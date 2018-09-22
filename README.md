@@ -1,2 +1,2 @@
-#Contents:
- 1) MyCodewars - Task 1 - 10
+Contents:
+ 1) CodeWars - Task 1 - 10
