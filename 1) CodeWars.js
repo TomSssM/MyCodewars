@@ -117,3 +117,108 @@ function getMiddle(s)
     return News;
   }
 }
+
+// Task 5
+// This time we want to write calculations using functions and get the results.
+// Let's have a look at some examples:
+// seven(times(five())); must return 35
+// four(plus(nine())); must return 13
+// eight(minus(three())); must return 5
+// six(dividedBy(two())); must return 3
+
+// Defining the main function
+
+var arr = [];
+
+function math() {
+
+  if(arr.length == 3) {
+    var a = arr[2];
+    var operator = arr[1];
+    var z = arr[0];
+    arr = [];
+
+    if(operator == "+") {
+      return a + z;
+    }
+    else if (operator == "-") {return a - z;}
+    else if (operator == "*") {return a * z;}
+    else {return Math.floor(a / z);}
+  }
+  else {return arr;}
+
+}
+
+// values:
+
+function zero() {
+  arr.push(0);
+  return math();
+}
+
+function one() {
+  arr.push(1);
+  return math();
+}
+
+function two() {
+  arr.push(2);
+  return math();
+}
+
+function three() {
+  arr.push(3);
+  return math();
+}
+
+function four() {
+  arr.push(4);
+  return math();
+}
+
+function five() {
+  arr.push(5);
+  return math();
+}
+
+function six() {
+  arr.push(6);
+  return math();
+}
+
+function seven() {
+  arr.push(7);
+  return math();
+}
+
+function eight() {
+  arr.push(8);
+  return math();
+}
+
+function nine() {
+  arr.push(9);
+  return math();
+}
+
+function plus() {
+  arr.push("+");
+  return arr;
+}
+
+function minus() {
+  arr.push("-");
+  return arr;
+}
+
+function times() {
+  arr.push("*");
+  return arr;
+}
+
+function dividedBy() {
+  arr.push("/");
+  return arr;
+}
+
+// Task 6
