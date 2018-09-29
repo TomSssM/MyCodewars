@@ -261,3 +261,68 @@ function getLoveTrianglesCount(preferences = []) {
 };
 
 // Task 7
+// Can you realize a function that returns word count from a given string?
+//
+// You have to ensure that spaces in string is a whitespace for real.
+//
+// What we want and finish of work:
+//
+// countWords("Hello"); // returns 1 as int
+// countWords("Hello, World!") // returns 2
+// countWords("No results for search term `s`") // returns 6
+// countWords(" Hello") // returns 1
+// // ... and so on
+// What kind of tests we got for your code:
+//
+// Function have to count words, but not spaces, so be sure that it does right.
+// Empty string has no words.
+// String with spaces around should be trimmed.
+// Non-whitespace (ex. breakspace, unicode chars) should be assumed as delimiter
+// Be sure that words with chars like -, ', ` are counted right.
+function validator(string) {
+
+  let left, right, length = string.length;
+
+  string = string.trim();
+
+  for (let i = 0; i < length; i++) {
+    if( string[i] == " " && string[i] == string[i+1]) {
+      left = string.substring(0, i);
+      right = string.substring(i+1, length);
+      string = left.concat(right);
+      i--;
+    }
+  }
+  return string;
+}
+
+function countWords(str) {
+
+  let number, count = 0;
+
+  str = validator(str);
+
+  if(str.length == 0) {
+
+    return 0;
+
+  }
+
+  while (number != -1) {
+    number = str.search(/\s/);
+    str = str.replace(/\s/, "");
+    count++;
+  }
+
+  return count;
+
+}
+
+// alternative :)
+function countWordsAlt(str) {
+  str = str.trim();
+  if (str === '') return 0;
+  return str.split(/\s+/).length;
+}
+
+//Task 8
