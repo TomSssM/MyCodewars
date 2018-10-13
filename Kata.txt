@@ -1,5 +1,3 @@
-http://www.codewars.com/kata/remove-first-and-last-character-part-two
-
 http://www.codewars.com/kata/implement-a-filter-function
 
 http://www.codewars.com/kata/prefill-an-array
