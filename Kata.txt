@@ -1,3 +1,12 @@
+//isNaN( undefined || null );
+//Undefined + 10;
+//Errors where should they appear and what is up
+//The Screenshot
+// why doesn't it concat?; if x.reverse().concat(x);
+// sum of five biggest
+//palindromes
+//check if parenteses are balanced in a string
+
 https://www.codewars.com/kata/handshake-problem
 https://www.codewars.com/kata/array-deep-count
 http://www.codewars.com/kata/stringing-me-along
