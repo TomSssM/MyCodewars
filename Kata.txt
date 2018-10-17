@@ -1,8 +1,5 @@
-//palindromes
-//check if parenteses are balanced in a string
-
-//Errors where should they appear and what is up
 //The Screenshot
+//Errors where should they appear and what is up
 
 https://www.codewars.com/kata/handshake-problem
 https://www.codewars.com/kata/array-deep-count
