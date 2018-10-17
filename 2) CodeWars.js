@@ -24,3 +24,23 @@ function prefill(n, v) {
 }
 
 //Task 11
+//Checking for palidromes
+function palindrome(str) {
+  str = str.replace(/[\W_]/g, "").toLowerCase().split(""); 
+  // we include underscore because \W excludes it
+  // see what it is equivalent to; that would be [^A-Za-z0-9_]; alternative: /[^A-Za-z0–9]/g
+  return str.join("") === str.reverse().join("");
+}
+
+//alternative
+function palindrome(str) {
+ var re = /[^A-Za-z0-9]/g;
+ str = str.toLowerCase().replace(re, '');
+ var len = str.length;
+ for (var i = 0; i < len/2; i++) {
+   if (str[i] !== str[len - 1 - i]) {
+       return false;
+   }
+ }
+ return true;
+}
