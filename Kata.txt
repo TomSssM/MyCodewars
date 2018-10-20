@@ -1,9 +1,6 @@
 //The Screenshot
 //Errors where should they appear and what is up
-
-https://www.codewars.com/kata/handshake-problem
 https://www.codewars.com/kata/array-deep-count
-
 http://www.codewars.com/kata/stringing-me-along
 http://www.codewars.com/kata/a-chain-adding-function
 http://www.codewars.com/kata/cross-product-of-vectors
