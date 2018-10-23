@@ -79,3 +79,9 @@ function array_diff(a, b) {
     return b.every((v) => val !== v);
   });
 }
+//alt good
+function array_diff(a, b) {
+  return a.filter((val) => b.indexOf(val) === -1);
+}
+
+//Task 14
