@@ -52,3 +52,30 @@ const lostSheep = (f,s,t) => t - [...f,...s].reduce((a,b) => a + b,0);
 lostSheep([12, 20, 30], [1,2,3], 120);
 
 //Task 13
+// Your goal in this kata is to implement a difference function, which subtracts 
+// one list from another and returns the result.
+// It should remove all values from list a, which are present in list b.
+// array_diff([1,2],[1]) == [2]
+// If a value is present in b, all of its occurrences must be removed from 
+// the other:
+// array_diff([1,2,2,2,3],[2]) == [1,3]
+// beware stupid solution below!!!
+
+function array_diff(a, b) {
+  for(let i = 0; i < a.length; i++) {
+    for(let j = 0; j < b.length; j++) {
+      if(a[i] === b[j]) {
+        a.splice(i, 1);
+        i = -1; //do note that we have to set i to -1 to be able to access the 0 element
+      }
+    }
+  }
+  return a;
+}
+
+// good
+function array_diff(a, b) {
+  return a.filter((val) => {
+    return b.every((v) => val !== v);
+  });
+}
