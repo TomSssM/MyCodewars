@@ -44,3 +44,11 @@ function palindrome(str) {
  }
  return true;
 }
+
+//Task 12
+//do note the use of spread operator here
+
+const lostSheep = (f,s,t) => t - [...f,...s].reduce((a,b) => a + b,0);
+lostSheep([12, 20, 30], [1,2,3], 120);
+
+//Task 13
