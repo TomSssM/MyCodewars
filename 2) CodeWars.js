@@ -239,5 +239,11 @@ function compose(f, g) {
     return f(g.apply(null, arguments));
   };
 }
+//the last one can be rewritten like so
+// function compose(f, g) {
+//   return function(...args) {
+//     return f(g(...args));
+//   };
+// }
 
 //Task 17
