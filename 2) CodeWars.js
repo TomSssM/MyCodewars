@@ -219,6 +219,9 @@ function createFunctions(n) {
 
 function compose(...args) {
   return function(...num) {
+    if(args.length === 0) {
+      return num[0];
+    }
     const len = args.length - 1;
     let result = args[len](...num);
     for(let i = len; i > 0; i--) {
@@ -245,6 +248,17 @@ function compose(f, g) {
 //     return f(g(...args));
 //   };
 // }
+
+// More Alternatives ( all work with 2+ functions)
+
+function compose(...args) {
+  return function(num) {
+      args.reverse().forEach((val) => num = val(num));
+      return num;
+  }
+}
+
+const compose = (...fns) => arg => fns.reduceRight((res, fn) => fn(res), arg);
 
 //Task 17
 // Array.prototype.length will give you the number of top-level elements in an array.
