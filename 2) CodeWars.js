@@ -247,3 +247,44 @@ function compose(f, g) {
 // }
 
 //Task 17
+// Array.prototype.length will give you the number of top-level elements in an array.
+// Your task is to create a function deepCount that returns the number of ALL elements within an array,including any within inner-level arrays.
+// For example:
+// deepCount([1, 2, 3]);  
+// //>>>>> 3
+// deepCount(["x", "y", ["z"]]);  
+// //>>>>> 4
+// deepCount([1, 2, [3, 4, [5]]]);  
+// //>>>>> 7
+// The input will always be an array.
+
+const deepCount = function(arrays) {
+  let count = 0;
+
+  const result = function name(arr) {
+    count += arr.length;
+
+    for(let i = 0; i < arr.length; i++) {
+      if(typeof arr[i] === "object") {
+          name(arr[i]);
+      }
+    }
+
+    return count;
+  }
+
+  return result(arrays);
+};
+
+//alternatives
+function deepCount(a){
+  let count = a.length;
+  for (let i=0; i<a.length; i++) if (Array.isArray(a[i])) count += deepCount(a[i]);
+  return count;
+}
+
+function deepCount(a){
+  return a.reduce((s,e)=>s+(Array.isArray(e)?deepCount(e):0),a.length);
+}
+
+//Task 18

@@ -1,13 +1,12 @@
 //The Screenshot
 //Errors where should they appear and what is up
 
+http://www.codewars.com/kata/implement-a-filter-function
 http://www.codewars.com/kata/function-composition-1
 http://www.codewars.com/kata/i-spy
-http://www.codewars.com/kata/implement-a-filter-function
 http://www.codewars.com/kata/a-function-within-a-function
 http://www.codewars.com/kata/function-cache
 http://www.codewars.com/kata/sequence-generator-1
-https://www.codewars.com/kata/array-deep-count
 http://www.codewars.com/kata/stringing-me-along
 http://www.codewars.com/kata/a-chain-adding-function
 http://www.codewars.com/kata/cross-product-of-vectors
