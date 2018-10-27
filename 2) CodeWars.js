@@ -120,4 +120,79 @@ function firstTooth(t) {
   return d.filter(v => v==m).length!=1 ? -1 : d.findIndex(v => v==m);
 }
 
-//Next Task
+//Task 15
+// We want to create a function, which returns an array of functions, which return their index in the array.
+// For better understanding, here an example:
+// var callbacks = createFunctions(5); // create an array, containing 5 functions
+// callbacks[0](); // must return 0
+// callbacks[3](); // must return 3
+// We already implemented that function, but when we actually run the code, the result doesn't look like what we expected.
+// Can you spot, what's wrong with it? A test fixture is also available
+
+function createFunctions(n) {
+  var callbacks = [];
+  for (var i=0; i<n; i++) {
+    let ises = i;
+    callbacks.push(function() {
+      return ises;
+    });
+  }
+  
+  return callbacks;
+}
+
+//do note, however, how easily we could fix that if we were to just replace var x to let x in the for loop
+function createFunctions(n) {
+  var callbacks = [];
+
+  for (let i=0; i<n; i++) { //the original example had 'vari=0;' here
+    callbacks.push(function() {
+      return i;
+    });
+  }
+  
+  return callbacks;
+}
+
+//here is the original:
+// function createFunctions(n) {
+//   var callbacks = [];
+//   for (var i=0; i<n; i++) {
+//     callbacks.push(function() {
+//       return i;
+//     });
+//   }
+//   return callbacks;
+// }
+
+//alternative:
+function createFunctions(n) {
+  var callbacks = [];
+  var factory = function(x){
+    return function(){
+      return x;
+    };
+  };
+  for (var i=0; i<n; i++) {
+    callbacks.push(factory(i));
+  }
+  return callbacks;
+}
+
+//alternative with IIFE
+function createFunctions(n) {
+  var callbacks = [];
+
+  for (var i=0; i<n; i++) {
+    var oneCall = (function(x) {
+      return function() {
+        return x;
+      }
+    })(i);
+    callbacks.push(oneCall);
+  }
+
+  return callbacks;
+}
+
+//Task 16
