@@ -132,7 +132,7 @@ function firstTooth(t) {
 function createFunctions(n) {
   var callbacks = [];
   for (var i=0; i<n; i++) {
-    let ises = i;
+    let ises = i; //let being used here is definetely the only reason this solution passes
     callbacks.push(function() {
       return ises;
     });
