@@ -224,9 +224,11 @@ function compose(...args) {
     }
     const len = args.length - 1;
     let result = args[len](...num);
+
     for(let i = len; i > 0; i--) {
       result = args[i-1](result);
     }
+
     return result;
   };
 }
@@ -302,3 +304,15 @@ function deepCount(a){
 }
 
 //Task 18
+// Reversing A String
+// One of my co-workers recently told me about a whiteboard question that he’d been asked in an
+// interview, and I thought it was kind of a fun problem.
+
+// Write a function that accepts a string a reverses it. Recursively.
+
+function reverse( str ) {
+  if ( str.length <= 1 ) {
+    return str;
+  }
+  return reverse( str.substr( 1 ) ) + str[ 0 ];
+}
