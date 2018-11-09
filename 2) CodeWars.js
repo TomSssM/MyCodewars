@@ -316,3 +316,17 @@ function reverse( str ) {
   }
   return reverse( str.substr( 1 ) ) + str[ 0 ];
 }
+
+//Task 19
+//create a function that turns an array of numbers into an array where each value is the sum of all the other numbers
+// [1,2,3] => [5,4,3] (1: 2 + 3; 2: 1 + 3; 3: 1 + 2)
+
+function sumOfOther(arr = []) {
+	
+  const result = arr.map((v, i, a) => a.slice().reduce((t,v,ind) => t += ind !== i ? v : 0, 0));
+  // do note what happens in the line above t += ind !== i ? v : 0
+  // first we check whether ind is not equal to i or not. If it is not we add v to t or else we add 0 to t
+  return result;
+}
+
+//Task 20
