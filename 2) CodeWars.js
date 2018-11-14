@@ -369,6 +369,7 @@ console.log(make(100)(10, 10, 10)(2, 3, 3, 2, 3)(7)(10)(extract)); //40
 console.log(make(2)(2,2)(multiply)); //8
 console.log(make(120)(2)(10)(3, 1, 2)(0.5, 1)(division)); //2
 
+// the file stops here
 //Task 21
 // Another example of recursion
 function doNTimes(n, fun) {
@@ -379,4 +380,54 @@ function doNTimes(n, fun) {
     }	  
   }
   recursionFun(n);	
+}
+
+//Task 22
+//Polyfill Function.prototype.bind
+
+Function.prototype.mybind = function () {
+  const fn = this;
+  const args = Array.from(arguments);
+  const object = args.shift();
+  return function () {
+    return fn.apply(object, [...args, ...Array.from(arguments)]);
+  };
+};
+const myObject = {
+	x: "my value"
+};
+
+console.log(
+  function(val1, val2){
+    return this.x + " " + val1 + " " + val2;
+  }.mybind(myObject, "is")("cool")
+);
+
+//The cool MDN Polyfill
+if (!Function.prototype.bind) {
+  Function.prototype.bind = function(oThis) {
+    if (typeof this !== 'function') {
+      // closest thing possible to the ECMAScript 5
+      // internal IsCallable function
+      throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
+    }
+
+    var aArgs   = Array.prototype.slice.call(arguments, 1),
+        fToBind = this,
+        fNOP    = function() {},
+        fBound  = function() {
+          return fToBind.apply(this instanceof fNOP
+                 ? this
+                 : oThis,
+                 aArgs.concat(Array.prototype.slice.call(arguments)));
+        };
+
+    if (this.prototype) {
+      // Function.prototype doesn't have a prototype property
+      fNOP.prototype = this.prototype; 
+    }
+    fBound.prototype = new fNOP();
+
+    return fBound;
+  };
 }

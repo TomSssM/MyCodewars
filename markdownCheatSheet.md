@@ -53,11 +53,12 @@ Go to the very first created file here: [CodeWarsOne](./Laboratory.js/).
 
 #### Ordered List:
 1. Tom
-
-  1. Coffee
-  2. Orange Juice
-  3. Tea
-  4. Cocoa
-
+    - Cool
+    - Awesome
 2. Elijah
+    * Interesting
+      * OK
+        - Bookworm
 3. Smith
+
+# Part 7 Continues
