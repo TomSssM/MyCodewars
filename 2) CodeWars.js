@@ -368,16 +368,3 @@ console.log(make(15)(34, 24, 777)(41)(add)); //891
 console.log(make(100)(10, 10, 10)(2, 3, 3, 2, 3)(7)(10)(extract)); //40
 console.log(make(2)(2,2)(multiply)); //8
 console.log(make(120)(2)(10)(3, 1, 2)(0.5, 1)(division)); //2
-
-// the file stops here
-//Task 21
-// Another example of recursion
-function doNTimes(n, fun) {
-  function recursionFun(x) {
-    if(x >= 1) {
-       fun();
-       recursionFun(x - 1);
-    }	  
-  }
-  recursionFun(n);	
-}
