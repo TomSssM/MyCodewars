@@ -71,6 +71,10 @@ Go to the very first created file here: [CodeWarsOne](./Laboratory.js/).
 ***
 As there as no PR's or issues right now the #2 reference is futile. We will have to wait till @TomSssM :koala: does smth about it.
 ***
+![the real ghostbusters img](https://upload.wikimedia.org/wikipedia/en/thumb/5/5d/Realghostbusters_title.jpg/250px-Realghostbusters_title.jpg)
+<p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/5d/Realghostbusters_title.jpg/250px-Realghostbusters_title.jpg" width="100" height="100"/>
+  </p>
 
 # Part 9
  | Hey You, I Love Your Soul | Invincible | Collide |
@@ -79,7 +83,7 @@ As there as no PR's or issues right now the #2 reference is futile. We will have
  | Things are Coming Down, Of things Coming Down | Best Kept Secret | Open Wounds |
 
 # Part 10 Fenced code blocks
-```JS
+```javascript
 const extends = function(Child, Parent) {
   Child.prototype = Object.create(Parent.prototype);
   Child.prototype.constructor = Child;
