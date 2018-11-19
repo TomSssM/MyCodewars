@@ -1,13 +1,13 @@
 //1) Function.prototype.bind
 
-Function.prototype.mybind = function () {
+Function.prototype.mybind = function (...args1) {
   const fn = this;
-  const args = Array.from(arguments);
-  const object = args.shift();
-  return function () {
-    return fn.apply(object, [...args, ...Array.from(arguments)]);
+  const object = args1.shift();
+  return function (...args2) {
+    return fn.apply(object, [...args1, ...args2]);
   };
 };
+
 const myObject = {
 	x: "my value"
 };
