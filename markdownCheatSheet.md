@@ -61,4 +61,28 @@ Go to the very first created file here: [CodeWarsOne](./Laboratory.js/).
         - Bookworm
 3. Smith
 
-# Part 7 Continues
+# Part 7 Task List
+- [ ] Buy Milk
+- [x] Buy Soda
+- [ ] Buy Coffee
+- [x] Buy Mars
+
+# Part 8
+***
+As there as no PR's or issues right now the #2 reference is futile. We will have to wait till @TomSssM :koala: does smth about it.
+***
+
+# Part 9
+ | Hey You, I Love Your Soul | Invincible | Collide |
+ | :--- | :---: | ---: |
+ | Locked In a Cage | You Take My Rights Away | Savior |
+ | Things are Coming Down, Of things Coming Down | Best Kept Secret | Open Wounds |
+
+# Part 10 Fenced code blocks
+```JS
+const extends = function(Child, Parent) {
+  Child.prototype = Object.create(Parent.prototype);
+  Child.prototype.constructor = Child;
+  Child.prototype.superclass = Parent.prototype;
+}
+```
