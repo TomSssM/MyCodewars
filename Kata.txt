@@ -1,9 +1,8 @@
-https://www.codewars.com/kata/using-closures-to-share-class-state
-https://www.codewars.com/kata/replicate-new
-http://www.codewars.com/kata/array-helpers
 http://www.codewars.com/kata/santaclausable-interface
 http://www.codewars.com/kata/fun-with-es6-classes-number-2-animals-and-inheritance
 http://www.codewars.com/kata/fun-with-es6-classes-number-3-cuboids-cubes-and-getters
+http://www.codewars.com/kata/array-helpers
+https://www.codewars.com/kata/replicate-new
 
 http://www.codewars.com/kata/a-chain-adding-function
 http://www.codewars.com/kata/i-spy
