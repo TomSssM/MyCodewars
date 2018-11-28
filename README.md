@@ -22,4 +22,6 @@
 ## Others
 
 - [Markdown Cheat Sheet](./markdownCheatSheet.md) :eyes:
+- [Code Editors Config](./code-editors/README.md) :wrench:
+- [Articles](./articles/README.md) :newspaper:
 - [The Cheat Sheet](./cheatsheet/)

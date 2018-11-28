@@ -1,0 +1,20 @@
+{
+  "extensions": {
+    "80s-baby": true,
+    "mikaeljorhult.brackets-autoprefixer": true,
+    "brackets-beautify": true,
+    "bvermeule.brackets-devicons": true,
+    "zaggino.brackets-git": true,
+    "mskocik.brackets.icons": true,
+    "dune": true,
+    "brackets-emmet": true,
+    "milosh86.extensions-bulk-installer": true,
+    "seandee.custom-font-selector": true,
+    "brackets-indent-guides": true,
+    "iplastic": true,
+    "lion": true,
+    "bracket-match-highlighter": true,
+    "midnight-pumpkin": true,
+    "enturn.quick-search": true
+  }
+}
