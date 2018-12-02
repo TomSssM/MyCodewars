@@ -46,6 +46,7 @@ code --install-extension pranaygp.vscode-css-peek
 code --install-extension robertohuertasm.vscode-icons
 code --install-extension sean.Macaroon-theme
 code --install-extension ullissescastro.theme-bracketslight
+code --install-extension davidmart.theme-jsfiddle-like-syntax-vscode
 ```
 ### Default Editor for Git
 
