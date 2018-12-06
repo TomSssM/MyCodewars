@@ -16,6 +16,7 @@
 
 ## Interview Prep Kit
 
+- [Task challenges ( Task 1 - 20 )](./1\)%20Task%20Challanges.js') :bear:
 - [Array.prototype.reduce](./MDN%20Array.prototype.reduce.js)
 - [Polyfill.js](./Polyfill.js)
 
