@@ -1,3 +1,4 @@
 # Articles
 - [Partial Application vs Currying](./partialApplication.md)
+- [Creating Closures in Loops: A Common Mistake](./ClosuresInALoop.md)
 - Next Article
