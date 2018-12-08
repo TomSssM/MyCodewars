@@ -420,3 +420,97 @@ If you read the IIFE article, you'll know that function expressions don't need t
   frankenCurry(add)()()()()()(1)()()()()()(2)()()()()()(3); // "1 + 2 + 3 = 6"
 ```
 I'll be the first to admit that franken-currying has limited real-world appeal, but then again, in JavaScript, so does currying. Besides, I'm not going for real-world appeal with this particular example. I'm going for crazy-looking JavaScript.
+
+# Partial Application vs Currying 2
+
+[*Original Source*](http://2ality.com/2011/09/currying-vs-part-eval.html)
+
+## Currying
+Currying takes a function:
+```
+f: X × Y → R
+```
+and turns it into a function:
+```
+f': X → (Y → R)
+```
+Instead of calling f with two arguments, we invoke f' with the first argument. The result is a function that we then call with the second argument to produce the result. Thus, if the uncurried f is invoked as:
+```
+f(3, 5)
+```
+then the curried f' is invoked as:
+```
+f'(3)(5)
+```
+**JavaScript example.** The following is the uncurried binary function add().
+```javascript
+    function add(x, y) {
+        return x + y;
+    }
+```
+Calling it:
+```
+    > add(3, 5)
+    8
+```
+The curried version of add looks as follows.
+```javascript
+    function addC(x) {
+        return function (y) {
+            return x + y;
+        }
+    }
+```
+Calling it:
+```
+    > addC(3)(5)
+    8
+```
+**The algorithm for currying.** The function curry curries a given binary function. It has the signature:
+```
+curry: (X × Y → R) → (X → (Y → R))
+```
+Explanation: curry takes a binary function and returns a unary function that returns a unary function. Its JavaScript code is:
+```javascript
+    function curry(f) {
+        return function(x) {
+            return function(y) {
+                return f(x, y);
+            }
+        }
+    }
+```
+## Partial application
+Partial application takes a function
+```
+f: X × Y → R
+```
+and a fixed value x for the first argument to produce a new function
+```
+f': Y → R
+```
+f' does the same as f, but only has to fill in the second parameter which is why its arity is one less than the arity of f. One says that the first argument is bound to x.
+**JavaScript example.** Binding the first argument of function `add` to 5 produces the function `plus5`. Compare their definitions to see that we have simply filled in the first argument.
+```javascript
+    function plus5(y) {
+        return 5 + y;
+    }
+```    
+**The algorithm for partial application.** The function partApply partially applies binary functions. It has the signature:
+```
+partApply : ((X × Y → R) × X) → (Y → R)
+```
+Explanation: partApply takes a binary function and a value and produces a unary function. Its JavaScript code is:
+```javascript
+    function partApply(f, x) {
+        return function(y) {
+            return f(x, y);
+        }
+    }
+```
+## Currying versus partial application
+The difference between the two is:
+- Currying always produces nested unary (1-ary) functions. The transformed function is still largely the same as the original.
+- Partial application produces functions of arbitrary arity. The transformed function is different from the original – it needs less arguments.
+
+Interestingly, with a curried function and curried invocation, it is easy to achieve the same effect as binding one argument (performing this operation several times yields the general case): To bind the first argument to a value, you simply apply the outer-most of the nested functions to that value, which returns the desired new function.
