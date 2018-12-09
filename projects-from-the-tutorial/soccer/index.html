@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    * {
+      transition: .2s all ease-in-out;
+    }
+    .container {
+      border: 1px solid #000;
+      width: 240px;
+      padding: 1rem;
+    }
+    .container::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+    #soccer {
+      width: 200px;
+      border: 10px groove black;
+      background: #00FF00;
+      position: relative;
+      padding: 10px;
+    }
+    #ball {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .button-holder {
+      width: 40%;
+      float: left;
+      padding: 7px 0;
+    }
+    button#goal {
+      width: 40px;
+      height: 40px;
+      border-radius: 7px;
+      border: 1px solid rgb(177, 177, 177);
+      outline: none;
+      background: rgb(214, 214, 214);
+      margin: 0 auto;
+      float: none;
+    }
+    button#goal:active {
+      border: 2px solid rgb(177, 177, 177);
+    }
+    button#goal:hover {
+      background: rgb(231, 231, 231);
+    }
+    i::before {
+      font-size: 1.3rem;
+      text-align: center;
+    }
+    .row {
+      padding: .2rem 0;
+      width: 130px;
+      text-align: center;
+    }
+    .row.row-lab {
+      text-align: left;
+      user-select: none;
+    }
+    .row::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+    .frozen {
+      position: relative;
+    }
+    .frozen::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.726);
+    }
+  </style>
+  <title>JS</title>
+</head>
+
+<body>
+  <h1 id="special">JS</h1>
+  <div class="container">
+    <div id="soccer">
+      <img src="./ball.svg" alt="ball" id="ball">
+      . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+      . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+      . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+      . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    </div>
+    <div class="button-holder">
+      <div class="row row-lab">
+        <label for="siz">Size: <span id="size-value">40</span></label>
+      </div>
+      <div class="row">
+        <input id="siz" onclick="createBall()" type="range" min="10" max="70" step="1" value="40">
+      </div>
+      <div class="row row-lab margRow">
+        <label for="marg">Margin: <span id="margin-value">20</span></label>
+      </div>
+      <div class="row margRow">
+        <input id="marg" onclick="createBall()" type="range" min="0" max="40" step="1" value="20">
+      </div>
+      <div class="row">
+        <button id="goal" type="button" onclick="moveBall()"><i class="fa fa-futbol-o" aria-hidden="true"></i></button>
+      </div>
+      <div class="row row-lab">
+        <label for="toggMar">Toggle Margins</label>
+        <input type="checkbox" id="toggMar" onclick="freezeMar()">
+      </div>
+    </div>
+  </div>
+  <script src="./code.js"></script>
+</body>
+
+</html>
