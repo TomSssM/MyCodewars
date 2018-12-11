@@ -25,7 +25,7 @@ console.log(decToBin(15313523) == 15313523..toString(2));
 
 # 2) Binary To Decimal
 ```javascript
-function binToDec(num){
+const binToDec = function(num) {
   return (num + '').split('').reverse()
     .reduce((t, v, i) => (v === '1') ? t + Math.pow(2, i) : t, 0);
 }
@@ -35,8 +35,20 @@ console.log(binToDec('101100111') === parseInt('101100111', 2));
 console.log(binToDec(1101) === parseInt('1101', 2));
 console.log(binToDec('1111111111111') === parseInt('1111111111111', 2));
 ```
+# 3) Palindrome
+```javascript
+const palindrome = function(str) {
+  str = str.toLowerCase().replace(/[^a-z0-9]/g, '');
+  return str.split('').reverse().join('') === str;
+ }
 
-# 3) Currying
+ console.log(palindrome("never odd or even...")); // true
+ console.log(palindrome("My age is 0, 0 si ega ym.")); // true
+ console.log(palindrome("1 eye for of 1 eye.")); // false
+ console.log(palindrome("0_0 (: /-\\ :) 0–0")); // true
+```
+
+# 4) Currying
 ```javascript
 function curry(fn) {
   const arity = fn.length;
@@ -57,12 +69,13 @@ const fun = function(a,b,c){
 
 console.log(curry(fun)(3)(true, 'hidden')('a')); // 3 true a
 ```
-# 4) Partial Application
+# 5) Partial Application
 ```javascript
 ```
-# 5) Function Composition
+# 6) Function Composition
 ```javascript
 ```
-# 6)
 
 # 7) Next
+```javascript
+```
