@@ -25,6 +25,10 @@ const freezeMar = function() {
   Array.from(marginRow).forEach(v => {
     v.classList.toggle('frozen');
   });
+  if(Array.from(marginRow).every(v => v.classList.contains('frozen'))) {
+    ball.style.margin = '0px';
+  } else {
+    ball.style.margin = marg.value + 'px';
+  }
 };
-
 createBall();
