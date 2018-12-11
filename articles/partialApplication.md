@@ -184,6 +184,49 @@ This is an unfortunate--but very common--cause of confusion, because partial app
 Note that the remainder of this article describes currying, which is somewhat academic and has limited practical use in JavaScript. While you're encouraged to continue reading, if your brain is on fire, you may want to skip to the article's Final Words. That being said, if you do skip the the end, you'll miss the crazy stuff.
 
 *Addendum: there's now even more crazy stuff at the very end, in the Extra Credit section. Good luck.*
+
+## Another Implementation of Arbitary Partial Application
+
+[*Original Source*](http://raganwald.com/2015/04/01/partial-application.html)
+
+What if you want to apply some, but not all of the arguments, and they may not be neatly lined up at the beginning or end? This is also possible, provided we define a placeholder of some kind, and then write some code to “fill in the blanks”.
+
+This implementation takes a “template” of values, you insert placeholder values (traditionally `_`, but anything will do) where you want values to be supplied later.
+
+```javascript
+const div = (verbed, numerator, denominator) =>
+  `${numerator} ${verbed} ${denominator} is ${numerator/denominator}`
+  
+div('divided by', 1, 3)
+  //=> 1 divided by 3 is 0.3333333333333333
+  
+const arbitraryPartialApply = (() => {
+  const placeholder = {},
+        arbitraryPartialApply = (fn, ...template) => {
+          let remainingArgIndex = 0;
+          const mapper = template.map((templateArg) =>
+                           templateArg === placeholder
+                             ? ((i) => (args) => args[i])(remainingArgIndex++)
+                             : (args) => templateArg);
+          
+          return function (...remainingArgs) {
+            const composedArgs = mapper.map(f => f(remainingArgs));
+            
+            return fn.apply(this, composedArgs);
+          }
+          
+        };
+        
+  arbitraryPartialApply._ = placeholder;
+  return arbitraryPartialApply;
+})();
+
+const _ = arbitraryPartialApply._;
+
+const dividedByThree =
+  arbitraryPartialApply(div, 'divided by', _, 3);
+```
+
 ## Currying
 Currying can be described as transforming a function of N arguments in such a way that it can be called as a chain of N functions each with a single argument.
 
