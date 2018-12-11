@@ -35,6 +35,7 @@ console.log(binToDec('101100111') === parseInt('101100111', 2));
 console.log(binToDec(1101) === parseInt('1101', 2));
 console.log(binToDec('1111111111111') === parseInt('1111111111111', 2));
 ```
+
 # 3) Palindrome
 ```javascript
 const palindrome = function(str) {
@@ -69,11 +70,36 @@ const fun = function(a,b,c){
 
 console.log(curry(fun)(3)(true, 'hidden')('a')); // 3 true a
 ```
+
 # 5) Partial Application
 ```javascript
+const partialAny = (function() {
+  const partialAnyInn = function(fn, ...args1) {
+    return function(...args2) {
+      const args = [];
+      args1.forEach(v => {
+        args.push(v === partialAny._ ? args2.shift() : v);
+      });
+      return fn(...args, ...args2);
+    };
+  }
+
+  partialAnyInn._ = {};
+  return partialAnyInn;
+}());
+
+const __ = partialAny._;
+function hex(r, g, b) {
+  return `#${r}${g}${b}`;
+}
+
+const greenMax = partialAny(hex, __, 'ff');
+console.log(greenMax('33', '44'));  // "#33ff44"
 ```
+
 # 6) Function Composition
 ```javascript
+
 ```
 
 # 7) Next
