@@ -10,12 +10,17 @@ const DecToBin = function(num = 0) {
   }
 
   while(num > 0) {
-    res += num % 2;
+    res = (num % 2) + res;
     num = Math.floor(num / 2);
   }
   
-  return res.split('').reverse().join('') * sign;
+  return res * sign;
 };
+
+console.log(DecToBin(123) == 123..toString(2));
+console.log(DecToBin(145871865) == 145871865..toString(2));
+console.log(DecToBin(1456165378) == 1456165378..toString(2));
+console.log(DecToBin(15313523) == 15313523..toString(2));
 ```
 # 2) Currying
 ```javascript
