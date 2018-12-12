@@ -376,7 +376,18 @@ const make = function(...fArgs) {
     const memory = args;
     return function(...newArgs) {
       if(newArgs[0] instanceof Function) {
-        return memory.reduce(newArgs[0]);
+        const fn = newArgs[0];
+        const neededArity = fn.length - 1;
+
+        if(neededArity === 0) throw new Error('Shouldn\'t be a unary Function!!!');
+        const argsComp = [memory.shift()];
+        let i = 0;
+        while(memory[((i + 1) * neededArity) - 1]) {
+          argsComp.push(memory.slice(i * neededArity, (i + 1) * neededArity));
+          i += 1;
+        }
+        
+        return argsComp.reduce((t, v) => fn(t, ...v));
       } else {
         const local = [...memory, ...newArgs];
         return name(local);
