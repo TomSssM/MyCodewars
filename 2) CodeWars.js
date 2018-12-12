@@ -368,3 +368,19 @@ console.log(make(15)(34, 24, 777)(41)(add)); //891
 console.log(make(100)(10, 10, 10)(2, 3, 3, 2, 3)(7)(10)(extract)); //40
 console.log(make(2)(2,2)(multiply)); //8
 console.log(make(120)(2)(10)(3, 1, 2)(0.5, 1)(division)); //2
+
+// another proposed alternative man
+
+const make = function(...fArgs) {
+  return (function name(args){
+    const memory = args;
+    return function(...newArgs) {
+      if(newArgs[0] instanceof Function) {
+        return memory.reduce(newArgs[0]);
+      } else {
+        const local = [...memory, ...newArgs];
+        return name(local);
+      }
+    };
+  })(fArgs);
+};
