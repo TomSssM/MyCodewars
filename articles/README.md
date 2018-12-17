@@ -3,4 +3,5 @@
 - [Creating Closures in Loops: A Common Mistake](./ClosuresInALoop.md)
 - [JS Floating Points](./JSFloatingPoints.md)
 - [Function.prototype.bind Polyfill](./bindPolyfill.md)
+- [MDN Array.prototype.reduce](./Array.prototype.reduce.md)
 - Next Article
