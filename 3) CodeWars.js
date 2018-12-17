@@ -278,3 +278,25 @@ function isSantaClausable(obj) {
 }
 
 // Task 26
+// my own contrived task
+// here I reverse the difits of any safe integer
+// with my hands completely off arrays
+// only once do I use .toString().lenght
+
+const swap = function(num) {
+  let length = 10 ** (num.toString().length - 1);
+  const lengthIni = length;
+  let res = 0;
+  while(length >= 1) {
+    let cur = Math.floor(num / length);
+    num %= length;
+    cur = (cur / length) * lengthIni;
+    res += cur;
+    length *= 0.1;
+  }
+  return res;
+};
+
+swap(123); // 321
+
+// Task 27
