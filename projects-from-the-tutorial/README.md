@@ -7,4 +7,5 @@
   -  [Part Two](./object-to-ul/part%20two/Laboratory.js)
 - [Time and Calendar](./calendar-and-time/Laboratory.js)
 - [Sorting a Table](./sorting-a-table/Laboratory.js)
+- [Note](./note/Laboratory.js)
 - next
