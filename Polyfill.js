@@ -18,4 +18,35 @@ console.log(
   }.mybind(myObject, "is")("cool")
 );
 
-// 2)
+// 2) String.prototype.toUpperCase + String.prototype.toLowerCase
+
+String.prototype.myToUpper = function() {
+  const strArra = this.split('');
+  let res = '';
+  strArra.forEach(v => {
+    if(v >= 'a' && v <= 'z') {
+      res += String.fromCharCode(v.charCodeAt(0) - 32);
+    } else {
+      res += v;
+    }
+  });
+  return res;
+};
+
+String.prototype.myToLower = function() {
+  const strArra = this.split('');
+  let res = '';
+  strArra.forEach(v => {
+    if(v >= 'A' && v <= 'Z') {
+      res += String.fromCharCode(v.charCodeAt(0) + 32);
+    } else {
+      res += v;
+    }
+  });
+  return res;
+};
+
+console.log('aabD f g HH ww Zzz'.myToUpper()); // AABD F G HH WW ZZZ
+console.log('ABC AA a $ \\ ~~ $ a v ww ZZZ'.myToLower()); // abc aa a $ \ ~~ $ a v ww zzz
+
+// 3)
