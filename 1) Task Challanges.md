@@ -98,8 +98,24 @@ console.log(greenMax('33', '44'));  // "#33ff44"
 ```
 
 # 6) Function Composition
+## 1st
 ```javascript
 const compose = (...fns) => x => fns.reduceRight((v, f) => f(v), x);
+```
+## 2nd
+```javascript
+const compose = (...fns) => fns.reduce((f, g) => (...args) => f(g(...args)))
+```
+## 3rd
+```javascript
+const compose = (fn, ...rest) =>
+  (...args) =>
+    (rest.length === 0)
+      ? fn(...args)
+      : fn(compose(...rest)(...args));
+```
+## Pipe
+```javascript
 const pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
 ```
 
