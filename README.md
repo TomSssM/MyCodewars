@@ -19,7 +19,6 @@
 - [Task challenges ( Task 1 - 20 )](./1\)%20Task%20Challanges.md) :camel:
 - Task challenges ( Task 21 - 41 ) :bear:
 - Task challenges ( Task 42 - 60 ) :monkey:
-- [Array.prototype.reduce](./MDN%20Array.prototype.reduce.js)
 - [Polyfill.js](./Polyfill.js)
 
 ## Others
