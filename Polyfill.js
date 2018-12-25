@@ -49,4 +49,13 @@ String.prototype.myToLower = function() {
 console.log('aabD f g HH ww Zzz'.myToUpper()); // AABD F G HH WW ZZZ
 console.log('ABC AA a $ \\ ~~ $ a v ww ZZZ'.myToLower()); // abc aa a $ \ ~~ $ a v ww zzz
 
-// 3)
+// 3) Array.prototype.forEach
+
+Array.prototype.myForEach = function(fn) {
+  const arr = this;
+  for(let i = 0; i < arr.length; i++) {
+    fn(arr[i], i, arr);
+  }
+}
+
+// 4) Next

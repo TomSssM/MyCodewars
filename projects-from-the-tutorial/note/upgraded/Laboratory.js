@@ -43,4 +43,4 @@ positionAt(anchor, 'bottom-in', 'bottom-in');
 positionAt(anchor, 'top-out', 'top-out');
 positionAt(anchor, 'top-in', 'top-in');
 positionAt(anchor, 'right-out', 'right-out');
-positionAt(anchor, 'right-in', 'right-in');
+positionAt(anchor, 'right-in', 'right-in'); 
