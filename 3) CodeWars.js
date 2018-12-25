@@ -300,3 +300,29 @@ const swap = function(num) {
 swap(123); // 321
 
 // Task 27
+// the caesar task from CS50
+// encoding a secret message by shifting each character key spaces to the right
+
+const cipher = function(key = 0, str = '') {
+  const charArr = str.split('');
+  let res = '';
+  charArr.forEach(v => {
+    if(v >= 'a' && v <= 'z') {
+      const initialPosInAlph = (v.charCodeAt(0) - 97); // lower case a starts at 97 in Unicode
+      const posInAlph = (initialPosInAlph + key) % 26; // % 26 ( 26 letters in English alphabet ) is done so that the 
+                                                       // letter z corresponds to 2 and not 28 which is a weird character
+      res += String.fromCharCode(posInAlph + 97);
+    } else if(v >= 'A' && v <= 'Z') {
+      const InitialPosInAlph = (v.charCodeAt(0) - 65);
+      const posInAlph = (InitialPosInAlph + key) % 26;
+      res += String.fromCharCode(posInAlph + 65);
+    } else {
+      res += v;
+    }
+  });
+  return res;
+}
+
+console.log(cipher(2, 'abc | \\ !$ aa XyZ')); // cde | \ !$ cc ZaB
+
+// Task 28
