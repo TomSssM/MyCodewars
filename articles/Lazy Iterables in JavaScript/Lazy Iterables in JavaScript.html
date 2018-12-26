@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+          
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href="./Lazy Iterables in JavaScript_files/css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="./Lazy Iterables in JavaScript_files/stylesheet.css" media="screen">
+
+    <link rel="stylesheet" type="text/css" href="./Lazy Iterables in JavaScript_files/pygment_trac.css" media="screen">
+    <link rel="StyleSheet" href="./Lazy Iterables in JavaScript_files/pygments.css" type="text/css" media="screen">
+
+<style type="text/css">
+:root #header + #content > #left > #rlblock_left
+{ display: none !important; }</style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <title>Lazy Iterables in JavaScript</title>
+
+    </head>
+  <body>
+    <div id="container">
+      <div class="inner">
+
+              <div id="header">
+        <h3><a href="http://raganwald.com/">RAGANWALD.COM</a></h3>
+        <h1>Lazy Iterables in JavaScript</h1>
+      </div><!-- end header -->
+
+
+        <hr>
+
+        <section id="main_content">
+
+          
+
+
+
+  
+  
+
+  
+
+  
+    
+    
+  
+
+
+
+
+          <p><img src="./Lazy Iterables in JavaScript_files/coffee-labels.jpg" alt="Coffee Labels at the Saltspring Coffee Processing Facility"></p>
+
+<p><em>Nota Bene: All of the examples in this essay require ECMAScript-6, and were tested with the <a href="https://babeljs.io/">Babel</a> transpiler. You can <a href="https://babeljs.io/docs/using-babel/">integrate Babel into your toolchain</a>, or copy and paste the examples into its <a href="https://babeljs.io/repl">REPL</a> in your browser.</em></p>
+
+<hr>
+
+<p>Many objects in JavaScript can model collections of things. A collection is like a box containing stuff. Sometimes you just want to move the box around. But sometimes you want to open it up and do things with its contents.</p>
+
+<p>Things like “put a label on every bag of coffee in this box,” Or, “Open the box, take out the bags of decaf, and make a new box with just the decaf.” Or, “go through the bags in this box, and take out the first one marked ‘Espresso’ that contains at least 454 grams of beans.”</p>
+
+<p>All of these actions involve going through the contents one by one. Acting on the elements of a collection one at a time is called <em>iterating over the contents</em>, and JavaScript has a standard way to iterate over the contents of collections.</p>
+
+<h3 id="a-look-back-at-functional-iterators">a look back at functional iterators</h3>
+
+<p>When discussing functions, we looked at the benefits of writing <a href="http://raganwald.com/2013/02/15/turtles-and-iterators.js.html" title="Tortoises, Teleporting Turtles, and Iterators">Functional Iterators</a>. We can do the same thing for objects. Here’s a stack that has its own functional iterator method:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Stack1</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span>
+  <span class="p">({</span>
+    <span class="na">array</span><span class="p">:[],</span>
+    <span class="na">index</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="na">push</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="na">pop</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">];</span>
+    
+      <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
+      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">-=</span> <span class="mi">1</span> 
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="nx">value</span>
+    <span class="p">},</span>
+    <span class="na">isEmpty</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&lt;</span> <span class="mi">0</span>
+    <span class="p">},</span>
+    <span class="na">iterator</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">let</span> <span class="nx">iterationIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">;</span>
+      
+      <span class="k">return</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">iterationIndex</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">iterationIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">iterationIndex</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">return</span> <span class="p">{</span><span class="na">done</span><span class="p">:</span> <span class="kc">true</span><span class="p">};</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+          <span class="k">return</span> <span class="p">{</span><span class="na">done</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="nx">iterationIndex</span><span class="o">--</span><span class="p">]}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+<span class="kd">const</span> <span class="nx">stack</span> <span class="o">=</span> <span class="nx">Stack1</span><span class="p">();</span>
+
+<span class="nx">stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">"Greetings"</span><span class="p">);</span>
+<span class="nx">stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">"to"</span><span class="p">);</span>
+<span class="nx">stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">"you!"</span><span class="p">)</span>
+
+<span class="kd">const</span> <span class="nx">iter</span> <span class="o">=</span> <span class="nx">stack</span><span class="p">.</span><span class="nx">iterator</span><span class="p">();</span>
+<span class="nx">iter</span><span class="p">().</span><span class="nx">value</span>
+  <span class="c1">//=&gt; "you!"</span>
+<span class="nx">iter</span><span class="p">().</span><span class="nx">value</span>
+  <span class="c1">//=&gt; "to"</span>
+</code></pre></div></div>
+
+<p>The way we’ve written <code class="highlighter-rouge">.iterator</code> as a method, each object knows how to return an iterator for itself.</p>
+
+<blockquote>
+  <p>Note that the <code class="highlighter-rouge">.iterator()</code> method is implemented with the <code class="highlighter-rouge">function</code> keyword, so when we invoke it with <code class="highlighter-rouge">stack.iterator()</code>, JavaScript sets <code class="highlighter-rouge">this</code> to the value of <code class="highlighter-rouge">stack</code>. But what about the function <code class="highlighter-rouge">.iterator()</code> returns? It is defined with a fat arrow <code class="highlighter-rouge">() =&gt; { ... }</code>. What is the value of <code class="highlighter-rouge">this</code> within that function?</p>
+
+  <p>Since JavaScript doesn’t bind <code class="highlighter-rouge">this</code> within a fat arrow function, we follow the same rules of variable scoping as any other variable name: We check in the environment enclosing the function. Although the <code class="highlighter-rouge">.iterator()</code> method has returned, its environment is the one that encloses our <code class="highlighter-rouge">() =&gt; { ... }</code> function, and that’s where <code class="highlighter-rouge">this</code> is bound to the value of <code class="highlighter-rouge">stack</code>.</p>
+
+  <p>Therefore, the iterator function returned by the <code class="highlighter-rouge">.iterator()</code> method has <code class="highlighter-rouge">this</code> bound to the <code class="highlighter-rouge">stack</code> object, even though we call it with <code class="highlighter-rouge">iter()</code>.</p>
+</blockquote>
+
+<p>And here’s a <code class="highlighter-rouge">sum</code> function implemented as a fold over a functional iterator:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">iteratorSum</span> <span class="o">=</span> <span class="p">(</span><span class="nx">iterator</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">eachIteration</span><span class="p">,</span>
+      <span class="nx">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  
+  <span class="k">while</span> <span class="p">((</span><span class="nx">eachIteration</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">(),</span> <span class="o">!</span><span class="nx">eachIteration</span><span class="p">.</span><span class="nx">done</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">eachIteration</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">sum</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We can use it with our stack:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">stack</span> <span class="o">=</span> <span class="nx">Stack1</span><span class="p">();</span>
+
+<span class="nx">stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="nx">stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+
+<span class="nx">iteratorSum</span><span class="p">(</span><span class="nx">stack</span><span class="p">.</span><span class="nx">iterator</span><span class="p">())</span>
+  <span class="c1">//=&gt; 6</span>
+</code></pre></div></div>
+
+<p>We could save a step and write <code class="highlighter-rouge">collectionSum</code>, a function that folds over any object, provided that the object implements an <code class="highlighter-rouge">.iterator</code> method:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">collectionSum</span> <span class="o">=</span> <span class="p">(</span><span class="nx">collection</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">collection</span><span class="p">.</span><span class="nx">iterator</span><span class="p">();</span>
+  
+  <span class="kd">let</span> <span class="nx">eachIteration</span><span class="p">,</span>
+      <span class="nx">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  
+  <span class="k">while</span> <span class="p">((</span><span class="nx">eachIteration</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">(),</span> <span class="o">!</span><span class="nx">eachIteration</span><span class="p">.</span><span class="nx">done</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">eachIteration</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">sum</span>
+<span class="p">}</span>
+
+<span class="nx">collectionSum</span><span class="p">(</span><span class="nx">stack</span><span class="p">)</span>
+  <span class="c1">//=&gt; 6</span>
+</code></pre></div></div>
+
+<p>If we write a program with the presumption that “everything is an object,” we can write maps, folds, and filters that work on objects. We just ask the object for an iterator, and work on the iterator. Our functions don’t need to know anything about how an object implements iteration, and we get the benefit of lazily traversing our objects.</p>
+
+<p>This is a good thing.</p>
+
+<h3 id="iterator-objects">iterator objects</h3>
+
+<p>Iteration for functions and objects has been around for many, many decades. For simple linear collections like arrays, linked lists, stacks, and queues, functional iterators are the simplest and easiest way to implement iterators.</p>
+
+<p>In programs involving large collections of objects, it can be handy to implement iterators as objects, rather than functions. The mechanics of iterating can then be factored using the same tools that are used to factor the mechanics of all other objects in the system.</p>
+
+<p>Fortunately, an iterator object is almost as simple as an iterator function. Instead of having a function that you call to get the next element, you have an object with a <code class="highlighter-rouge">.next()</code> method.</p>
+
+<p>Like this:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Stack2</span> <span class="o">=</span> <span class="p">())</span> <span class="o">=&gt;</span>
+  <span class="p">({</span>
+    <span class="na">array</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="na">index</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="na">push</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="na">pop</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">];</span>
+    
+      <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
+      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">-=</span> <span class="mi">1</span> 
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="nx">value</span>
+    <span class="p">},</span>
+    <span class="na">isEmpty</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&lt;</span> <span class="mi">0</span>
+    <span class="p">},</span>
+    <span class="na">iterator</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">let</span> <span class="nx">iterationIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">;</span>
+      
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">iterationIndex</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">iterationIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">;</span>
+          <span class="p">}</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">iterationIndex</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="na">done</span><span class="p">:</span> <span class="kc">true</span><span class="p">};</span>
+          <span class="p">}</span>
+          <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="na">done</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="nx">iterationIndex</span><span class="o">--</span><span class="p">]}</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+<span class="kd">const</span> <span class="nx">stack</span> <span class="o">=</span> <span class="nx">Stack2</span><span class="p">();</span>
+
+<span class="nx">stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<span class="nx">stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="nx">stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="kd">const</span> <span class="nx">collectionSum</span> <span class="o">=</span> <span class="p">(</span><span class="nx">collection</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">collection</span><span class="p">.</span><span class="nx">iterator</span><span class="p">();</span>
+  
+  <span class="kd">let</span> <span class="nx">eachIteration</span><span class="p">,</span>
+      <span class="nx">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  
+  <span class="k">while</span> <span class="p">((</span><span class="nx">eachIteration</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">(),</span> <span class="o">!</span><span class="nx">eachIteration</span><span class="p">.</span><span class="nx">done</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">eachIteration</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">sum</span>
+<span class="p">}</span>
+
+<span class="nx">collectionSum</span><span class="p">(</span><span class="nx">stack</span><span class="p">)</span>
+  <span class="c1">//=&gt; 2015</span>
+</code></pre></div></div>
+
+<p>Now our <code class="highlighter-rouge">.iterator()</code> method is returning an iterator object. When working with objects, we do things the object way. But having started by building functional iterators, we understand what is happening underneath the object’s scaffolding.</p>
+
+<h3 id="iterables">iterables</h3>
+
+<p>People have been writing iterators since JavaScript was first released in the late 1990s. Since there was no particular standard way to do it, people used all sorts of methods, and their methods returned all sorts of things: Objects with various interfaces, functional iterators, you name it.</p>
+
+<p>So, when a standard way to write iterators was added to the JavaScript language, it didn’t make sense to use a method like <code class="highlighter-rouge">.iterator()</code> for it: That would conflict with existing code. Instead, the language encourages new code to be written with a different name for the method that a collection object uses to return its iterator.</p>
+
+<p>To ensure that the method would not conflict with any existing code, JavaScript provides a <em>symbol</em>. Symbols are unique constants that are guaranteed not to conflict with existing strings. Symbols are a longstanding technique in programming going back to Lisp, where the <code class="highlighter-rouge">GENSYM</code> function generated… You guessed it… Symbols.<sup id="fnref:symbol"><a href="http://raganwald.com/2015/02/17/lazy-iteratables-in-javascript.html#fn:symbol" class="footnote">1</a></sup></p>
+
+<p>The expression <code class="highlighter-rouge">Symbol.iterator</code> evaluates to a special symbol representing the name of the method that objects should use if they return an iterator object.</p>
+
+<p>Our stack does, so instead of binding the existing iterator method to the name <code class="highlighter-rouge">iterator</code>, we bind it to the <code class="highlighter-rouge">Symbol.iterator</code>. We’ll do that using the <code class="highlighter-rouge">[</code> <code class="highlighter-rouge">]</code> syntax for using an expression as an object literal key:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Stack3</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span>
+  <span class="p">({</span>
+    <span class="na">array</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="na">index</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="na">push</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="na">pop</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">];</span>
+    
+      <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
+      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">-=</span> <span class="mi">1</span> 
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="nx">value</span>
+    <span class="p">},</span>
+    <span class="na">isEmpty</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&lt;</span> <span class="mi">0</span>
+    <span class="p">},</span>
+    <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">let</span> <span class="nx">iterationIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">;</span>
+      
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">iterationIndex</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">iterationIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">;</span>
+          <span class="p">}</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">iterationIndex</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="na">done</span><span class="p">:</span> <span class="kc">true</span><span class="p">};</span>
+          <span class="p">}</span>
+          <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="na">done</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="nx">iterationIndex</span><span class="o">--</span><span class="p">]}</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+<span class="kd">const</span> <span class="nx">stack</span> <span class="o">=</span> <span class="nx">Stack3</span><span class="p">();</span>
+
+<span class="nx">stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<span class="nx">stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="nx">stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="kd">const</span> <span class="nx">collectionSum</span> <span class="o">=</span> <span class="p">(</span><span class="nx">collection</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">collection</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
+  
+  <span class="kd">let</span> <span class="nx">eachIteration</span><span class="p">,</span>
+      <span class="nx">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  
+  <span class="k">while</span> <span class="p">((</span><span class="nx">eachIteration</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">(),</span> <span class="o">!</span><span class="nx">eachIteration</span><span class="p">.</span><span class="nx">done</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">eachIteration</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">sum</span>
+<span class="p">}</span>
+
+<span class="nx">collectionSum</span><span class="p">(</span><span class="nx">stack</span><span class="p">)</span>
+  <span class="c1">//=&gt; 2015</span>
+</code></pre></div></div>
+
+<p>Using <code class="highlighter-rouge">[Symbol.iterator]</code> instead of <code class="highlighter-rouge">.iterator</code> seems like adding an extra moving part for nothing. Do we get anything in return?</p>
+
+<p>Indeed we do. Behold the <code class="highlighter-rouge">for...of</code> loop:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">iterableSum</span> <span class="o">=</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">num</span> <span class="k">of</span> <span class="nx">iterable</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">num</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">sum</span>
+<span class="p">}</span>
+
+<span class="nx">iterableSum</span><span class="p">(</span><span class="nx">stack</span><span class="p">)</span>
+  <span class="c1">//=&gt; 2015</span>
+</code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">for...of</code> loop works directly with any object that is <em>iterable</em>, meaning it works with any object that has a <code class="highlighter-rouge">Symbol.iterator</code> method that returns a object iterator. Here’s another linked list, this one is iterable:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">EMPTY</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">isEmpty</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="kc">true</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">isEmpty</span> <span class="o">=</span> <span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">node</span> <span class="o">===</span> <span class="nx">EMPTY</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">Pair1</span> <span class="o">=</span> <span class="p">(</span><span class="nx">first</span><span class="p">,</span> <span class="nx">rest</span> <span class="o">=</span> <span class="nx">EMPTY</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="p">({</span>
+    <span class="nx">first</span><span class="p">,</span>
+    <span class="nx">rest</span><span class="p">,</span>
+    <span class="na">isEmpty</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">let</span> <span class="nx">currentPair</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+      
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">currentPair</span><span class="p">.</span><span class="nx">isEmpty</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="na">done</span><span class="p">:</span> <span class="kc">true</span><span class="p">}</span>
+          <span class="p">}</span>
+          <span class="k">else</span> <span class="p">{</span>
+            <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">currentPair</span><span class="p">.</span><span class="nx">first</span><span class="p">;</span>
+            
+            <span class="nx">currentPair</span> <span class="o">=</span> <span class="nx">currentPair</span><span class="p">.</span><span class="nx">rest</span><span class="p">;</span>
+            <span class="k">return</span> <span class="p">{</span><span class="na">done</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+<span class="kd">const</span> <span class="nx">list</span> <span class="o">=</span> <span class="p">(...</span><span class="nx">elements</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">]</span> <span class="o">=</span> <span class="nx">elements</span><span class="p">;</span>
+  
+  <span class="k">return</span> <span class="nx">elements</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span>
+    <span class="p">?</span> <span class="nx">EMPTY</span>
+    <span class="p">:</span> <span class="nx">Pair1</span><span class="p">(</span><span class="nx">first</span><span class="p">,</span> <span class="nx">list</span><span class="p">(...</span><span class="nx">rest</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="kd">const</span> <span class="nx">someSquares</span> <span class="o">=</span> <span class="nx">list</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">);</span>
+    
+<span class="nx">iterableSum</span><span class="p">(</span><span class="nx">someSquares</span><span class="p">)</span>
+  <span class="c1">//=&gt; 55</span>
+</code></pre></div></div>
+
+<p>As we can see, we can use <code class="highlighter-rouge">for...of</code> with linked lists just as easily as with stacks. And there’s one more thing: You recall that the spread operator (<code class="highlighter-rouge">...</code>) can spread the elements of an array in an array literal or as parameters in a function invocation.</p>
+
+<p>Now is the time to note that we can spread any iterable. So we can spread the elements of an iterable into an array literal:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="s1">'some squares'</span><span class="p">,</span> <span class="p">...</span><span class="nx">someSquares</span><span class="p">]</span>
+  <span class="c1">//=&gt; ["some squares", 1, 4, 9, 16, 25]</span>
+</code></pre></div></div>
+
+<p>And we can also spread the elements of an array literal into parameters:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">firstAndSecondElement</span> <span class="o">=</span> <span class="p">(</span><span class="nx">first</span><span class="p">,</span> <span class="nx">second</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="p">({</span><span class="nx">first</span><span class="p">,</span> <span class="nx">second</span><span class="p">})</span>
+  
+<span class="nx">firstAndSecondElement</span><span class="p">(...</span><span class="nx">stack</span><span class="p">)</span>
+  <span class="c1">//=&gt; {"first":5,"second":10}</span>
+</code></pre></div></div>
+
+<p>This can be extremely useful.</p>
+
+<p>One caveat of spreading iterables: JavaScript creates an array out of the elements of the iterable. That might be very wasteful for extremely large collections. For example, if we spread a large collection just to find an element in the collection, it might have been wiser to iterate over the element using its iterator directly.</p>
+
+<p>And if we have an infinite collection, spreading is going to fail outright.</p>
+
+<h3 id="iterables-out-to-infinity">iterables out to infinity</h3>
+
+<p>Iterables needn’t represent finite collections:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Numbers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span>
+        <span class="p">({</span><span class="na">done</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">n</span><span class="o">++</span><span class="p">})</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>There are useful things we can do with iterables representing an infinite number of elements. Before we point out something we can do with them, let’s point out what we can’t do with them:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="s1">'all the numbers'</span><span class="p">,</span> <span class="p">...</span><span class="nx">Numbers</span><span class="p">]</span>
+  <span class="c1">//=&gt; infinite loop!</span>
+  
+<span class="nx">firstAndSecondElement</span><span class="p">(...</span><span class="nx">Numbers</span><span class="p">)</span>
+  <span class="c1">//=&gt; infinite loop!</span>
+</code></pre></div></div>
+
+<p>Attempting to spread an infinite iterable into an array is always going to fail.</p>
+
+<p>We can look at useful things to do with both infinite and finite iterables. But first, let’s define some operations on iterables. Here’s <code class="highlighter-rouge">mapIterableWith</code>, it takes any iterable and returns an iterable representing a mapping over the original iterable:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">mapIterableWith</span> <span class="o">=</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="p">({</span>
+    <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
+      
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="kd">const</span> <span class="p">{</span><span class="nx">done</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
+    
+          <span class="k">return</span> <span class="p">({</span><span class="nx">done</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">done</span> <span class="p">?</span> <span class="kc">undefined</span> <span class="p">:</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">value</span><span class="p">)});</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+</code></pre></div></div>
+
+<p>This illustrates the general pattern of working with iterables: An <em>iterable</em> is an object, representing a collection, with a <code class="highlighter-rouge">[Symbol.iterator]</code> method, that returns an iteration over the elements of a collection. The iteration over elements is an <em>iterator</em>. An iterator is also an object, but with a <code class="highlighter-rouge">.next()</code> method taht is invoked repeatedly to obtain the elements in order.</p>
+
+<p>Many operations on iterables return iterables. Our <code class="highlighter-rouge">mapIterableWith</code> returns an iterable. But the iterable it returns is not the same kind of collection as the iterable it consumes. If we give it a <code class="highlighter-rouge">Stack3</code>, we don’t get a stack back. We just get an iterable. (If we want a specific kind of collection, we have to gather the iterable into a collection. We’ll see how to do that below.)</p>
+
+<p>Here are two more operations on iterables, <code class="highlighter-rouge">filterIterableWith</code> and <code class="highlighter-rouge">untilIterable</code>:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">filterIterableWith</span> <span class="o">=</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="p">({</span>
+    <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
+      
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="k">do</span> <span class="p">{</span>
+            <span class="kd">const</span> <span class="p">{</span><span class="nx">done</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
+          <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="nx">done</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">fn</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
+          <span class="k">return</span> <span class="p">{</span><span class="nx">done</span><span class="p">,</span> <span class="nx">value</span><span class="p">};</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+  
+<span class="kd">const</span> <span class="nx">untilIterable</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="p">({</span>
+    <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
+      
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="kd">let</span> <span class="p">{</span><span class="nx">done</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
+          
+          <span class="nx">done</span> <span class="o">=</span> <span class="nx">done</span> <span class="o">||</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+    
+          <span class="k">return</span> <span class="p">({</span><span class="nx">done</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">done</span> <span class="p">?</span> <span class="kc">undefined</span> <span class="p">:</span> <span class="nx">value</span><span class="p">});</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+</code></pre></div></div>
+
+<p>And here’s a computation performed using operations on iterables: We’ll print the odd squares that are less than or equal to one hundred:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">compose</span> <span class="o">=</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="p">(...</span><span class="nx">args</span><span class="p">)</span> <span class="o">=&gt;</span>
+    <span class="p">(</span><span class="nx">rest</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="p">?</span> <span class="nx">fn</span><span class="p">(...</span><span class="nx">args</span><span class="p">)</span>
+      <span class="p">:</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">compose</span><span class="p">(...</span><span class="nx">rest</span><span class="p">)(...</span><span class="nx">args</span><span class="p">))</span>
+
+<span class="kd">const</span> <span class="nx">callLeft</span> <span class="o">=</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">)</span> <span class="o">=&gt;</span>
+    <span class="p">(...</span><span class="nx">remainingArgs</span><span class="p">)</span> <span class="o">=&gt;</span>
+      <span class="nx">fn</span><span class="p">(...</span><span class="nx">args</span><span class="p">,</span> <span class="p">...</span><span class="nx">remainingArgs</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">squaresOf</span> <span class="o">=</span> <span class="nx">callLeft</span><span class="p">(</span><span class="nx">mapIterableWith</span><span class="p">,</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">oddsOf</span> <span class="o">=</span> <span class="nx">callLeft</span><span class="p">(</span><span class="nx">mapIterableWith</span><span class="p">,</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">===</span> <span class="mi">1</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">untilTooBig</span> <span class="o">=</span> <span class="nx">callLeft</span><span class="p">(</span><span class="nx">until</span><span class="p">,</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">);</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">s</span> <span class="k">of</span> <span class="nx">compose</span><span class="p">(</span><span class="nx">untilTooBig</span><span class="p">,</span> <span class="nx">oddsOf</span><span class="p">,</span> <span class="nx">squaresOf</span><span class="p">)(</span><span class="nx">Numbers</span><span class="p">))</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+<span class="p">}</span>
+  <span class="c1">//=&gt;</span>
+    <span class="mi">1</span>
+    <span class="mi">9</span>
+    <span class="mi">25</span>
+    <span class="mi">49</span>
+    <span class="mi">81</span>
+</code></pre></div></div>
+
+<p>For completeness, here are two more handy iterable functions. <code class="highlighter-rouge">firstIterable</code> returns the first element of an iterable (if it has one), and <code class="highlighter-rouge">restIterable</code> returns an iterable that iterates over all but the first element of an iterable. They are equivalent to destructuring arrays with <code class="highlighter-rouge">[first, ...rest]</code>:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">firstIterable</span> <span class="o">=</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]().</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">restIterable</span> <span class="o">=</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span> 
+  <span class="p">({</span>
+    <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
+      
+      <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
+      <span class="k">return</span> <span class="nx">iterator</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="from">from</h3>
+
+<p>Having iterated over a collection, are we limited to <code class="highlighter-rouge">for..do</code> and/or gathering the elements in an array literal and/or gathering the elements into the parameters of a function? No, of course not, we can do anything we like with them.</p>
+
+<p>One useful thing is to write a <code class="highlighter-rouge">.from</code> function that gathers an iterable into a particular collection type. JavaScript’s built-in <code class="highlighter-rouge">Array</code> class already has one:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Array</span><span class="p">.</span><span class="k">from</span><span class="p">(</span><span class="nx">compose</span><span class="p">(</span><span class="nx">untilTooBig</span><span class="p">,</span> <span class="nx">oddsOf</span><span class="p">,</span> <span class="nx">squaresOf</span><span class="p">)(</span><span class="nx">Numbers</span><span class="p">))</span>
+  <span class="c1">//=&gt; [1, 9, 25, 49, 81]</span>
+</code></pre></div></div>
+
+<p>We can do the same with our own collections. As you recall, functions are mutable objects. And we can assign properties to functions with a <code class="highlighter-rouge">.</code> or even <code class="highlighter-rouge">[</code> and <code class="highlighter-rouge">]</code>. And if we assign a function to a property, we’ve created a method.</p>
+
+<p>So let’s do that:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Stack3</span><span class="p">.</span><span class="k">from</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">stack</span> <span class="o">=</span> <span class="k">this</span><span class="p">();</span>
+  
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">element</span> <span class="k">of</span> <span class="nx">iterable</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">stack</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">Pair1</span><span class="p">.</span><span class="k">from</span> <span class="o">=</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="p">(</span><span class="kd">function</span> <span class="nx">interationToList</span> <span class="p">(</span><span class="nx">iteration</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="p">{</span><span class="nx">done</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span> <span class="o">=</span> <span class="nx">iteration</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
+    
+    <span class="k">return</span> <span class="nx">done</span> <span class="p">?</span> <span class="nx">EMPTY</span> <span class="p">:</span> <span class="nx">Pair1</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">interationToList</span><span class="p">(</span><span class="nx">iteration</span><span class="p">));</span>
+  <span class="p">})(</span><span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]())</span>
+</code></pre></div></div>
+
+<p>Now we can go “end to end,” If we want to map a linked list of numbers to a linked list of the squares of some numbers, we can do that:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">numberList</span> <span class="o">=</span> <span class="nx">Pair1</span><span class="p">.</span><span class="k">from</span><span class="p">(</span><span class="nx">untilIterable</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">,</span> <span class="nx">Numbers</span><span class="p">));</span>
+
+<span class="nx">Pair1</span><span class="p">.</span><span class="k">from</span><span class="p">(</span><span class="nx">squaresOf</span><span class="p">(</span><span class="nx">numberList</span><span class="p">))</span>
+  <span class="c1">//=&gt; {"first":0,</span>
+        <span class="s2">"rest"</span><span class="p">:{</span><span class="s2">"first"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+                <span class="s2">"rest"</span><span class="p">:{</span><span class="s2">"first"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span>
+                        <span class="s2">"rest"</span><span class="p">:{</span> <span class="p">...</span>
+</code></pre></div></div>
+
+<h3 id="why-operations-on-iterables">why operations on iterables?</h3>
+
+<p>The operations on iterables are interesting, but let’s reiterate why we care: In JavaScript, we build single-responsibility objects, and single-responsibility functions, and we compose these together to build more full-featured objects and algorithms.</p>
+
+<blockquote>
+  <p>Composing an iterable with a <code class="highlighter-rouge">mapIterable</code> method cleaves the responsibility for knowing how to map from the fiddly bits of how a linked list differs from a stack</p>
+</blockquote>
+
+<p>in the older style of object-oriented programming, we built “fat” objects. Each collection knew how to map itself (<code class="highlighter-rouge">.map</code>), how to fold itself (<code class="highlighter-rouge">.reduce</code>), how to filter itself (<code class="highlighter-rouge">.filter</code>) and how to find one element within itself (<code class="highlighter-rouge">.find</code>). If we wanted to flatten collections to arrays, we wrote a <code class="highlighter-rouge">.toArray</code> method for each type of collection.</p>
+
+<p>Over time, this informal “interface” for collections grows by accretion. Some methods are only added to a few collections, some are added to all. But our objects grow fatter and fatter. We tell ourselves that, well, a collection ought to know how to map itself.</p>
+
+<p>But we end up recreating the same bits of code in each <code class="highlighter-rouge">.map</code> method we create, in each <code class="highlighter-rouge">.reduce</code> method we create, in each <code class="highlighter-rouge">.filter</code> method we create, and in each <code class="highlighter-rouge">.find</code> method. Each one has its own variation, but the overall form is identical. That’s a sign that we should work at a higher level of abstraction, and working with iterables is that higher level of abstraction.</p>
+
+<p>This “fat object” style springs from a misunderstanding: When we say a collection should know how to perform a map over itself, we don’t need for the collection to handle every single detail. That would be like saying that when we ask a bank teller for some cash, they personally print every bank note.</p>
+
+<p>Object-oriented collections should definitely have methods for mapping, reducing, filtering, and finding. And they should know how to accomplish the desired result, but they should do so by delegating as much of the work as possible to operations like <code class="highlighter-rouge">mapIterableWith</code>.</p>
+
+<p>Composing an iterable with a <code class="highlighter-rouge">mapIterable</code> method cleaves the responsibility for knowing how to map from the fiddly bits of how a linked list differs from a stack. And if we want to create convenience methods, we can reuse common pieces:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">extend</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">consumer</span><span class="p">,</span> <span class="p">...</span><span class="nx">providers</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">providers</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">provider</span> <span class="o">=</span> <span class="nx">providers</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">provider</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">provider</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">consumer</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">provider</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">consumer</span>
+<span class="p">};</span>
+  
+<span class="kd">const</span> <span class="nx">mapIterableWith</span> <span class="o">=</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="nx">extend</span><span class="p">({</span>
+    <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
+      
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="kd">const</span> <span class="p">{</span><span class="nx">done</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
+    
+          <span class="k">return</span> <span class="p">({</span><span class="nx">done</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">done</span> <span class="p">?</span> <span class="kc">undefined</span> <span class="p">:</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">value</span><span class="p">)});</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="nx">LazyIterable</span><span class="p">);</span>
+  
+<span class="kd">const</span> <span class="nx">reduceIterableWith</span> <span class="o">=</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">seed</span><span class="p">,</span> <span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
+  <span class="kd">let</span> <span class="nx">iterationResult</span><span class="p">,</span>
+      <span class="nx">accumulator</span> <span class="o">=</span> <span class="nx">seed</span><span class="p">;</span>
+  
+  <span class="k">while</span> <span class="p">((</span><span class="nx">iterationResult</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">(),</span> <span class="o">!</span><span class="nx">iterationResult</span><span class="p">.</span><span class="nx">done</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">accumulator</span> <span class="o">=</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">accumulator</span><span class="p">,</span> <span class="nx">iterationResult</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">accumulator</span><span class="p">;</span>
+<span class="p">};</span>
+  
+<span class="kd">const</span> <span class="nx">filterIterableWith</span> <span class="o">=</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="nx">extend</span><span class="p">({</span>
+    <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
+      
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="k">do</span> <span class="p">{</span>
+            <span class="kd">const</span> <span class="p">{</span><span class="nx">done</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
+          <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="nx">done</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">fn</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
+          <span class="k">return</span> <span class="p">{</span><span class="nx">done</span><span class="p">,</span> <span class="nx">value</span><span class="p">};</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="nx">LazyIterable</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">untilIterable</span> <span class="o">=</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="nx">extend</span><span class="p">({</span>
+    <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
+    
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="kd">let</span> <span class="p">{</span><span class="nx">done</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
+        
+          <span class="nx">done</span> <span class="o">=</span> <span class="nx">done</span> <span class="o">||</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+  
+          <span class="k">return</span> <span class="p">({</span><span class="nx">done</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">done</span> <span class="p">?</span> <span class="kc">undefined</span> <span class="p">:</span> <span class="nx">value</span><span class="p">});</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="nx">LazyIterable</span><span class="p">);</span>
+  
+<span class="kd">const</span> <span class="nx">firstIterable</span> <span class="o">=</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]().</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">restIterable</span> <span class="o">=</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span> 
+  <span class="nx">extend</span><span class="p">({</span>
+    <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
+      
+      <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
+      <span class="k">return</span> <span class="nx">iterator</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="nx">LazyIterable</span><span class="p">);</span>
+  
+<span class="kd">const</span> <span class="nx">takeIterable</span> <span class="o">=</span> <span class="p">(</span><span class="nx">numberToTake</span><span class="p">,</span> <span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="nx">extend</span><span class="p">({</span>
+    <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
+      <span class="kd">let</span> <span class="nx">remainingElements</span> <span class="o">=</span> <span class="nx">numberToTake</span><span class="p">;</span>
+    
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="kd">let</span> <span class="p">{</span><span class="nx">done</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
+        
+          <span class="nx">done</span> <span class="o">=</span> <span class="nx">done</span> <span class="o">||</span> <span class="nx">remainingElements</span><span class="o">--</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>
+  
+          <span class="k">return</span> <span class="p">({</span><span class="nx">done</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">done</span> <span class="p">?</span> <span class="kc">undefined</span> <span class="p">:</span> <span class="nx">value</span><span class="p">});</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="nx">LazyIterable</span><span class="p">);</span>
+    
+<span class="kd">const</span> <span class="nx">LazyIterable</span> <span class="o">=</span> <span class="p">{</span>
+   <span class="na">map</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+     <span class="k">return</span> <span class="nx">mapIterableWith</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+   <span class="p">},</span>
+   <span class="na">reduce</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">seed</span><span class="p">)</span> <span class="p">{</span>
+     <span class="k">return</span> <span class="nx">reduceIterableWith</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">seed</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+   <span class="p">},</span>
+   <span class="na">filter</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+     <span class="k">return</span> <span class="nx">filterIterableWith</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+   <span class="p">},</span>
+   <span class="na">find</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+     <span class="k">return</span> <span class="nx">filterIterableWith</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="k">this</span><span class="p">).</span><span class="nx">first</span><span class="p">();</span>
+   <span class="p">},</span>
+   <span class="na">first</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+     <span class="k">return</span> <span class="nx">firstIterable</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+   <span class="p">},</span>
+   <span class="na">rest</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+     <span class="k">return</span> <span class="nx">restIterable</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+   <span class="p">},</span>
+   <span class="na">until</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">numberToTake</span><span class="p">)</span> <span class="p">{</span>
+     <span class="k">return</span> <span class="nx">untilIterable</span><span class="p">(</span><span class="nx">numberToTake</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+   <span class="p">},</span>
+   <span class="na">take</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">numberToTake</span><span class="p">)</span> <span class="p">{</span>
+     <span class="k">return</span> <span class="nx">takeIterable</span><span class="p">(</span><span class="nx">numberToTake</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Pair, a/k/a linked lists</span>
+
+<span class="kd">const</span> <span class="nx">EMPTY</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">isEmpty</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="kc">true</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">isEmpty</span> <span class="o">=</span> <span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">node</span> <span class="o">===</span> <span class="nx">EMPTY</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">Pair</span> <span class="o">=</span> <span class="p">(</span><span class="nx">car</span><span class="p">,</span> <span class="nx">cdr</span> <span class="o">=</span> <span class="nx">EMPTY</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="nx">extend</span><span class="p">({</span>
+    <span class="nx">car</span><span class="p">,</span>
+    <span class="nx">cdr</span><span class="p">,</span>
+    <span class="na">isEmpty</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">let</span> <span class="nx">currentPair</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+      
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">currentPair</span><span class="p">.</span><span class="nx">isEmpty</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="na">done</span><span class="p">:</span> <span class="kc">true</span><span class="p">}</span>
+          <span class="p">}</span>
+          <span class="k">else</span> <span class="p">{</span>
+            <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">currentPair</span><span class="p">.</span><span class="nx">car</span><span class="p">;</span>
+            
+            <span class="nx">currentPair</span> <span class="o">=</span> <span class="nx">currentPair</span><span class="p">.</span><span class="nx">cdr</span><span class="p">;</span>
+            <span class="k">return</span> <span class="p">{</span><span class="na">done</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="nx">LazyIterable</span><span class="p">);</span>
+
+<span class="nx">Pair</span><span class="p">.</span><span class="k">from</span> <span class="o">=</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="p">(</span><span class="kd">function</span> <span class="nx">interationToList</span> <span class="p">(</span><span class="nx">iteration</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="p">{</span><span class="nx">done</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span> <span class="o">=</span> <span class="nx">iteration</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
+    
+    <span class="k">return</span> <span class="nx">done</span> <span class="p">?</span> <span class="nx">EMPTY</span> <span class="p">:</span> <span class="nx">Pair</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">interationToList</span><span class="p">(</span><span class="nx">iteration</span><span class="p">));</span>
+  <span class="p">})(</span><span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]());</span>
+  
+<span class="c1">// Stack</span>
+
+<span class="kd">const</span> <span class="nx">Stack</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span>
+  <span class="nx">extend</span><span class="p">({</span>
+    <span class="na">array</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="na">index</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="na">push</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="na">pop</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">];</span>
+    
+      <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
+      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">-=</span> <span class="mi">1</span> 
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="nx">value</span>
+    <span class="p">},</span>
+    <span class="na">isEmpty</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&lt;</span> <span class="mi">0</span>
+    <span class="p">},</span>
+    <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">let</span> <span class="nx">iterationIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">;</span>
+      
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">iterationIndex</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">iterationIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">;</span>
+          <span class="p">}</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">iterationIndex</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="na">done</span><span class="p">:</span> <span class="kc">true</span><span class="p">};</span>
+          <span class="p">}</span>
+          <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="na">done</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="nx">iterationIndex</span><span class="o">--</span><span class="p">]}</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="nx">LazyIterable</span><span class="p">);</span>
+  
+<span class="nx">Stack</span><span class="p">.</span><span class="k">from</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">stack</span> <span class="o">=</span> <span class="k">this</span><span class="p">();</span>
+  
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">element</span> <span class="k">of</span> <span class="nx">iterable</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">stack</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Pair and Stack in action</span>
+  
+<span class="nx">Stack</span><span class="p">.</span><span class="k">from</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+  <span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">first</span><span class="p">()</span>
+
+<span class="c1">//=&gt; 100</span>
+  
+<span class="nx">Pair</span><span class="p">.</span><span class="k">from</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+  <span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">seed</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">seed</span> <span class="o">+</span> <span class="nx">element</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+  
+<span class="c1">//=&gt; 220</span>
+</code></pre></div></div>
+
+<h3 id="lazy-iterables">lazy iterables</h3>
+
+<p>“Laziness” is a very pejorative word when applied to people. But it can be an excellent strategy for efficiency in algorithms. Let’s be precise: <em>Laziness</em> is the characteristic of not doing any work until you know you need the result of the work.</p>
+
+<p>Here’s an example. Compare these two:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+  <span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">seed</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">seed</span> <span class="o">+</span> <span class="nx">element</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+  
+<span class="nx">Pair</span><span class="p">.</span><span class="k">from</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+  <span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">seed</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">seed</span> <span class="o">+</span> <span class="nx">element</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Both expressions evaluate to <code class="highlighter-rouge">220</code>. And they array is faster in practice, because it is a built-in data type that performs its work in the engine, while the linked list does its work in JavaScript.</p>
+
+<p>But it’s still illustrative to dissect something important: Array’s <code class="highlighter-rouge">.map</code> and <code class="highlighter-rouge">.filter</code> methods gather their results into new arrays. Thus, calling <code class="highlighter-rouge">.map.filter.reduce</code> produces two temporary arrays that are discarded when <code class="highlighter-rouge">.reduce</code> performs its final computation.</p>
+
+<p>Whereas the <code class="highlighter-rouge">.map</code> and <code class="highlighter-rouge">.filter</code> methods on <code class="highlighter-rouge">Pair</code> work with iterators. They produce small iterable objects that refer back to the original iteration. This reduces the memory footprint. When working with very large collections and many operations, this can be important.</p>
+
+<p>The effect is even more pronounced when we use methods like <code class="highlighter-rouge">first</code>, <code class="highlighter-rouge">until</code>, or <code class="highlighter-rouge">take</code>:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Stack</span><span class="p">.</span><span class="k">from</span><span class="p">([</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">3</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">5</span><span class="p">,</span>  <span class="mi">6</span><span class="p">,</span>  <span class="mi">7</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span>
+            <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span>
+            <span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">29</span><span class="p">])</span>
+  <span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">first</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>This expression begins with a stack containing 30 elements. The top two are <code class="highlighter-rouge">29</code> and <code class="highlighter-rouge">28</code>. It maps to the squares of all 30 numbers, but our code for mapping an iteration returns an iterable that can iterate over the squares of our numbers, not an array or stack of the squares. Same with <code class="highlighter-rouge">.filter</code>, we get an iterable that can iterate over the even squares, but not an actual stack or array.</p>
+
+<p>Finally, we take the first element of that filtered, squared iterable and now JavaScript actually iterates over the stack’s elements, and it only needs to square two of those elements, <code class="highlighter-rouge">29</code> and <code class="highlighter-rouge">28</code>, to return the answer.</p>
+
+<p>We can confirm this:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Stack</span><span class="p">.</span><span class="k">from</span><span class="p">([</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">3</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">5</span><span class="p">,</span>  <span class="mi">6</span><span class="p">,</span>  <span class="mi">7</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span>
+            <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span>
+            <span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">29</span><span class="p">])</span>
+  <span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`squaring </span><span class="p">${</span><span class="nx">x</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`filtering </span><span class="p">${</span><span class="nx">x</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">first</span><span class="p">()</span>
+
+<span class="c1">//=&gt;</span>
+  <span class="nx">squaring</span> <span class="mi">29</span>
+  <span class="nx">filtering</span> <span class="mi">841</span>
+  <span class="nx">squaring</span> <span class="mi">28</span>
+  <span class="nx">filtering</span> <span class="mi">784</span>
+  <span class="mi">784</span>
+</code></pre></div></div>
+
+<p>If we write the almost identical thing with an array, we get a different behaviour:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">3</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">5</span><span class="p">,</span>  <span class="mi">6</span><span class="p">,</span>  <span class="mi">7</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span>
+ <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span>
+ <span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">29</span><span class="p">]</span>
+  <span class="p">.</span><span class="nx">reverse</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`squaring </span><span class="p">${</span><span class="nx">x</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`filtering </span><span class="p">${</span><span class="nx">x</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+  <span class="p">})[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1">//=&gt;</span>
+  <span class="nx">squaring</span> <span class="mi">0</span>
+  <span class="nx">squaring</span> <span class="mi">1</span>
+  <span class="nx">squaring</span> <span class="mi">2</span>
+  <span class="nx">squaring</span> <span class="mi">3</span>
+  <span class="p">...</span>
+  <span class="nx">squaring</span> <span class="mi">28</span>
+  <span class="nx">squaring</span> <span class="mi">29</span>
+  <span class="nx">filtering</span> <span class="mi">0</span>
+  <span class="nx">filtering</span> <span class="mi">1</span>
+  <span class="nx">filtering</span> <span class="mi">4</span>
+  <span class="p">...</span>
+  <span class="nx">filtering</span> <span class="mi">784</span>
+  <span class="nx">filtering</span> <span class="mi">841</span>
+  <span class="mi">784</span>
+</code></pre></div></div>
+
+<p>Arrays copy-on-read, so every time we perform a map or filter, we get a new array and perform all the computations. This might be expensive.</p>
+
+<p>You recall we briefly touched on the idea of infinite collections? Let’s make iterable numbers. They <em>have</em> to be lazy, otherwise we couldn’t write things like:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Numbers</span> <span class="o">=</span> <span class="nx">extend</span><span class="p">({</span>
+  <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span>
+        <span class="p">({</span><span class="na">done</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">n</span><span class="o">++</span><span class="p">})</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="nx">LazyCollection</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">firstCubeOver1234</span> <span class="o">=</span>
+  <span class="nx">Numbers</span>
+    <span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">&gt;</span> <span class="mi">1234</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">first</span><span class="p">()</span>
+
+<span class="c1">//=&gt; 1331</span>
+</code></pre></div></div>
+
+<p>Balanced against their flexibility, our “lazy iterables” use structure sharing. If we mutate a collection after taking an iterable, we might get an unexpected result. This is why “pure” functional languages like Haskell combine lazy semantics with immutable collections, and why even “impure” languages like Clojure emphasize the use of immutable collections.</p>
+
+<h3 id="eager-iterables">eager iterables</h3>
+
+<p>Arrays have <em>eager</em> semantics for <code class="highlighter-rouge">.map</code>, <code class="highlighter-rouge">.filter</code>, <code class="highlighter-rouge">.rest</code> and <code class="highlighter-rouge">.take</code>. They return another array, not a lazy iterable. Whereas, the <code class="highlighter-rouge">Stack</code> and <code class="highlighter-rouge">Pair</code> collections we wrote have <em>lazy</em> semantics: They return a lazy iterable and when we want a true collection, we have to gather the elements into an array or another collection using <code class="highlighter-rouge">.from</code>:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">evenSquares</span> <span class="o">=</span> <span class="nx">Pair</span><span class="p">.</span><span class="k">from</span><span class="p">(</span>
+  <span class="nx">Pair</span><span class="p">.</span><span class="k">from</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+    <span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="p">);</span>
+
+<span class="p">[...</span><span class="nx">evenSquares</span><span class="p">]</span>
+  <span class="c1">//=&gt; [4,16,36,64,100]</span>
+</code></pre></div></div>
+
+<p>Or if we want to design a collection with eager semantics for <code class="highlighter-rouge">.map</code>, <code class="highlighter-rouge">.filter</code>, <code class="highlighter-rouge">.rest</code> and <code class="highlighter-rouge">.take</code>, we can do that:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">EagerIterable</span> <span class="o">=</span> <span class="p">(</span><span class="nx">gatherable</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="p">({</span>
+     <span class="na">map</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="nx">gatherable</span><span class="p">.</span><span class="k">from</span><span class="p">(</span><span class="nx">mapIterableWith</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="k">this</span><span class="p">));</span>
+     <span class="p">},</span>
+     <span class="na">reduce</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">seed</span><span class="p">)</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="nx">reduceIterableWith</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">seed</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+     <span class="p">},</span>
+     <span class="na">filter</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="nx">gatherable</span><span class="p">.</span><span class="k">from</span><span class="p">(</span><span class="nx">filterIterableWith</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="k">this</span><span class="p">));</span>
+     <span class="p">},</span>
+     <span class="na">find</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="nx">filterIterableWith</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="k">this</span><span class="p">).</span><span class="nx">first</span><span class="p">();</span>
+     <span class="p">},</span>
+     <span class="na">first</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="nx">firstIterable</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+     <span class="p">},</span>
+     <span class="na">rest</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="nx">gatherable</span><span class="p">.</span><span class="k">from</span><span class="p">(</span><span class="nx">restIterable</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
+     <span class="p">},</span>
+     <span class="na">take</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">numberToTake</span><span class="p">)</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="nx">gatherable</span><span class="p">.</span><span class="k">from</span><span class="p">(</span><span class="nx">takeIterable</span><span class="p">(</span><span class="nx">numberToTake</span><span class="p">,</span> <span class="k">this</span><span class="p">));</span>
+     <span class="p">}</span>
+  <span class="p">})</span>
+  
+<span class="kd">const</span> <span class="nx">EagerStack</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span>
+  <span class="nx">extend</span><span class="p">({</span>
+    <span class="na">array</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="na">index</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="na">push</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="na">pop</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">];</span>
+    
+      <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
+      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">-=</span> <span class="mi">1</span> 
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="nx">value</span>
+    <span class="p">},</span>
+    <span class="na">isEmpty</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&lt;</span> <span class="mi">0</span>
+    <span class="p">},</span>
+    <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">let</span> <span class="nx">iterationIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">;</span>
+      
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">iterationIndex</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">iterationIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">;</span>
+          <span class="p">}</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">iterationIndex</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="na">done</span><span class="p">:</span> <span class="kc">true</span><span class="p">};</span>
+          <span class="p">}</span>
+          <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">{</span><span class="na">done</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="nx">iterationIndex</span><span class="o">--</span><span class="p">]}</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="nx">EagerIterable</span><span class="p">(</span><span class="nx">EagerStack</span><span class="p">));</span>
+  
+<span class="nx">EagerStack</span><span class="p">.</span><span class="k">from</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">stack</span> <span class="o">=</span> <span class="k">this</span><span class="p">();</span>
+  
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">element</span> <span class="k">of</span> <span class="nx">iterable</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">stack</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">EagerStack</span>
+  <span class="p">.</span><span class="k">from</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+  <span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+  
+<span class="c1">//=&gt; {"array":[10,8,6,4,2],"index":4}</span>
+</code></pre></div></div>
+
+<p>And we can go back and forth between them. For example, if we want a lazy map of an array, we can use the <code class="highlighter-rouge">mapIterableWith</code> function to return a lazy iterable. And as we just noted, we can use <code class="highlighter-rouge">.from</code> to eagerly gather any iterable into a collection.</p>
+
+<h3 id="summary">summary</h3>
+
+<p>Iterators are a JavaScript feature that allow us to separate the concerns of how to iterate over a collection from what we want to do with the elements of a collection. <em>Iterable</em> collections can be iterated over or gathered into another collection, either lazily or eagerly.</p>
+
+<p>Separating concerns with iterators speaks to JavaScript’s fundamental nature: It’s a language that <em>wants</em> to compose functionality out of small, singe-responsibility pieces, whether those pieces are functions or objects built out of functions.</p>
+
+<hr>
+
+
+<hr>
+
+<p>This post was extracted from a draft of the book, <a href="https://leanpub.com/b/buyjavascriptallongthesixeditiongetjavascriptallongfree">JavaScript Allongé, The “Six” Edition</a>. The extracts so far:</p>
+
+<ul>
+  <li><a href="http://raganwald.com/2015/05/11/javascript-classes.html">OOP, Javascript, and so-called Classes</a>,</li>
+  <li><a href="http://raganwald.com/2015/04/03/left-variadic.html">Left-Variadic Functions in JavaScript</a>,</li>
+  <li><a href="http://raganwald.com/2015/04/01/partial-application.html">Partial Application in ECMAScript 2015</a>,</li>
+  <li><a href="http://raganwald.com/2015/03/12/symmetry.html">The Symmetry of JavaScript Functions</a>,</li>
+  <li><a href="http://raganwald.com/2015/02/17/lazy-iteratables-in-javascript.html">Lazy Iterables in JavaScript</a>,</li>
+  <li><a href="http://raganwald.com/2015/02/13/functional-quantum-electrodynamics.html">The Quantum Electrodynamics of Functional JavaScript</a>,</li>
+  <li><a href="http://raganwald.com/2015/02/07/tail-calls-defult-arguments-recycling.html">Tail Calls, Default Arguments, and Excessive Recycling in ES-6</a>, and:</li>
+  <li><a href="http://raganwald.com/2015/02/02/destructuring.html">Destructuring and Recursion in ES-6</a>.</li>
+</ul>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:symbol">
+      <p>You can read more about JavaScript symbols in Axel Rauschmayer’s <a href="http://www.2ality.com/2014/12/es6-symbols.html">Symbols in ECMAScript 6</a>.&nbsp;<a href="http://raganwald.com/2015/02/17/lazy-iteratables-in-javascript.html#fnref:symbol" class="reversefootnote">↩</a></p>
+    </li>
+  </ol>
+</div>
+
+        </section>
+
+        
+
+
+      </div>
+    </div>
+
+    
+</body></html>
