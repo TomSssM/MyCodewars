@@ -6,5 +6,6 @@
 - [MDN Array.prototype.reduce](./Array.prototype.reduce.md)
 - Raganwald
   - [Lazy Iterables in JS](./Lazy%20Iterables%20in%20JavaScript/)
+  - [Destructuring and Recursion in ES6](./Destructuring%20and%20Recursion%20in%20ES-6)
   - more
 - Next Article

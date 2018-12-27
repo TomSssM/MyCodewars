@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+          
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href="./Destructuring and Recursion in ES-6_files/css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="./Destructuring and Recursion in ES-6_files/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="./Destructuring and Recursion in ES-6_files/pygments.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="./Destructuring and Recursion in ES-6_files/pygment_trac.css" media="screen">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <title>Destructuring and Recursion in ES-6</title>
+
+    <style type="text/css">
+:root #header + #content > #left > #rlblock_left
+{ display: none !important; }</style></head>
+  <body>
+    <div id="container">
+      <div class="inner">
+
+              <div id="header">
+        <h3><a href="http://raganwald.com/">RAGANWALD.COM</a></h3>
+        <h1>Destructuring and Recursion in ES-6</h1>
+      </div><!-- end header -->
+
+
+        <hr>
+
+        <section id="main_content">
+
+          <p><a href="https://www.flickr.com/photos/wunderle/8336797898/"><img src="./Destructuring and Recursion in ES-6_files/hand-poured.jpg" alt="Drink HAND-POURED coffee."></a></p>
+
+<h3 id="array-literals">array literals</h3>
+
+<p>Arrays are JavaScript’s “native” representation of lists. Lists are important because they represent ordered collections of things, and ordered collections are a fundamental abstraction for making sense of reality.</p>
+
+<p>JavaScript has a literal syntax for creating an array: The <code class="highlighter-rouge">[</code> and <code class="highlighter-rouge">]</code> characters. We can create an empty array:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[]</span>
+  <span class="c1">//=&gt; []</span>
+</code></pre></div></div>
+
+<p>We can create an array with one or more <em>elements</em> by placing them between the brackets and separating the items with commas. Whitespace is optional:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="c1">//=&gt; [1]</span>
+
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+  <span class="c1">//=&gt; [2,3,4]</span>
+</code></pre></div></div>
+
+<p>Any expression will work:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="mi">3</span><span class="p">,</span>
+  <span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="p">]</span>
+  <span class="c1">//=&gt; [2,3,4]</span>
+</code></pre></div></div>
+
+<p>Including an expression denoting another array:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[[[[[]]]]]</span>
+</code></pre></div></div>
+
+<p>This is an array with one element that is an array array with one element this an array with one element that is an array with one element that is an empty array. Although that seems like something nobody would ever construct, many students have worked with almost the exact same thing when they explored various means of constructing arithmetic from Set Theory.</p>
+
+<p>Any expression will do, including names:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">wrap</span> <span class="o">=</span> <span class="p">(</span><span class="nx">something</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nx">something</span><span class="p">];</span>
+
+<span class="nx">wrap</span><span class="p">(</span><span class="s2">"lunch"</span><span class="p">)</span>
+  <span class="c1">//=&gt; ["lunch"]</span>
+</code></pre></div></div>
+
+<p>Array literals are expressions, and arrays are <em>reference types</em>. We can see that each time an array literal is evaluated, we get a new, distinct array, even if it contains the exact same elements:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[]</span> <span class="o">===</span> <span class="p">[]</span>
+  <span class="c1">//=&gt; false</span>
+
+<span class="p">[</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">===</span> <span class="p">[</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span>
+  <span class="c1">//=&gt; false</span>
+
+<span class="kd">const</span> <span class="nx">array_of_one</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+
+<span class="nx">array_of_one</span><span class="p">()</span> <span class="o">===</span> <span class="nx">array_of_one</span><span class="p">()</span>
+  <span class="c1">//=&gt; false</span>
+</code></pre></div></div>
+
+<h3 id="destructuring-arrays">destructuring arrays</h3>
+
+<p><em>Destructuring</em> is a feature going back to Common Lisp, if not before. We saw how to construct an array literal using <code class="highlighter-rouge">[</code>, expressions, <code class="highlighter-rouge">,</code> and <code class="highlighter-rouge">]</code>. Here’s an example of an array literal that uses a name:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">wrap</span> <span class="o">=</span> <span class="p">(</span><span class="nx">something</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nx">something</span><span class="p">];</span>
+</code></pre></div></div>
+
+<p>Let’s expand it to use a block and an extra name:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">wrap</span> <span class="o">=</span> <span class="p">(</span><span class="nx">something</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">wrapped</span> <span class="o">=</span> <span class="p">[</span><span class="nx">something</span><span class="p">];</span>
+
+  <span class="k">return</span> <span class="nx">wrapped</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">wrap</span><span class="p">(</span><span class="s2">"package"</span><span class="p">)</span>
+  <span class="c1">//=&gt; ["package"]</span>
+</code></pre></div></div>
+
+<p>The line <code class="highlighter-rouge">const wrapped = [something];</code> is interesting. On the left hand is a name to be bound, and on the right hand is an array literal, a template for constructing an array, very much like a quasi-literal string.</p>
+
+<p>In JavaScript, we can actually <em>reverse</em> the statement and place the template on the left and a value on the right:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">unwrap</span> <span class="o">=</span> <span class="p">(</span><span class="nx">wrapped</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">something</span><span class="p">]</span> <span class="o">=</span> <span class="nx">wrapped</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="nx">something</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">unwrap</span><span class="p">([</span><span class="s2">"present"</span><span class="p">])</span>
+  <span class="c1">//=&gt; "present"</span>
+</code></pre></div></div>
+
+<p>The statement <code class="highlighter-rouge">const [something] = wrapped;</code> <em>destructures</em> the array represented by <code class="highlighter-rouge">wrapped</code>, binding the value of its single element to the name <code class="highlighter-rouge">something</code>. We can do the same thing with more than one element:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">surname</span> <span class="o">=</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">first</span><span class="p">,</span> <span class="nx">last</span><span class="p">]</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="nx">last</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">surname</span><span class="p">([</span><span class="s2">"Reginald"</span><span class="p">,</span> <span class="s2">"Braithwaite"</span><span class="p">])</span>
+  <span class="c1">//=&gt; "Braithwaite"</span>
+</code></pre></div></div>
+
+<p>We could do the same thing with <code class="highlighter-rouge">(name) =&gt; name[1]</code>, but destructuring is code that resembles the data it consumes, a valuable coding style.</p>
+
+<p>Destructuring can nest:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">description</span> <span class="o">=</span> <span class="p">(</span><span class="nx">nameAndOccupation</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[[</span><span class="nx">first</span><span class="p">,</span> <span class="nx">last</span><span class="p">],</span> <span class="nx">occupation</span><span class="p">]</span> <span class="o">=</span> <span class="nx">nameAndOccupation</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="s2">`</span><span class="p">${</span><span class="nx">first</span><span class="p">}</span><span class="s2"> is a </span><span class="p">${</span><span class="nx">occupation</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">description</span><span class="p">([[</span><span class="s2">"Reginald"</span><span class="p">,</span> <span class="s2">"Braithwaite"</span><span class="p">],</span> <span class="s2">"programmer"</span><span class="p">])</span>
+  <span class="c1">//=&gt; "Reginald is a programmer"</span>
+</code></pre></div></div>
+
+<h3 id="gathering">gathering</h3>
+
+<p>Sometimes we need to extract arrays from arrays. Here is the most common pattern: Extracting the head and gathering everything but the head from an array:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">[</span><span class="nx">car</span><span class="p">,</span> <span class="p">...</span><span class="nx">cdr</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">];</span>
+
+<span class="nx">car</span>
+  <span class="c1">//=&gt; 1</span>
+<span class="nx">cdr</span>
+  <span class="c1">//=&gt; [2, 3, 4, 5]</span>
+</code></pre></div></div>
+
+<p><a href="https://en.wikipedia.org/wiki/CAR_and_CDR"><code class="highlighter-rouge">car</code> and <code class="highlighter-rouge">cdr</code></a> are archaic terms that go back to an implementation of Lisp running on the IBM 704 computer. Some other languages call them <code class="highlighter-rouge">first</code> and <code class="highlighter-rouge">butFirst</code>, or <code class="highlighter-rouge">head</code> and <code class="highlighter-rouge">tail</code>. We will use a common convention and call variables we gather <code class="highlighter-rouge">rest</code>, but refer to the <code class="highlighter-rouge">...</code> operation as a “gather,” follow Kyle Simpson’s example.<sup id="fnref:getify"><a href="http://raganwald.com/2015/02/02/destructuring.html#fn:getify" class="footnote">1</a></sup></p>
+
+<p>Alas, the <code class="highlighter-rouge">...</code> notation does not provide a universal patten-matching capability. For example, we cannot write</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">[...</span><span class="nx">butLast</span><span class="p">,</span> <span class="nx">last</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">];</span>
+  <span class="c1">//=&gt; ERROR</span>
+
+<span class="kd">const</span> <span class="p">[</span><span class="nx">first</span><span class="p">,</span> <span class="p">...,</span> <span class="nx">last</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">];</span>
+  <span class="c1">//=&gt; ERROR</span>
+</code></pre></div></div>
+
+<p>Also it’s important to note that the <code class="highlighter-rouge">...</code> can be at the beginning, for example in case of constructors like:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">date</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(...[</span><span class="mi">2015</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]);</span>
+</code></pre></div></div>
+
+<p>Now, when we introduced destructuring, we saw that it is kind-of-sort-of the reverse of array literals. So if</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">wrapped</span> <span class="o">=</span> <span class="p">[</span><span class="nx">something</span><span class="p">];</span>
+</code></pre></div></div>
+
+<p>Then:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">[</span><span class="nx">unwrapped</span><span class="p">]</span> <span class="o">=</span> <span class="nx">something</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>What is the reverse of gathering? We know that:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">[</span><span class="nx">car</span><span class="p">,</span> <span class="p">...</span><span class="nx">cdr</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">];</span>
+</code></pre></div></div>
+
+<p>What is the reverse? It would be:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">cons</span> <span class="o">=</span> <span class="p">[</span><span class="nx">car</span><span class="p">,</span> <span class="p">...</span><span class="nx">cdr</span><span class="p">];</span>
+</code></pre></div></div>
+
+<p>Let’s try it:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">oneTwoThree</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"one"</span><span class="p">,</span> <span class="s2">"two"</span><span class="p">,</span> <span class="s2">"three"</span><span class="p">];</span>
+
+<span class="p">[</span><span class="s2">"zero"</span><span class="p">,</span> <span class="p">...</span><span class="nx">oneTwoThree</span><span class="p">]</span>
+  <span class="c1">//=&gt; ["zero","one","two","three"]</span>
+</code></pre></div></div>
+
+<p>It works! We can use <code class="highlighter-rouge">...</code> to place the elements of an array inside another array. We say that using <code class="highlighter-rouge">...</code> to destructure is gathering, and using it in a literal to insert elements is called “spreading.”</p>
+
+<h3 id="destructuring-parameters">destructuring parameters</h3>
+
+<p>Consider the way we pass arguments to parameters:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">foo</span><span class="p">()</span>
+<span class="nx">bar</span><span class="p">(</span><span class="s2">"smaug"</span><span class="p">)</span>
+<span class="nx">baz</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>It is very much like an array literal. And consider how we bind values to parameter names:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">...</span>
+<span class="kd">const</span> <span class="nx">bar</span> <span class="o">=</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">...</span>
+<span class="kd">const</span> <span class="nx">baz</span> <span class="o">=</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">...</span>
+</code></pre></div></div>
+
+<p>It <em>looks</em> like destructuring. It acts like destructuring. There is only one difference: We have not tried gathering. Let’s do that:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">numbers</span> <span class="o">=</span> <span class="p">(...</span><span class="nx">nums</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">nums</span><span class="p">;</span>
+
+<span class="nx">numbers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+  <span class="c1">//=&gt; [1,2,3,4,5]</span>
+
+<span class="kd">const</span> <span class="nx">headAndTail</span> <span class="o">=</span> <span class="p">(</span><span class="nx">head</span><span class="p">,</span> <span class="p">...</span><span class="nx">tail</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nx">head</span><span class="p">,</span> <span class="nx">tail</span><span class="p">];</span>
+
+<span class="nx">headAndTail</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+  <span class="c1">//=&gt; [1,[2,3,4,5]]</span>
+</code></pre></div></div>
+
+<p>Gathering works with parameters! This is very useful indeed, and we’ll see more of it in a moment.<sup id="fnref:rest"><a href="http://raganwald.com/2015/02/02/destructuring.html#fn:rest" class="footnote">2</a></sup></p>
+
+<p><a href="https://www.flickr.com/photos/sankarshan/5165312159"><img src="./Destructuring and Recursion in ES-6_files/stacked-cups.jpg" alt="Stacked Cups"></a></p>
+
+<h2 id="self-similarity">Self-Similarity</h2>
+
+<blockquote>
+  <p>Recursion is the root of computation since it trades description for time.—Alan Perlis, <a href="http://www.cs.yale.edu/homes/perlis-alan/quotes.html">Epigrams in Programming</a></p>
+</blockquote>
+
+<p>We saw that the basic idea that putting an array together with a literal array expression was the reverse or opposite of taking it apart with a destructuring assignment.</p>
+
+<p>Let’s be more specific. Some data structures, like lists, can obviously be seen as a collection of items. Some are empty, some have three items, some forty-two, some contain numbers, some contain strings, some a mixture of elements, there are all kinds of lists.</p>
+
+<p>But we can also define a list by describing a rule for building lists. One of the simplest, and longest-standing in computer science, is to say that a list is:</p>
+
+<ol>
+  <li>Empty, or;</li>
+  <li>Consists of an element concatenated with a list .</li>
+</ol>
+
+<p>Let’s convert our rules to array literals. The first rule is simple: <code class="highlighter-rouge">[]</code> is a list. How about the second rule? We can express that using a spread. Given an element <code class="highlighter-rouge">e</code> and a list <code class="highlighter-rouge">list</code>, <code class="highlighter-rouge">[e, ...list]</code> is a list. We can test this manually by building up a list:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[]</span>
+<span class="c1">//=&gt; []</span>
+
+<span class="p">[</span><span class="s2">"baz"</span><span class="p">,</span> <span class="p">...[]]</span>
+<span class="c1">//=&gt; ["baz"]</span>
+
+<span class="p">[</span><span class="s2">"bar"</span><span class="p">,</span> <span class="p">...[</span><span class="s2">"baz"</span><span class="p">]]</span>
+<span class="c1">//=&gt; ["bar","baz"]</span>
+
+<span class="p">[</span><span class="s2">"foo"</span><span class="p">,</span> <span class="p">...[</span><span class="s2">"bar"</span><span class="p">,</span> <span class="s2">"baz"</span><span class="p">]]</span>
+<span class="c1">//=&gt; ["foo","bar","baz"]</span>
+</code></pre></div></div>
+
+<p>Thanks to the parallel between array literals + spreads with destructuring + rests, we can also use the same rules to decompose lists:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">[</span><span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="nx">first</span>
+  <span class="c1">//=&gt; undefined</span>
+<span class="nx">rest</span>
+  <span class="c1">//=&gt; []:</span>
+
+<span class="kd">const</span> <span class="p">[</span><span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"foo"</span><span class="p">];</span>
+<span class="nx">first</span>
+  <span class="c1">//=&gt; "foo"</span>
+<span class="nx">rest</span>
+  <span class="c1">//=&gt; []</span>
+
+<span class="kd">const</span> <span class="p">[</span><span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"foo"</span><span class="p">,</span> <span class="s2">"bar"</span><span class="p">];</span>
+<span class="nx">first</span>
+  <span class="c1">//=&gt; "foo"</span>
+<span class="nx">rest</span>
+  <span class="c1">//=&gt; ["bar"]</span>
+
+<span class="kd">const</span> <span class="p">[</span><span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"foo"</span><span class="p">,</span> <span class="s2">"bar"</span><span class="p">,</span> <span class="s2">"baz"</span><span class="p">];</span>
+<span class="nx">first</span>
+  <span class="c1">//=&gt; "foo"</span>
+<span class="nx">rest</span>
+  <span class="c1">//=&gt; ["bar","baz"]</span>
+</code></pre></div></div>
+
+<p>For the purpose of this exploration, we will presume the following:<sup id="fnref:wellactually"><a href="http://raganwald.com/2015/02/02/destructuring.html#fn:wellactually" class="footnote">3</a></sup></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">isEmpty</span> <span class="o">=</span> <span class="p">([</span><span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">])</span> <span class="o">=&gt;</span> <span class="nx">first</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">;</span>
+
+<span class="nx">isEmpty</span><span class="p">([])</span>
+  <span class="c1">//=&gt; true</span>
+
+<span class="nx">isEmpty</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+  <span class="c1">//=&gt; false</span>
+
+<span class="nx">isEmpty</span><span class="p">([[]])</span>
+  <span class="c1">//=&gt; false</span>
+</code></pre></div></div>
+
+<p>Armed with our definition of an empty list and with what we’ve already learned, we can build a great many functions that operate on arrays. We know that we can get the length of an array using its <code class="highlighter-rouge">.length</code>. But as an exercise, how would we write a <code class="highlighter-rouge">length</code> function using just what we have already?</p>
+
+<p>First, we pick what we call a <em>terminal case</em>. What is the length of an empty array? <code class="highlighter-rouge">0</code>. So let’s start our function with the observation that if an array is empty, the length is <code class="highlighter-rouge">0</code>:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">length</span> <span class="o">=</span> <span class="p">([</span><span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">])</span> <span class="o">=&gt;</span>
+  <span class="nx">first</span> <span class="o">===</span> <span class="kc">undefined</span>
+    <span class="p">?</span> <span class="mi">0</span>
+    <span class="p">:</span> <span class="c1">// ???</span>
+</code></pre></div></div>
+
+<p>We need something for when the array isn’t empty. If an array is not empty, and we break it into two pieces, <code class="highlighter-rouge">first</code> and <code class="highlighter-rouge">rest</code>, the length of our array is going to be <code class="highlighter-rouge">length(first) + length(rest)</code>. Well, the length of <code class="highlighter-rouge">first</code> is <code class="highlighter-rouge">1</code>, there’s just one element at the front. But we don’t know the length of <code class="highlighter-rouge">rest</code>. If only there was a function we could call… Like <code class="highlighter-rouge">length</code>!</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">length</span> <span class="o">=</span> <span class="p">([</span><span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">])</span> <span class="o">=&gt;</span>
+  <span class="nx">first</span> <span class="o">===</span> <span class="kc">undefined</span>
+    <span class="p">?</span> <span class="mi">0</span>
+    <span class="p">:</span> <span class="mi">1</span> <span class="o">+</span> <span class="nx">length</span><span class="p">(</span><span class="nx">rest</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Let’s try it!</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">length</span><span class="p">([])</span>
+  <span class="c1">//=&gt; 0</span>
+
+<span class="nx">length</span><span class="p">([</span><span class="s2">"foo"</span><span class="p">])</span>
+  <span class="c1">//=&gt; 1</span>
+
+<span class="nx">length</span><span class="p">([</span><span class="s2">"foo"</span><span class="p">,</span> <span class="s2">"bar"</span><span class="p">,</span> <span class="s2">"baz"</span><span class="p">])</span>
+  <span class="c1">//=&gt; 3</span>
+</code></pre></div></div>
+
+<p>Our <code class="highlighter-rouge">length</code> function is <em>recursive</em>, it calls itself. This makes sense because our definition of a list is recursive, and if a list is self-similar, it is natural to create an algorithm that is also self-similar.</p>
+
+<h3 id="linear-recursion">linear recursion</h3>
+
+<p>“Recursion” sometimes seems like an elaborate party trick. There’s even a joke about this:</p>
+
+<blockquote>
+  <p>When promising students are trying to choose between pure mathematics and applied engineering, they are given a two-part aptitude test. In the first part, they are led to a laboratory bench and told to follow the instructions printed on the card. They find a bunsen burner, a sparker, a tap, an empty beaker, a stand, and a card with the instructions “boil water.”</p>
+</blockquote>
+
+<blockquote>
+  <p>Of course, all the students know what to do: They fill the beaker with water, place the stand on the burner and the beaker on the stand, then they turn the burner on and use the sparker to ignite the flame. After a bit the water boils, and they turn off the burner and are lead to a second bench.</p>
+</blockquote>
+
+<blockquote>
+  <p>Once again, there is a card that reads, “boil water.” But this time, the beaker is on the stand over the burner, as left behind by the previous student. The engineers light the burner immediately. Whereas the mathematicians take the beaker off the stand and empty it, thus reducing the situation to a problem they have already solved.</p>
+</blockquote>
+
+<p>There is more to recursive solutions that simply functions that invoke themselves. Recursive algorithms follow the “divide and conquer” strategy for solving a problem:</p>
+
+<ol>
+  <li>Divide the problem into smaller problems</li>
+  <li>If a smaller problem is solvable, solve the small problem</li>
+  <li>If a smaller problem is not solvable, divide and conquer that problem</li>
+  <li>When all small problems have been solved, compose the solutions into one big solution</li>
+</ol>
+
+<p>The big elements of divide and conquer are a method for decomposing a problem into smaller problems, a test for the smallest possible problem, and a means of putting the pieces back together. Our solutions are a little simpler in that we don’t really break a problem down into multiple pieces, we break a piece off the problem that may or may not be solvable, and solve that before sticking it onto a solution for the rest of the problem.</p>
+
+<p>A very good recursive algorithm is one that parallels the recursive nature of the data being manipulated. This simpler form of “divide and conquer” is called <em>linear recursion</em>. It’s very useful and simple to understand, and it parallels the linearly self-similar definition we made for lists. Let’s take another example. Sometimes we want to <em>flatten</em> an array, that is, an array of arrays needs to be turned into one array of elements that aren’t arrays.<sup id="fnref:unfold"><a href="http://raganwald.com/2015/02/02/destructuring.html#fn:unfold" class="footnote">4</a></sup></p>
+
+<p>We already know how to divide arrays into smaller pieces. How do we decide whether a smaller problem is solvable? We need a test for the terminal case. Happily, there is something along these lines provided for us:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="s2">"foo"</span><span class="p">)</span>
+  <span class="c1">//=&gt; false</span>
+
+<span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span><span class="p">([</span><span class="s2">"foo"</span><span class="p">])</span>
+  <span class="c1">//=&gt; true</span>
+</code></pre></div></div>
+
+<p>The usual “terminal case” will be that flattening an empty array will produce an empty array. The next terminal case is that if an element isn’t an array, we don’t flatten it, and can put it together with the rest of our solution directly. Whereas if an element is an array, we’ll flatten it and put it together with the rest of our solution.</p>
+
+<p>So our first cut at a <code class="highlighter-rouge">flatten</code> function will look like this:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">flatten</span> <span class="o">=</span> <span class="p">([</span><span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">])</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">first</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">[];</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">first</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">flatten</span><span class="p">(</span><span class="nx">rest</span><span class="p">)];</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">[...</span><span class="nx">flatten</span><span class="p">(</span><span class="nx">first</span><span class="p">),</span> <span class="p">...</span><span class="nx">flatten</span><span class="p">(</span><span class="nx">rest</span><span class="p">)];</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">flatten</span><span class="p">([</span><span class="s2">"foo"</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="p">[]]])</span>
+  <span class="c1">//=&gt; ["foo",3,4]</span>
+</code></pre></div></div>
+
+<p>Once again, the solution directly displays the important elements: Dividing a problem into subproblems, detecting terminal cases, solving the terminal cases, and composing a solution from the solved portions.</p>
+
+<h3 id="mapping">mapping</h3>
+
+<p>Another common problem is applying a function to every element of an array. JavaScript has a built-in function for this, but let’s write our own using linear recursion.</p>
+
+<p>If we want to square each number in a list, we could write:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">squareAll</span> <span class="o">=</span> <span class="p">([</span><span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">])</span> <span class="o">=&gt;</span>
+  <span class="nx">first</span> <span class="o">===</span> <span class="kc">undefined</span>
+  <span class="p">?</span> <span class="p">[]</span>
+  <span class="p">:</span> <span class="p">[</span><span class="nx">first</span> <span class="o">*</span> <span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">squareAll</span><span class="p">(</span><span class="nx">rest</span><span class="p">)];</span>
+
+<span class="nx">squareAll</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+  <span class="c1">//=&gt; [1,4,9,16,25]</span>
+</code></pre></div></div>
+
+<p>And if we wanted to “truthify” each element in a list, we could write:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">truthyAll</span> <span class="o">=</span> <span class="p">([</span><span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">])</span> <span class="o">=&gt;</span>
+  <span class="nx">first</span> <span class="o">===</span> <span class="kc">undefined</span>
+    <span class="p">?</span> <span class="p">[]</span>
+    <span class="p">:</span> <span class="p">[</span><span class="o">!!</span><span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">truthyAll</span><span class="p">(</span><span class="nx">rest</span><span class="p">)];</span>
+
+<span class="nx">truthyAll</span><span class="p">([</span><span class="kc">null</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="s2">"foo"</span><span class="p">])</span>
+  <span class="c1">//=&gt; [false,true,true,false,true]</span>
+</code></pre></div></div>
+
+<p>This specific case of linear recursion is called “mapping,” and it is not necessary to constantly write out the same pattern again and again. Functions can take functions as arguments, so let’s “extract” the thing to do to each element and separate it from the business of taking an array apart, doing the thing, and putting the array back together.</p>
+
+<p>Given the signature:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">mapWith</span> <span class="o">=</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">array</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="c1">// ...</span>
+</code></pre></div></div>
+
+<p>We can write it out using a ternary operator. Even in this small function, we can identify the terminal condition, the piece being broken off, and recomposing the solution.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">mapWith</span> <span class="o">=</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="p">[</span><span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">])</span> <span class="o">=&gt;</span>
+  <span class="nx">first</span> <span class="o">===</span> <span class="kc">undefined</span>
+    <span class="p">?</span> <span class="p">[]</span>
+    <span class="p">:</span> <span class="p">[</span><span class="nx">fn</span><span class="p">(</span><span class="nx">first</span><span class="p">),</span> <span class="p">...</span><span class="nx">mapWith</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">rest</span><span class="p">)];</span>
+
+<span class="nx">mapWith</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+  <span class="c1">//=&gt; [1,4,9,16,25]</span>
+
+<span class="nx">mapWith</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="o">!!</span><span class="nx">x</span><span class="p">,</span> <span class="p">[</span><span class="kc">null</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="s2">"foo"</span><span class="p">])</span>
+  <span class="c1">//=&gt; [false,true,true,false,true]</span>
+</code></pre></div></div>
+
+<h3 id="folding">folding</h3>
+
+<p>With the exception of the <code class="highlighter-rouge">length</code> example at the beginning, our examples so far all involve rebuilding a solution using spreads.  But they needn’t. A function to compute the sum of the squares of a list of numbers might look like this:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">sumSquares</span> <span class="o">=</span> <span class="p">([</span><span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">])</span> <span class="o">=&gt;</span>
+  <span class="nx">first</span> <span class="o">===</span> <span class="kc">undefined</span>
+    <span class="p">?</span> <span class="mi">0</span>
+    <span class="p">:</span> <span class="nx">first</span> <span class="o">*</span> <span class="nx">first</span> <span class="o">+</span> <span class="nx">sumSquares</span><span class="p">(</span><span class="nx">rest</span><span class="p">);</span>
+
+<span class="nx">sumSquares</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+  <span class="c1">//=&gt; 55</span>
+</code></pre></div></div>
+
+<p>There are two differences between <code class="highlighter-rouge">sumSquares</code> and our maps above:</p>
+
+<ol>
+  <li>Given the terminal case of an empty list, we return a <code class="highlighter-rouge">0</code> instead of an empty list, and;</li>
+  <li>We catenate the square of each element to the result of applying <code class="highlighter-rouge">sumSquares</code> to the rest of the elements.</li>
+</ol>
+
+<p>Let’s rewrite <code class="highlighter-rouge">mapWith</code> so that we can use it to sum squares.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">foldWith</span> <span class="o">=</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">terminalValue</span><span class="p">,</span> <span class="p">[</span><span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">])</span> <span class="o">=&gt;</span>
+  <span class="nx">first</span> <span class="o">===</span> <span class="kc">undefined</span>
+    <span class="p">?</span> <span class="nx">terminalValue</span>
+    <span class="p">:</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">first</span><span class="p">,</span> <span class="nx">foldWith</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">terminalValue</span><span class="p">,</span> <span class="nx">rest</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>And now we supply a function that does slightly more than our mapping functions:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">foldWith</span><span class="p">((</span><span class="nx">number</span><span class="p">,</span> <span class="nx">rest</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="nx">number</span> <span class="o">*</span> <span class="nx">number</span> <span class="o">+</span> <span class="nx">rest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+  <span class="c1">//=&gt; 55</span>
+</code></pre></div></div>
+
+<p>Our <code class="highlighter-rouge">foldWith</code> function is a generalization of our <code class="highlighter-rouge">mapWith</code> function. We can represent a map as a fold, we just need to supply the array rebuilding code:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">squareAll</span> <span class="o">=</span> <span class="p">(</span><span class="nx">array</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="nx">foldWith</span><span class="p">((</span><span class="nx">first</span><span class="p">,</span> <span class="nx">rest</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nx">first</span> <span class="o">*</span> <span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">],</span> <span class="p">[],</span> <span class="nx">array</span><span class="p">);</span>
+
+<span class="nx">squareAll</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+  <span class="c1">//=&gt; [1,4,9,16,25]</span>
+</code></pre></div></div>
+
+<p>And if we like, we can write <code class="highlighter-rouge">mapWith</code> using <code class="highlighter-rouge">foldWith</code>:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">mapWith</span> <span class="o">=</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">array</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="nx">foldWith</span><span class="p">((</span><span class="nx">first</span><span class="p">,</span> <span class="nx">rest</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nx">fn</span><span class="p">(</span><span class="nx">first</span><span class="p">),</span> <span class="p">...</span><span class="nx">rest</span><span class="p">],</span> <span class="p">[],</span> <span class="nx">array</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">squareAll</span> <span class="o">=</span> <span class="p">(</span><span class="nx">array</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">mapWith</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">array</span><span class="p">);</span>
+
+<span class="nx">squareAll</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+  <span class="c1">//=&gt; [1,4,9,16,25]</span>
+</code></pre></div></div>
+
+<p>And to return to our first example, our version of <code class="highlighter-rouge">length</code> can be written as a fold:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">length</span> <span class="o">=</span> <span class="p">(</span><span class="nx">array</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="nx">foldWith</span><span class="p">((</span><span class="nx">first</span><span class="p">,</span> <span class="nx">rest</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="mi">1</span> <span class="o">+</span> <span class="nx">rest</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">array</span><span class="p">);</span>
+
+<span class="nx">length</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+  <span class="c1">//=&gt; 5</span>
+</code></pre></div></div>
+
+<h3 id="what-does-it-all-mean">what does it all mean?</h3>
+
+<p>Some data structures, like lists, have a can be defined as self-similar. When working with a self-similar data structure, a recursive algorithm parallels the data’s self-similarity.</p>
+
+<p>Linear recursion is a basic building block of algorithms. Its basic form parallels the way linear data structures like lists are constructed: This helps make it understandable. Its specialized cases of mapping and folding are especially useful and can be used to build other functions. And finally, while folding is a special case of linear recursion, mapping is a special case of folding.</p>
+
+<p>And last but certainly not least, destructuring, spreading, and gathering make this very natural to express in JavaScript ES-6.</p>
+
+<hr>
+
+<p>This post was extracted from a draft of the book, <a href="https://leanpub.com/b/buyjavascriptallongthesixeditiongetjavascriptallongfree">JavaScript Allongé, The “Six” Edition</a>. The extracts so far:</p>
+
+<ul>
+  <li><a href="http://raganwald.com/2015/05/11/javascript-classes.html">OOP, Javascript, and so-called Classes</a>,</li>
+  <li><a href="http://raganwald.com/2015/04/03/left-variadic.html">Left-Variadic Functions in JavaScript</a>,</li>
+  <li><a href="http://raganwald.com/2015/04/01/partial-application.html">Partial Application in ECMAScript 2015</a>,</li>
+  <li><a href="http://raganwald.com/2015/03/12/symmetry.html">The Symmetry of JavaScript Functions</a>,</li>
+  <li><a href="http://raganwald.com/2015/02/17/lazy-iteratables-in-javascript.html">Lazy Iterables in JavaScript</a>,</li>
+  <li><a href="http://raganwald.com/2015/02/13/functional-quantum-electrodynamics.html">The Quantum Electrodynamics of Functional JavaScript</a>,</li>
+  <li><a href="http://raganwald.com/2015/02/07/tail-calls-defult-arguments-recycling.html">Tail Calls, Default Arguments, and Excessive Recycling in ES-6</a>, and:</li>
+  <li><a href="http://raganwald.com/2015/02/02/destructuring.html">Destructuring and Recursion in ES-6</a>.</li>
+</ul>
+
+<hr>
+<div class="footnotes">
+  <ol>
+    <li id="fn:getify">
+      <p>Kyle Simpson is the author of <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/README.md#you-dont-know-js-book-series">You Don’t Know JS</a>, available <a href="http://search.oreilly.com/?q=you+don%27t+know+js+kyle+simpson">here</a>&nbsp;<a href="http://raganwald.com/2015/02/02/destructuring.html#fnref:getify" class="reversefootnote">↩</a></p>
+    </li>
+    <li id="fn:rest">
+      <p>Gathering in parameters has a long history, and the usual terms are to call gathering “pattern matching” and to call a name that is bound to gathered values a “rest parameter.” The term “rest” is perfectly compatible with gather: “Rest” is the noun, and “gather” is the verb. We <em>gather</em> the <em>rest</em> of the parameters.&nbsp;<a href="http://raganwald.com/2015/02/02/destructuring.html#fnref:rest" class="reversefootnote">↩</a></p>
+    </li>
+    <li id="fn:wellactually">
+      <p>Well, actually, this does not work for arrays that contain <code class="highlighter-rouge">undefined</code> as a value, but we are not going to see that in our examples. A more robust implementation would be <code class="highlighter-rouge">(array) =&gt; array.length === 0</code>, but we are doing backflips to keep this within a very small and contrived playground.&nbsp;<a href="http://raganwald.com/2015/02/02/destructuring.html#fnref:wellactually" class="reversefootnote">↩</a></p>
+    </li>
+    <li id="fn:unfold">
+      <p><code class="highlighter-rouge">flatten</code> is a very simple <a href="https://en.wikipedia.org/wiki/Anamorphism">unfold</a>, a function that takes a seed value and turns it into an array. Unfolds can be thought of a “path” through a data structure, and flattening a tree is equivalent to a depth-first traverse.&nbsp;<a href="http://raganwald.com/2015/02/02/destructuring.html#fnref:unfold" class="reversefootnote">↩</a></p>
+    </li>
+  </ol>
+</div>
+
+        </section>
+
+      </div>
+    </div>
+</body></html>
