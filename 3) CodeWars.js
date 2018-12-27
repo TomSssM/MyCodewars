@@ -325,4 +325,44 @@ const cipher = function(key = 0, str = '') {
 
 console.log(cipher(2, 'abc | \\ !$ aa XyZ')); // cde | \ !$ cc ZaB
 
+const uncipher = function(key = 0, str) {
+  const charArr = str.split('');
+  let res = '';
+  key *= -1;
+  
+  charArr.forEach(v => {
+    if(v >= 'a' && v <= 'z') {
+      const initialPosInAlph = (v.charCodeAt(0) - 97);
+      const posInAlph = ((initialPosInAlph + key) + 26) % 26;
+      res += String.fromCharCode(posInAlph + 97);
+    } else if(v >= 'A' && v <= 'Z') {
+      const initialPosInAlph = (v.charCodeAt(0) - 65);
+      const posInAlph = ((initialPosInAlph + key) + 26) % 26;
+      res += String.fromCharCode(posInAlph + 65);
+    } else {
+      res += v;
+    }
+  });
+  return res;
+}
+
+// here is the cool implementation
+const key = 2;
+const compose = (...fns) => arg => fns.reduceRight((t,v) => v(t), arg);
+
+const curry = function(fn) {
+  const arity = fn.length;
+  return (function resolver(...args) {
+    const memory = args;
+    return function(arg) {
+      const local = memory.slice();
+      local.push(arg);
+      const next = local.length >= arity ? fn : resolver;
+      return next(...local);
+    };
+  }());
+};
+
+console.log(compose(curry(uncipher)(key), curry(cipher)(key))('Tom is Cool!!!')); // => 'Tom is Cool!!!'
+
 // Task 28
