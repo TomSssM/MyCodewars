@@ -135,9 +135,9 @@ mapWith((x) => x * x, [1, 2, 3, 4, 5]) // => [1,4,9,16,25]
 
 ```javascript
 if (!Array.prototype.mapUsingReduce) {
-  Array.prototype.mapUsingReduce = function(callback, thisArg) {
+  Array.prototype.mapUsingReduce = function(callback) {
     return this.reduce(function(mappedArray, currentValue, index, array) {
-      mappedArray[index] = callback.call(thisArg, currentValue, index, array);
+      mappedArray[index] = callback(currentValue, index, array);
       return mappedArray;
     }, []);
   };
