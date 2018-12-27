@@ -148,4 +148,57 @@ if (!Array.prototype.mapUsingReduce) {
 ); // [5, 7, , 10]
 ```
 
-# 8) Next
+# 8) Memoization
+## Default
+```javascript
+// we can memoize only pure functions
+
+function memoize(func) {
+  const cache = {};
+  return function() {
+    const key = JSON.stringify(arguments);
+    if(cache[key]) {
+      return cache[key];
+    }
+    else {
+      const val = func.apply(this, arguments);
+      cache[key] = val;
+      return val;
+    }
+  };
+}
+```
+## As a Method
+```javascript
+function memoize(func, depsFunc) {
+  const cache = {};
+  return function() {
+    const key = JSON.stringify([depsFunc(), arguments]);
+    if(cache[key]) {
+      return cache[key];
+    }
+    else {
+      const val = func.apply(this, arguments);
+      cache[key] = val;
+      return val;
+    }
+  };
+}
+
+function Person(firstName, lastName) {
+  this.firstName = firstName;
+  this.lastName = lastName;
+
+  this.fullName = memoize(
+    function(title) {
+      return title + ' ' + this.firstName + ' ' + this.lastName;
+    },
+
+    function() {
+      return [this.firstName, this.lastName];
+    }.bind(this));
+}
+
+const person = new Person('Jonathan', 'Lehman');
+```
+# 9) Next
