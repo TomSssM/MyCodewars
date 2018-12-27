@@ -366,3 +366,30 @@ const curry = function(fn) {
 console.log(compose(curry(uncipher)(key), curry(cipher)(key))('Tom is Cool!!!')); // => 'Tom is Cool!!!'
 
 // Task 28
+// the alphabetical position of each letter in the word is now key
+// every iteration switches to the next letter
+
+const cipherUpg = function(strKey, str) {
+  const arrKey = strKey.toLowerCase().split('').map(v => v.charCodeAt(0) - 97);
+  const arrStr = str.split('');
+  let res = '';
+  let i = 0;
+  arrStr.forEach(v => {
+    if(v >= 'a' && v <= 'z') {
+      const initialPosInAlph = (v.charCodeAt(0) - 97);
+      const posInAlph = (initialPosInAlph + arrKey[i++ % arrKey.length]) % 26;
+      res += String.fromCharCode(posInAlph + 97);
+    } else if(v >= 'A' && v <= 'Z') {
+      const InitialPosInAlph = (v.charCodeAt(0) - 65);
+      const posInAlph = (InitialPosInAlph + arrKey[i++ % arrKey.length]) % 26;
+      res += String.fromCharCode(posInAlph + 65);
+    } else {
+      res += v;
+    }
+  });
+  return res;
+};
+
+console.log(cipherUpg('ABc', 'Robert is sleeping on my backsuck!!!')); // => 'Rpdesv it ulfgpjpg pp mz dadmsvek!!!'
+
+// Task 29
