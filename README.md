@@ -28,4 +28,4 @@
 - [Articles](./articles/README.md) :newspaper:
 - [Projects from the Tutorial](./projects-from-the-tutorial/README.md)
 - [The Cheat Sheet](./cheatsheet/)
-- [Freakshow](./freakshow.js)
+- [Freakshow](./freakshow.js) :microscope:
