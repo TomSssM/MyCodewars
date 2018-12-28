@@ -12,6 +12,6 @@
   - [Upgraded](./note/upgraded/Laboratory.js)
 - Simple Events
   - [Menu](./simple-events/menu/Laboratory.js)
-  - [aa](./simple-events/)
+  - [Closing Buttons](./simple-events/closing-buttons/Laboratory.js)
   - [aa](./simple-events/)
 - next

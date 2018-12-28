@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>JS</title>
+  <style>
+  body {
+    margin: 10px auto;
+    width: 470px;
+  }
+  h3 {
+    margin: 0;
+    padding-bottom: .3em;
+    font-size: 1.1em;
+  }
+  p {
+    margin: 0;
+    padding: 0 0 .5em;
+  }
+  .pane {
+    background: #edf5e1;
+    padding: 10px 20px 10px;
+    border-top: solid 2px #c4df9b;
+    position: relative;
+    transition: .3s all ease-in-out;
+  }
+  .pane.shrink {
+    transform: scale(0);
+  }
+  .remove-button {
+    cursor: pointer;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 110%;
+    color: darkred;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+  }
+  </style>
+</head>
+<body>
+  <h1 id="special">JS</h1>
+  <div>
+    <div class="pane">
+      <h3>Animals</h3>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus delectus nisi architecto, dicta excepturi animi illo itaque corrupti aspernatur. Animi minus perferendis incidunt delectus, rem facere? Consequatur molestiae reprehenderit aut.</p>
+    </div>
+    <div class="pane">
+      <h3>Flowers</h3>
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem reprehenderit accusamus nulla ratione incidunt suscipit dolorum laborum, quam totam obcaecati neque adipisci at tenetur aperiam minus repellat ipsam, accusantium sunt.</p>
+    </div>
+    <div class="pane">
+      <h3>Others</h3>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, in consequuntur! Quaerat incidunt pariatur provident autem, iste qui laborum a consequuntur eum? Reiciendis quam quod at sapiente quasi reprehenderit quia.</p>
+    </div>
+  </div>
+  <script src="./Laboratory.js"></script>
+</body>
+</html>
