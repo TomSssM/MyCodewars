@@ -10,4 +10,8 @@
 - Note
   - [Default](./note/default/Laboratory.js)
   - [Upgraded](./note/upgraded/Laboratory.js)
+- Simple Events
+  - [Menu](./simple-events/menu/Laboratory.js)
+  - [aa](./simple-events/)
+  - [aa](./simple-events/)
 - next

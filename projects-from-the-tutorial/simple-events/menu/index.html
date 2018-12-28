@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>JS</title>
+  <style>
+    span {
+      padding: 1rem;
+      padding-left: 0;
+      font-size: 1.2rem;
+      user-select: none;
+      cursor: pointer;
+    }
+    i {
+      text-align: left;
+      color: chocolate;
+      width: .8rem;
+    }
+    li {
+      padding: 0.2rem 0;
+    }
+    li::before {
+      content: '\f0f4';
+      text-align: center;
+      font-size: 1rem;
+      font-family: fontAwesome;
+      display: inline-block;
+      width: 1.7rem;
+      height: 1.2rem;
+      margin-left: -1.7rem;
+      color: gold;
+    }
+    ul {
+      list-style: none;
+      margin: 0;
+      padding-left: 1.7rem;
+      clear: both;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="special">JS</h1>
+  <span><i class="fa fa-angle-right"></i>Drinks</span>
+  <ul id="drink-list" style="display:none"> 
+    <li>Coffee</li>
+    <li>Tea</li>
+    <li>Cocoa</li>
+  </ul>
+  <script src="./Laboratory.js"></script>
+</body>
+</html>
