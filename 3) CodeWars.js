@@ -392,4 +392,27 @@ const cipherUpg = function(strKey, str) {
 
 console.log(cipherUpg('ABc', 'Robert is sleeping on my backsuck!!!')); // => 'Rpdesv it ulfgpjpg pp mz dadmsvek!!!'
 
+// here is the same implementation except recursive
+
+const cipherUpgrecursive = function(strKey, str) {
+  let i = 0;
+  let index = 0;
+  let result = '';
+  const len = str.length;
+  strKey = strKey.toLowerCase().split('').map(v => v.charCodeAt(0) - 97);
+  const rec = function(key, char) {
+    if(!char) return result;
+    result += cipher(key, char); // yeap this one is an impure function and does require cipher to work
+    i++;
+    while(/[^A-Za-z]/.test(str[i]) && i < len) {
+      result += str[i];
+      i++;
+    }
+    return rec(strKey[index++ % strKey.length], str[i]);
+  };
+  return rec(strKey[index++ % strKey.length], str[i]);
+};
+
+cipherUpgrecursive('Something', 'Cool Long String Man'); // Ucap Evvt Ylfurz Tia
+
 // Task 29
