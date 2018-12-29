@@ -13,5 +13,5 @@
 - Simple Events
   - [Menu](./simple-events/menu/Laboratory.js)
   - [Closing Buttons](./simple-events/closing-buttons/Laboratory.js)
-  - [aa](./simple-events/)
+  - [Slider](./simple-events/slider/Laboratory.js)
 - next
