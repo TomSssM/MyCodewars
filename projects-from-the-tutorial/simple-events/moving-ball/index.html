@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    #field {
+      width: 200px;
+      height: 150px;
+      border: 10px groove black;
+      /* border-right-width: 20px;
+      border-top-width: 20px;
+      border-left-width: 70px; */
+      background-color: #00FF00;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      user-select: none;
+    }
+    #ball {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: all .2s ease-in-out;
+      width: 40px;
+      height: 40px;
+      /* top: 50%;
+      left: 50%;
+      margin-left: -20px;
+      margin-top: -20px; */
+    }
+  </style>
+  <title>JS</title>
+</head>
+<body>
+  <h1 id="special">JS</h1>
+  <div id="field">
+    <img src="./ball.svg" alt="ball" id="ball"> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  </div>
+  <script src="./Laboratory.js"></script>
+</body>
+</html>

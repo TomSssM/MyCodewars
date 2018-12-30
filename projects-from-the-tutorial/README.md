@@ -14,4 +14,5 @@
   - [Menu](./simple-events/menu/Laboratory.js)
   - [Closing Buttons](./simple-events/closing-buttons/Laboratory.js)
   - [Slider](./simple-events/slider/Laboratory.js)
+  - [Moving Ball](./simple-events/moving-ball/Laboratory.js)
 - next
