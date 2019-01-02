@@ -17,4 +17,5 @@
   - [Moving Ball](./simple-events/moving-ball/Laboratory.js)
 - Delegation
   - [The Bagua](./delegation/bagua/Laboratory.js)
+  - [Menu](./delegation/menu/Laboratory.js)
 - next
