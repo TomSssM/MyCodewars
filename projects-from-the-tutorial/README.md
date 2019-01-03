@@ -18,4 +18,5 @@
 - Delegation
   - [The Bagua](./delegation/bagua/Laboratory.js)
   - [Menu](./delegation/menu/Laboratory.js)
+  - [Closing Buttons](./delegation/closing-buttons/Laboratory.js)
 - next
