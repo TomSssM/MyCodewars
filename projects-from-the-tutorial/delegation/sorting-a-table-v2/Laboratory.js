@@ -19,13 +19,21 @@ table.addEventListener('click', function(e) {
     }
 
     for(let i = 1; i < tableRowCount; i++) {
-      const val = isNumber ? +table.rows[i].cells[cellIndex].textContent : table.rows[i].cells[cellIndex].textContent;
+      const val = table.rows[i].cells[cellIndex].textContent;
       sortArr.push({
         val,
         ref: table.rows[i],
       });
     }
 
-    console.log(sortArr);
+    if(isNumber) {
+      sortArr.sort((x,y) => x.val - y.val);
+    } else {
+      sortArr.sort((x,y) => x.val > y.val ? 1 : -1);
+    }
+
+    sortArr.forEach(obj => {
+      table.tBodies[0].appendChild(obj.ref);
+    });
   }
-})
+});
