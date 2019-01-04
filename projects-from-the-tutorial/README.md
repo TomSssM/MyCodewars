@@ -1,5 +1,4 @@
 # Projects
-
 - [Notification Creator](./notification-creater/notificationCreater.js)
 - [Soccer](./soccer/code.js)
 - [Object to Ul](./object-to-ul)
@@ -7,15 +6,15 @@
   - [Part Two](./object-to-ul/part%20two/Laboratory.js)
 - [Time and Calendar](./calendar-and-time/Laboratory.js)
 - [Sorting a Table](./sorting-a-table/Laboratory.js)
-- Note
+- [Note](./note)
   - [Default](./note/default/Laboratory.js)
   - [Upgraded](./note/upgraded/Laboratory.js)
-- Simple Events
+- [Simple Events](./simple-events)
   - [Menu](./simple-events/menu/Laboratory.js)
   - [Closing Buttons](./simple-events/closing-buttons/Laboratory.js)
   - [Slider](./simple-events/slider/Laboratory.js)
   - [Moving Ball](./simple-events/moving-ball/Laboratory.js)
-- Delegation
+- [Delegation](./delegation)
   - [The Bagua](./delegation/bagua/Laboratory.js)
   - [Menu](./delegation/menu/Laboratory.js)
   - [Closing Buttons](./delegation/closing-buttons/Laboratory.js)
