@@ -21,4 +21,5 @@
   - [Closing Buttons](./delegation/closing-buttons/Laboratory.js)
   - [Tree](./delegation/tree/Laboratory.js)
   - [Sorting a Table Version 2](./delegation/sorting-a-table-v2/Laboratory.js)
+- [Tooltip](./tooltip/Laboratory.js)
 - next

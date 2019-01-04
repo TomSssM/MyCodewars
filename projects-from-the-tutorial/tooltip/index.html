@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    body {
+      height: 2000px;
+    }
+    .tooltip {
+      padding: .4rem;
+      border: 1px solid #ccc;
+      border-radius: 7px;
+      box-shadow: 3px 2px 10px 0px #929292;
+      position: fixed; 
+      /* fixed is better in this very case as it calculates say 30px */
+      /* when the page is scrolled by some amount, from the top of the visible  */
+      /* part of the document; if we were to offset an element by 30px from */
+      /* the top of the invisible part of the doc some of the tooltip would be cropped */
+      color: #2e2e2e;
+      background: #fff;
+    }
+  </style>
+  <title>JS</title>
+</head>
+<body>
+  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+  <p>Repellat aut atque minus numquam, tempore, magni delectus adipisci iste corporis, ab facilis. Delectus, consectetur hic porro quibusdam unde odit ipsam velit!</p>
+
+  <button data-tooltip="long long long long long long long tooltip">Clicks!</button>
+  <button data-tooltip="HTML and a tooltip">Button</button>
+  <button data-tooltip="HTML<br>tooltip">Button Button Button Button Button Button Button</button>
+
+  <script src="./Laboratory.js"></script>
+</body>
+</html>
