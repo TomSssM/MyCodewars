@@ -57,3 +57,8 @@ function a(arg1, arg2, arg3) {
 
 frankenCurry(a)('x','y','z'); // => "x, y, z"
 frankenCurry(a)()()()()()(1)()()()()()(2)()()()()()(3); // => "1, 2, 3"
+
+// 3) CSS and Emojis withconsole.log
+
+const CSS = ['background:yellow', 'padding:2rem', 'color:chocolate', 'font-size: 3rem', 'font-weight:bold', 'margin:0 1rem'];
+console.log('%cRed%cGreen%cBlue', (CSS.join(';') + ';color:red'), (CSS.join(';') + ';color:green'), (CSS.join(';') + ';color:blue'));
