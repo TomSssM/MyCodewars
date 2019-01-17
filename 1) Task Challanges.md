@@ -115,13 +115,17 @@ const compose = (fn, ...rest) =>
       : fn(compose(...rest)(...args));
 ```
 ## Pipe
+### 1st
 ```javascript
 const pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
+```
+### 2nd
+```javascript
+const pipe = (fn, ...fns) => (...args) => fns.reduce( (acc, fn) => fn(acc), fn(...args));
 ```
 
 # 7) Array.prototype.map Polyfill
 ## With Recursion
-
 ```javascript
 const mapWith = (fn, [first, ...rest]) =>
   first === undefined
@@ -130,9 +134,7 @@ const mapWith = (fn, [first, ...rest]) =>
 
 mapWith((x) => x * x, [1, 2, 3, 4, 5]) // => [1,4,9,16,25]
 ```
-
 ## With Reduce
-
 ```javascript
 if (!Array.prototype.mapUsingReduce) {
   Array.prototype.mapUsingReduce = function(callback) {
