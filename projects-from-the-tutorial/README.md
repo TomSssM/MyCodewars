@@ -28,4 +28,5 @@
   - [Selectable List](./mouse-events/selectable-list/Laboratory.js)
   - [Event Delegation For Mouseleave / Mouseenter](./mouse-events/event-delegation-for-mouseleave-mouseenter/Laboratory.js)
   - [Logger](./mouse-events/logger/Laboratory.js)
+  - [Improved Tooltip](./mouse-events/improved-tooltip/Laboratory.js)
 - next

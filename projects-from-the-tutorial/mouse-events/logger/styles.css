@@ -1,13 +1,13 @@
 #green {
   height: 50px;
   width: 160px;
-  background: green;
+  background: chocolate;
 }
 #red {
   height: 20px;
   width: 110px;
-  background: red;
-  color: white;
+  background: yellow;
+  color: #000;
   font-weight: bold;
   padding: 5px;
   text-align: center;
