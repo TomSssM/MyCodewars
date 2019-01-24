@@ -29,4 +29,5 @@
   - [Event Delegation For Mouseleave / Mouseenter](./mouse-events/event-delegation-for-mouseleave-mouseenter/Laboratory.js)
   - [Logger](./mouse-events/logger/Laboratory.js)
   - [Improved Tooltip](./mouse-events/improved-tooltip/Laboratory.js)
+  - [Improved Tooltip Clever Alternative](./mouse-events/improved-tooltip/tutorial.js)
 - next

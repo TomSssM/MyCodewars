@@ -8,7 +8,6 @@
       height: 2000px;
       /* the tooltip should work after page scroll too */
     }
-
     .tooltip {
       position: absolute;
       z-index: 100;
@@ -21,13 +20,11 @@
       background: #fff;
       box-shadow: 3px 3px 3px rgba(0, 0, 0, .3);
     }
-
     #house {
       margin-top: 50px;
       width: 400px;
       border: 1px solid brown;
     }
-
     #roof {
       width: 0;
       height: 0;
@@ -36,10 +33,12 @@
       border-bottom: 20px solid brown;
       margin-top: -20px;
     }
-
     p {
       text-align: justify;
       margin: 10px 3px;
+    }
+    .sponge {
+      color: #ebeb52;
     }
   </style>
 </head>
@@ -51,15 +50,15 @@
 
     <p>Once upon a time there was a mother pig who had three little pigs.</p>
 
-    <p>The three little pigs grew so big that their mother said to them, "You are too big to live here any longer. You must go and build houses for yourselves. But take care that the wolf does not catch you."
+    <p>The three <span class="sponge" data-tooltip="I'm a span">little</span> pigs grew so big that their mother said to them, "You are too big to live here any longer. You must go and build houses for yourselves. But take care that the wolf does not catch you."
 
     <p>The three little pigs set off. "We will take care that the wolf does not catch us," they said.</p>
 
     <p>Soon they met a man. <a href="https://en.wikipedia.org/wiki/The_Three_Little_Pigs" data-tooltip="Read on…">Hover over me</a></p>
 
   </div>
-
+  <script src="./tooltipCreator.js"></script>
   <script src="./Laboratory.js"></script>
-
+  <!-- <script src="./tutorial.js"></script> -->
 </body>
 </html>
