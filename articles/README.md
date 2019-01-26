@@ -4,8 +4,8 @@
 - [JS Floating Points](./JSFloatingPoints.md)
 - [Function.prototype.bind Polyfill](./bindPolyfill.md)
 - [MDN Array.prototype.reduce](./Array.prototype.reduce.md)
-- Raganwald
-  - [Lazy Iterables in JS](./Lazy%20Iterables%20in%20JavaScript/)
-  - [Destructuring and Recursion in ES6](./Destructuring%20and%20Recursion%20in%20ES-6)
-  - [Data Structures](./Data%20Structures/README.md)
+- [Raganwald](./coffee-book-articles/)
+  - [Lazy Iterables in JS](./coffee-book-articles/Lazy%20Iterables%20in%20JavaScript/)
+  - [Destructuring and Recursion in ES6](./coffee-book-articles/Destructuring%20and%20Recursion%20in%20ES-6)
+- [Data Structures](./Data%20Structures/README.md)
 - Next Article
