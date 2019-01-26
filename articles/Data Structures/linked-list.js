@@ -1,4 +1,7 @@
 /* LinkedList */
+/* A lil' Note: in Linked Lists we don't really
+   ever delete or add anything, we only work 
+   with links and change where those point to */
 
 function LinkedList() { 
   var length = 0; 
