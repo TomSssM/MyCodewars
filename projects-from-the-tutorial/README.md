@@ -30,4 +30,6 @@
   - [Logger](./mouse-events/logger/Laboratory.js)
   - [Improved Tooltip](./mouse-events/improved-tooltip/Laboratory.js)
   - [Improved Tooltip Clever Alternative](./mouse-events/improved-tooltip/tutorial.js)
+  - [My Smart Tooltip](./mouse-events/smart-tooltip/hoverintent.js)
+  - [Smart Tooltip the Tutorial](./mouse-events/smart-tooltip/hoverintent-tutorial.js)
 - next
