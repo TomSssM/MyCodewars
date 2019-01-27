@@ -5,4 +5,4 @@
 - [Stack](./stack.js)
 - Queues:
   - [Queue](./queue.js)
-  - [Priority Queue](./)
+  - [Priority Queue](./priority-queue.js)
