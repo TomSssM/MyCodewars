@@ -25,6 +25,7 @@ var DoublyLinkedList = function() {
     if(currentNode.data === data) {
       this.head = this.head.next;
       if(this.head) this.head.prev = null;
+      if(this.tail.data === data) this.tail = null;
       return currentNode.data;
     }
 
@@ -36,11 +37,32 @@ var DoublyLinkedList = function() {
     currentNode.prev.next = currentNode.next;
     return currentNode.data;
   };
+
+  this.reverse = function() {
+    if(!this.head) return null;
+
+    var currentNode = this.head;
+    var temp;
+
+    while(currentNode) {
+      temp = currentNode.next;
+      currentNode.next = currentNode.prev;
+      currentNode.prev = temp;
+      currentNode = currentNode.prev;
+    }
+
+    temp = this.head;
+    this.head = this.tail;
+    this.tail = temp;
+  }
 };
 
 const dbl = new DoublyLinkedList();
 
 dbl.add('Cat');
 dbl.remove('Cat');
-
-console.dir(dbl);
+dbl.add('Cat');
+dbl.add('Dog');
+dbl.add('Robert');
+dbl.add('Markdown');
+dbl.reverse();
