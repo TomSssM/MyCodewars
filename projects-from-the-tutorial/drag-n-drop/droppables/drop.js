@@ -20,6 +20,9 @@ ball.onmousedown = function(event) {
     moveAt(event.pageX, event.pageY);
   
     ball.hidden = true;
+
+    // we should use e.clientX / Y ( relative to the viewport ) as the elementFromPoint
+    // function works with viewport relative coordinates
     // let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
 
     // upgraded elemBelow:
