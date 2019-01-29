@@ -1,0 +1,40 @@
+body {
+  width: 3000px;
+}
+
+.slider {
+  border-radius: 5px;
+  background: #E0E0E0;
+  background: linear-gradient(left top, #E0E0E0, #EEEEEE);
+  width: 310px;
+  height: 15px;
+  margin: 200px auto;
+  position: relative;
+}
+
+.thumb {
+  width: 10px;
+  height: 25px;
+  border-radius: 3px;
+  position: absolute;
+  left: 10px;
+  top: -5px;
+  background: blue;
+  cursor: pointer;
+}
+
+.box {
+  border: 2px solid #000;
+  position: relative;
+  width: 400px;
+  margin: 0 auto;
+  padding: 4rem;
+  height: 200px;
+}
+
+img {
+  position: absolute;
+  width: 100px;
+  height: 120px;
+  cursor: pointer;
+}
