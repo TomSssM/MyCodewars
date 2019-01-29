@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+  
+  <div style="height:64px">
+    <img src="./images/chrome.svg" class="draggable">
+    <img src="./images/firefox.svg" class="draggable">
+    <img src="./images/ie.svg" class="draggable">
+    <img src="./images/opera.svg" class="draggable">
+    <img src="./images/safari.svg" class="draggable">
+  </div>
+    
+    <p>Drag the browser into the computer:</p>
+    
+    <div class="computer droppable">
+    </div>
+    
+  <script src="./drag-n-drop.js"></script>
+
+  <script>
+    const dragCancel = function(dragObject) {
+      dragObject.avatar.rollback();
+    };
+
+    const dragEnd = function(dragObject, dropElem) {
+      dragObject.elem.remove();
+      // dragObject.elem.hidden = true;
+      dropElem.classList.add('computer-smile');
+
+      setTimeout(() => dropElem.classList.remove('computer-smile'), 200);
+    };
+
+    new DragManager(dragEnd, dragCancel);
+  </script>
+</body>
+
+</html>
