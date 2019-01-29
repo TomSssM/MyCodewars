@@ -231,6 +231,38 @@ var Cat = (function () {
   return constr;
 }());
 
+// yet another alternative this one using class syntax and prototype
+
+class Cat {
+  constructor(name, weight) {
+    this.name = name;
+    this._weight = 0;
+
+    Object.defineProperty(this, 'weight', {
+      get() {
+        return this._weight;
+      },
+      set(newWei) {
+        this.__proto__.totalWeight -= this.weight;
+        this.__proto__.totalWeight += newWei;
+        this._weight = newWei;
+      },
+    });
+
+    this.weight = weight;
+    this.__proto__.catCount++;
+    
+    Object.defineProperty(this, 'averageWeight', {
+      get() {
+        return this.__proto__.totalWeight / this.__proto__.catCount;
+      }
+    });
+  }
+}
+
+Cat.prototype.totalWeight = 0;
+Cat.prototype.catCount = 0;
+
 // Task 25
 // You probably know, that in Javascript (and also Ruby) there is no concept of interfaces. There is only a concept of inheritance,
 // but you can't assume that a certain method or property exists, just because it exists in the parent prototype / class.
