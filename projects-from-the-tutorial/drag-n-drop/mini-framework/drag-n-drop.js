@@ -95,6 +95,7 @@ class DragManager {
       if (e.which != 1) return;
   
       const elem = e.target.closest('.draggable');
+      
       // we clicked on not a draggable obj
       if (!elem) return;
   
@@ -185,6 +186,7 @@ class DragManager {
 
     // because we used addEventListener for our mouseEvents we need
     // to explicitly cancel the default dragstart
+
     document.addEventListener('dragstart', function(e) {
       e.preventDefault();
     });
