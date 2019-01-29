@@ -36,4 +36,6 @@
   - [Default Algorithm for Dragging](./drag-n-drop/default-algorithm/drag.js)
   - [Default Algorithm for Dropping](./drag-n-drop/droppables/drop.js)
   - [Drag'n'Drop Mini Framework](./drag-n-drop/mini-framework/drag-n-drop.js)
+  - [Slider](./drag-n-drop/slider/slider.js)
+  - [Slider Sponge](./drag-n-drop/slider-sponge/slider.js)
 - next
