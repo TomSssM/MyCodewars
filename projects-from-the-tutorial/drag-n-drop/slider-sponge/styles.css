@@ -36,7 +36,7 @@ body {
   width: 100px;
   height: 100px;
   position: absolute;
-  background: url('https://pngimage.net/wp-content/uploads/2018/05/comics-png-5.png') no-repeat center center;
+  background: url('./comics-png-5.png') no-repeat center center;
   background-size: cover;
   top: 50%;
   right: -50px;
