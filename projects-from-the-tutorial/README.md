@@ -23,6 +23,7 @@
   - [Default Action](./delegation/default-action/Laboratory.js)
   - [Images Gallery](./delegation/images-gallery/Laboratory.js)
 - [Tooltip](./tooltip/Laboratory.js)
+- [Scroll Button](./scroll-button/Laboratory.js)
 - [Mouse Events](./mouse-events)
   - [Fixing a Tree](./mouse-events/fixing-a-tree/Laboratory.js)
   - [Selectable List](./mouse-events/selectable-list/Laboratory.js)
