@@ -116,8 +116,27 @@ setD.add("c");
 setD.add("d");
 
 console.log(setD.values()) // => {a,b,c,d}
+
 setD.delete("a");
 setD.delete("c");
 
 console.log(setD.has("a")); // => false
 console.log(setD.add("d")); // not gonna add it
+
+// more with ES2015
+
+// initializing (only with an iterator (like an array or a string)):
+const seto = new Set([1,2,3]);
+
+// adding
+seto.add(["Cat", "Taco", "Awesome"]); // => [1,2,3, ["Cat", "Taco", "Awesome"]]
+// we can add only one at a time
+seto.add(...["Man", "Love", "Smth"]); // => [1,2,3, ["Cat", "Taco", "Awesome"], "Man"]
+
+// only one at a time
+seto.delete(3, 'Man'); // => [1,2, ["Cat", "Taco", "Awesome"], "Man"]
+// the folowing is a noop :)
+seto.delete(["Cat", "Taco", "Awesome"])
+
+// size
+console.log(seto.size); // => 4
