@@ -39,4 +39,5 @@
   - [Drag'n'Drop Mini Framework](./drag-n-drop/mini-framework/drag-n-drop.js)
   - [Slider](./drag-n-drop/slider/slider.js)
   - [Slider Sponge](./drag-n-drop/slider-sponge/slider.js)
+  - [Tom's Draggables](./drag-n-drop/my-task-list/draggable.js)
 - next

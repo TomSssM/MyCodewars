@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  height: 100vh;
+  margin: 0;
+}
+#notepad {
+  position: absolute;
+  left: 50%;
+  margin-left: -200px;
+  top: 50%;
+  width: 400px;
+  background: #8d8d8d;
+  padding: 0;
+}
+li {
+  list-style: none;
+  display: block;
+  padding-top: 0;
+  transition: .1s all ease-in-out;
+}
+li > div {
+  user-select: none;
+  border: 1px solid #000; 
+  display: inline-block;
+  width: 100%;
+  background: #ccc;
+  text-align: center;
+  line-height: 3rem;
+  cursor: grab;
+}
+.dragging {
+  cursor: grabbing;
+  position: fixed;
+  z-index: 9999;
+  opacity: .8;
+}
