@@ -60,7 +60,7 @@ console.log(map.values); // => [2, 10, 2, 1]
 // ES6 built-in Map class implementation:
 const map2 = new Map();
 map2.has('hands'); // => false
-map2.entries(); // MapIterator
+map2.entries(); // MapIterator (Object like)
 
 const keyObj1 = {};
 const keyObj2 = {};
@@ -90,3 +90,13 @@ console.log(map2.get(keyFunc2)); // => 'func two value'
 
 console.log(map2.get(12)); // => 'numeric value'
 console.log(map2.get(NaN)); // => 'NaN value'
+
+map2.values(); // => MapIterator (Array like)
+
+map2.delete('NaN'); // => false
+map2.has(NaN); // => true
+map2.delete(NaN); // => true
+map2.has(NaN); // => false
+
+map2.clear();
+console.log(map2); // => Map(0) {}
