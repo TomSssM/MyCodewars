@@ -7,3 +7,4 @@
   - [Queue](./queue.js)
   - [Priority Queue](./priority-queue.js)
 - [Set](./sets.js)
+- [Map](./maps.js)
