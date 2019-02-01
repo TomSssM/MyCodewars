@@ -1,10 +1,15 @@
 *__Note:__ in order to convert the good old functions into es2015 class, do create a class and put an entire function body into the constructor to use the necessary closure features :)*
 - Linked Lists:
   - [Singly Linked List](./linked-list.js)
+  - Singly Linked List
   - [Doubly Linked List](./dbly-linked.js)
+  - Doubly Linked List
 - [Stack](./stack.js)
 - Queues:
   - [Queue](./queue.js)
   - [Priority Queue](./priority-queue.js)
+  - Queue ES2015
+  - Priority Queue ES2015
 - [Set](./sets.js)
 - [Map](./maps.js)
+- [Hash Table](./hash-tables.js)
