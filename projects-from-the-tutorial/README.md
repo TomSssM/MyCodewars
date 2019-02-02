@@ -40,4 +40,5 @@
   - [Slider](./drag-n-drop/slider/slider.js)
   - [Slider Sponge](./drag-n-drop/slider-sponge/slider.js)
   - [Tom's Draggables](./drag-n-drop/my-task-list/draggable.js)
+- [Cookies Example](./cookies/cookies.js)
 - next
