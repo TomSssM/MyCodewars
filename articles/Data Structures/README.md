@@ -8,7 +8,7 @@
 - Queues:
   - [Queue](./queue.js)
   - [Priority Queue](./priority-queue.js)
-  - Queue ES2015
+  - [Queue ES2015](./queue-es2015.js)
   - Priority Queue ES2015
 - [Set](./sets.js)
 - [Map](./maps.js)
