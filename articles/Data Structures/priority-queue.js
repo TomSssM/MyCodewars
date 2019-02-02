@@ -1,6 +1,6 @@
 // prioruty queue is only different in the way it implements the
 // enqueue method, which takes the value and priority and
-// inserts it according to the priority in the queu
+// inserts it according to the priority in the queue
 // note: priority 1 comes before priority 3 (3 is last)
 
 function PriorityQueue () {
