@@ -3,7 +3,7 @@
   - [Singly Linked List](./linked-list.js)
   - [Singly Linked List ES2015](./linked-list-es2015.js)
   - [Doubly Linked List](./dbly-linked.js)
-  - Doubly Linked List
+  - [Doubly Linked List](./dbly-linked-es2015.js)
 - [Stack](./stack.js)
 - Queues:
   - [Queue](./queue.js)
