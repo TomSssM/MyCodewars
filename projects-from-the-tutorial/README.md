@@ -43,5 +43,6 @@
 - [Cookies Example](./cookies/cookies.js)
 - [Keys](./keys)
   - [Keys Teststand](./keys/teststand-keys/teststand.js)
+  - [Numeric Input](./keys/numeric-input/numi.js)
   - []()
 - next
