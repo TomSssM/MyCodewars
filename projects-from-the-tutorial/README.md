@@ -44,5 +44,5 @@
 - [Keys](./keys)
   - [Keys Teststand](./keys/teststand-keys/teststand.js)
   - [Numeric Input](./keys/numeric-input/numi.js)
-  - []()
+  - [Extended Hotkeys](./keys/extended-hotkeys/hotkeys.js)
 - next
