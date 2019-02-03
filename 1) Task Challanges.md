@@ -170,6 +170,16 @@ function memoize(func) {
   };
 }
 ```
+## Upgraded
+```javascript
+const memoize = function(fun) {
+  fun.memory = {};
+  return function(...args) {
+    const key = JSON.stringify(args);
+    return fun.memory[key] ? fun.memory[key] : fun.memory[key] = fun(...args);
+  }
+};
+```
 ## As a Method
 ```javascript
 function memoize(func, depsFunc) {
