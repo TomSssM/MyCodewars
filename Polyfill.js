@@ -51,11 +51,16 @@ console.log('ABC AA a $ \\ ~~ $ a v ww ZZZ'.myToLower()); // abc aa a $ \ ~~ $ a
 
 // 3) Array.prototype.forEach
 
-Array.prototype.myForEach = function(fn) {
+Array.prototype.myForEach = function(fn, thisCont) {
   const arr = this;
   for(let i = 0; i < arr.length; i++) {
-    fn(arr[i], i, arr);
+    fn.call(thisCont, arr[i], i, arr);
   }
-}
+};
+
+[1,2,3].myForEach(function(v, i, arr) {
+  console.log(`value: ${v}; index: ${i}; array value: ${arr}`);
+  console.log(`this cont: ${this}`); // => Wrapper Object
+}, 'stringo');
 
 // 4) Next
