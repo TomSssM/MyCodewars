@@ -49,17 +49,15 @@ code --install-extension ullissescastro.theme-bracketslight
 code --install-extension davidmart.theme-jsfiddle-like-syntax-vscode
 ```
 ### Default Editor for Git
-
 Change the config:
 ```bash
 git config --global core.editor "code --wait"
 ```
 ### Update settings.json
-
 Here are my preferences:
 ```javascript
 {
-    "workbench.iconTheme": "material-icon-theme",
+    "workbench.iconTheme": "vscode-icons",
     "editor.tabSize": 2,
     "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
     "terminal.external.windowsExec": "C:\\\\Program Files\\\\Git\\\\bin\\\\bash.exe",
@@ -70,8 +68,6 @@ Here are my preferences:
     "editor.minimap.enabled": false,
     "editor.renderLineHighlight": "line",
     "editor.highlightActiveIndentGuide": true,
+    "workbench.colorTheme": "Default Light+",
 }
 ```
-
-## Atom
-*to be continued . . .*
