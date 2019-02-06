@@ -47,6 +47,8 @@ code --install-extension robertohuertasm.vscode-icons
 code --install-extension sean.Macaroon-theme
 code --install-extension ullissescastro.theme-bracketslight
 code --install-extension davidmart.theme-jsfiddle-like-syntax-vscode
+code --install-extension msjsdiag.debugger-for-chrome
+code --install-extension ritwickdey.LiveServer
 ```
 ### Default Editor for Git
 Change the config:
