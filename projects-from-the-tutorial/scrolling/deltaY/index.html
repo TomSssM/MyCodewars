@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    #container {
+      width: 200px;
+      height: 200px;
+      border: 1px solid black;
+      background: #0FF;
+      overflow: auto;
+    }
+    #big {
+      width: 700px;
+      height: 700px;
+    }
+  </style>
+</head>
+
+<body>
+
+  Scroll: <span id="delta">0</span>
+  <div id="container">
+    Scroll over me
+    <!-- we are forcing our div#container to have scrollbars only to show the
+    e.returnValue = false thing in action otherwise the wheel event would happen anyways -->
+    <div id="big"></div>
+  </div>
+
+  <script src="./deltaY.js"></script>
+</body>
+
+</html>
