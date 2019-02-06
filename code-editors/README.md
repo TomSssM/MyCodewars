@@ -56,7 +56,9 @@ Change the config:
 git config --global core.editor "code --wait"
 ```
 ### Update settings.json
+
 Here are my preferences:
+
 ```javascript
 {
     "workbench.iconTheme": "vscode-icons",
