@@ -39,6 +39,7 @@
   - [Drag'n'Drop Mini Framework](./drag-n-drop/mini-framework/drag-n-drop.js)
   - [Slider](./drag-n-drop/slider/slider.js)
   - [Slider Sponge](./drag-n-drop/slider-sponge/slider.js)
+  - [Super Soccer](./drag-n-drop/super-soccer/super-soccer-alt.js)
   - [Tom's Draggables](./drag-n-drop/my-task-list/draggable.js)
 - [Cookies Example](./cookies/cookies.js)
 - [Keys](./keys)
