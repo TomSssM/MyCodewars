@@ -54,6 +54,7 @@
   - [Avatar](./scrolling/avatar/avat.js)
   - [Up Button](./scrolling/up-button/upButton.js)
   - [Up Button Upgraded](./scrolling/up-button-upgraded/upBtnUpg.js)
-  - [Loading Pictures]()
+  - [Up Button Doubly-Upgraded](./scrolling/up-button-upgraded/upBtnUpgUpg.js)
   - [Endless Page]()
+  - [Loading Pictures]()
 - next

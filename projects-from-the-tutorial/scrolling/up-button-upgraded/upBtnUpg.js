@@ -6,6 +6,7 @@ document.addEventListener('scroll', function(e) {
     arr.hidden = true;
   } else if(window.pageYOffset >= document.documentElement.clientHeight) {
     if(arr.classList.contains('up')) arr.hidden = false;
+
     if(arr.classList.contains('down')) {
       arr.classList.remove('down');
       arr.classList.add('up');
@@ -27,3 +28,6 @@ arr.addEventListener('click', function() {
     arr.classList.add('up');
   }
 });
+
+// do feel free to check out my upgraded version of this task :)
+// however I should admit it is a bit too complex :)
