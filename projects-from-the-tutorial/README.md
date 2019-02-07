@@ -49,5 +49,5 @@
   - [Extended Hotkeys](./keys/extended-hotkeys/hotkeys.js)
 - [Scrolling](./srolling)
   - [DeltaY](./scrolling/deltaY/deltaY.js)
-  - []()
+  - [Resizing](./scrolling/resizing/resizing.js)
 - next
