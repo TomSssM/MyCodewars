@@ -49,6 +49,8 @@ code --install-extension ullissescastro.theme-bracketslight
 code --install-extension davidmart.theme-jsfiddle-like-syntax-vscode
 code --install-extension msjsdiag.debugger-for-chrome
 code --install-extension ritwickdey.LiveServer
+code --install-extension eryouhao.brackets-light-pro
+code --install-extension Heron.firefox-devtools-theme
 ```
 ### Default Editor for Git
 Change the config:
