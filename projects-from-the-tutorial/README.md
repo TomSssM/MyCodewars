@@ -53,6 +53,7 @@
   - [Rectifying the Scroll](./scrolling/rectify/rectify.js)
   - [Avatar](./scrolling/avatar/avat.js)
   - [Up Button](./scrolling/up-button/upButton.js)
+  - [Up Button Upgraded](./scrolling/up-button-upgraded/upBtnUpg.js)
   - [Loading Pictures]()
   - [Endless Page]()
 - next
