@@ -51,4 +51,5 @@
   - [DeltaY](./scrolling/deltaY/deltaY.js)
   - [Resizing](./scrolling/resizing/resizing.js)
   - [Rectifying the Scroll](./scrolling/rectify/rectify.js)
+  - [Avatar](./scrolling/avatar/avat.js)
 - next
