@@ -29,3 +29,4 @@
 - [Projects from the Tutorial](./projects-from-the-tutorial/README.md)
 - [The Cheat Sheet](./cheatsheet/)
 - [Freakshow](./freakshow.js) :microscope:
+- [AJAX](./ajax/README.md)
