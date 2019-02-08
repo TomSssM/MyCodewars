@@ -57,5 +57,5 @@
   - [Up Button Doubly-Upgraded](./scrolling/up-button-upgraded/upBtnUpgUpg.js)
   - [Endless Page](./scrolling/endless-page/endless.js)
   - [Endless Page Alternative](./scrolling/endless-page/endless-alt.js)
-  - [Loading Pictures]()
+  - [Loading Pictures](./scrolling/loading-pictures/pictures.js)
 - next
