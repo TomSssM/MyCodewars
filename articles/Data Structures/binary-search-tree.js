@@ -239,6 +239,31 @@ class BST {
           return null;
       };
   };
+
+  reverseLevelOrder() {
+
+    // it logs left-to-right (exactly that) all the values first
+    // of max height, then of height above that and so on
+    if(this.root === null) return null;
+
+    const q = [this.root];
+    const res = [];
+    while(q.length) {
+        const node = q.shift();
+        res.push(node.data);
+
+        // do note that we push the right node first
+        // so that when we reverse res, the values of
+        // each height follow left-to-right as opposed
+        // to right-to-left if we were to apply the
+        // usual levelOrder function and simply reverse
+        // the array it returns
+        node.right && q.push(node.right);
+        node.left && q.push(node.left);
+    }
+
+    return res.reverse();
+  }
 }
 
 const bst = new BST();
@@ -260,14 +285,12 @@ console.log(bst.findMin()); // => 4
 console.log(bst.findMax()); // => 22
 
 bst.add(3);
-
 console.log(bst.isPresent(3)); // true
 console.log(bst.findMinHeight()); // => 1
 console.log(bst.findMaxHeight()); // => 3
 console.log(bst.isBalanced()); // false
 
 bst.add(10);
-
 console.log(bst.findMinHeight()); // => 2
 console.log(bst.findMaxHeight()); // => 3
 console.log(bst.isBalanced()); // => true
@@ -275,4 +298,6 @@ console.log(bst.isBalanced()); // => true
 console.log('inOrder: ' + bst.inOrder()); // 3,4,5,6,7,9,10,17,20,22
 console.log('preOrder: ' + bst.preOrder()); // 9,4,3,6,5,7,17,10,22,20
 console.log('postOrder: ' + bst.postOrder()); // 3,5,7,6,4,10,20,22,17,9
+
 console.log('levelOrder: ' + bst.levelOrder()); // 9,4,17,3,6,10,22,5,7,20
+console.log('levelOrder from bottom: ' + bst.reverseLevelOrder()); // 5,7,20,3,6,10,22,4,17,9
