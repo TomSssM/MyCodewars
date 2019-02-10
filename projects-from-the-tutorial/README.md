@@ -58,5 +58,7 @@
   - [Endless Page](./scrolling/endless-page/endless.js)
   - [Endless Page Alternative](./scrolling/endless-page/endless-alt.js)
   - [Loading Pictures](./scrolling/loading-pictures/pictures.js)
-- [Page Lifecycle](./page-lifecycle/lifecycle.html)
+- [Page Lifecycle](./page-lifecycle)
+  - [Page Lifecycle Logger](./page-lifecycle/logger/lifecycle.html)
+  - [Preload Images](./page-lifecycle/preload-images/images.js)
 - next
