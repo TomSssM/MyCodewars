@@ -40,7 +40,7 @@
   - [Slider](./drag-n-drop/slider/slider.js)
   - [Slider Sponge](./drag-n-drop/slider-sponge/slider.js)
   - [Super Soccer](./drag-n-drop/super-soccer/super-soccer-alt.js)
-  - [Drag Demo](./drag-n-drop/drag-demo/drag-demo.js)
+  - [Drag Demo](./drag-n-drop/drag-demo/drag-demo-OOP.js)
   - [Tom's Draggables](./drag-n-drop/my-task-list/draggable.js)
 - [Cookies Example](./cookies/cookies.js)
 - [Keys](./keys)
