@@ -264,6 +264,42 @@ class BST {
 
     return res.reverse();
   }
+
+  invert() {
+    // this function turns Tree A into a such Tree B
+    // that the inOrder traversal for Tree B is going
+    // to return the same array as for Tree A except with
+    // numbers in the reversed order
+    // this way if the inorder traversal for Tree A is [10, 12, 22, 34], the
+    // inOrder Traversal for Tree B is going to be [34, 22, 12, 10]
+
+    if(!this.root) return null;
+
+    const swap = function(node) {
+      // all we gotta do is swap the left and right
+      // pointers for every node
+
+      if(!node.right && !node.left) return node;
+      if(!node.right) {
+        node.right = node.left;
+        node.left = null;
+        node.right = swap(node.right);
+      } else if(!node.left) {
+        node.left = node.right;
+        node.right = null;
+        node.left = swap(node.left);
+      } else {
+        let left = node.left;
+        node.left = node.right;
+        node.right = left;
+        node.left = swap(node.left);
+        node.right = swap(node.right);
+      }
+      return node;
+    };
+
+    this.root = swap(this.root);
+  }
 }
 
 const bst = new BST();
@@ -301,3 +337,6 @@ console.log('postOrder: ' + bst.postOrder()); // 3,5,7,6,4,10,20,22,17,9
 
 console.log('levelOrder: ' + bst.levelOrder()); // 9,4,17,3,6,10,22,5,7,20
 console.log('levelOrder from bottom: ' + bst.reverseLevelOrder()); // 5,7,20,3,6,10,22,4,17,9
+
+bst.invert(); // invert
+console.log('inOrder for Inverted: ' + bst.inOrder()); // 22,20,17,10,9,7,6,5,4,3
