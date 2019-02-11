@@ -61,5 +61,7 @@
 - [Page Lifecycle](./page-lifecycle)
   - [Page Lifecycle Logger](./page-lifecycle/logger/lifecycle.html)
   - [Preload Images](./page-lifecycle/preload-images/images.js)
+  - [Add Scripts](./page-lifecycle/add-scripts/add-scripts.js)
+  - [IE8- onload Polyfill](./page-lifecycle/add-scripts/add-scripts.js)
   - [Beautiful Alt](./page-lifecycle/beautiful-alt/beautiful-alt-alt.js)
 - next
