@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    .img-replace {
+      float: left;
+      border: 1px solid black;
+    }
+    .container {
+      border-bottom: 2px solid #ccc;
+      padding-bottom: .3rem;
+      margin-bottom: .3rem;
+    }
+    .container::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+  </style>
+</head>
+
+<body>
+  
+  <div class="container">
+    <!-- Google -->
+    <div data-src="./images/google.png" style="width:114px;height:40px;font-size:32px;letter-spacing:3px" class="img-replace">
+      <span style="color:#1A53F7">G</span><span style="color:#E42131">o</span><span style="color:#FEB819">o</span><span style="color:#164AF2">g</span><span style="color:#00a315">l</span><span style="color:#E42131">e</span>
+    </div>
+    
+    <!-- Yahoo -->
+    <div style="width:101px;height:40px;font-size:32px" data-src="./images/yahoo.png" class="img-replace">
+      <span style="color:#8a00ca">Yahoo</span>
+    </div>
+
+    <!-- Bing -->
+    <!-- Bing is deleberately missing -->
+    <div class="img-replace" data-src="https://js.cx/search/bing.png" style="width:100;height:40px;font-size:32px;color:#006dd4;font-weight:bold;letter-spacing: 3px; font-family:sans-serif">bing</div>
+    
+  </div>
+  
+  <button onclick="window.location.reload(true)">Reload Page</button>
+  <!-- <script src="./beautiful-alt.js"></script> -->
+  <!-- alt -->
+  <script src="./beautiful-alt-alt.js"></script>
+</body>
+</html>

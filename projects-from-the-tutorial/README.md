@@ -61,4 +61,5 @@
 - [Page Lifecycle](./page-lifecycle)
   - [Page Lifecycle Logger](./page-lifecycle/logger/lifecycle.html)
   - [Preload Images](./page-lifecycle/preload-images/images.js)
+  - [Beautiful Alt](./page-lifecycle/beautiful-alt/beautiful-alt-alt.js)
 - next
