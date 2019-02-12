@@ -64,4 +64,6 @@
   - [Add Scripts](./page-lifecycle/add-scripts/add-scripts.js)
   - [IE8- onload Polyfill](./page-lifecycle/add-scripts/add-scripts.js)
   - [Beautiful Alt](./page-lifecycle/beautiful-alt/beautiful-alt-alt.js)
+- [DOM Forms API](./form)
+  - [Create an Option](./form/create-option/option.js)
 - next
