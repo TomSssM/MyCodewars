@@ -14,3 +14,4 @@
 - [Map](./maps.js)
 - [Hash Table](./hash-tables.js)
 - [Binary Search Tree](./binary-search-tree.js)
+- [Trie](./trie.js)

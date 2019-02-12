@@ -81,17 +81,15 @@ map2.set(NaN, 'NaN value');
 
 console.log(map2.size); // => 7
 console.log(map2.get('hello')); // => 'string value
-
 console.log(map2.get(keyObj1)); // => 'obj one value'
 console.log(map2.get(keyObj2)); // => 'obj two value'
-
 console.log(map2.get(keyFunc1)); // => 'func one value'
 console.log(map2.get(keyFunc2)); // => 'func two value'
-
 console.log(map2.get(12)); // => 'numeric value'
 console.log(map2.get(NaN)); // => 'NaN value'
 
-map2.values(); // => MapIterator (Array like)
+map2.values(); // => MapIterator for values (Array like)
+map2.keys(); // => MapIterator for keys (Array like)
 
 map2.delete('NaN'); // => false
 map2.has(NaN); // => true
