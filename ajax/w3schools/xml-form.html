@@ -23,6 +23,14 @@ function loadXMLDoc() {
       myFunction(this);
     }
   };
+
+  // we could also listen implement the
+  // 'successful load' myFunction simply
+  // on the onload event
+  xmlhttp.onload = function() {
+    myFunction();
+  };
+  
   xmlhttp.open("GET", "cd_catalog.xml", true);
   xmlhttp.send();
 }
