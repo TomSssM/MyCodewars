@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Send</title>
+</head>
+<body>
+  <h1>Cat Friends</h1> 
+  <p class="message box">
+    Reply from Server will be here
+  </p>
+  <p>
+    <label for="name">Your name:
+      <input type="text" id="name"/>
+    </label>
+    <button id="sendMessage">
+      Send Message
+    </button>
+  </p>
+
+  <script>
+    sendMessage.addEventListener('click', function() {
+      const userName = document.getElementById('name').value;
+      const req=new XMLHttpRequest();
+
+      req.open("POST", url, true); // url is udefined let's pretend it exists
+      // the setRequestHeader method should be called before send but after open
+      req.setRequestHeader('Content-Type','text/plain');
+      req.onreadystatechange = function() {
+        if(req.readyState === 4 && req.status === 200) {
+          document.getElementsByClassName('message')[0].innerHTML=req.responseText;
+        }
+      };
+      // we also indicate the string (plain text) that we are sending
+      req.send(userName);  
+    });
+  </script>
+</body>
+</html>
