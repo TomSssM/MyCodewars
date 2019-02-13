@@ -21,3 +21,7 @@ document.addEventListener('keydown', function(e) {
 document.addEventListener('keyup', function(e) {
   pressed.delete(e.code);
 });
+
+document.addEventListener('keydown', function(e) {
+  if(e.code === 'Control') return;
+});

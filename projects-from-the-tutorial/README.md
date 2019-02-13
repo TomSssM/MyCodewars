@@ -66,4 +66,5 @@
   - [Beautiful Alt](./page-lifecycle/beautiful-alt/beautiful-alt-alt.js)
 - [DOM Forms API](./form)
   - [Create an Option](./form/create-option/option.js)
+  - [Editable Div](./form/editable-div/editable-div.js)
 - next
