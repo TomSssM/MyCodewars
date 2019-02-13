@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Geolocation</title>
+</head>
+<body>
+  It's a privacy matter actually
+  <script>
+    // checking if a device supports the location stuff
+    if(window.navigator.geolocation) {
+      // in case of a success, call the function we pass as an argument
+      // and feed to it as an argument a position property which is
+      // an object which has two properties: .coords (coordinates object)
+      // and .timestamp (when the geolocation was retrieved)
+
+      window.navigator.geolocation.getCurrentPosition(fun);
+    } else {
+      document.body.innerHTML = 'Sowwy your device can\'t be located';
+    }
+
+    function fun(position) {
+      // we are going to use the coordinates object which lives
+      // in a coords property and has many location related
+      // properties, we will use the latitiude and longitude
+
+      document.body.innerHTML = `lattitude: ${position.coords.latitude} , longitude: ${position.coords.longitude}`;
+    }
+  </script>
+</body>
+</html>
