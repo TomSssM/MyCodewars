@@ -6,3 +6,4 @@
 - [Freak Show](./freakshow.js)
 - JSON
 - Iterators and Generators
+- git cheatsheet
