@@ -27,4 +27,4 @@
 - [Code Editors Config](./code-editors/README.md) :wrench:
 - [Articles](./articles/README.md) :newspaper:
 - [Projects from the Tutorial](./projects-from-the-tutorial/README.md) :page_facing_up:
-- [Big Snippets](./big-snippets/README.md) :eyes:
+- [Snippets](./snippets/README.md) :eyes:

@@ -33,7 +33,7 @@ git commit
 # Part 5 linking
 This site was built using [GitHub Pages](https://pages.github.com/).   
 This site was built using [GitHub Pages](https://github.com/TomSssM/MyCodewars/blob/master/markdownCheatSheet.md#part-3-quoting-text).   
-Go to the very first created file here: [CodeWarsOne](./Laboratory.js/).
+Go to the very first created file here: [CodeWarsOne](../Laboratory.js/).
 
 # Part 6 list
 #### Unordered List:
