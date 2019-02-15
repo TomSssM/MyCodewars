@@ -1,0 +1,29 @@
+body {
+  height: 3000px;
+}
+.button-holder {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+textarea {
+  left: 0;
+  top: 0;
+  border: 0;
+  padding: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  /* remove resizing handle in Firefox */
+  resize: none;
+  /* remove outline on focus in Chrome */
+  outline: none;
+  /* remove scrollbar in IE */
+  overflow: auto;
+}
+
+.editing {
+  background: #ccc;
+  position: relative;
+}

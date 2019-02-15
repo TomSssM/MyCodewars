@@ -67,4 +67,5 @@
 - [DOM Forms API](./form)
   - [Create an Option](./form/create-option/option.js)
   - [Editable Div](./form/editable-div/editable-div.js)
+  - [Editable Td](./form/editable-cells/edit-td.js)
 - next
