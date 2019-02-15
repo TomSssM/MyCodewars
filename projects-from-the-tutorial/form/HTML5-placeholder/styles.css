@@ -1,0 +1,13 @@
+body {
+  font: 14px/14px sans-serif;
+}
+input {
+  font: 14px/14px sans-serif;
+  width: 12em;
+  padding: 0;
+  margin: 0;
+}
+.placeholder {
+  position: absolute;
+  cursor: text;
+}
