@@ -71,4 +71,5 @@
   - [Keyboard Mouse](./form/mouse/mouse.js)
   - [Keyboard Mouse Alt](./form/mouse-alt/mouse-alt.js)
   - [Keyboard Mouse Fixed](./form/mouse/mouse-fixed.js)
+  - [CapsLock Check](./form/caps-lock-warn/warn.js)
 - next
