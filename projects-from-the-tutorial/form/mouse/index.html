@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      height: 100vh;
+    }
+    #mouse {
+      display: inline-block;
+      cursor: pointer;
+      user-select: none;
+      left: 0;
+      top: 0;
+      margin: 0;
+    }
+
+    #mouse:focus {
+      outline: 1px dashed black;
+    }
+  </style>
+</head>
+
+<body>
+
+  <p>Click on the mouse and move it with arrow keys.</p>
+
+  <pre id="mouse" tabindex="0">
+ _   _
+(q\_/p)
+ /. .\
+=\_t_/=   __
+ /   \   (
+((   ))   )
+/\) (/\  /
+\  Y  /-'
+ nn^nn
+</pre>
+
+
+  <!-- <script src="./mouse.js"></script> -->
+  <script src="./mouse-fixed.js"></script>
+
+</body>
+
+</html>

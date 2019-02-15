@@ -68,4 +68,7 @@
   - [Create an Option](./form/create-option/option.js)
   - [Editable Div](./form/editable-div/editable-div.js)
   - [Editable Td](./form/editable-cells/edit-td.js)
+  - [Keyboard Mouse](./form/mouse/mouse.js)
+  - [Keyboard Mouse Alt](./form/mouse-alt/mouse-alt.js)
+  - [Keyboard Mouse Fixed](./form/mouse/mouse-fixed.js)
 - next
