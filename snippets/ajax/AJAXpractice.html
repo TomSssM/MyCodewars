@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>AJAX requests</title>
+</head>
+<body>
+
+  <p id="demo"></p>
+
+  <script>
+    // launch this website on a live server and let the script below
+    // fetch some info from the local XML file
+    const req = new XMLHttpRequest();
+    req.onreadystatechange = function() {
+      if(this.readyState === 4 && this.status === 200) {
+        const xml = this.responseXML;
+        let art = '<b>Artists:</b> <br>';
+        const artists = Array.from(xml.getElementsByTagName('ARTIST'));
+
+        artists.forEach(arti => {
+          art += `${arti.firstChild.nodeValue} <br>`;
+        });
+
+        document.querySelector('#demo').innerHTML = art;
+      }
+    };
+    req.open('GET', 'expl.xml', true);
+    req.send();
+  </script>
+</body>
+</html>

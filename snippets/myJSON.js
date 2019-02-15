@@ -5,7 +5,9 @@
 // property keys and strings must be double quoted 
 // and there should be no trailing commas
 // then such a string can be safelyfed to JSON.parse
-// JS objects to be fed to JSON.stringify can be anything
+// JS objects to be fed to 
+// JSON.stringify can be anything however beware of illegal values
+// (function, undefiend, symbol)
 const jsonString = '{  "key1": "string", "key2": true }';
 const anotherJsonString = '"string"';
 
