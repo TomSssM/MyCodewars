@@ -74,4 +74,5 @@
   - [CapsLock Check](./form/caps-lock-warn/warn.js)
   - [HTML5 Placeholder](./form/HTML5-placeholder/html5-placeholder.js)
   - [The Ultimate Placeholder](./form/the-ultimate-placeholder/the-ultimate-placeholder.js)
+  - [Deposit Calculator](./form/deposit-calc/deposit.js)
 - next
