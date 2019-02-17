@@ -6,5 +6,6 @@
 - [Freak Show](./freakshow.js)
 - [JSON](./myJSON.js)
 - [Geolocation](./geolocation.html)
+- [Timers](./timers/README.md)
 - Iterators and Generators
 - git cheatsheet
