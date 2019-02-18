@@ -24,6 +24,19 @@ setTimeout(function run() {
 }, 2000);
 
 // ________________________________________________________________________________________________________________________
+// Imitating setInterval with setTimeout
+// ________________________________________________________________________________________________________________________
+// *the following information is the result of a long experiment
+// since setInterval starts counting the interval and then invokes its
+// callback for it either to execute during the interval or delay all
+// others if it takes more time to execute than the interval we could also
+// implement setTimeout that is absolutely the same as setInterval
+setTimeout(function run() {
+  setTimeout(run, 100); // first starts counting down our time
+  soemFunc(); // then invoke func (even if it is difficult and takes for ever to execute)
+}, 100);
+
+// ________________________________________________________________________________________________________________________
 // Details
 // ________________________________________________________________________________________________________________________
 
