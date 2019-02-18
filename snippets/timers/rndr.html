@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Rendering</title>
+</head>
+<body>
+  <button id="crsh">Single Call</button>
+
+  <button id="okay">Recursive setTimeout</button>
+
+  <div id="progress"></div>
+
+  <script>
+    // Another benefit for in-browser scripts is that they can show a progress bar or something
+    // to the user. That’s because the browser usually does all “repainting” after the script is complete.
+    // So if we do a single huge function then even if it changes something, the changes are not
+    // reflected in the document till it finishes.
+
+    let i = 0;
+    function countCrash() {
+      for (let j = 0; j < 1e5; j++) {
+        i++;
+        // put the current i into the <div>
+        // (we'll talk more about innerHTML in the specific chapter, should be obvious here)
+        progress.innerHTML = i;
+      }
+    }
+
+    // If you run it, the changes to i will show up after the whole count finishes.
+    // And if we use setTimeout to split it into pieces then changes are applied in-between
+    // the runs, so this looks better:
+
+    function countSuccess() {
+      // do a piece of the heavy job (*)
+      do {
+        i++;
+        progress.innerHTML = i;
+      } while (i % 1e3 != 0);
+
+      if (i < 1e7) {
+        setTimeout(countSuccess, 0);
+      }
+    }
+
+    crsh.onclick = () => {
+      i = 0;
+      countCrash();
+    }
+    okay.onclick = () => {
+      i = 0;
+      countSuccess();
+    }
+  </script>
+</body>
+</html>

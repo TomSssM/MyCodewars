@@ -6,3 +6,5 @@
 - [Debounce](./debounce.js)
 - [Throttler](./throttle.js)
 - [Divide and Conquer](./div-a-conq.js)
+- [How big Is The Minial Delay?](./min-dlay.js)
+- [Rendering](./rndr.html)
