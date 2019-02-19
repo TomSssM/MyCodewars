@@ -39,20 +39,30 @@ const showPrompt = function(html, callback) {
   container.classList.remove('hide');
   form.elements.text.focus();
 
-  const firstElem = form.elements[0];
-  const lastElem = form.elements[form.elements.length - 1];
-  
-  const checkTabFirst = function(e) {
-    if(e.code === 'Tab' && e.shiftKey) {
-      e.preventDefault();
-      lastElem.focus();
-    }
-  };
+  // const firstElem = form.elements[0];
+  // const lastElem = form.elements[form.elements.length - 1];
+  // firstElem.okeydown = function(e) {
+  //   if(e.code === 'Tab' && e.shiftKey) {
+  //     e.preventDefault();
+  //     lastElem.focus();
+  //   }
+  // };
+  // lastElem.onkeydown = function(e) {
+  //   if(e.code === 'Tab' && !e.shiftKey) {
+  //     e.preventDefault();
+  //     firstElem.focus();
+  //   }
+  // };
 
-  const checkTabLast = function(e) {
-    if(e.code === 'Tab' && !e.shiftKey) {
-      e.preventDefault();
-      firstElem.focus();
+  const delegatedTab = function(e) {
+    if(e.code === 'Tab') {
+      if(e.target === form.elements[form.elements.length - 1] && !e.shiftKey) {
+        form.elements[0].focus();
+        e.preventDefault();
+      } else if(e.target === form.elements[0] && e.shiftKey) {
+        form.elements[form.elements.length - 1].focus();
+        e.preventDefault();
+      }
     }
   };
 
@@ -75,24 +85,28 @@ const showPrompt = function(html, callback) {
       oncancel();
     }
   };
-  
+
   const remList = function() {
     uncoverPage();
     setTimeout(() => container.style.display = 'none', 200);
-    form.classList.remove('visible');
 
+    form.classList.remove('visible');
     document.removeEventListener('keydown', escapeCheck);
+    document.removeEventListener('keydown', delegatedTab);
     form.elements.cancel.removeEventListener('click', oncancel);
     form.removeEventListener('submit', onsuccess);
-    lastElem.removeEventListener('keydown', checkTabLast);
-    firstElem.removeEventListener('keydown', checkTabFirst);
+
+
+    // lastElem.removeEventListener('keydown', checkTabLast);
+    // firstElem.removeEventListener('keydown', checkTabFirst);
   };
   
   document.addEventListener('keydown', escapeCheck);
+  document.addEventListener('keydown', delegatedTab);
   form.addEventListener('submit', onsuccess);
   form.elements.cancel.addEventListener('click', oncancel);
-  firstElem.addEventListener('keydown', checkTabFirst);
-  lastElem.addEventListener('keydown', checkTabLast);
+  // firstElem.addEventListener('keydown', checkTabFirst);
+  // lastElem.addEventListener('keydown', checkTabLast);
 
   setTimeout(() => document.body.querySelector('.hideman').classList.add('visible'),0);
   setTimeout(() => form.classList.add('visible'),0);
