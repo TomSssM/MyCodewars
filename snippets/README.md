@@ -8,4 +8,4 @@
 - [Geolocation](./geolocation.html)
 - [Timers](./timers/README.md)
 - [git cheatsheet](./git-cheatsheet.md)
-- Iterators and Generators
+- [Iterators and Generators](./iterators/README.md)
