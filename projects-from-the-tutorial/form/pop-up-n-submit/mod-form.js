@@ -23,6 +23,7 @@ const coverPage = function() {
 const uncoverPage = function() {
   const div = document.querySelector('.hideman');
   div.classList.remove('visible');
+  
   setTimeout(() => {
     div.remove();
     document.body.style.overflow = '';
@@ -31,33 +32,34 @@ const uncoverPage = function() {
 
 const showPrompt = function(html, callback) {
   coverPage();
-
   form.querySelector('#prompt-message').innerHTML = html;
   form.elements.text.value = '';
+
   container.style.display = 'block';
   container.classList.remove('hide');
-  // form.elements.text.focus();
+  form.elements.text.focus();
 
   const firstElem = form.elements[0];
   const lastElem = form.elements[form.elements.length - 1];
-
-  firstElem.addEventListener('keydown', function(e) {
+  
+  const checkTabFirst = function(e) {
     if(e.code === 'Tab' && e.shiftKey) {
       e.preventDefault();
       lastElem.focus();
     }
-  });
+  };
 
-  lastElem.addEventListener('keydown', function(e) {
+  const checkTabLast = function(e) {
     if(e.code === 'Tab' && !e.shiftKey) {
       e.preventDefault();
       firstElem.focus();
     }
-  });
-  
+  };
+
   const onsuccess = function(e) {
     e.preventDefault();
     const text = e.currentTarget.elements.text.value;
+
     if(!text) return;
     callback(text);
     remList();
@@ -78,15 +80,19 @@ const showPrompt = function(html, callback) {
     uncoverPage();
     setTimeout(() => container.style.display = 'none', 200);
     form.classList.remove('visible');
+
     document.removeEventListener('keydown', escapeCheck);
     form.elements.cancel.removeEventListener('click', oncancel);
     form.removeEventListener('submit', onsuccess);
+    lastElem.removeEventListener('keydown', checkTabLast);
+    firstElem.removeEventListener('keydown', checkTabFirst);
   };
   
   document.addEventListener('keydown', escapeCheck);
   form.addEventListener('submit', onsuccess);
   form.elements.cancel.addEventListener('click', oncancel);
-
+  firstElem.addEventListener('keydown', checkTabFirst);
+  lastElem.addEventListener('keydown', checkTabLast);
 
   setTimeout(() => document.body.querySelector('.hideman').classList.add('visible'),0);
   setTimeout(() => form.classList.add('visible'),0);
