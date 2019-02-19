@@ -7,5 +7,5 @@
 - [JSON](./myJSON.js)
 - [Geolocation](./geolocation.html)
 - [Timers](./timers/README.md)
+- [git cheatsheet](./git-cheatsheet.md)
 - Iterators and Generators
-- git cheatsheet
