@@ -75,4 +75,6 @@
   - [HTML5 Placeholder](./form/HTML5-placeholder/html5-placeholder.js)
   - [The Ultimate Placeholder](./form/the-ultimate-placeholder/the-ultimate-placeholder.js)
   - [Deposit Calculator](./form/deposit-calc/deposit.js)
+  - [Pop-Up and Submit Form](./form/pop-up-n-submit/mod-form.js)
+  - [Validate Form](./form/validate-form/vald.js)
 - next

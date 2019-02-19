@@ -1,0 +1,58 @@
+html,
+body {
+  width: 100%;
+  height: 4000px; /* deliberately for scroll */
+  padding: 0;
+  margin: .3rem;
+}
+#prompt-form {
+  display: inline-block;
+  padding: 5px 5px 5px 70px;
+  width: 200px;
+  border: 1px solid black;
+  background: white url('./prompt.png') no-repeat left 5px;
+  vertical-align: middle;
+  transform: scale(0);
+  transition: all .2s ease-in-out;
+}
+#prompt-form-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999; /* the biggest z-index of all */
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: none;
+}
+#prompt-form-container:before {
+  display: inline-block;
+  height: 100%;
+  content: '';
+  vertical-align: middle;
+}
+#prompt-form input[name="text"] {
+  display: block;
+  margin: 5px;
+  width: 180px;
+}
+/* the following styles for the div 
+to cover the entire page 
+(viewport to be precise) */
+.hideman {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #ccc;
+  opacity: 0;
+  transition: .2s all ease-in-out;
+  top: 0;
+  left: 0;
+  z-index: 9900;
+}
+.hideman.visible {
+  opacity: 0.3;
+}
+#prompt-form.visible {
+  transform: scale(1, 1);
+}
