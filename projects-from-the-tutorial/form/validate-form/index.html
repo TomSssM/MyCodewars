@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Correct Message</title>
+  <style>
+    td select,
+    td input {
+      width: 150px;
+    }
+    label {
+      display: block;
+    }
+    .error-message {
+      color: red;
+    }
+    .error input, .error textarea {
+      border: 1px solid red;
+    }
+  </style>
+</head>
+<body>
+  <form action="https://www.unexisitingWebsite.com/missing_php.php" method="GET">
+      <table>
+        <tr>
+          <td>From who</td>
+          <td>
+            <input name="from" type="text">
+          </td>
+        </tr>
+        <tr>
+          <td>Password:</td>
+          <td>
+            <input name="password" type="password">
+          </td>
+        </tr>
+        <tr>
+          <td>Check Password</td>
+          <td>
+            <input name="password2" type="password">
+          </td>
+        </tr>
+        <tr>
+          <td>Where</td>
+          <td>
+            <select name="to">
+              <option></option>
+              <option value="1">A</option>
+              <option value="2">B</option>
+              <option value="3">C</option>
+            </select>
+          </td>
+        </tr>
+      </table>
+
+    Message text:
+    <label>
+      <textarea name="message" style="display:block;width:400px;height:100px"></textarea>
+    </label>
+
+    <input type="submit" onclick="return validate(this.form)" value="validate">
+    
+  </form>
+
+  <script src="./vald.js"></script>
+</body>
+</html>
