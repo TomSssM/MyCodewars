@@ -77,5 +77,4 @@
   - [Deposit Calculator](./form/deposit-calc/deposit.js)
   - [Pop-Up and Submit Form](./form/pop-up-n-submit/mod-form.js)
   - [Validate Form](./form/validate-form/vald.js)
-  - [Guide to Focusing](./form/focusing/focusing.js)
 - next
