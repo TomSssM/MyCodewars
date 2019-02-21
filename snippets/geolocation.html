@@ -16,7 +16,7 @@
       // an object which has two properties: .coords (coordinates object)
       // and .timestamp (when the geolocation was retrieved)
 
-      window.navigator.geolocation.getCurrentPosition(fun);
+      window.navigator.geolocation.getCurrentPosition(fun, funError);
     } else {
       document.body.innerHTML = 'Sowwy your device can\'t be located';
     }
@@ -28,6 +28,57 @@
 
       document.body.innerHTML = `lattitude: ${position.coords.latitude} , longitude: ${position.coords.longitude}`;
     }
+
+    // function to run if we get back an error
+    function funError(error) {
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          document.body.innerHTML = "User denied the request for Geolocation."
+          break;
+        case error.POSITION_UNAVAILABLE:
+          document.body.innerHTML = "Location information is unavailable."
+          break;
+        case error.TIMEOUT:
+          document.body.innerHTML = "The request to get user location timed out."
+          break;
+        case error.UNKNOWN_ERROR:
+          document.body.innerHTML = "An unknown error occurred."
+          break;
+      }
+    }
+
+    // other interesting methods
+    // watchPosition will call a passed-in callback like in setInterval
+    // each time passing to it an updated position object
+    // using this technique we could implement our own navigator
+
+    const target = {
+      latitude : 0,
+      longitude: 0,
+    }
+
+    const options = {
+      enableHighAccuracy: false,
+      timeout: 5000,
+      maximumAge: 0
+    };
+
+    const id = navigator.geolocation.watchPosition(success, error, options);
+
+    // function to be called by watchPosition regularly
+    function success(pos) {
+      const crd = pos.coords;
+      console.log('watching the user');
+
+      if (target.latitude === crd.latitude && target.longitude === crd.longitude) {
+        console.log('Congratulation, you reach the target');
+        navigator.geolocation.clearWatch(id);
+      }
+    };
+
+    function error(err) {
+      console.warn('ERROR(' + err.code + '): ' + err.message);
+    };
   </script>
 </body>
 </html>
