@@ -9,3 +9,4 @@
 - [Timers](./timers/README.md)
 - [git cheatsheet](./git-cheatsheet.md)
 - [Iterators and Generators](./iterators/README.md)
+- [Private Properties](./private.js)
