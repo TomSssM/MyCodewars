@@ -50,6 +50,13 @@ JSON.stringify(function() {}); // => undefined
 JSON.stringify({foo: function() {}}); // => '{}'
 JSON.stringify([function() {}]); // => '[null]'
 
+// stringify coverts strings with both double and single quotes to a string
+// containing a string with double quotes
+JSON.stringify('OK'); // ""OK""
+JSON.stringify("OK"); // ""OK""
+JSON.stringify('OK') === '"OK"'; // true
+JSON.stringify('OK') === "\"OK\""; // true
+
 // ________________________________________________________________________________________________________________________
 // Parse
 // ________________________________________________________________________________________________________________________
