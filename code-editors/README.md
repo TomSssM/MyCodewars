@@ -51,6 +51,9 @@ code --install-extension msjsdiag.debugger-for-chrome
 code --install-extension ritwickdey.LiveServer
 code --install-extension eryouhao.brackets-light-pro
 code --install-extension Heron.firefox-devtools-theme
+code --install-extension techer.open-in-browser
+code --install-extension formulahendry.auto-rename-tag
+code --install-extension aaron-bond.better-comments
 ```
 ### Default Editor for Git
 Change the config:
