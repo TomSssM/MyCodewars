@@ -5,15 +5,17 @@
 
 # Part 2 bold & italic
 In order to create a line break use 3 trailing spaces in the end   
-  or two on both ends of the line  
+  or two on both ends of the line or simply leave a blank line  
 **Bold**   
 __Bold__   
 *Italic*   
 _Italic_   
 ~~Strikethrough~~ \
 *__Lorem Ipsum__* \
-**_Lorem Ipsum_** \
-**_~~Lorem Ipsum~~_** \
+**_Lorem Ipsum_**
+
+**_~~Lorem Ipsum~~_**
+
 **This ~~text~~ is _extremely_ important**
 
 # Part 3 Quoting text
@@ -74,7 +76,7 @@ As there as no PR's or issues right now the #2 reference is futile. We will have
 ![the real ghostbusters img](https://upload.wikimedia.org/wikipedia/en/thumb/5/5d/Realghostbusters_title.jpg/250px-Realghostbusters_title.jpg)
 <p align="center">
   <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/5d/Realghostbusters_title.jpg/250px-Realghostbusters_title.jpg" width="100" height="100"/>
-  </p>
+</p>
 
 # Part 9
  | Hey You, I Love Your Soul | Invincible | Collide |
