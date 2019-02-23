@@ -46,11 +46,13 @@ $ git branch -a
 Delete a branch
 ``` bash
 $ git branch -d <name-of-a-branch>
+$ git branch -D <name-of-a-branch>      (force deleting)
 ```
 
 Create and automatically switch to a branch
 ``` bash
 $ git branch -m <name-of-a-branch>
+$ git checkout -b <name-of-a-branch>
 ```
 
 ## Removing Red Files
@@ -197,3 +199,9 @@ And then implement them like this:
 ```bash
 $ git br feature
 ```
+
+There is also a way to create alisases for BASH (__but not for git!__) with the following command:
+```bash
+alias gac="git add -A && git commit -m"
+```
+The aliases you create this way don't live in the .gitconfig file
