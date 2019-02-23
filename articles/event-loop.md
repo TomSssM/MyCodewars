@@ -21,7 +21,7 @@ A JavaScript runtime contains a message queue, which is a list of messages to be
 # Regular Event Loop
 
 <p align="center">
-  <img src="../data/event-loop.png" width="520px">
+  <img src="../data/event-loop.png">
 </p>
 
 This shows the execution order given JavaScript's Call Stack, Event Loop, and
@@ -461,5 +461,4 @@ Finally, there are no other commands to execute, so it too is taken off the Call
 Stack.
 
 Our program has now finished execution.
-
 End.
