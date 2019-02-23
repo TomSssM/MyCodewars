@@ -167,3 +167,33 @@ $ git stash pop
 $ git stash drop <stash-hash>
 $ git stash clear
 ```
+
+## Aliases
+There are two ways of creating git aliases
+
+First you can add them directly to the .gitconfig file itself like so:
+
+```bash
+[core]
+  editor = code --wait
+[user]
+  name = TomSssM
+  email = ilyashome3@gmail.com
+[alias]
+  ci = "commit"
+  st = status
+```
+Or you could write them like this:
+
+```bash
+$ git config --global alias.co checkout
+$ git config --global alias.br "branch -m"
+```
+
+And then implement them like this:
+
+
+
+```bash
+$ git br feature
+```
