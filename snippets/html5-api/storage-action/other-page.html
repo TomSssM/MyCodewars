@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Other Page</title>
+</head>
+<body>
+  Chnage the value of localStorage in the main page :)
+  <script>
+    window.addEventListener('storage', function(e) {
+      document.body.innerHTML = `<b>localStorage[${e.key}]:</b> from <b>${e.oldValue}</b> to <b>${e.newValue}</b>; <br />
+      Value changed at <i>${e.url}</i> <br />
+      Current localStorage: <pre>${JSON.stringify(e.storageArea, null, 4)}</pre>`;
+    });
+  </script>
+</body>
+</html>

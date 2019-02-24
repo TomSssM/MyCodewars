@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./styles.css">
+  <title>localStorage Action</title>
+</head>
+<body>
+  <header>
+    <h1>Set localStorage</h1>
+  </header>
+
+  <main>
+    <div class="row">
+      <div class="col-7">
+        <label for="key">Key:</label>
+      </div>
+      <div class="col-93">
+        <input type="text" id="key"></input>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-7">
+        <label for="val">Value:</label>
+      </div>
+      <div class="col-93">
+        <input type="text" id="val"></input>
+      </div>
+    </div>
+    
+    <input type="button" value="Set localStorage" id="set">
+    
+    <p>Try opening <a href="./other-page.html" target="_blank">this page</a> and while it is open setting local storage (the changes to it wil be reflected
+    in this other open page too cause changes to local storage can be tracked across pages of the same origin. Do note however that <strong>storage event won't work
+    on the same page that is making the changes</strong></p>
+  </main>
+
+  <script src="./index.js"></script>
+</body>
+</html>

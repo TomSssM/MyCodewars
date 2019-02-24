@@ -1,0 +1,29 @@
+main, header {
+  width: 700px;
+  margin: 0 auto;
+}
+
+p {
+  width: 70%;
+  text-align: justify;
+}
+
+.row {
+  margin: .4rem 0;
+}
+
+.row::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.col-93 {
+  width: 93%;
+  float: left;
+}
+
+.col-7 {
+  width: 7%;
+  float: left;
+}

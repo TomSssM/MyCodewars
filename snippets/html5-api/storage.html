@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Storage</title>
+</head>
+<body>
+  Storage
+  <p>
+    Local Storage:
+    <span id="one"></span>
+  </p>
+  <p>
+    Session Storage
+    <span id="two"></span>
+  </p>
+  <script>
+    const one = document.querySelector('#one');
+    const two = document.querySelector('#two');
+
+    // web storage is bigger and more secure than cookies
+    // data in web storage is never transferred to a server and
+    // all websites from the same origin ( same domain + protocol ) can access the data in web storage
+
+    if(!window.localStorage) {
+      document.body.innerHTML = 'No local storage available';
+    } else {
+      document.addEventListener('click', function() {
+        if(!localStorage.clickCount) {
+          localStorage.clickCount = 1;
+        } else localStorage.clickCount = +localStorage.clickCount + 1;
+
+        one.innerHTML = `You clicked ${localStorage.clickCount} time(s)`;
+      });
+    }
+
+    // you can also set/delete localStorage items like so:
+    localStorage.setItem('John', 23);
+    localStorage.removeItem('John');
+    // clear the entire storge
+    const obj = {};
+    const obj2 = {};
+    localStorage.setItem(obj, 'obj');
+    localStorage.setItem(obj2, 'obj2');
+    localStorage[obj] === localStorage[{}]; // => true (everything coerced to a string)
+    // don't forget that this will clear the localStorage whenever the page loads!!!
+    localStorage.clear();
+
+    // session storage
+    // same as local storage except it is cleared when the user closes the page
+    if(!window.sessionStorage) {
+      document.body.innerHTML = 'No Session Storage Support';
+    } else {
+      document.addEventListener('click', function() {
+        if(!sessionStorage.clickCount) {
+          sessionStorage.clickCount = 1;
+        } else {
+          sessionStorage.clickCount = +sessionStorage.clickCount + 1;
+        }
+
+        two.innerHTML = `You clicked ${sessionStorage.clickCount} time(s)`;
+      });
+    }
+
+    // there is also a storage event that is triggered on the same origin whenever
+    // localStorage is changed ( but not when sessionStorage is changed )
+    // the example is in ./storage-demo/index.html
+  </script>
+</body>
+</html>

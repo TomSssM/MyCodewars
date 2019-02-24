@@ -5,7 +5,7 @@
 - [Markdown Cheatsheet](./markdownCheatSheet.md)
 - [Freak Show](./freakshow.js)
 - [JSON](./myJSON.js)
-- [Geolocation](./geolocation.html)
+- [HTML5 API](./html5-api/README.md)
 - [Timers](./timers/README.md)
 - [git cheatsheet](./git-cheatsheet.md)
 - [Iterators and Generators](./iterators/README.md)
