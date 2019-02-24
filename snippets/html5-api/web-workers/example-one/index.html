@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Web Workers</title>
+  <style>
+    .finished {
+      background: yellow;
+      border: 1px solid blue;
+      margin: 0 3rem;
+    }
+    #load {
+      width: 700px;
+      position: relative;
+      height: 40px;
+      text-align: center;
+      border: 1px solid #000;
+      margin: .3rem auto;
+    }
+    #load-line {
+      content: '';
+      display: block;
+      width: 0;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: greenyellow;
+    }
+    #count {
+      color: chocolate;
+      vertical-align: middle;
+      line-height: 40px;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <button id="ok1">Start Worker</button>
+  <button id="ok2">Terminate Worker</button>
+  <button id="ok3">Do the same without a worker</button>
+  <div id="load">
+    <div id="load-line"></div>
+    <span id="count">0%</span>
+  </div>
+  <script>
+    // Web Workers are basically the same as our asynchrous
+    // setInterval / setTimeout functions that we used in the past for
+    // CPU hungry task (counting to 1e12) becuase async events go to
+    // the Queue and Event Loop and all
+    // except they don't have access to DOM
+
+    const but1 = document.querySelector('#ok1');
+    const but2 = document.querySelector('#ok2');
+    const but3 = document.querySelector('#ok3');
+
+    const load = document.querySelector('#load');
+    const count = document.querySelector('#count');
+    const loadLine = document.querySelector('#load-line');
+
+    let w = null;
+
+    but1.addEventListener('click', function() {
+      if(!w) {
+        w = new Worker('./workers.js');
+        w.onmessage = function(event) {
+          loadLine.style.width = `${event.data}px`;
+          count.innerHTML = `${((event.data * 100) / 700) >> 0}%`;
+        };
+      }
+    });
+
+    but2.addEventListener('click', function() {
+      if(w) {
+        w.terminate();
+        w = null;
+      }
+    });
+
+    // just as an experiment let's try doing the same function without a worker
+    const workerFunction = function() {
+      const doSomeHeaveStuff = function() {
+        for(let y = 0; y < 7e5; y++) {
+          y + 1;
+        }
+      };
+
+      for(let i = 0; i <= 7e3; i++) {
+        doSomeHeaveStuff();
+        // setTimeout(() => postMessage(i / 10), 4 * (i + 1));
+        postMessage(i / 10);
+      }
+    };
+
+    but3.addEventListener('click', () => workerFunction());
+
+  </script>
+</body>
+</html>

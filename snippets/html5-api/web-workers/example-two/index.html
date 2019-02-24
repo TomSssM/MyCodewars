@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Workers Two</title>
+  <style>
+    #put {
+      margin: .4rem 0;
+    }
+    #res {
+      border: 1px solid #000;
+      border-radius: 30px;
+      padding: .3rem;
+    }
+  </style>
+</head>
+<body>
+  <input type="text" id="put">
+  <span id="res"></span>
+  <script>
+    const put = document.querySelector('#put');
+    const result = document.querySelector('#res');
+    const worker = new Worker('./workers-two.js');
+
+    put.addEventListener('change', function() {
+      console.log('sending a message to worker');
+      worker.postMessage([this.value, 12, true]);
+    });
+
+    worker.onmessage = function(e) {
+      console.log('message received from worker');
+      result.innerHTML = `Result: ${e.data}`;
+    };
+
+  </script>
+</body>
+</html>
