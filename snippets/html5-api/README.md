@@ -6,3 +6,4 @@
 - [Web Workers](./web-workers)
   - [Example One](./web-workers/example-one/index.html)
   - [Example Two](./web-workers/example-two/index.html)
+  - [Shared Workers](./web-workers/shared/index.html)
