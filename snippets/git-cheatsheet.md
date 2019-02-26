@@ -132,7 +132,7 @@ $ git commit --amend -m <new-message-text>
 
 ### Squash
 ``` bash
-$ git rebase -i HEAD~<number-of-commits-to-worj-with>
+$ git rebase -i HEAD~<number-of-commits-to-display-starting-from-current>
 ```
 
 ### Rebase
