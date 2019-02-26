@@ -194,14 +194,41 @@ $ git config --global alias.br "branch -m"
 
 And then implement them like this:
 
-
-
 ```bash
 $ git br feature
 ```
 
-There is also a way to create alisases for BASH (__but not for git!__) with the following command:
+There is also a way to create alisases for BASH (__but not for git!__):
+
+create `.bashrc` file in Users/_User Name_/.bashrc
+
+Add the following contents to it:
+
 ```bash
-alias gac="git add -A && git commit -m"
+alias com="git add -A && git commit -m"
 ```
-The aliases you create this way don't live in the .gitconfig file
+
+Be very attentive about no space after `=` and then run
+
+```bash
+$ source ./.bashrc
+```
+
+## SSH Keys
+
+Go to the location where you want to store SSH keys folder and generate:
+
+```bash
+$ ssh-keygen
+```
+
+You may always hit enter and everything be fine but if you type in a file name
+a new SSH key with the same file name as the value you typed in will be created
+in your _current directory_
+
+Go to GitHub and create a public SSH key with the following value:
+
+```bash
+$ cd ./.ssh
+$ cat id_rsa.pub
+```
