@@ -62,3 +62,9 @@ frankenCurry(a)()()()()()(1)()()()()()(2)()()()()()(3); // => "1, 2, 3"
 
 const CSS = ['background:yellow', 'padding:2rem', 'color:chocolate', 'font-size: 3rem', 'font-weight:bold', 'margin:0 1rem'];
 console.log('%cRed%cGreen%cBlue', (CSS.join(';') + ';color:red'), (CSS.join(';') + ';color:green'), (CSS.join(';') + ';color:blue'));
+// in order for a compliler to render the
+// unicode of your emoji and display it prefix
+// the unicode id of the emoji with 0x
+
+const bug = String.fromCodePoint(0x1F41E);
+console.log(`Sometimes there is a ${bug} in the code`);
