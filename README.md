@@ -24,7 +24,7 @@
 
 ## Others
 
-- [Code Editors Config](./code-editors/README.md) :wrench:
+- [Environment Config](./code-editors/README.md) :wrench:
 - [Articles](./articles/README.md) :newspaper:
 - [Projects from the Tutorial](./projects-from-the-tutorial/README.md) :page_facing_up:
 - [Snippets](./snippets/README.md) :seedling:
