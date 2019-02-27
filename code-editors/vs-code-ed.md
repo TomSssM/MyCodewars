@@ -21,6 +21,7 @@ code --install-extension robertohuertasm.vscode-icons
 code --install-extension msjsdiag.debugger-for-chrome
 code --install-extension ritwickdey.LiveServer
 code --install-extension techer.open-in-browser
+code --install-extension gencer.html-slim-scss-css-class-completion
 code --install-extension formulahendry.auto-rename-tag
 code --install-extension aaron-bond.better-comments
 
