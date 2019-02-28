@@ -24,6 +24,7 @@ code --install-extension techer.open-in-browser
 code --install-extension gencer.html-slim-scss-css-class-completion
 code --install-extension formulahendry.auto-rename-tag
 code --install-extension aaron-bond.better-comments
+code --install-extension streetsidesoftware.code-spell-checker
 
 code --install-extension dracula-theme.theme-dracula
 code --install-extension johnpapa.winteriscoming
