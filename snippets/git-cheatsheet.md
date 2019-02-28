@@ -232,3 +232,23 @@ Go to GitHub and create a public SSH key with the following value:
 $ cd ./.ssh
 $ cat id_rsa.pub
 ```
+## Syncing a Fork
+
+First do add an upstream remote:
+```bash
+$ git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git
+```
+
+Then fetch all the branches and commits on the upstream:
+```bash
+$ git fetch upstream
+```
+
+Then go to your branch that you want to sync and perform a fast-forward commit (it happens when there were no unique commits before the ones that you are merging; otherwise a merge commit is created and even merge conflicts might arise):
+
+But we are fine:
+```bash
+$ git checkout master
+$ git merge upstream/master
+```
+And then simply push your changes :)
