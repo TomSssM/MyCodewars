@@ -61,7 +61,7 @@ Removing Files from the Working Directory
 If the file has already been there but was modified and is now red
 ``` bash
 $ git checkout <file>
-$ git checkout
+$ git checkout .
 ```
 
 If the file was just created and is now red (called untracked)
@@ -70,8 +70,13 @@ If the file was just created and is now red (called untracked)
 $ git clean -df
 $ git clean -df <file>
 ```
-
 Thus the difference between untracked and modified files that are both in red
+
+Also here is a shortcut to deleting a file from working directory and automatically adding the delete to green files:
+
+```bash
+$ git rm <file>
+```
 
 ## Moving commits from one branch to another
 Cherry Picking
