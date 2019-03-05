@@ -102,10 +102,15 @@ $ git reset --hard <hash>
 
 ## Reviving Files after reset --hard
 Checkout (go into a detached HEAD state) for the hash of the necessary commit. Grab the hash from the kind of history returned by the following command:
-Working wiht checkout is explained in the next chapter
+Working with checkout is explained in the next chapter
 
 ``` bash
 $ git reflog
+```
+
+Or alternatively you could do this to bring back all the changes you deleted:
+```bash
+$ git reset --hard <hash-of-the-deleted-commit-we-want-to-revive>
 ```
 
 ## Checking out Hashes
@@ -124,15 +129,20 @@ $ git branch <name-of-a-branch>
 $ git checkout Tom
 ```
 
-## Ammeding Commits
+## Amending Commits
 ### Revert
 A new commit to revert the changes
 ``` bash
 $ git revert <hash>
 ```
-### Ammend
+### Amend
 ``` bash
 $ git commit --amend -m <new-message-text>
+```
+
+If you don't need to change message do this:
+```bash
+$ git commit --amend --no-edit
 ```
 
 ### Squash
@@ -156,6 +166,13 @@ If you checkouted from master at commit C and your branch has commits
 
 When you __pull master first__ and rebase __your__ branch you make it so that your first commit 1 begins after the most recent commit on master (H) instead of some outdated commit like C. Thus your commit history becomes:
 A->B->C->D->E->F->G->H->1->2->3->4. So this way you have the most recent updates from master and a pretty clean commit history.
+
+If you made some commits on your `master` branch (it can be any branch `master` is an example) and there are some commits on the upstream `master` branch you can rebase your current master branch and then push it:
+
+```bash
+$ git pull origin master --rebase
+```
+But you should never do that if the commits that are going to be overwritten are already being used and have been pulled by somebody in this case do merge
 
 ## Stash
 
