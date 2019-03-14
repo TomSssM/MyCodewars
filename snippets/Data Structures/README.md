@@ -1,4 +1,5 @@
 *__Note:__ in order to convert the good old functions into es2015 class, do create a class and put an entire function body into the constructor to use the necessary closure features or refer to the ES2015 sections :)*
+
 - Linked Lists:
   - [Singly Linked List](./linked-list.js)
   - [Singly Linked List ES2015](./linked-list-es2015.js)
@@ -15,3 +16,7 @@
 - [Hash Table](./hash-tables.js)
 - [Binary Search Tree](./binary-search-tree.js)
 - [Trie](./trie.js)
+- Heap:
+  - [Min Heap](./min-heap.js)
+  - [Max Heap](./max-heap.js)
+- Next
