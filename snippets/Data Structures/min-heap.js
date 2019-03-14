@@ -23,10 +23,10 @@ class MinHeap {
 
   remove() {
     if(this.heap.length < 2) return null;
+    if(this.heap.length === 2) return this.heap.pop();
+
     const smallest = this.heap[1];
     this.heap[1] = this.heap.pop();
-    if(this.heap.length === 2) return smallest;
-
     let i = 1;
     let left = i * 2;
     let right = left + 1;
@@ -105,3 +105,6 @@ heap3.insert(100);
 heap3.remove();
 console.log(...heap3.heap);
 // [null, 20, 30, 100, 40]
+
+console.log(`Sorted array: ${heap3.sort()}`);
+// Sorted array: 20, 30, 40, 100

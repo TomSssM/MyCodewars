@@ -23,10 +23,12 @@ class MaxHeap {
 
   remove() {
     if(this.heap.length < 2) return null;
+    if(this.heap.length === 2) {
+      return this.heap.pop();
+    }
+
     const biggest = this.heap[1];
     this.heap[1] = this.heap.pop();
-    if(this.heap.length === 2) return biggest;
-
     let i = 1;
     let left = i * 2;
     let right = left + 1;
@@ -85,3 +87,6 @@ console.log(...heap.heap);
 //   3   1
 //  /       
 // 2       
+
+console.log(`Sorted array: ${heap.sort()}`);
+// Sorted array: 4, 3, 2, 1
