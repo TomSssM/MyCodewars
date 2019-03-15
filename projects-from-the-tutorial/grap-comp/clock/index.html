@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Clock</title>
+  <meta charset="utf-8">
+  <style>
+    .hour {
+      color: green
+    }
+
+    .min {
+      color: blue
+    }
+
+    .sec {
+      color: red
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="clock" class="clock">
+    <span class="hour">00</span>:<span class="min">00</span>:<span class="sec">00</span>
+  </div>
+
+  <script src="./click-grap.js"></script>
+  <script>
+    const pageClock = new Clock({
+      elem: document.getElementById('clock')
+    });
+  </script>
+
+  <input type="button" onclick="pageClock.start()" value="Start">
+  <input type="button" onclick="pageClock.stop()" value="Stop">
+
+  <input type="button" 
+    onclick="alert('here is the alert')" 
+    value="alert to check the correctness of the implementation">
+
+</body>
+
+</html>
