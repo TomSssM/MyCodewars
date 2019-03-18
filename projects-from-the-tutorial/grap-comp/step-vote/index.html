@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    .voter {
+      font-family: 'DejaVu Sans Mono', 'Lucida Console', 'Menlo', 'Monaco', monospace;
+      font-size: 18px;
+      user-select: none;
+    }
+
+    .up,
+    .down {
+      cursor: pointer;
+      color: blue;
+      font-weight: bold;
+    }
+  </style>
+  <title>Step Vote</title>
+</head>
+<body>
+  This Vote inherits from the usual vote but also accepts the additional
+  step property
+
+  <div id="voter" class="voter">
+    <span class="down">—</span>
+    <span class="vote">0</span>
+    <span class="up">+</span>
+  </div>
+
+  <script src="../vote-prot/index.js"></script>
+  <script src="./index-alt.js"></script>
+  <!-- <script src="./index.js"></script> -->
+  <script>
+    const vote = new StepVoter({
+      elem: document.getElementById('voter'),
+      step: 2
+    });
+  </script>
+</body>
+</html>

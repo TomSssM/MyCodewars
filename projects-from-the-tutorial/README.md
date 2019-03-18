@@ -84,6 +84,7 @@
   - [Slider](./grap-comp/slider/index.js)
   - [Selection List](./grap-comp/selection-list/index.js)
   - [Vote](./grap-comp/vote/index.js)
-  - Vote in Prototype Style OOP
-  - Double Vote
+  - [Vote in Prototype Style OOP](./grap-comp/vote-prot/index.js)
+  - [Double Vote](./grap-comp/step-vote/index.js)
+  - [Double Vote Alt](./grap-comp/step-vote/index-alt.js)
 - Next
