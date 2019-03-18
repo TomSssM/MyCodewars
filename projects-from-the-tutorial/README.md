@@ -80,3 +80,10 @@
   - [Validate Form](./form/validate-form/vald.js)
 - [Graphic Components](./grap-comp)
   - [Menu](./grap-comp/menu/menu.js)
+  - [Clock](./grap-comp/clock/click-grap.js)
+  - [Slider](./grap-comp/slider/index.js)
+  - [Selection List](./grap-comp/selection-list/index.js)
+  - [Vote](./grap-comp/vote/index.js)
+  - Vote in Prototype Style OOP
+  - Double Vote
+- Next
