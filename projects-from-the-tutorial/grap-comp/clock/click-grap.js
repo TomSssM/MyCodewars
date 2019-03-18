@@ -6,6 +6,7 @@ class Clock {
 
   start() {
     this.render();
+    clearInterval(this.id);
     this.id = setInterval(() => {
       this.render();
     }, 1000);
