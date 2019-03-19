@@ -213,4 +213,15 @@ function Person(firstName, lastName) {
 
 const person = new Person('Jonathan', 'Lehman');
 ```
-# 9) Next
+# 9) Prime Number
+```javascript
+function isPrime(number) {
+  if(number <= 1) return false;
+  for(let i = 2; i < number; i++) {
+    if(!(number % i)) return false;
+  }
+  return true;
+}
+```
+
+# 10) Next
