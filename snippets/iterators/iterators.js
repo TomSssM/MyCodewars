@@ -150,3 +150,19 @@ const [aSet, bSet, cSet] = new Set(simpleIterable);
 console.log(`aSet: ${aSet}`);
 console.log(`bSet: ${bSet}`);
 console.log(`cSet: ${cSet}`);
+
+// iterate an objecto:
+const obj = {
+  a: 'property one',
+  b: 'property two',
+  c: 'property three',
+  [Symbol.iterator]: function* () {
+    let i = 0;
+    const keys = Object.keys(this);
+    while(i < keys.length) yield this[keys[i++]];
+  }
+};
+
+obj.newProp = 'new property';
+delete obj.b;
+console.log([...obj]);
