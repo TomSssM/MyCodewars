@@ -24,6 +24,7 @@
   - [Images Gallery](./delegation/images-gallery/Laboratory.js)
 - [Tooltip](./tooltip/Laboratory.js)
 - [Scroll Button](./scroll-button/Laboratory.js)
+  - [Pure CSS](./scroll-button/pure-css.html)
 - [Mouse Events](./mouse-events)
   - [Fixing a Tree](./mouse-events/fixing-a-tree/Laboratory.js)
   - [Selectable List](./mouse-events/selectable-list/Laboratory.js)
