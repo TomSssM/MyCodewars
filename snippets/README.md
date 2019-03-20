@@ -1,13 +1,21 @@
 # Snippets
 
+## Main
+
 - [AJAX](./ajax/README.md)
-- [Data Structures](./Data%20Structures/README.md)
-- [Markdown Cheatsheet](./markdownCheatSheet.md)
-- [Freak Show](./freakshow.js)
 - [JSON](./myJSON.js)
-- [HTML5 API](./html5-api/README.md)
-- [Timers](./timers/README.md)
+- [Data Structures](./Data%20Structures/README.md)
+- Algorithms
+- [Markdown Cheatsheet](./markdownCheatSheet.md)
 - [git cheatsheet](./git-cheatsheet.md)
 - [Iterators and Generators](./iterators/README.md)
+- Unit Testing
+
+## Trivial
+
+- [Freak Show](./freakshow.js)
+- [Timers](./timers/README.md)
+- [HTML5 API](./html5-api/README.md)
 - [Private Properties](./private.js)
 - [Server Sent Events (SSE)](./sse/server-evts.js)
+- [Errors](./errors.js)
