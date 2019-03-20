@@ -259,6 +259,9 @@ try {
 }
 
 // here is a better and less examply example from the tutorial:
+// VERY IMPORTANT NOTE HERE:
+// we should inherit from the more general ValidationError class
+// to make things easier in line below marked as (*)
 
 function validateUser(user) {
   if (!user.age) {
@@ -286,6 +289,9 @@ function readUser(json) {
   try {
     validateUser(user);
   } catch (err) {
+    // (*) here
+    // because there may well be many species of
+    // the validation error type
     if (err instanceof ValidationError) {
       throw new ReadError("Validation Error", err);
     } else {
