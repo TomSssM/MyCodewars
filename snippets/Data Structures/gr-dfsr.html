@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Depth First Search</title>
+</head>
+<body>
+  <img src="../../data/dfsgraph.gif" alt="traversal">
+  <script>    
+    function dfs(graph, root) {
+      const allNodes = [];
+      const stack = [];
+      stack.push(root);
+      while(stack.length) {
+        let currInd = stack.pop();
+        const arrayCurr = graph[currInd];
+        for(let i = arrayCurr.length - 1; i >= 0; i--) {
+          let item = arrayCurr[i];
+          if(item !== 0 && !allNodes.includes(i)) {
+            stack.push(i);
+          }
+        }
+        allNodes.push(currInd);
+      }
+      return allNodes;
+    }
+
+    const exDFSGraph = [
+      [0, 1, 0, 0, 1, 0, 0, 0, 1, 0],
+      [1, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+      [0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+      [0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+      [1, 0, 0, 0, 0, 1, 0, 1, 0, 0],
+      [0, 0, 0, 0, 1, 0, 1, 0, 0, 0],
+      [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+    ];
+
+    console.log(dfs(exDFSGraph, 0));
+    // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  </script>
+</body>
+</html>

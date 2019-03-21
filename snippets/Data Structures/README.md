@@ -19,4 +19,6 @@
 - Heap:
   - [Min Heap](./min-heap.js)
   - [Max Heap](./max-heap.js)
-- Next
+- Graph
+  - [Breadth-First Search](./gr-brtr.html)
+  - [Depth-First Search](./gr-dfsr.html)
