@@ -224,4 +224,30 @@ function isPrime(num) {
 }
 ```
 
-# 10) Next
+# 10) Advanced Currying
+```javascript
+function sum(a) {
+  let result = a;
+
+  function next(b) {
+    result += b;
+    return next;
+  }
+
+  next.valueOf = function() {
+    return result;
+  }
+
+  return next;
+}
+
+let result1 = sum(1)(3)(3); // 7
+let result2 = sum(1)(1)(2)(3)(22)(11)(47)(2); // 89
+
+console.log(result1 == 7); // true
+console.log(result1 === 7); // false
+console.log(result1 + 0); // 7
+console.log(result1); // Function
+```
+
+# 11) Next
