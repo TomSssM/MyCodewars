@@ -58,3 +58,40 @@ Here are my preferences:
     "workbench.colorTheme": "Default Light+",
 }
 ```
+
+# Snippets
+Go to -> `Preferences: Configure User Snippets`, select the .json file for JavaScript and paste:
+```json
+{
+	"Console Log": {
+		"prefix": "cc",
+		"body": [
+			"console.log(${1:''});$0"
+		],
+		"description": "Console Log"
+	},
+	"Function Decl": {
+		"prefix": "ff",
+		"body": [
+			"function ${1:name}(${2:parm}) {",
+			"  $0",
+			"}"
+		],
+		"description": "Function Decl"
+	},
+	"Arrow Function": {
+		"prefix": "ffa",
+		"body": [
+			"const ${1:name} = (${2:parm}) => $0;"
+		],
+		"description": "Arrow Function"
+	},
+	"Array Methods": {
+		"prefix": "arm",
+		"body": [
+			"${1|forEach,map,reduce,every|}((${2:item}) => $0);"
+		],
+		"description": "Array Methods"
+	}
+}
+```
