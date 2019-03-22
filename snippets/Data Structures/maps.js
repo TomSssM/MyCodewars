@@ -98,3 +98,12 @@ map2.has(NaN); // => false
 
 map2.clear();
 console.log(map2); // => Map(0) {}
+
+// you can initialize a map with an iterator:
+const m3 = new Map([['a', true],['string', 'str']]);
+
+const gen = function* (i) {
+  if(i>3) i = 0;
+  while(i <= 3) yield [`key${i++}`, i];
+}
+const m4 = new Map(gen(1));
