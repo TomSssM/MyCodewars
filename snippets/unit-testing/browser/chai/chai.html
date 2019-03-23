@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Testing with Chai</title>
+  <!-- Chai can be used with any Testing Framework but we are going to use Mocha here -->
+  <!-- add Mocha -->
+  <link rel="stylesheet" href="https://unpkg.com/mocha/mocha.css">
+  <script src="https://unpkg.com/mocha/mocha.js"></script>
+  <script>
+    mocha.setup('bdd');
+  </script>
+
+  <!-- add Chai: -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+  <script>
+    // chai has a lot of stuff, just take a look:
+    console.log(chai);
+    // let's make assert global
+    let assert = chai.assert;
+  </script>
+</head>
+<body>
+  <script src="./code-to-test.js"></script>
+  <script src="./test.spec.js"></script>
+  <div id="mocha"></div>
+  <script>
+    mocha.run();
+  </script>
+</body>
+</html>

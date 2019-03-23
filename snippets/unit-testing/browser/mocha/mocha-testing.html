@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./mocha-browser.css">
+  <title>Testing With Mocha</title>
+
+  <!-- 3) mocha css: -->
+  <link rel="stylesheet" href="https://unpkg.com/mocha/mocha.css">
+
+</head>
+<body>
+
+  <div id="my-stuff">
+    <h1>Testing With Mocha in the Browser</h1>
+    <span>Typically we should need the following thingies:</span>
+    <ol>
+      <li>Mocha Code</li>
+      <li>Setup Mocha manually</li>
+      <li>Mocha CSS</li>
+      <li>Block level element with id #mocha</li>
+      <li>Write Some Code</li>
+      <li>Write the tests</li>
+      <li>Run Mocha manually</li>
+    </ol>
+  </div>
+
+  <!-- 1) the mocha code itself: -->
+  <script src="https://unpkg.com/mocha/mocha.js"></script>
+  
+  <!-- 2) do minimal setup: -->
+  <script>
+    mocha.setup('bdd');
+  </script>
+
+  <!-- 4) then we are also going to need the following element cause we are
+  running Mocha in the browser: -->
+  <div id="mocha"></div>
+
+  <!-- 5) let's store all our code to test here: -->
+  <!-- <script src="./code-to-test.js"></script> -->
+  <script>
+    function isPrime(num) {
+      
+      for(let i = 0; i <= Math.sqrt(num); i++) {
+        if(!(num % i)) return false;
+      }
+
+      return true;
+    }
+  </script>
+
+  <!-- 6) and all our tests here: -->
+  <script src="./isPrime.spec.js"></script>
+
+  <!-- 7) last but not least we need to run the tests manually -->
+  <!-- note: Mocha will execute all describe tests from anywhere; we may want to
+  keep those in separate files merely for our own convenience -->
+
+  <!-- tests after mocha.run are NOT ignored: -->
+
+  <script>
+    describe('I\'m not ignored', function() {
+      it('edge case passes', () => {});
+    })
+  </script>
+
+  <script>
+    mocha.run();
+  </script>
+
+  <!-- will NOT be ignored -->
+  <script>
+    describe('I\'m NOT ignored even though I\'m after mocha.run()', function() {
+      it('edge case passes', () => {});
+    })
+  </script>
+  
+</body>
+</html>
