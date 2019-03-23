@@ -9,9 +9,19 @@ describe('pow function', function() {
   });
   describe('edge case prepared', function() {
     // usual equality
-    it('usual equal', function() {
+    it('usual equality', function() {
       assert.equal('0', 0);
     });
+
+    // custom error message
+    it('custom error message', function() {
+      assert.equal('0', 'error', 'my message!');
+    });
+
+    // usual assert
+    it('usual assert', function() {
+      assert('', 'my custom message');
+    })
 
     // strict equality
     it('strict equal', function() {
