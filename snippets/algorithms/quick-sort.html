@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Quick Sort</title>
+  <style>
+    img {
+      width: 800px;
+    }
+  </style>
+</head>
+<body>
+  <img src="../../data/quickSort.png" alt="quick sort">
+  <script>
+    // the way that QuickSort works is as follows:
+    // a pivot is a random element. There are ways to choose
+    // a pivot very wisely. We are always going to be choosing
+    // as a pivot the rightmost element ( if you choose any other element
+    // as a pivot it may be a good idea to swap it with the last element so
+    // that whichever element you choose the pivot is always the rightmost element )
+    // it is just a convention for this particular implementation of the algorithm
+    // to work. The point to QuickSort is that if we have an array like this:
+    // [4, 10, 8, 7, 6, 5, 3, 12, 14, 2] and our element is 6 (note: we can just yet
+    // choose the pivot anywhere we like without making it rightmost, that is just
+    // an implementation detail for JavaScript )
+    // then we are going to move all the smaller things to the left and
+    // all the bigger things to the right:
+    // [4, 5, 3, 2, 6, 10, 8, 7, 12, 14]
+    //              ^
+    // the point is: we don't need to compare the things on the left to the
+    // things on the right
+    // QuickSort is a recursive algorithm so now we should do a quicksort for the
+    // right and left parts of the array:
+    // for the right (the pivot is 3):
+    // [2, 3, 4, 5]
+    //     ^
+    // after we do the left part ([4,5]) the whole left part of the original array is
+    // going to be sorted:
+    // [2, 3, 4, 5, 6, 10, 8, 7, 12, 14]
+    //              ^
+    // we can do the same for the right part
+    // now let's tear apart what the pseudocode might be for the actual implementation
+    // here is the array:
+    // [34,2,8,3,2,7,12,4]
+    // the pivot is going to be 4 at index 7 (last element)
+    // let's set partitionIndex to 0
+    // this value (partitionIndex) is going to increase gradually
+    // the first value is 34, since it isn't bigger than 4 leave it
+    // 2 is less than four, then swap 2 with value at partitionIndex
+    // and increment partitionIndex++ (2 goes to 0, 34 goes to 1 partitionIndex becomes from 0 -> 1)
+    // [2,34,8,3,2,7,12,4]
+    //    ^
+    //
+    // ^ - partitionIndex
+    // go to 8, it is bigger than 4, leave it, go to 3, it is smaller
+    // swap it with item at partitonIndex and partitonIndex++:
+    // [2,3,8,34,2,7,12,4]
+    //      ^
+    // the next value is 2 do the same again:
+    // [2,3,2,34,8,7,12,4]
+    //        ^
+    // then we look at 7 and 12, leave them alone and
+    // in the end we swap our pivot with partitionIndex:
+    // [2,3,2,4,8,7,12,34]
+    //        ^
+    // now if we recursively implement the same algorithm to the 
+    // left part ([2,3,2]) and the right part ([8,7,12,34])
+    // the array is going to be sorted!
+
+    function quickSort(arr, left, right) {
+      let pivot;
+      let partitionIndex;
+
+      if(left === undefined && right === undefined) {
+        left = 0;
+        right = arr.length - 1;
+      }
+
+      // this is so we can break out after we have
+      // already sorted things out
+      if(left < right) {
+        pivot = right;
+        partitionIndex = partition(left, right);        
+        quickSort(arr, left, partitionIndex - 1);
+        quickSort(arr, partitionIndex + 1, right);
+      }
+
+      function partition(left, right) {
+        const pivotValue = arr[pivot];
+        let partitionIndex = left;
+        for(let i = left; i < right; i++) {
+          if(arr[i] < pivotValue) {
+            [arr[i], arr[partitionIndex]] = [arr[partitionIndex], arr[i]];
+            partitionIndex++;
+          }
+        }
+        [arr[right], arr[partitionIndex]] = [arr[partitionIndex], arr[right]];
+        return partitionIndex;
+      }
+
+      return arr;
+    }
+
+    console.log(quickSort([11,8,14,3,6,2,7])); //[2, 3, 6, 7, 8, 11, 14]
+    console.log(quickSort([11,8,14,3,6,2,1,7])); //[1, 2, 3, 6, 7, 8, 11, 14]
+    console.log(quickSort([16,11,9,7,6,5,3,2])); //[2, 3, 5, 6, 7, 9, 11, 16]
+
+  </script>
+</body>
+</html>
