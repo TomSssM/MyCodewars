@@ -1,1 +1,1 @@
-// TODO: add circular linked list to doc
+console.log('Hello\nWorld!');
