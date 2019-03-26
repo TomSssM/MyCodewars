@@ -16,15 +16,15 @@ class myMap {
   }
 
   has(key) {
-    return (key in this.collection);
+    return this.collection.hasOwnProperty(key);
   }
 
   get(key) {
-    return (key in this.collection) ? this.collection[key] : null;
+    return this.has(key) ? this.collection[key] : null;
   }
 
   delete(key) {
-    if (key in this.collection) {
+    if (this.has(key)) {
       delete this.collection[key];
       this.count--;
     }
@@ -56,6 +56,8 @@ map.set('belley button', 1);
 console.log(map.get('fingers')); // => 10
 console.log(map.size); // => 4
 console.log(map.values); // => [2, 10, 2, 1]
+console.log(map.has('eyes')); // => true
+console.log(map.has('valueOf')); // => false
 
 // ES6 built-in Map class implementation:
 const map2 = new Map();
