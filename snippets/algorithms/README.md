@@ -1,8 +1,9 @@
 # Algorithms
 
 ## Array Sort
-- Insertion Sort
-- Bubble Sort
+- [Selection Sort](./selection-sort.js)
+- [Bubble Sort](./bubble-sort.js)
+- [Insertion Sort](./insertion-sort.js)
 
 ## Array Search
 - [Linear Search](./linear-search.js)
