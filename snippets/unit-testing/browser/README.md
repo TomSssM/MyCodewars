@@ -6,4 +6,3 @@
 
 ## Libraries
 - [Chai](./chai/chai.html)
-  - Sample Test
