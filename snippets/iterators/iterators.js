@@ -204,3 +204,38 @@ String.prototype[Symbol.iterator] = function* () {
 };
 
 console.log(...'drummer');
+
+// iterator for a Linked List:
+class LinkedList {
+  constructor() {
+    // ...
+  }
+
+  // ...
+
+  [Symbol.iterator]() {
+    const list = this;
+    function* gen() {
+      let current = list.head;
+      let name;
+      let prev = null;
+      while(current) {
+        if(!prev) {
+          name = 'head';
+        } else if(!current.next) {
+          name = 'tail';
+        } else {
+          name = 'node';
+        }
+        yield {
+          value: current.element,
+          name,
+        };
+        prev = current;
+        current = current.next;
+      }
+    }
+  
+    return gen();
+  }
+}
