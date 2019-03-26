@@ -5,6 +5,9 @@
 - [Bubble Sort](./bubble-sort.js)
 - [Insertion Sort](./insertion-sort.js)
 - [Merge Sort](./merge-sort.js)
+- [Quick Sort]()
+- [Heap Sort](./heap-sort.js)
+- [Binary Tree Sort]()
 
 ## Array Search
 - [Linear Search](./linear-search.js)
