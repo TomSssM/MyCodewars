@@ -4,6 +4,7 @@
 - [Selection Sort](./selection-sort.js)
 - [Bubble Sort](./bubble-sort.js)
 - [Insertion Sort](./insertion-sort.js)
+- [Merge Sort](./merge-sort.js)
 
 ## Array Search
 - [Linear Search](./linear-search.js)
