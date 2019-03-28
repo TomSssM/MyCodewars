@@ -18,7 +18,7 @@
 ## Interview Prep Kit
 
 - [Task challenges ( Task 1 - 20 )](./1\)%20Task%20Challanges.md)
-- Task challenges ( Task 21 - 41 )
+- [Task challenges ( Task 21 - 41 )](./2\)%20Task%20Challanges.md)
 - Task challenges ( Task 42 - 60 )
 - [Polyfill.js](./Polyfill.js)
 
