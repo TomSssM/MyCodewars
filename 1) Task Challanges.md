@@ -393,4 +393,212 @@ fibonacci(12); // 144
 ```
 __Time Complexity:__ O(2^n)
 
-# 13) Next
+# 13) Greatest Common Divisor
+```javascript
+function greatestCommonDivisor(a, b) {
+  let divisor = 2;
+  let greatestDivisor = 1;
+
+  if (a < 2 || b < 2) return 1;
+  
+  while(a >= divisor && b >= divisor) {
+   if(a % divisor == 0 && b % divisor ==0) {
+      greatestDivisor = divisor;      
+    }
+    divisor++;
+  }
+  return greatestDivisor;
+}
+
+greatestCommonDivisor(14, 21); // 7 
+greatestCommonDivisor(69, 169); // 1
+```
+
+# 14) Remove Duplicate From An Array
+```javascript
+function removeDuplicate(arr) {
+  const exists ={};
+  const outArr = [];
+  let elm;
+
+  for(let i =0; i < arr.length; i++) {
+    elm = arr[i];
+    if(!exists[elm]) {
+      outArr.push(elm);
+      exists[elm] = true;
+   }
+  }
+  return outArr;
+}
+
+removeDuplicate([1,3,3,3,1,5,6,7,8,1]); // [1, 3, 5, 6, 7, 8]
+```
+# 15) Merge Two Sorted Arrays
+```javascript
+function mergeSortedArray(a, b) {
+  const merged = [];
+  let aElm = a[0];
+  let bElm = b[0];
+  let i = 1;
+  let j = 1;
+  
+  if(a.length === 0) return b;
+  if(b.length === 0) return a;
+
+  while(aElm || bElm) {
+    // we push a either if there is no b or
+    // if a is smaller
+    // don't forget to set a to the next elm in the
+    // first array afterwards (everything but reversed applies to b)
+    if((aElm && !bElm) || aElm < bElm) {
+      merged.push(aElm);
+      aElm = a[i++];
+    } else {
+      merged.push(bElm);
+      bElm = b[j++];
+    }
+  }
+  return merged;
+}
+
+mergeSortedArray([2,5,6,9], [1,2,3,29]); // [1, 2, 2, 3, 5, 6, 9, 29]
+```
+
+# 16) Swap Numbers Without Temp
+```javascript
+function swapNumb(a, b) {
+  console.log(`before swap: a: ${a}; b: ${b}`);
+  b = b - a;
+  a = a + b;
+  b = a - b;
+  console.log(`after swap: a: ${a}; b: ${b}`);
+}
+
+swapNumb(2, 3);
+// before swap:  a: 2; b:  3
+// after swap:  a: 3; b:  2
+```
+# 17) Stringo Reverso
+## Concatenation
+```javascript
+function reverse(str) {
+  let res = '';
+  for(let i = str.length - 1; i >= 0; i--) res += str[i];
+  return res;
+}
+
+reverse('you are a nice dude'); // edud ecin a era uoy
+```
+## Array and Only One Concatenation
+```javascript
+function reverse(str) {
+  let res = [];
+  for(let i = str.length - 1; i >= 0; i--) res.push(str[i]);
+  return res.join('');
+}
+
+reverse('you are a nice dude'); // edud ecin a era uoy
+```
+## Upgrade of Previous Algorithm
+```javascript
+// go half the string swapping the
+// last with the first
+
+function reverse(str) {
+  str = str.split('');
+  const len = str.length;
+  const halfIndex = Math.floor(len / 2) - 1;
+  let revStr;
+
+  for (let i = 0; i <= halfIndex; i++) {
+    revStr = str[len - i - 1];
+    str[len - i - 1] = str[i];
+    str[i] = revStr;
+  }
+  return str.join('');
+}
+
+reverse('you are a nice dude'); // edud ecin a era uoy
+reverse('abcdefg'); // gfedcba
+```
+## Recursively
+```javascript
+function reverse(str) {
+  if(str === '') return str;
+  return reverse(str.substr(1)) + str[0];
+}
+
+reverse('you are a nice dude'); // edud ecin a era uoy
+reverse('abcdefg'); // gfedcba
+```
+## Built In Methods
+```javascript
+function reverse(str) {
+  return str.split('').reverse().join('');
+}
+reverse('you are a nice dude'); // edud ecin a era uoy
+reverse('abcdefg'); // gfedcba
+```
+# 18) Reverse Word Order
+## Default
+```javascript
+function reverseWords(str = '') {
+  let res = [];
+  let wordlen = 0;
+  for(let i = str.length - 1; i >= 0; i--) {
+    if(str[i] === ' ') {
+      res.push(str.substr(i + 1, wordlen));
+      wordlen = 0;
+    } else if(i === 0) {
+      res.push(str.substr(i, wordlen + 1));
+    } else wordlen++;
+  }
+  return res.join(' ');
+}
+
+reverseWords("I am the good boy"); // "boy good the am I"
+reverseWords("Yellow fox jumps over a lazy dog"); // "dog lazy a over jumps fox Yellow"
+```
+## Built In Methods
+```javascript
+function reverseWords(str = '') {
+  return str.split(' ').reverse().join(' ');
+}
+reverseWords("I am the good boy"); // "boy good the am I"
+reverseWords("Yellow fox jumps over a lazy dog"); // "dog lazy a over jumps fox Yellow"
+```
+# 19) Reverse Words In Place
+How do you reverse the letters in each of the words so that the following string : "I am a good boy"
+becomes: `"I am a good boy" -> "I ma a doog yob"`
+
+__Answer:__ first do string reverse, then word reverse
+```javascript
+function reverseInPlace(str) {
+  str = stringReverse(str);
+  str = wordReverse(str);
+  return str;
+}
+
+reverseInPlace('I am a good boy'); // "I ma a doog yob"
+```
+# 20) First Non Repeating Char in a String
+```javascript
+function firstNonRepeatChar(str) {
+  let char;
+  const charCount = {};
+  for(let i =0; i < str.length; i++) {
+    char = str[i];
+    if(charCount[char]) {
+      charCount[char]++;
+    } else charCount[char] = 1;
+  }
+
+  for (let char in charCount) {
+    if(charCount[char] === 1) return char;
+  }
+
+  return null;
+}
+
+firstNonRepeatChar('the quick brown fox jumps then quickly blow air'); // "f"
+```
