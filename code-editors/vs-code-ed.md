@@ -66,7 +66,7 @@ Go to -> `Preferences: Configure User Snippets`, select the .json file for JavaS
 	"Console Log": {
 		"prefix": "cc",
 		"body": [
-			"console.log(${1:''});$0"
+			"console.log($1);$0"
 		],
 		"description": "Console Log"
 	},
