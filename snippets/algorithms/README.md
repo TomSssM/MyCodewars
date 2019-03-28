@@ -7,8 +7,6 @@
 - [Merge Sort](./merge-sort.js)
 - [Quick Sort](./quick-sort.html)
 - [Heap Sort](./heap-sort.js)
-- [Binary Tree Sort]()
-- Next
 
 ## Array Search
 - [Linear Search](./linear-search.js)
