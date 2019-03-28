@@ -214,6 +214,7 @@ function Person(firstName, lastName) {
 const person = new Person('Jonathan', 'Lehman');
 ```
 # 9) Prime Number
+## Default
 ```javascript
 function isPrime(num) {
   if(num <= 1) return false;
@@ -222,6 +223,57 @@ function isPrime(num) {
   }
   return true;
 }
+```
+## Cool
+```javascript
+function isPrime(num) {
+  if(num <= 1) return false;
+  let divisor = 2;
+
+  while (num > divisor) {
+    if(num % divisor === 0) {
+     return false; 
+    }
+    else divisor++;
+  }
+  return true;
+}
+
+isPrime(-3); // false
+isPrime(1); // false
+isPrime(137); // true
+isPrime(237); // false
+```
+`interviewer:` can you make it better?
+
+`you`: Yeap
+
+### first
+After checking 2 and 3 we can start increasing the divisor by 2 as any number
+that can't be divided by 2, can't be divided by any even number either
+### Second
+We can check only the numbers up to Math.sqrt(originalNum) to verify a prime number.
+
+Thus here is an upgraded implementation:
+```javascript
+function isPrime(num) {
+  if(num <= 1) return false;
+  let divisor = 3;
+  let limit = Math.sqrt(num);
+
+  if (num === 2 || num === 3) return true;
+  if (num % 2 == 0) return false;
+
+  while (divisor <= limit) {
+    if (num % divisor === 0) {
+      return false;
+    } else divisor += 2;
+  }
+  return true;
+}
+
+isPrime(137); // true
+isPrime(237); // false
 ```
 
 # 10) Advanced Currying
@@ -250,4 +302,49 @@ console.log(result1 + 0); // 7
 console.log(result1); // Function
 ```
 
-# 11) Next
+# 11) Prime Factors
+```javascript
+function primeFactors(num) {
+  const fact = {};
+  if(num <= 2) return fact;
+  for(let i = 2; i <= num; i++) {
+    if(!(num % i)) {
+      fact[i] = fact[i] || 0;
+      fact[i]++;
+      num /= i;
+      i--;
+    }
+  }
+  return fact;
+}
+
+primeFactors(69); // { '3': 1, '23': 1 }
+```
+You could optimize it by increasing the divisor by 2 after checking that 2 isn't a prime factor
+as any number that can't be divided by 2, can't be divided by any even number either
+```javascript
+function primeFactors(num) {
+  const fact = {};
+  let divisor = 2;
+  if(num <= 2) return fact;
+  while(!(num % divisor)) {
+    fact[divisor] = fact[divisor] || 0;
+    fact[divisor]++;
+    num /= divisor;
+  }
+  for(let i = 3; i <= num; i += 2) {
+    if(!(num % i)) {
+      fact[i] = fact[i] || 0;
+      fact[i]++;
+      num /= i;
+      i -= 2;
+    }
+  }
+  return fact;
+}
+
+primeFactors(69); // { '3': 1, '23': 1 }
+```
+__Time Complexity:__ O(n)
+
+# 12) Next
