@@ -347,4 +347,50 @@ primeFactors(69); // { '3': 1, '23': 1 }
 ```
 __Time Complexity:__ O(n)
 
-# 12) Next
+# 12) Fibonacci
+<p align="center">
+  <img src="./data/PascalTriangleFibanacci.png" width="200px">
+</p>
+
+Fibonacci numbers is a sequence (usually starting at 1) where every number is a sum of its two
+preceding numbers. For example:
+
+`... 3, 5, 8, ...` the first two numbers are 3 and 5 thus the next (third) number is going to be 8 (3+5)
+## Default
+```javascript
+function fibonacci(num) {
+  const nums = [0,1];
+  if(num <= 2) return nums[num - 1];
+  for(let i = 2; i < num; i++) {
+    nums[i] = nums[i-1] + nums[i-2];
+  }
+  return nums[num - 1];
+}
+
+fibonacci(13); // 144
+fibonacci(4); // 2
+```
+__Time Complexity:__ O(n)
+
+## Recursive
+```javascript
+function fibonacci(num) {
+  if(num <= 1) return num;
+  return fibonacci(num - 1) + fibonacci(num - 2);
+}
+
+fibonacci(0); // 0 - 0th is 0
+fibonacci(1); // 1 - 1st is 1
+fibonacci(2); // 1 - 2nd is 1 too
+fibonacci(3); // 2 - and so on
+fibonacci(4); // 3
+fibonacci(5); // 5
+fibonacci(6); // 8
+fibonacci(7); // 13
+fibonacci(8); // 21
+fibonacci(9); // 34
+fibonacci(12); // 144
+```
+__Time Complexity:__ O(2^n)
+
+# 13) Next
