@@ -37,6 +37,21 @@ console.log(binToDec('1111111111111') === parseInt('1111111111111', 2));
 ```
 
 # 3) Palindrome
+## Default
+```javascript
+function isPalindrome(str) {
+  const len = str.length;
+  const limit = Math.floor(len / 2);
+  for(let i = 0; i < limit; i++) {
+    if (str[i] !== str[len - 1 - i]) return false;
+  }
+  return true;
+}
+
+isPalindrome('madam'); // true
+isPalindrome('toyota'); // false
+```
+## Built In Methods
 ```javascript
 const palindrome = function(str) {
   str = str.toLowerCase().replace(/[^a-z0-9]/g, '');
