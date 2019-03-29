@@ -118,7 +118,7 @@ sumFinder([6,4,3,2,1,7], 2); // false
 ```
 __Interviewer:__ What is the time complexity of this function
 
-__You:__ O(n2)
+__You:__ O(n^2)
 
 __Interviewer:__ Can you make this better
 
@@ -196,4 +196,102 @@ function countZero(n) {
 
 countZero(2014); // 223
 ```
-# 27) Permutations
+# 27) Sudoku Solve (Recursive Backtracking)
+```javascript
+function solveSudoku(matrix) {
+  function isInRow(row, num) {
+    for(let i = 0; i < 9; i++) {
+      if(matrix[row][i] === num) return true;
+    }
+  }
+
+  function isInCol(col, num) {
+    for(let i = 0; i < 9; i++) {
+      if(matrix[i][col] === num) return true;
+    }
+  }
+
+  function isInBox(row, col, num) {
+    const r = Math.floor(row / 3) * 3;
+    const c = Math.floor(col / 3) * 3;
+    for(let i = r; i < r + 3; i++) {
+      for(let j = c; j < c + 3; j++) {
+        if(matrix[i][j] === num) return true;
+      }
+    }
+  }
+
+  function isSafe(row, col, num) {
+    return (!isInRow(row, num) && !isInCol(col, num) && !isInBox(row, col, num));
+  }
+
+  function solve() {
+    for(let row = 0; row < 9; row++) {
+      for(let col = 0; col < 9; col++) {
+        if(!matrix[row][col]) {
+          for(let num = 1; num <= 9; num++) {
+            if(isSafe(row, col, num)) {
+              matrix[row][col] = num;
+              if(solve()) {
+                return true;
+              } else {
+                matrix[row][col] = 0;
+              }
+            }
+          }
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  if(solve()) {
+    return matrix;
+  } else throw new Error('unsolvable');
+}
+```
+# 28) Permutations of a String
+This task is for __*Recursive Backtracking*__
+
+__Explanation:__
+
+__Idea:__ Idea is very simple. We will convert the string to an array. from the array we will pick one character and then permute rest of it. 
+After getting the permutation of the rest of the characters, we will concatenate each of them with the character we have picked.
+
+__step-1__ First copy original array to avoid changing it while picking elements
+
+__step-2__ Use splice to removed element from the copied array. We copied the array because splice will remove the item from the array. 
+We will need the picked item in the next iteration.
+
+__step-3__ `[1,2,3,4].splice(2,1)` will return `[3]` and remaining array = `[1,2,4]`
+
+__step-4__ Use recursive method to get the permutation of the rest of the elements by passing array as string
+
+__step-5__ Finally, concat like `a + permute(bc)` for each
+```javascript
+function permutations(str) {
+  const arr = str.split('');
+  const perms = [];
+  let rest;
+  let picked;
+  let restPerms;
+  let next;
+  
+  if (arr.length === 1) return [str];
+  for (let i = 0; i < arr.length; i++) {
+    rest = [...arr];
+    picked = rest.splice(i, 1);
+    restPerms = permutations(rest.join(''));
+    for (let j = 0; j < restPerms.length; j++) {
+      next = [...picked, ...restPerms[j]]
+      perms.push(next.join(''));
+    }
+  }
+  return perms;
+}
+
+permutations('boat'); // 24 permutations
+```
+
+# 29) Next
