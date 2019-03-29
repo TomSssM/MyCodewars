@@ -146,7 +146,7 @@ sumFinder([6,4,3,2,1,7], 2); // false
 console.log(sumFinder([6,4,3,2,1,7], 9)); // true
 console.log(sumFinder([6,4,3,2,1,7], 2)); // false
 ```
-# 25) Next
+# 25) Largest Sum of Two
 __Question:__ How would you find the largest sum of any two elements?
 
 __Answer:__ this is actually very simple and straight forward. Just find the two largest number and
@@ -196,4 +196,4 @@ function countZero(n) {
 
 countZero(2014); // 223
 ```
-# 27) Next
+# 27) Permutations
