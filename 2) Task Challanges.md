@@ -118,7 +118,7 @@ sumFinder([6,4,3,2,1,7], 2); // false
 ```
 __Interviewer:__ What is the time complexity of this function
 
-__You:__ O(n2)
+__You:__ O(n^2)
 
 __Interviewer:__ Can you make this better
 
