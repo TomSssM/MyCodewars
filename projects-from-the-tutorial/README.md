@@ -88,4 +88,5 @@
   - [Vote in Prototype Style OOP](./grap-comp/vote-prot/index.js)
   - [Double Vote](./grap-comp/step-vote/index.js)
   - [Double Vote Alt](./grap-comp/step-vote/index-alt.js)
+- [Templating with Lodash](./lodash-temp/README.md)
 - Next

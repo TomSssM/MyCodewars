@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Templating Workflow</title>
+  <style>
+    .menu ul {
+      display: none;
+      margin: 0;
+    }
+    .menu .title {
+      user-select: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .menu .title:before {
+      content: '▶';
+      padding-right: 6px;
+      color: green;
+    }
+    .menu.open ul {
+      display: block;
+    }
+    .menu.open .title:before {
+      content: '▼';
+    }
+  </style>
+</head>
+<body>
+  <!-- add lodash: -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.js"></script>
+  <p>
+    All right so here is the thing: it isn't convenient to write the entire template into a
+    string between the quotes " " so here is a cool workaround:
+    write template into a script tag and give it a type attribute like 'text/template' or
+    anything but the default value so the browser wouldn't execute this script. Here is an example
+    of such a template:
+  </p>
+  <script type="text/template" id="list-template">
+    <ul>
+      <%items.forEach(item => { %>
+        <li><%=item%></li>
+      <% }) %>
+    </ul>
+  </script>
+  <script>
+    // and here is how the script would use such a template:
+    const str = document.getElementById('list-template').textContent;
+    const html = _.template(str)({
+      items: [
+        'coffee',
+        'tea',
+        'coco',
+      ]
+    });
+    document.write(html);
+  </script>
+
+  <p>Now let's look into how we can combine this technique with OOP to create good ole menu:</p>
+  <!-- 1) create templates: -->
+  <script type="text/template" id="menu-template">
+    <div class="menu">
+      <span class="title"><%-title%></span>
+    </div>
+  </script>
+  <script type="text/template" id="menu-list-template">
+    <ul>
+      <%items.forEach(item => { %>
+        <li><%-item%></li>
+      <%}); %>
+    </ul>
+  </script>
+
+  <!-- 2) write Class: -->
+  <script>
+    class Menu {
+      constructor(obj) {
+        this.title = obj.title;
+        this.items = obj.items;
+        this.menuTemplate = obj.menuTemplate;
+        this.listTemplate = obj.listTemplate;
+      }
+
+      getElem() {
+        if(this.elem) return;
+        this.render();
+        return this.elem;
+      }
+
+      render() {
+        const html = this.menuTemplate({
+          title: this.title,
+        });
+        this.elem = document.createElement('div');
+        this.elem.innerHTML = html;
+        this.elem = this.elem.firstElementChild;
+        this.elem.addEventListener('click', (e) => {
+          if(!e.target.closest('.title')) return;
+          this.toggle();
+        });
+      }
+
+      toggle() {
+        if(this.elem.classList.contains('open')) {
+          this.close();
+        } else this.open();
+      }
+
+      open() {
+        if(!this.elem.querySelector('ul')) this.renderItems();
+        this.elem.classList.add('open');
+      }
+
+      close() {
+        this.elem.classList.remove('open');
+      }
+
+      renderItems() {
+        const html = this.listTemplate({
+          items: this.items,
+        });
+        this.elem.insertAdjacentHTML('beforeEnd', html);
+      }
+    }
+  </script>
+
+  <!-- 3) use the Class: -->
+  <script>
+    // do note that we are going to be creating a new element
+    // instead of animating the already existing one
+    // why so? because templates are used to generate HTML :)
+    // so that is what we do for this example
+
+    const menu = new Menu({
+      /* the arguments for templates: */
+      title: 'Sweets',
+      items: [
+        'chocolate',
+        'candy',
+        'coco',
+        'coffee',
+        'cake',
+        'pie',
+        'sugar'
+      ],
+
+      /* the templates themselves: */
+      menuTemplate: _.template(document.querySelector('#menu-template').textContent),
+      listTemplate: _.template(document.querySelector('#menu-list-template').textContent),
+    });
+
+    // once again: whenever we are working with templates we are creating stuff
+    // so the way the Menu Class should work is it should generate a new HTML element
+    // thus appendChild :)
+    document.body.appendChild(menu.getElem());
+  </script>
+</body>
+</html>
