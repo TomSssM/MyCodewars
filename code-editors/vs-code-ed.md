@@ -33,6 +33,10 @@ code --install-extension eryouhao.brackets-light-pro
 code --install-extension sean.Macaroon-theme
 code --install-extension davidmart.theme-jsfiddle-like-syntax-vscode
 code --install-extension Heron.firefox-devtools-theme
+code --install-extension akamud.vscode-theme-onelight
+code --install-extension beastdestroyer.firefox-quantum-themes
+code --install-extension obrejla.netbeans-light-theme
+code --install-extension zoxon.monokai-light
 ```
 # Default Editor for Git
 Change the config:
