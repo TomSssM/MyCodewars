@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="./lod-menu.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.js"></script>
+  <script src="./lod-menu.js"></script>
+</head>
+
+<body>
+
+  <p>
+    All right so here we are going to expand our Menu class and template so they instead
+    create the same menu except each item is also going to be a link. Where do we get the
+    value of the link from? Well <i>that</i> is going to come from the object of items which
+    we are going to be passing instead of the array (like we used to):
+    <pre>
+      items: {
+        "donut": "Donuuut",
+        "cake": "Cupcake",
+        "chocolate": "Chocolato",
+      }
+    </pre>
+    So as you can see every key should be the value of href:
+    <pre>
+        &lt;a&gt; href="#key">&lt;/a&gt;
+    </pre>
+  </p>
+  <script type="text/template" id="menu-template">
+    <div class="menu">
+      <span class="title"><%-title%></span>
+    </div>
+  </script>
+
+  <script type="text/template" id="menu-list-template">
+    <%const keys = Object.keys(items)%>
+    <ul>
+      <%for(let key of keys) {%>
+        <li>
+          <a href="#<%-key%>"><%-items[key]%></a>
+        </li>
+      <%}%>
+    </ul>
+  </script>
+
+  <script>
+    const menu = new Menu({
+      title: "Sweets",
+      template: _.template(document.getElementById('menu-template').innerHTML.trim()),
+      listTemplate: _.template(document.getElementById('menu-list-template').innerHTML.trim()),
+      items: {
+        "donut": "Donuuut",
+        "cake": "Cupcake",
+        "chocolate": "Chocolato",
+      }
+    });
+    document.body.appendChild(menu.getElem());
+  </script>
+
+</body>
+
+</html>

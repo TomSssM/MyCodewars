@@ -5,4 +5,4 @@
 - [Common Workflow](./workflow.html)
 - Exercises:
   - [Lodash Table](./lod-table.html)
-  - Next
+  - [Lodash Menu](./lod-menu.html)
