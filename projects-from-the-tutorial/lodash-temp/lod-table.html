@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Lodash Table</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.js"></script>
+  <style>
+    table {
+      border-collapse: collapse;
+      text-align: center;
+      margin: 0 auto;
+    }
+    td, th {
+      border: 1px solid #000;
+      padding: .2rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="grid-holder"></div>
+
+  <script type="text/template" id="grid-template">
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+      </tr>
+      <%users.forEach(user => { %>
+        <tr>
+          <td><%-user.name%></td>
+          <td><%-user.age%></td>
+        </tr>
+      <%}); %>
+    </table>
+  </script>
+
+  <script>
+    // we are going to insert a table with the following users:
+    const users = [{
+      name: 'John',
+      age: 10
+    }, {
+      name: 'Bob',
+      age: 15
+    }, {
+      name: 'Scott',
+      age: 20
+    }, {
+      name: 'Nick',
+      age: 25
+    }, {
+      name: 'Mike',
+      age: 30
+    }, {
+      name: 'Walter White',
+      age: 20
+    }];
+    // into the #grid-holder element
+    document.querySelector('#grid-holder').innerHTML = _.template(
+      document.querySelector('#grid-template').textContent
+    )({
+      users,
+    });
+  </script>
+  
+</body>
+</html>

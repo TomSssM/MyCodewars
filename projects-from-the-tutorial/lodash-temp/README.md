@@ -4,4 +4,5 @@
   - [JavaScript](./explanation.js)
 - [Common Workflow](./workflow.html)
 - Exercises:
-- Next
+  - [Lodash Table](./lod-table.html)
+  - Next
