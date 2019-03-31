@@ -89,4 +89,7 @@
   - [Double Vote](./grap-comp/step-vote/index.js)
   - [Double Vote Alt](./grap-comp/step-vote/index-alt.js)
 - [Templating with Lodash](./lodash-temp/README.md)
-- Next
+- [Component Communication](./comp-com)
+  - [CallBacks Example](./comp-com/callbacks-example/callbacks.html)
+  - [CustomEvents Example](./comp-com/custevnt.html)
+  - Next
