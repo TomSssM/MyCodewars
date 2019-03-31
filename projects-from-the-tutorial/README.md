@@ -91,5 +91,5 @@
 - [Templating with Lodash](./lodash-temp/README.md)
 - [Component Communication](./comp-com)
   - [CallBacks Example](./comp-com/callbacks-example/callbacks.html)
-  - [CustomEvents Example](./comp-com/custevnt.html)
+  - [CustomEvents Example](./comp-com/custevnt/custevnt.html)
   - Next
