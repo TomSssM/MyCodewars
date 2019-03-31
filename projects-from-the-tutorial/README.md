@@ -92,4 +92,7 @@
 - [Component Communication](./comp-com)
   - [CallBacks Example](./comp-com/callbacks-example/callbacks.html)
   - [CustomEvents Example](./comp-com/custevnt/custevnt.html)
-  - Next
+  - [Vote (Custom Events)](./comp-com/vote/index.js)
+  - Selection List (Custom Events)
+  - Dropdown
+  - Slider (Custom Events)
