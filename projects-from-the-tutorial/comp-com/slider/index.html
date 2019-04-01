@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../../drag-n-drop/slider/styles.css">
+  <title>Slider Component</title>
+  <style>
+    body {
+      width: auto;
+    }
+    .slider {
+      margin: 2rem auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="slider" class="slider">
+    <div class="thumb"></div>
+  </div>
+  <p>
+    Change: <span id="change"></span> <br>
+    Slide: <span id="slide"></span>
+  </p>
+  <input type="button" id="button" value="lider.setValue(50)">
+  <script src="./index.js"></script>
+  <script>
+    const slider = new Slider({
+      elem: document.getElementById('slider'),
+      max: 100, // from 0 - 100 but it may not be 100 tomorrow
+    });
+
+    slider.init();
+
+    document.querySelector('#button').addEventListener('click', () => slider.setValue(50));
+
+    const sliderElem = document.getElementById('slider');
+
+    sliderElem.addEventListener('slide', function(event) {
+      document.getElementById('slide').innerHTML = event.detail;
+    });
+
+    sliderElem.addEventListener('change', function(event) {
+      document.getElementById('change').innerHTML = event.detail;
+    });
+  </script>
+</body>
+</html>
