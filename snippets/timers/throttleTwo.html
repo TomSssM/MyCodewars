@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>JS</title>
+  <style>
+    body {
+      height: 3000px;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="special">JS</h1>
+  <script>
+    document.addEventListener('scroll', (e) => {
+      console.log('sliders');
+    });
+
+    let last_known_scroll_position = 0;
+    let ticking = false;
+
+    function doSomething(scroll_pos) {
+      console.log(`log from doSomething: ${scroll_pos}`);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      last_known_scroll_position = window.scrollY;
+
+      if (!ticking) {
+        setTimeout(() => {
+          doSomething(last_known_scroll_position);
+          ticking = false;
+        }, 500);
+
+        ticking = true;
+      }
+    });
+  </script>
+  <script src="./Laboratory.js"></script>
+</body>
+</html>
