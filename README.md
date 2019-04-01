@@ -13,7 +13,7 @@
 
 - [Laboratory](./Laboratory.js) :bulb:
 - [HTML](./index.html) :fax:
-- [The Kata List](./Kata.txt) :paperclip:
+- [Environment Config](./code-editors/README.md) :wrench:
 
 ## Interview Prep Kit
 
@@ -24,7 +24,6 @@
 
 ## Others
 
-- [Environment Config](./code-editors/README.md) :wrench:
 - [Articles](./articles/README.md) :newspaper:
 - [Projects from the Tutorial](./projects-from-the-tutorial/README.md) :page_facing_up:
 - [Snippets](./snippets/README.md) :seedling:
