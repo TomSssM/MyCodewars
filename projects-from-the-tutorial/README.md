@@ -94,6 +94,5 @@
   - [CustomEvents Example](./comp-com/custevnt/custevnt.html)
   - [Vote (Custom Events)](./comp-com/vote/index.js)
   - [Selection List (Custom Events)](./comp-com/sel-list/index.js)
- |-TODO: -|
   - [Custom Dropdown](./comp-com/cust-dropdown/index.js)
   - [Slider (Custom Events)](./comp-com/slider/index.js)

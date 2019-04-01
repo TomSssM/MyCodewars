@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Custom Select</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./index.js"></script>
+</head>
+
+<body>
+
+  <div>Last Result: <span id="result">...</span></div>
+
+  <div id="animal-select" class="customselect">
+    <button class="title">Choose here</button>
+    <ul>
+      <li data-value="bird">Birdies</li>
+      <li data-value="fish">Fishies</li>
+      <li data-value="animal">Animals</li>
+      <li data-value="dino">Dinosaurses</li>
+      <li data-value="simplest">Cell</li>
+    </ul>
+  </div>
+
+  <div id="food-select" class="customselect">
+    <button class="title">You can choose too</button>
+    <ul>
+      <li data-value="carnivore">We eat meet!</li>
+      <li data-value="herbivore">We eat grass</li>
+      <li data-value="omnivore">We eat everything</li>
+    </ul>
+  </div>
+
+
+  <script>
+    const animalSelect = new CustomSelect({
+      elem: document.getElementById('animal-select')
+    });
+
+    const foodSelect = new CustomSelect({
+      elem: document.getElementById('food-select')
+    });
+
+    document.addEventListener('select', function(event) {
+      document.getElementById('result').innerHTML = event.detail.value;
+      console.log(event.detail.title);
+    });
+  </script>
+
+</body>
+
+</html>
