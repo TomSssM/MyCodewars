@@ -63,4 +63,12 @@ Array.prototype.myForEach = function(fn, thisCont) {
   console.log(`this cont: ${this}`); // => Wrapper Object
 }, 'stringo');
 
-// 4) Next
+
+// 4) Array.prototype.filter
+Array.prototype.myFilter = function(callback) {
+  return this.reduce((t,v,i) => {
+    if(callback(v,i, this))  t.push(v);
+    return t;
+  }, []);
+};
+[1,2,3].myFilter(v => v > 2) // [3]
