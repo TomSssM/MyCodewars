@@ -6,7 +6,7 @@
 - [CodeWars ( Task 1 - 10 )](./1\)%20CodeWars.js)
 - [CodeWars ( Task 11 - 20 )](./2\)%20CodeWars.js)
 - [CodeWars ( Task 21 - 30 )](./3\)%20CodeWars.js)
-- CodeWars ( Task 31 - 40 )
+- [CodeWars ( Task 31 - 40 )](./4\)%20CodeWars.js)
 - [The Cheat Sheet](./cheatsheet/)
 
 **The Tools :coffee:**

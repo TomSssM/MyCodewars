@@ -1,9 +1,5 @@
-11. http://www.codewars.com/kata/cross-product-of-vectors
-13. https://www.codewars.com/kata/base-conversion/
-15. http://www.codewars.com/kata/a-function-within-a-function
 16. http://www.codewars.com/kata/can-you-keep-a-secret
 19. http://www.codewars.com/kata/function-cache
-22. http://www.codewars.com/kata/stringing-me-along
 23. http://www.codewars.com/kata/i-spy
 24. http://www.codewars.com/kata/calculating-with-functions
 28. http://www.codewars.com/kata/array-helpers
@@ -14,4 +10,6 @@
    - http://www.codewars.com/kata/lazy-evaluation
    - http://www.codewars.com/kata/tail-recursion-with-trampoline
    - http://www.codewars.com/kata/functional-sql
+11. http://www.codewars.com/kata/cross-product-of-vectors
+13. https://www.codewars.com/kata/base-conversion/
    - http://www.codewars.com/kata/can-you-get-the-loop
