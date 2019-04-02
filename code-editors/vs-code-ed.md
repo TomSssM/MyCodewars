@@ -10,14 +10,10 @@ Here is the extensions list:
 ```bash
 code --install-extension CoenraadS.bracket-pair-colorizer
 code --install-extension eamodio.gitlens
-code --install-extension gurayyarar.dummytextgenerator
 code --install-extension HookyQR.beautify
 code --install-extension kisstkondoros.vscode-gutter-preview
 code --install-extension mrmlnc.vscode-autoprefixer
-code --install-extension Perkovec.emoji
-code --install-extension PKief.material-icon-theme
 code --install-extension pranaygp.vscode-css-peek
-code --install-extension robertohuertasm.vscode-icons
 code --install-extension msjsdiag.debugger-for-chrome
 code --install-extension ritwickdey.LiveServer
 code --install-extension techer.open-in-browser
@@ -25,18 +21,22 @@ code --install-extension gencer.html-slim-scss-css-class-completion
 code --install-extension formulahendry.auto-rename-tag
 code --install-extension aaron-bond.better-comments
 code --install-extension streetsidesoftware.code-spell-checker
+code --install-extension EditorConfig.EditorConfig
 
+code --install-extension robertohuertasm.vscode-icons
+code --install-extension PKief.material-icon-theme
+
+code --install-extension obrejla.netbeans-light-theme
 code --install-extension dracula-theme.theme-dracula
+code --install-extension beastdestroyer.firefox-quantum-themes
+code --install-extension zoxon.monokai-light
+code --install-extension linking.evo-theme
+code --install-extension Heron.firefox-devtools-theme
 code --install-extension johnpapa.winteriscoming
 code --install-extension ullissescastro.theme-bracketslight
 code --install-extension eryouhao.brackets-light-pro
-code --install-extension sean.Macaroon-theme
-code --install-extension davidmart.theme-jsfiddle-like-syntax-vscode
-code --install-extension Heron.firefox-devtools-theme
 code --install-extension akamud.vscode-theme-onelight
-code --install-extension beastdestroyer.firefox-quantum-themes
-code --install-extension obrejla.netbeans-light-theme
-code --install-extension zoxon.monokai-light
+
 ```
 # Default Editor for Git
 Change the config:
