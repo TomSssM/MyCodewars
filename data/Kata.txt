@@ -1,32 +1,20 @@
-http://www.codewars.com/kata/santaclausable-interface
-http://www.codewars.com/kata/fun-with-es6-classes-number-2-animals-and-inheritance
-http://www.codewars.com/kata/fun-with-es6-classes-number-3-cuboids-cubes-and-getters
-http://www.codewars.com/kata/array-helpers
-https://www.codewars.com/kata/replicate-new
-
-http://www.codewars.com/kata/a-chain-adding-function
-http://www.codewars.com/kata/i-spy
-http://www.codewars.com/kata/a-function-within-a-function
-http://www.codewars.com/kata/stringing-me-along
-http://www.codewars.com/kata/function-cache
-http://www.codewars.com/kata/cross-product-of-vectors
-http://www.codewars.com/kata/lazy-evaluation
-http://www.codewars.com/kata/sum-of-digits-slash-digital-root/
-http://www.codewars.com/kata/tail-recursion-with-trampoline
-http://www.codewars.com/kata/implement-a-filter-function
-https://www.codewars.com/kata/525f3eda17c7cd9f9e000b39
-http://www.codewars.com/kata/can-you-keep-a-secret
-https://www.codewars.com/kata/mutual-recursion
-https://www.codewars.com/kata/base-conversion/
-http://www.codewars.com/kata/functional-sql
-https://www.codewars.com/kata/sequence-generator-1
-
-
-http://www.codewars.com/kata/can-you-get-the-loop
-https://www.codewars.com/kata/fun-with-trees-array-to-tree
-https://www.codewars.com/kata/head-tail-init-and-last
-https://www.codewars.com/kata/convert-a-linked-list-to-a-string
-
-https://www.codewars.com/kata/is-a-number-prime
-
-unfinished kata in profile
+9. http://www.codewars.com/kata/implement-a-filter-function
+11. http://www.codewars.com/kata/cross-product-of-vectors
+12. http://www.codewars.com/kata/sequence-generator-1
+13. https://www.codewars.com/kata/base-conversion/
+15. http://www.codewars.com/kata/a-function-within-a-function
+16. http://www.codewars.com/kata/can-you-keep-a-secret
+18. http://www.codewars.com/kata/a-chain-adding-function
+19. http://www.codewars.com/kata/function-cache
+22. http://www.codewars.com/kata/stringing-me-along
+23. http://www.codewars.com/kata/i-spy
+24. http://www.codewars.com/kata/calculating-with-functions
+28. http://www.codewars.com/kata/array-helpers
+29. http://www.codewars.com/kata/replicate-new
+30. http://www.codewars.com/kata/sum-of-digits-slash-digital-root/
+31. http://www.codewars.com/kata/fun-with-es6-classes-number-2-animals-and-inheritance
+32. http://www.codewars.com/kata/fun-with-es6-classes-number-3-cuboids-cubes-and-getters
+   - http://www.codewars.com/kata/lazy-evaluation
+   - http://www.codewars.com/kata/tail-recursion-with-trampoline
+   - http://www.codewars.com/kata/functional-sql
+   - http://www.codewars.com/kata/can-you-get-the-loop
