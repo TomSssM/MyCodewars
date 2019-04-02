@@ -195,6 +195,20 @@ const memoize = function(fun) {
   }
 };
 ```
+## Doubly Upgraded
+This version doesn't call a pure function all over even if it was called with something and
+returned undefined
+```javascript
+function cache(func) {
+  func.cache = {};
+  return function(...args) {
+    const key = JSON.stringify(args);
+    if(key in func.cache) {
+      return func.cache[key];
+    } else return func.cache[key] = func(...args);
+  };
+}
+```
 ## As a Method
 ```javascript
 function memoize(func, depsFunc) {

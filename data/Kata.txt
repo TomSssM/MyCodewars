@@ -1,5 +1,3 @@
-16. http://www.codewars.com/kata/can-you-keep-a-secret
-19. http://www.codewars.com/kata/function-cache
 23. http://www.codewars.com/kata/i-spy
 24. http://www.codewars.com/kata/calculating-with-functions
 28. http://www.codewars.com/kata/array-helpers
