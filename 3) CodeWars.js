@@ -475,3 +475,31 @@ function partitionOn(pred, items) {
 }
 
 // Task 30
+// Implement function sequence, which returns new n-size Array 
+// filled according to pattern. Pattern may be:
+// a function that takes two: (element, index), one: (element) or 
+// any arguments (similar to map function), then filled running this function, 
+// in other words: function describes sequence,
+// number, string or any other object, then filled by copying, this object n-times.
+// Examples:
+// sequence(3, 4); // [4, 4, 4]
+// sequence(5, []); // [[], [], [], [], []]
+// sequence(2, "s"); // ["s", "s"]
+// sequence(5, (x, idx) => idx%2) // [0, 1, 0, 1, 0];
+// sequence(10, (x, idx) => idx+1) // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+function sequence(n, pattern) {
+  let arr = new Array(n);
+  if(typeof pattern !== 'function') {
+    arr.fill(pattern);
+  } else {
+    arr.fill(undefined);
+    arr = arr.map((v,i) => pattern(v,i));
+  }
+  return arr;
+}
+
+sequence(3, 4); // [4, 4, 4]
+sequence(3, 's'); // ['s', 's', 's']
+sequence(5, []); // [[], [], [], [], []]
+sequence(5, (x, idx) => idx%2); // [0, 1, 0, 1, 0]
