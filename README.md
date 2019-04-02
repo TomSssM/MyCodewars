@@ -1,18 +1,20 @@
 # Contents
 
-#### Archive :books:
+### Archive :books:
 
 - [Articles](./articles/README.md) :newspaper:
 - [Projects from the Tutorial](./projects-from-the-tutorial/README.md) :page_facing_up:
 - [Snippets](./snippets/README.md) :seedling:
+---
 
-#### The Tools :coffee:
+### The Tools :coffee:
 
 - [Laboratory](./Laboratory.js) :bulb:
 - [HTML](./index.html) :fax:
 - [Environment Config](./code-editors/README.md) :wrench:
+---
 
-#### Log :orange_book:
+### Log :orange_book:
 
 - __CodeWars__ :paperclip:
   - [CodeWars ( Task 1 - 10 )](./1\)%20CodeWars.js)
@@ -27,3 +29,4 @@
 - __Others__ :pineapple:
   - [Polyfill.js](./Polyfill.js)
   - [Hardcore](./cheatsheet/)
+  ---
