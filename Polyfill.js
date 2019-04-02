@@ -72,3 +72,17 @@ Array.prototype.myFilter = function(callback) {
   }, []);
 };
 [1,2,3].myFilter(v => v > 2) // [3]
+
+// 5) Array.prototype.map
+if (!Array.prototype.mapUsingReduce) {
+  Array.prototype.mapUsingReduce = function(callback) {
+    return this.reduce(function(mappedArray, currentValue, index, array) {
+      mappedArray[index] = callback(currentValue, index, array);
+      return mappedArray;
+    }, []);
+  };
+}
+
+[1, 2, , 3].mapUsingReduce(
+  (currentValue, index, array) => currentValue + index + array.length
+); // [5, 7, <1 empty item>, 10]
