@@ -75,3 +75,145 @@ console.log(adderSpy.returned(8)); // true
 console.log(adderSpy.returned(0)); // false
 
 // Task 33
+// This time we want to write calculations using functions and get the results. 
+// Let's have a look at some examples:
+// JavaScript:
+
+// seven(times(five())); // must return 35
+// four(plus(nine())); // must return 13
+// eight(minus(three())); // must return 5
+// six(dividedBy(two())); // must return 3
+
+// There must be a function for each number from 0 ("zero") to 9 ("nine")
+// There must be a function for each of the following mathematical operations: 
+// plus, minus, times, dividedBy
+
+// Each calculation consist of exactly one operation and two numbers
+// The most outer function represents the left operand, the most inner function represents 
+// the right operand
+// Division should be integer division, e.g eight(dividedBy(three()))/eight(divided_by(three)) 
+// should return 2, not 2.12349812409023490293402324210394023949023940920394191203942...
+
+function zero() {
+    if(arguments[0] === undefined) {
+        return 0;
+    } else {
+        return handleOperation(arguments[0].operation, 0, arguments[0].val);
+    }
+}
+function one() {
+    if(arguments[0] === undefined) {
+        return 1;
+    } else {
+        return handleOperation(arguments[0].operation, 1, arguments[0].val);
+    }
+}
+function two() {
+    if(arguments[0] === undefined) {
+        return 2;
+    } else {
+        return handleOperation(arguments[0].operation, 2, arguments[0].val);
+    }
+}
+function three() {
+    if(arguments[0] === undefined) {
+        return 3;
+    } else {
+        return handleOperation(arguments[0].operation, 3, arguments[0].val);
+    }
+}
+function four() {
+    if(arguments[0] === undefined) {
+        return 4;
+    } else {
+        return handleOperation(arguments[0].operation, 4, arguments[0].val);
+    }
+}
+function five() {
+    if(arguments[0] === undefined) {
+        return 5;
+    } else {
+        return handleOperation(arguments[0].operation, 5, arguments[0].val);
+    }
+}
+function six() {
+    if(arguments[0] === undefined) {
+        return 6;
+    } else {
+        return handleOperation(arguments[0].operation, 6, arguments[0].val);
+    }
+}
+function seven() {
+    if(arguments[0] === undefined) {
+        return 7;
+    } else {
+        return handleOperation(arguments[0].operation, 7, arguments[0].val);
+    }
+}
+function eight() {
+    if(arguments[0] === undefined) {
+        return 8;
+    } else {
+        return handleOperation(arguments[0].operation, 8, arguments[0].val);
+    }
+}
+function nine() {
+    if(arguments[0] === undefined) {
+        return 9;
+    } else {
+        return handleOperation(arguments[0].operation, 9, arguments[0].val);
+    }
+}
+
+function plus() {
+    return {
+        operation: '+',
+        val: arguments[0],
+    };
+}
+function minus() {
+    return {
+        operation: '-',
+        val: arguments[0],
+    };
+}
+function times() {
+    return {
+        operation: '*',
+        val: arguments[0],
+    };
+}
+function dividedBy() {
+    return {
+        operation: '/',
+        val: arguments[0],
+    };
+}
+
+function handleOperation(oper, a, b) {
+    let res;
+    switch(oper) {
+        case '+':
+            res = a + b;
+            break;
+        case '-':
+            res = a - b;
+            break;
+        case '*':
+            res = a * b;
+            break;
+        case '/':
+            res = a / b;
+            break;
+        default:
+            throw new Error('illegal operation');
+    }
+    return Math.floor(res);
+}
+
+console.log(seven(times(five()))); // must return 35
+console.log(four(plus(nine()))); // must return 13
+console.log(eight(minus(three()))); // must return 5
+console.log(six(dividedBy(two()))); // must return 3
+
+// Task 34
