@@ -588,3 +588,36 @@ function convert(input, source, target) {
 }
 
 // Task 40
+// You are given a node that is the beginning of a linked list. This list always contains a tail 
+// and a loop.
+
+// Your objective is to determine the length of the loop.
+// For example in the following picture the tail's size is 3 and the loop size is 10:
+
+//          1
+//           \
+//            2
+//             \
+//              3
+//               \
+//                4  __ 5 __ 6
+//              /             \
+//           13                7
+//            |                |
+//            12               8
+//             \              /
+//              11 __ 10  __ 9
+
+// Use the `getNext' method or 'next' property to get the following node.
+// node.getNext()
+// node.next
+
+function loop_size(node) {
+    const mentioned = [];
+    while(!mentioned.includes(node)) {
+        mentioned.push(node);
+        node = node.next;
+    }
+    const index = mentioned.indexOf(node);
+    return mentioned.length - index;
+  }
