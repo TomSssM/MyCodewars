@@ -1,15 +1,1 @@
-23. http://www.codewars.com/kata/i-spy
-24. http://www.codewars.com/kata/calculating-with-functions
-28. http://www.codewars.com/kata/array-helpers
-
-29. http://www.codewars.com/kata/replicate-new
-30. http://www.codewars.com/kata/sum-of-digits-slash-digital-root/
-31. http://www.codewars.com/kata/fun-with-es6-classes-number-2-animals-and-inheritance
-32. http://www.codewars.com/kata/fun-with-es6-classes-number-3-cuboids-cubes-and-getters
-   - http://www.codewars.com/kata/lazy-evaluation
-   - http://www.codewars.com/kata/tail-recursion-with-trampoline
-   - http://www.codewars.com/kata/functional-sql
-   
-11. http://www.codewars.com/kata/cross-product-of-vectors
-13. https://www.codewars.com/kata/base-conversion/
-   - http://www.codewars.com/kata/can-you-get-the-loop
+TODO: 3 5-kyu katas from TO DO Collection
