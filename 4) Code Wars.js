@@ -484,3 +484,107 @@ function isVectorOk(vector) {
 }
 
 // Task 39
+// In this kata you have to implement a base converter, which converts positive integers between 
+// arbitrary bases / alphabets. Here are some pre-defined alphabets:
+
+const Alphabet = {
+    BINARY:        '01',
+    OCTAL:         '01234567',
+    DECIMAL:       '0123456789',
+    HEXA_DECIMAL:  '0123456789abcdef',
+    ALPHA_LOWER:   'abcdefghijklmnopqrstuvwxyz',
+    ALPHA_UPPER:   'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    ALPHA:         'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    ALPHA_NUMERIC: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+};
+
+// The function convert() should take an input (string), the source alphabet (string) and the target 
+// alphabet (string). You can assume that the input value always consists of characters from the 
+// source alphabet. You don't need to validate it.
+
+// convert between numeral systems
+console.log(convert("15", Alphabet.DECIMAL, Alphabet.BINARY)); // should return "1111"
+console.log(convert("15", Alphabet.DECIMAL, Alphabet.OCTAL)); // should return "17"
+console.log(convert("1010", Alphabet.BINARY, Alphabet.DECIMAL)); // should return "10"
+console.log(convert("1010", Alphabet.BINARY, Alphabet.HEXA_DECIMAL)); // should return "a"
+
+// other bases
+console.log(convert("0", Alphabet.DECIMAL, Alphabet.ALPHA)); // should return "a"
+console.log(convert("27", Alphabet.DECIMAL, Alphabet.ALPHA_LOWER)); // should return "bb"
+console.log(convert("hello", Alphabet.ALPHA_LOWER, Alphabet.HEXA_DECIMAL)); // should return "320048"
+console.log(convert("SAME", Alphabet.ALPHA_UPPER, Alphabet.ALPHA_UPPER)); // should return "SAME"
+
+// all right so here is the thing:
+// we can convert from any base to decimal by multiplying the right way:
+// 1111(2) = 1*2^3 + 1*2^2 + 1*2^1 + 1*2^0(10) = 7(15)
+// then we can convert to any other base via division like so (suppose we choose octal):
+// 15 / 8 = 1 / 8 = 17 (*)
+// remember that? cool!
+// however this particular kata has a problem: there may be alphabet characters like:
+// ab is something similar to base 2 except instead of 0 and 1 we have a and b
+// well no problem:
+// what if in line marked (*) we were to coerce together not quite numbers but 
+// use those numbers as indexes to get values stored at them
+// let's imagine we have a binary like base: 'ab'
+//                                            01
+// down below are the indexes at which a and b are stored
+// now in line (*) we could simply say coerce not a number 0 or 1 but a value
+// at 0 or 1 this way we can handle the alphabets too!
+
+function convert(input, source, target) {
+    let inputNum = [];
+    const baseSource = source.length;
+    const baseTarget = target.length;
+  
+    if (source == target) {return input}
+  
+    stringToNum();
+  
+    if (baseSource !== 10) {
+        inputNum = toDecimal();
+    } else {
+        inputNum = +inputNum.join('');
+    }
+  
+    if (baseTarget === 10) {
+      return inputNum.toString();
+    } else {
+      return toTarget();
+    }
+  
+  
+    function stringToNum() { // * ready
+      for (let i = 0; i < input.length; i++) {
+        inputNum[i] = source.indexOf( input[i] );
+      }
+    }
+  
+    function toDecimal() { // * ready
+      let n = inputNum.length;
+      let sum = 0;
+      let j = 0;
+  
+      for (let i = n - 1; i >= 0; i--) {
+        sum = inputNum[j] * Math.pow(baseSource, i) + sum;
+        j++;
+      }
+  
+      return sum;
+    }
+  
+    function toTarget() { // * ready
+      let targetNum = [];
+      let prime = inputNum;
+      let float;
+  
+      do {
+        float = prime % baseTarget;
+        prime = Math.floor(prime / baseTarget);
+        targetNum.unshift( target[float]);
+      } while (prime > 0);
+  
+      return targetNum.join('');
+    } 
+}
+
+// Task 40
