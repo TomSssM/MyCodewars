@@ -268,3 +268,108 @@ console.log(numbers.even());    // must return [2, 4]
 console.log(numbers.odd());     // must return [1, 3, 5]
 
 // Task 35
+// TL;DR: write a nouveau function that replicates all the behavior of the new operator.
+
+// Aside: Operators?
+// In JavaScript, perhaps no operator is as complicated as new. "Wait; new is an operator?" 
+// Yep; an operator is something that operates on one or more operands and evaluates 
+// to a result. Binary operators like + and !== operate on two operands:
+
+// 5 + 5 evaluates to 10
+// {} !== [] evaluates to true
+// Whereas unary operators like + and typeof take one operand 
+// (hmm, + is both a unary and binary operator, how 'bout that!):
+
+// +'5' evaluates to 5
+// typeof '5' evaluates to 'string'
+// Ultimately operators are functions with different syntax. 
+// They take inputs/operands and return/evaluate to something. 
+// In fact, some JS operators can be re-written as functions.
+
+// New
+// So what about new? Well, the unary operator new is intended to create 
+// "instances" of a constructor function. To be more precise, the 
+// operation new Constructor(arg1, arg2, ...argX) does the following:
+
+// Creates an empty object (which we'll call instance) which prototypally inherits 
+// from Constructor.prototype
+// Binds Constructor to instance (meaning this is instance) and invokes 
+// Constructor with any arguments passed in
+// If the return value of Constructor is an object 
+// (including arrays, functions, dates, regexes, etc.) the operation evaluates to that object
+// Otherwise, the operation evaluates to instance
+// Let's see some examples:
+
+// function Person (name, age) {
+//   this.name = name;
+//   this.age = age;
+// }
+// Person.prototype.introduce = function(){
+//   return 'My name is ' + this.name + ' and I am ' + this.age;
+// };
+// const john = new Person('John', 30);
+// const jack = new Person('Jack', 40);
+// console.log( john.introduce() ); // My name is John and I am 30
+// console.log( jack.introduce() ); // My name is Jack and I am 40
+// function ReturnsArray (name) {
+//   this.name = name;
+//   return [1, 2, 3];
+// }
+// const arr = new ReturnsArray('arr?');
+// console.log( arr.name ); // undefined
+// console.log( arr ); // [1, 2, 3]
+// Oof! No wonder people get confused about new. The good news is… everything new 
+// can do, you can do too.
+// Exercise
+// Your mission: write a function nouveau (that's French for "new") which takes one function 
+// parameter (the constructor), plus an unknown number of additional parameters of any 
+// type (arguments for the constructor). When invoked, nouveau should do everything 
+// new does and return the same object new would evaluate to, as specified above.
+// const john = nouveau(Person, 'John', 30); // same result as above
+// Good luck!
+
+// Note: we are going to check whether Constructor returned another object, if so, return that object
+// we are going to use the 'typeof' kind of check because the
+// Constructor can return a null object or an object with no __proto__ (for example such an object would
+// be Object.prototype.__proto__ === null) thus making the 'instanceof Object' kind of check useless
+// however we should check for null return first cause typeof null is in fact an object
+
+function nouveau (Constructor, ...args) {
+    const inst = Object.create(Constructor.prototype);
+    const callRes = Constructor.call(inst, ...args);
+    if(callRes === null) return inst;
+    return (typeof callRes === 'object' || typeof callRes === 'function') ?
+      callRes : inst;
+}
+
+function Person (name) {
+    this.name = name;
+}
+Person.prototype.sayHi = function () {
+    return 'Hi, I am ' + this.name;
+};
+
+const guy = nouveau(Person, 'Guy');
+
+console.log(guy.name); // 'Guy'
+console.log(guy.sayHi()); // 'Hi, I am Guy'
+console.log(guy instanceof Person); // true
+
+function Nil() {
+    return Object.create(null);
+}
+
+const emptyObj = nouveau(Nil);
+console.log(emptyObj.__proto__); // undefined
+console.log(emptyObj instanceof Nil); // false
+
+function WeirdObjGen() {
+    Object.prototype instanceof Object; // false
+    return Object.prototype;
+}
+const weirdDude = nouveau(WeirdObjGen);
+console.log(weirdDude instanceof Object); // false
+console.log(weirdDude instanceof WeirdObjGen); // false
+console.log(weirdDude === Object.prototype); // true
+
+// Task 36
