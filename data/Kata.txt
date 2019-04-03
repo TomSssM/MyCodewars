@@ -1,1 +1,1 @@
-TODO: 3 5-kyu katas from TO DO Collection
+There are always more Kata to do on CodeWars
