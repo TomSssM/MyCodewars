@@ -26,7 +26,7 @@
   - [CodeWars ( Task 11 - 20 )](./2\)%20CodeWars.js)
   - [CodeWars ( Task 21 - 30 )](./3\)%20CodeWars.js)
   - [CodeWars ( Task 31 - 40 )](./4\)%20CodeWars.js)
-  - CodeWars ( Task 41 - 50 )
+  - [CodeWars ( Task 41 - 50 )](./5\)%20CodeWars.js)
 
 - __Others__ :pineapple:
   - [Polyfill.js](./Polyfill.js)
