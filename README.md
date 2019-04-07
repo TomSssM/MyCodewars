@@ -30,5 +30,5 @@
 
 - __Others__ :pineapple:
   - [Polyfill.js](./Polyfill.js)
-  - [Hardcore](./cheatsheet/)
+  - [Hardcore](./cheatsheet/README.md)
   ---

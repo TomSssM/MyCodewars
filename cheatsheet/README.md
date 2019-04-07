@@ -1,0 +1,12 @@
+# Hardcore
+- [Love Triangle](./love-triangles.js)
+- [Quadratic Equation](./quadratic-equation.js)
+- [Brackets](./brackets.js)
+- [Cash Exchange](./cash-exchange.js)
+- [Advanced Zeros](./advanced-zeros.js)
+- [Priority Queue](./priority-queue)
+- [Sudoku](./sudoku.js)
+- Longest Consequtive Sequence
+- Smart Calculator
+- Sorter
+- Help
