@@ -611,6 +611,7 @@ function reverseInPlace(str) {
 reverseInPlace('I am a good boy'); // "I ma a doog yob"
 ```
 # 20) First Non Repeating Char in a String
+## Version 1
 ```javascript
 function firstNonRepeatChar(str) {
   let char;
@@ -630,4 +631,18 @@ function firstNonRepeatChar(str) {
 }
 
 firstNonRepeatChar('the quick brown fox jumps then quickly blow air'); // "f"
+```
+## Version 2
+
+```javascript
+function firstNonRep(str) {
+
+    const arr = str.split('');
+
+    return arr.find((v,i) => {
+        return arr.indexOf(v, i+1) === -1;
+    });
+}
+
+firstNonRep('the quick brown fox jumps then quickly blow air'); // "f"
 ```
