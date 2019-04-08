@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JS Animation</title>
+    <style>
+        #node {
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="node"></div>
+    
+    <script>
+        const node = document.querySelector('#node');
+
+        function animateOffset(duration, totalOffset) {
+            const frameCount = duration / 1000 * 60;
+            const singleOffset = totalOffset / frameCount;
+            let offset = 0;
+            const tick = (timestamp) => {
+                console.log(timestamp);
+                if(offset >= totalOffset) return;
+                node.style.transform = `translateX(${offset += singleOffset}px)`;
+                requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+        }
+
+        animateOffset(3000, 300);
+
+    </script>
+</body>
+</html>

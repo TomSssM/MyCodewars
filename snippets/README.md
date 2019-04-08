@@ -19,3 +19,4 @@
 - [Private Properties](./private.js)
 - [Server Sent Events (SSE)](./sse/server-evts.js)
 - [Errors](./errors.js)
+- [JS Animations](./anim/README.md)

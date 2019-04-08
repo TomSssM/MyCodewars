@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Blocking JS</title>
+    <style>
+        .spinner {
+            border: 10px solid purple;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            background: #fff;
+            border-right-color: transparent;
+        }
+        .blocking-button {
+            margin: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Blocking JS</h1>
+    <h2>Blocking</h2>
+    <div class="container container--blocking">
+        <div class="spinner"></div>
+        <input class="blocking-button" type="button" value="Sleep" id="blocking-button">
+    </div>
+    <h2>Non-Blocking</h2>
+    <div class="container container--non-blocking">
+        <div class="spinner"></div>
+        <input class="blocking-button" type="button" value="Sleep" id="non-blocking-button">
+    </div>
+    <h2>Slightly Blocking</h2>
+    <div class="container container--slightly-blocking">
+        <div class="spinner"></div>
+        <input class="blocking-button" type="button" value="Sleep" id="slightly-blocking-button">
+    </div>
+    <div id="result">Results will appear here</div>
+    <script>
+        const spinner = document.querySelector('#spinner');
+        const spinner2 = document.querySelector('#spinner2');
+        let angle = 0;
+        const result = document.querySelector('#result');
+
+        function animate() {
+            angle += 16;
+            angle = angle > 360 ? angle - 360 : angle;
+
+            for(let sp of document.querySelectorAll('.spinner')) {
+                sp.style.transform = `rotate(${angle}deg)`;
+            }
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        function sleep(ms) {
+            const now = Date.now();
+            while (Date.now() - now < ms) {
+                // ...
+            }
+        }
+
+        const blockingButton = document.querySelector('#blocking-button');
+        // blockingButton.addEventListener('click', () => sleep(3000));
+        // or
+        blockingButton.addEventListener('click', () => {
+            let i = 0;
+            while(i <= 100) {
+                result.innerHTML = `${i++}%`;
+                // do some heavy stuff:
+                sleep(30);
+            }
+        });
+
+        const nonBlockingButton = document.querySelector('#non-blocking-button');
+        nonBlockingButton.addEventListener('click', () => {
+            let i = 0;
+            setTimeout(function name() {
+                if(i > 100) return;
+                result.innerHTML = `${i++}%`;
+                // this one has to do only light stuff:
+                sleep(30);
+                setTimeout(name, 0);
+            }, 0);
+        });
+
+        const slightlyBlocking = document.querySelector('#slightly-blocking-button');
+        slightlyBlocking.addEventListener('click', () => {
+            let i = 0;
+            setTimeout(function name() {
+                if(i > 100) return;
+                result.innerHTML = `${i++}%`;
+                // this one does too heavy stuff
+                // which is actually not OK
+                sleep(100);
+                setTimeout(name, 0);
+            }, 0);
+        });
+    </script>
+</body>
+</html>
