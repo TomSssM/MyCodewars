@@ -646,3 +646,19 @@ function firstNonRep(str) {
 
 firstNonRep('the quick brown fox jumps then quickly blow air'); // "f"
 ```
+## Version 3 (If there may be no such a character)
+```javascript
+function findFirstSingleChar(str) {
+    const lookedAt = new Set();
+    const arrStr = str.split('');
+    let char;
+    for(let i = 0; i <= arrStr.length; i++) {
+        char = arrStr[i];
+        if(arrStr.indexOf(char, i+1) === -1 && !lookedAt.has(char)) return char;
+        lookedAt.add(char);
+    }
+    return null;
+}
+findFirstSingleChar('The quick brown fox jumps over the lazy dog'); // => 'T'
+findFirstSingleChar('entente'); // => null
+```
