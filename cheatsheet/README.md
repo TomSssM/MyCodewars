@@ -9,4 +9,3 @@
 - Longest Consequtive Sequence
 - Smart Calculator
 - Sorter
-- Help
