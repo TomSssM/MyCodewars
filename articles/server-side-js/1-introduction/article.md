@@ -68,7 +68,7 @@ http.createServer(function(req, res) {
 ```
 `file.serve` will serve the necessary file if the `req.url` asks for it and if that file
 exists on the server. And after that we should be able to handle specific requests like so:
-```javascript
+```
 |                                                |   http.createServer(function(req, res) {
 |   xhr.open('GET', 'my-first-request', true);   |       if(request.url === '/my-first-request') {
 |   ...                                         ---->        response.end('my first response');
