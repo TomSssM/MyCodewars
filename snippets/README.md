@@ -2,7 +2,6 @@
 
 ## Main
 
-- [AJAX](./ajax/README.md)
 - [JSON](./myJSON.js)
 - [Data Structures](./Data%20Structures/README.md)
 - [Algorithms](./algorithms/README.md)
@@ -10,6 +9,7 @@
 - [git cheatsheet](./git-cheatsheet.md)
 - [Iterators and Generators](./iterators/README.md)
 - [Unit Testing](./unit-testing/README.md)
+- [Server Side JS](./server-side-js/README.md)
 
 ## Trivial
 
