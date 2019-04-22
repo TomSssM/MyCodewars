@@ -4,6 +4,8 @@
 3. [XHR - readyStateChange and Other Events](./2-ready-st-ch/article.md)
 4. [XHR - Encoding](./3-encoding/article.md)
 5. [XHR - Cross Domain](./4-cross-domain/article.md)
+6. [XHR - Upload Status](./5-status/article.md)
+
 n. XHR - Modern Days
 
 :ledger: _XHR - XMLHttpRequest_
