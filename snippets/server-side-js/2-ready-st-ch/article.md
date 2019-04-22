@@ -68,5 +68,3 @@ Here are all the other events that can be triggered when we do an `XMLHttpReques
 - `loadend` - either an unsuccessful or successful loading of a request
 
 Last but not least here is another [task](./code-3) done well.
-
----
