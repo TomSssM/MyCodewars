@@ -16,9 +16,12 @@ Do note that `3` might happen multiple times:
 
 Take a look at this [demo](./code-1/). Here we get multiple packages because the
 amount of info is really big! However do note that even though in this example each package
-contains around 1000 symbols we shouldn't rely on this cause in real life one package may end in
-half a byte and the other half will arrive with the next package. Thus we can distort data if we
-don't let the flow of packages complete properly.
+contains around 1000 symbols we shouldn't rely on this in real life.
+You see each package contains some amount of bytes. But certain things like Cyrilic letters 
+are stored as 2 bytes. Thus it may so happen that the 1st byte is in one package and the 2nd is in the
+other package. Thus if we look into `textContent` property during the loading process the data may be
+confusing and any operation on it should be avoided. It makes symbols that are represented as 1 byte the
+only reliable data to be checked during the load process.
 
 ---
 
