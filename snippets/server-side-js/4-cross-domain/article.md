@@ -139,8 +139,7 @@ Here is what the algorithm looks like:
 |                     |                                             |              |
 |                     |  Preflight 200 OK Response                  |              |
 |                     |  ^                                          |              |
-|                     |  (Origin: origin)                          <-- response    |
-|                     |  (Access-Control-Allow-Methods: <methods>)  |              |
+|                     |  (Access-Control-Allow-Methods: <methods>) <-- response    |
 |                     |  (Access-Control-Allow-Headers: <headers>)  |              |
 |                     |  (Access-Control-Max-Age: <ms>)             |              |
 |_____________________|_____________________________________________|______________|
@@ -221,3 +220,12 @@ if(req.url === '/file.json') {
     res.end(json);
 }
 ```
+
+---
+
+## Appendix
+
+The `OPTIONS` method is actually used to ask a server which other methods and headers it can handle. It doesn't
+seem to have anything to do with security. Thus we use it only with the complex requests (because they use
+non-standard methods and/ro headers). But we also check that the client be authorized to make these complex
+requests in addition to the server's ability to handle them.
