@@ -67,4 +67,6 @@ Here are all the other events that can be triggered when we do an `XMLHttpReques
 - `timeout` - the request timed out
 - `loadend` - either an unsuccessful or successful loading of a request
 
+Last but not least here is another [task](./code-3) done well.
+
 ---

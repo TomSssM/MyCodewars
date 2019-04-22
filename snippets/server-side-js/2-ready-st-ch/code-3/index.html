@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Servers Task One</title>
+</head>
+<body>
+    <button onclick="loadPhones()" id="button">Load phones.json!</button>
+    <script>
+    function loadPhones() {
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('GET', 'phones.json', true);
+
+        xhr.onreadystatechange = function() {
+
+        if (xhr.readyState != 4) return;
+        button.innerHTML = 'Load more';
+        button.disabled = false;
+        if (xhr.status != 200) {
+            // handler error
+            alert(xhr.status + ': ' + xhr.statusText);
+        } else {
+            makeMenu(JSON.parse(xhr.responseText));
+        }
+
+        }
+
+        xhr.send(null);
+
+        button.innerHTML = 'Loading...';
+        button.disabled = true;
+    }
+
+    function makeMenu(phones) {
+        let li;
+        const ul = document.createElement('ul');
+        phones.forEach(phone => {
+            li = document.createElement('li');
+            li.textContent = phone.name;
+            ul.appendChild(li);
+        });
+        document.body.appendChild(ul);
+    }
+    </script>
+</body>
+</html>
