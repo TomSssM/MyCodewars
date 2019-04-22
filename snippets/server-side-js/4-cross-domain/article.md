@@ -190,3 +190,34 @@ Origin:http://javascript.com
 Referer:http://javascript.com/some/url
 ```
 We use `Origin` _in addition_ to `Referrer` because it is more reliable :)
+
+---
+
+## Cool Example
+
+Go to [this folder](./code-1). Do `npm install` and `npm start` for both `someserver-1` 
+and `someserver-2`. `someserver-1` will log to the console the json `responseText`. You
+see, these two servers are opened on different domains and via setting the right header
+in `someserver-2` that gives the response `someserver-1` is able to obtain the json response.
+Here is how things happen in a nutshell:
+
+First. `someserver-1` makes a request to `someserver-2`:
+
+```javascript
+const xhr = new XMLHttpRequest();
+xhr.open('GET', 'http://localhost:8080/file.json', true);
+xhr.onload = function() {
+    console.log(this.responseText);
+};
+xhr.send(null);
+```
+
+Then `someserver-2` gives this file. However in order for it to be able to give that file cross
+domain we set aright the good old `Access-Control-Allow-Origin` header:
+
+```javascript
+if(req.url === '/file.json') {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5500');
+    res.end(json);
+}
+```
