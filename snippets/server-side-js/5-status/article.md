@@ -55,3 +55,22 @@ if `lengthComputable` is `true` and `total` is 0 it means that the amount of dat
 Also it is important to understand that the `xhr.upload.onprogress` guarantees that the data was _sent_ to
 the server but it doesn't guarantee that the server processed and wrote the data to the drive. So the upload
 indicator may not always be the thing to rely on. Speaking of which, [here](./code-1/) it is.
+
+---
+
+## The More Accurate File Upload
+
+Even the demo clearly shows how inaccurate the `onprogress` event really is. it only shows how many bytes the
+_browser_ has been able to send to the server (whilst the server could have died long ago). That is why its primary
+function may remain relegated to creating beautiful progress bars :)
+
+But how do we go about carefully getting the status of the uploaded data? As you may have guessed the
+server is by far the only thing that knows for sure how much data was received or failed.
+But before we begin here is how we would handle a similar situation via Frontend:
+listen to the whole process in the `onprogress` event and if something fail, get the amount of the loaded
+bytes from `event.loaded` and send all the bytes starting from the last loaded byte till the end.
+Here is how you would split the bytes via the `File` API:
+```javascript
+const slice = file.slice(10, 100); // read the bytes 10 - 99 (included)
+xhr.send(slice); // and send them
+```
