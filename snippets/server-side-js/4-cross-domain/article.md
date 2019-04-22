@@ -92,3 +92,101 @@ An important detail is that in this case `Access-Control-Allow-Origin` can't be 
 ---
 
 ## Complex requests
+
+In order to send a complex request to a different domain the browser needs to send a 'preflight' request
+to the server. This request is sent not via GET or POST but via another method called OPTIONS. If our request
+is complex it means that it uses a non-usual method and/or headers.
+That is what the preflight request deals with. It doesn't have a body, only headers. The
+`Access-Control-Allow-Method` and `Access-Control-Allow-Headers` headers ask the server whether we can make a
+request with a certain method and use certain headers in our request. Here is what it might look like:
+```
+OPTIONS /~ilya HTTP/1.1
+Host: site.com
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Encoding: gzip,deflate
+Connection: keep-alive
+Origin: http://javascript.com
+Access-Control-Request-Method: COPY
+Access-Control-Request-Headers: Destination
+```
+We are interested in the last 2 headers. After that the server needs to give a response of 200 with these
+two headers set to the headers/methods we request. For instance that is what the response may look like:
+```
+HTTP/1.1 200 OK
+Content-Type: text/plain
+Access-Control-Allow-Methods: PROPFIND, PROPPATCH, COPY, MOVE, DELETE, MKCOL, LOCK, UNLOCK, PUT, ...
+Access-Control-Allow-Headers: Overwrite, Destination, Content-Type, Depth, User-Agent, ...
+Access-Control-Max-Age: 86400
+```
+Since `Access-Control-Allow-Methods` in the response includes `COPY` (the same for 
+`Access-Control-Allow-Headers`) the request is success.
+Also take a look at the response `header` of `Access-Control-Max-Age` the value (in ms) indicates for
+how long to cache the response. During this time that the response is cached the browser doesn't have to
+send the additional preflight request each time it needs to send a request to a cross-domain server.  
+Here is what the algorithm looks like:
+```
+ __________________________________________________________________________________
+|    javascript.com   |                    browser                  | anywhere.com |
+|_____________________|_____________________________________________|______________|
+|                     |                                             |              |
+|                     | Preflight OPTIONS Request                  -->             |
+|                     | ^                                           |              |
+|                     | (Origin: origin)                            |              |
+|                     | (Access-Control-Allow-Methods: <methods>)   |              |
+|                     | (Access-Control-Allow-Headers: <headers>)   |              |
+|                     |                                             |              |
+|_____________________|_____________________________________________|______________|
+|                     |                                             |              |
+|                     |  Preflight 200 OK Response                  |              |
+|                     |  ^                                          |              |
+|                     |  (Origin: origin)                          <-- response    |
+|                     |  (Access-Control-Allow-Methods: <methods>)  |              |
+|                     |  (Access-Control-Allow-Headers: <headers>)  |              |
+|                     |  (Access-Control-Max-Age: <ms>)             |              |
+|_____________________|_____________________________________________|______________|
+|                     |                                             |              |
+|                     |            IF THE ABOVE IS SUCCESS          |              |
+|_____________________|_____________________________________________|______________|
+|      xhr.send() --> | Main HTTP request                          -->             |
+|                     | ^                                           |              |
+|                     | (Origin: origin)                            |              |
+|_____________________|_____________________________________________|______________|
+|                     |                                             |              |
+| onload / onerror  <-- Main HTTP Response                          <-- response   |
+| ^ if origin or *    | ^                                           |              |
+|                     | (Access-Control-Allow-Origin: origin or *)  |              |
+|                     |                                             |              |
+ __________________________________________________________________________________
+```
+The part after the preflight request is exactly the same as for other types of cross-domain
+requests except we would probably be working with other methods than GET and POST and so on.
+Here is what the request and response might look like (based on example above):
+
+__Request__ (after preflight):
+```
+COPY /~ilya HTTP/1.1
+Host: site.com
+Content-Type: text/html; charset=UTF-8
+Destination: http://site.com/~ilya.bak
+Origin: http://javascript.com
+```
+
+__Response__ (using COPY method):
+```
+HTTP/1.1 207 Multi-Status
+Content-Type: text/xml; charset="utf-8"
+Content-Length: ...
+Access-Control-Allow-Origin: http://javascript.com
+
+...body...
+```
+Also do __note__ that we use `Origin` header when we make any cross-browser request 
+(for example from our website to google.com):
+```
+...
+Connection:keep-alive
+Host:google.com
+Origin:http://javascript.com
+Referer:http://javascript.com/some/url
+```
+We use `Origin` _in addition_ to `Referrer` because it is more reliable :)
