@@ -3,10 +3,10 @@ const Static = require('node-static');
 const WebSocketServer = new require('ws');
 
 const clients = {};
-
 const webSocketServer = new WebSocketServer.Server({
     port: 8081
 });
+
 webSocketServer.on('connection', function (ws) {
     const id = Math.random();
     clients[id] = ws;
