@@ -70,6 +70,7 @@ But before we begin here is how we would handle a similar situation via Frontend
 listen to the whole process in the `onprogress` event and if something fail, get the amount of the loaded
 bytes from `event.loaded` and send all the bytes starting from the last loaded byte till the end.
 Here is how you would split the bytes via the `File` API:
+
 ```javascript
 const slice = file.slice(10, 100); // read the bytes 10 - 99 (included)
 xhr.send(slice); // and send them
