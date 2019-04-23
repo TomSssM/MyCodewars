@@ -5,6 +5,7 @@
 4. [XHR - Encoding](./3-encoding/article.md)
 5. [XHR - Cross Domain](./4-cross-domain/article.md)
 6. [XHR - Upload Status](./5-status/article.md)
+7. [Simple Chat with COMET (Part of Node.js Studies)](./6-simple-chat/article.md)
 
 n. XHR - Modern Days
 
