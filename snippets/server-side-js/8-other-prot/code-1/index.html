@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <script src="scriptRequest.js"></script>
+</head>
+
+<body>
+
+  <script>
+    function ok(data) {
+      alert("Loaded user - " + data.id + ": " + data.name);
+    }
+
+    function fail(url) {
+      alert('Error wile loading url: ' + url);
+    }
+
+    function go() {
+      // responses may arrive in any order!
+      scriptRequest("user?id=123", ok, fail); // will be loaded ok
+      scriptRequest("/badurl.js", ok, fail); // fail, 404
+      scriptRequest("index.html", ok, fail); // fail, 200 yet the script is incorrect (the body is the HTML page)
+    }
+  </script>
+
+  <button onclick='go()'>Make Requsts</button>
+
+
+</body>
+
+</html>

@@ -7,7 +7,7 @@
 6. [XHR - Upload Status](./5-status/article.md)
 7. [Simple Chat with COMET (Part of Node.js Studies)](./6-simple-chat/article.md)
 8. [Simple Chat with WebSocket](./7-web-sock-chat/article.md)
-
-n. XHR - Modern Days
+9. [Other Protocols](./8-other-prot/article.md)
+10. XHR - Modern Days
 
 :ledger: _XHR - XMLHttpRequest_
