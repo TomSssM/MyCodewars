@@ -1,0 +1,11 @@
+{
+    "str": "value",
+    "num": 12,
+    "nothing": null,
+    "obj": {
+        "name": "Tom",
+        "age": 12
+    },
+    "arr": [1,2,3],
+    "bool": true
+}

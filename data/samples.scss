@@ -1,0 +1,25 @@
+* body unknowntag html .className #idName::before div:nth-child(12) {
+    color: #ffffff;
+    color: #f0f0f020;
+    background-image: url('./');
+    background-image: url("./");
+    @mixin dude($one: 1) {
+        color: $one;
+    }
+    @include dude(2);
+    %spaces {
+        color: yellow;
+    }
+    @extend %spaces;
+    background: darken($color: #fff, $amount: 20);
+    &.className, & body, &-word, &--word {
+        color: aqua;
+    }
+    $cool-color: #000;
+    color: $cool-color;
+    @for $man from 0 through 10 {
+        h#{$man} {
+            color: blue;
+        }
+    }
+}
