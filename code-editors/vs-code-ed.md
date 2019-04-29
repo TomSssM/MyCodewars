@@ -45,17 +45,17 @@ Here are my preferences:
 ```javascript
 {
     "workbench.iconTheme": "vscode-icons",
-    "editor.tabSize": 2,
+    "editor.tabSize": 4,
     "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
     "terminal.external.windowsExec": "C:\\\\Program Files\\\\Git\\\\bin\\\\bash.exe",
-    "editor.fontSize": 16,
+    "editor.fontSize": 14,
     "git.confirmSync": false,
     "git.autofetch": true,
     "git.enableSmartCommit": true,
     "editor.minimap.enabled": false,
     "editor.renderLineHighlight": "line",
     "editor.highlightActiveIndentGuide": true,
-    "workbench.colorTheme": "Default Light+",
+    "workbench.colorTheme": "NetBeans Light Theme"
 }
 ```
 
