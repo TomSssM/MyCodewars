@@ -1,0 +1,10 @@
+$primary-col: #444;
+$primary-font-family: 'Ubuntu', sans-serif;
+$primary-shadow: 0 0 4px 0 #aaa;
+
+$secondary-col: #777;
+$secondary-col-light: lighten($color: $secondary-col, $amount: 10);
+
+$cell-count: 3; // TODO: move to JS
+$num-of-elms: $cell-count * $cell-count; // TODO: move to JS
+$hover-col: #eee;
