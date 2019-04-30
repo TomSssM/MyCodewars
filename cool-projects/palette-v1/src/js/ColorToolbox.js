@@ -3,17 +3,17 @@ export default class {
         this.currColorButton = data.currColor;
         this.prevColorButton = data.prevColor;
         this.colorContainer = data.colorContainer;
-
+        
         this.buttonClassName = data.buttonClassName;
         this.colorCircleClassName = data.colorCircleClass;
-
+        
         data.colors.forEach(colorCirc => {
             this.setColor(
                 colorCirc,
                 this.getColor(colorCirc),
             );
         });
-
+            
         this.currColorButton.addEventListener('click', () => {
             this.handleCurrColor();
         });
@@ -23,10 +23,16 @@ export default class {
         this.colorContainer.addEventListener('click', (e) => {
             this.handleCont(e.target);
         });
+
+        this.nativeColorPicker = document.createElement('input');
+        this.nativeColorPicker.type = 'color';
+        this.nativeColorPicker.addEventListener('change', (e) => {
+            this.currentColor = e.currentTarget.value;
+        });
     }
 
     handleCurrColor() {
-        console.log('in the future here will pop up the palette');
+        this.nativeColorPicker.click();
     }
 
     handlePrevColor() {

@@ -1,0 +1,224 @@
+@import './variables';
+@import './mixins-n-placeholders';
+@import './modal-styles';
+
+* {
+    box-sizing: border-box;
+    font-family: $primary-font-family;
+    color: $primary-col;
+}
+
+.header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: start;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: .5rem;
+    background: #fff;
+    box-shadow: 0 0 7px 0 #aaa;
+
+    &__h1 {
+        flex: 1;
+        margin: 0;
+        font-size: 1.2rem;
+        padding-left: 2rem;
+    }
+
+    &__btn {
+        @extend %button-reset;
+        text-align: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 4px;
+        transition: all .2s ease-in;
+
+        &:hover {
+            box-shadow: $primary-shadow;
+        }
+    }
+}
+
+.header-sett {
+    display: none;
+    position: fixed;
+    top: 7px;
+    right: 7px;
+    opacity: 0;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: $primary-shadow;
+    padding: .5rem;
+    transition: all .2s ease-in-out;
+
+    &__title {
+        font-size: 1.2rem;
+    }
+
+    &__container {
+        border-top: 1px solid $primary-col;
+        padding: 0;
+        padding-top: .4rem;
+        margin: .5rem 0 0 0;
+    }
+
+    &__btn {
+        @extend %button-reset;
+        width: 100%;
+        text-align: left;
+        padding: .7rem;
+        cursor: pointer;
+        transition: all .2s ease-out;
+        border-radius: 40px;
+
+        &:hover {
+            background: $hover-col;
+        }
+    }
+}
+
+.main {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding: 2rem;
+    padding-top: 4rem;
+}
+
+.tools-container {
+    background: #fff;
+    padding-bottom: 2rem;
+    box-shadow: 0 2px 4px 0 #aaa;
+    
+    &__wrapper {
+        padding: 0;
+        margin: 0;
+    }
+    
+    &__tool {
+        @extend %button-reset;
+        width: 100%;
+        padding: 1rem;
+        transition: all .2s ease-out;
+        
+        &:hover {
+            background: $hover-col;
+        }
+        
+        &--line-over {
+            border-top: 1px solid #ddd;
+        }
+        
+        &--active {
+            cursor: default;
+            background: #e0e0e0;
+
+            &:hover {
+                background: #e0e0e0;
+            }
+        }
+    }
+    
+    &__tool-icon {
+        padding-left: .5rem;
+        color: $secondary-col;
+    }
+
+    &__tool-name {
+        color: $secondary-col-light;
+    }
+}
+
+.tools {
+    margin-bottom: 2rem;
+    
+    &__tool-name {
+        padding: 0 3rem 0 2rem;
+    }
+}
+
+.colors {
+
+    &__color {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: start;
+    }
+
+    &__color-cir {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #000;
+        border-radius: 50%;
+    }
+
+    &__color-name {
+        padding-left: 1rem;
+    }
+}
+
+.canvas-container {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    width: 470px;
+    height: 470px;
+    background-image: url('../../assets/canvas-background.png');
+    background-size: 16px 16px;
+    background-position: -4px -4px;
+    align-self: flex-start;
+}
+
+.canvas {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+
+    &--tool-bucket {
+        cursor: url('../../assets/bucket.png'), pointer;
+    }
+
+    &--tool-eye-drop {
+        cursor: url('../../assets/eye-drop.png'), pointer;
+    }
+
+    &--tool-move {
+        cursor: url('../../assets/move.png'), pointer;
+    }
+
+    &--tool-transform {
+        cursor: url('../../assets/transform.png'), pointer;
+    }
+
+    &__elem {
+        user-select: none;        
+        
+        &:hover {
+            background: #acacac7a;
+        }
+
+        &--transformed {
+            border-radius: 50%;
+        }
+    }
+}
+
+@media all and (max-width: 800px) {
+    .main {
+        flex-flow: column nowrap;
+    }
+
+    .toolbox {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-evenly;
+        margin-bottom: 1rem;
+    }
+
+    .canvas-container {
+        align-self: center;
+    }
+}

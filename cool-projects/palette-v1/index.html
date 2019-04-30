@@ -36,7 +36,7 @@
                 </button>
             </div>
         </div>
-        <form id="js-modal-wind" class="modal-window" action="" method="get">
+        <form id="js-modal-wind" class="modal-window" action="#" method="get">
             <span class="modal-window__title">Choose the Ratio</span>
             <input class="modal-window__input" type="text">
             <span id="js-modal-window-output" class="modal-window__output"></span>
@@ -69,20 +69,20 @@
             <div id="js-colors-cont" class="tools-container colors">
                 <div class="tools-container__list">
                     <button id="js-curr-col" class="colors__color tools-container__tool">
-                        <div class="colors__color-cir" data-color="#ffffff"></div>
+                        <div class="colors__color-cir" data-color="#ff0000"></div>
                         <span class="tools-container__tool-name colors__color-name">Current Color</span>
                     </button>
                     <button id="js-prev-col" class="colors__color tools-container__tool">
-                        <div class="colors__color-cir" data-color="#000"></div>
+                        <div class="colors__color-cir" data-color="#0000ff"></div>
                         <span class="tools-container__tool-name colors__color-name">Prev Color</span>
                     </button>
                     <button data-sugg-colors="true" class="colors__color tools-container__tool tools-container__tool--line-over">
-                        <div class="colors__color-cir" data-color="#ff0000"></div>
-                        <span class="tools-container__tool-name colors__color-name">Red</span>
+                        <div class="colors__color-cir" data-color="#000000"></div>
+                        <span class="tools-container__tool-name colors__color-name">Black</span>
                     </button>
                     <button data-sugg-colors="true" class="colors__color tools-container__tool">
-                        <div class="colors__color-cir" data-color="#0000ff"></div>
-                        <span class="tools-container__tool-name colors__color-name">Blue</span>
+                        <div class="colors__color-cir" data-color="#ffffff"></div>
+                        <span class="tools-container__tool-name colors__color-name">White</span>
                     </button>
                 </div>
             </div>
@@ -94,11 +94,5 @@
 
     <script type="module" src="./src/js/index.js"></script>
 </body>
-
-<!-- TODO: Implement the proper functionality for move -->
-<!-- TODO: Submit and Save the project, change some functionality and develop it as a fork -->
-
-<!-- TODO: change bucket to brush + implement real bucket tool + eraser -->
-<!-- TODO: implement the change current color setting -->
 
 </html>
