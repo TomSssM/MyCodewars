@@ -45,6 +45,7 @@ export default class extends Tool {
     }
 
     onSwap(swapWith) {
+        if(!this.paint.canvas.contains(swapWith)) return;
         const currI = +this.currElem.dataset.i;
         const currY = +this.currElem.dataset.y;
         const swapI = +swapWith.dataset.i;
