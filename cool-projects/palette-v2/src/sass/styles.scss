@@ -193,6 +193,14 @@
         cursor: url('../../assets/transform.png'), pointer;
     }
 
+    &--tool-erase {
+        cursor: url('../../assets/erase.png'), pointer;
+    }
+
+    &--tool-brush {
+        cursor: url('../../assets/brush.png'), pointer;
+    }
+
     &__elem {
         user-select: none;        
         

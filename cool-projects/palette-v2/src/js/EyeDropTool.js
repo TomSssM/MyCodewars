@@ -2,6 +2,7 @@ import Tool from './Tool.js';
 export default class extends Tool {
     constructor(data) {
         super(data);
+        this.brush = data.brush;
         this.events['click'] = (e) => {
             this.onClick(e);
         }
@@ -11,8 +12,7 @@ export default class extends Tool {
         const color = this.paint.getColor(e.target);
         if(color === 'null') {
             this.paint.currentColor = '#ffffff';
-            return;
-        }
-        this.paint.currentColor = color;
+        } else this.paint.currentColor = color;
+        this.paint.replaceCurrentTool(this.brush);
     }
 }

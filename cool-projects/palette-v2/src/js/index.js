@@ -3,6 +3,9 @@ import SettBtn from './SettBtn.js';
 import GridSettBtn from './GridSettBtn.js';
 import Paint from './Paint.js';
 import ColorToolbox from './ColorToolbox.js';
+import BrushTool from './BrushTool.js';
+import EraseTool from './EraseTool.js';
+import ToolsShortcuts from './ToolsShortcuts.js';
 import BucketTool from './BucketTool.js';
 import EyeDropTool from './EyeDropTool.js';
 import MoveTool from './MoveTool.js';
@@ -36,6 +39,19 @@ const paint = new Paint({
     canvas: document.querySelector('#js-canvas'),
 });
 
+const brushTool = new BrushTool({
+    paint,
+    classNameCanvas: 'canvas--tool-brush',
+    button: document.querySelector('#js-brush'),
+    classNameButton: 'tools-container__tool--active',
+});
+
+const eraseTool = new EraseTool({
+    paint,
+    classNameCanvas: 'canvas--tool-erase',
+    button: document.querySelector('#js-erase'),
+    classNameButton: 'tools-container__tool--active',
+});
 
 const bucketTool = new BucketTool({
     paint,
@@ -44,16 +60,15 @@ const bucketTool = new BucketTool({
     classNameButton: 'tools-container__tool--active',
 });
 
-paint.replaceCurrentTool(bucketTool);
-
-new EyeDropTool({
+const eyeDropTool = new EyeDropTool({
     paint,
+    brush: brushTool,
     classNameCanvas: 'canvas--tool-eye-drop',
     button: document.querySelector('#js-eye-drop'),
     classNameButton: 'tools-container__tool--active',
 });
 
-new MoveTool({
+const moveTool = new MoveTool({
     paint,
     classNameCanvas: 'canvas--tool-move',
     button: document.querySelector('#js-move'),
@@ -95,3 +110,12 @@ new StorageHandler({
     paint,
     colorToolbox,
 });
+
+const toolsShortcuts = new ToolsShortcuts({
+    paint,
+    toolButtonsOrdered: Array.from(document.querySelectorAll('.tools__tool')),
+    tools: [brushTool, eraseTool, bucketTool, 
+            eyeDropTool, moveTool, transformTool],
+});
+
+paint.replaceCurrentTool(brushTool);

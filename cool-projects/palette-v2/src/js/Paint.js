@@ -24,6 +24,13 @@ export default class Paint {
 
     setCurrentTool(tool) {
         if(this.currentTool) return;
+        const changeToolEvent = new CustomEvent('change-tool', {
+            bubbles: true,
+            detail: {
+                tool,
+            },
+        });
+        this.canvas.dispatchEvent(changeToolEvent);
         this.currentTool = tool;
         this.currentTool.init();
     }

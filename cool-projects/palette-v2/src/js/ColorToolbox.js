@@ -68,8 +68,13 @@ export default class {
     setColor(elm, color) {
         if(!elm.dataset.color) elm = this.getCircle(elm);
         if(!elm) return;
-        elm.dataset.color = color;
-        elm.style.backgroundColor = color;
+        if(color === null) {
+            elm.dataset.color = 'null';
+            elm.style.backgroundColor = '';
+        } else {
+            elm.dataset.color = color;
+            elm.style.backgroundColor = color;
+        }
     }
 
     getColor(elm) {

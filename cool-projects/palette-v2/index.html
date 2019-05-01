@@ -32,7 +32,7 @@
                     Change the Grid
                 </button>
                 <button id="js-reset-storage" class="header-sett__btn">
-                    Reset Storage
+                    Clear Cache
                 </button>
             </div>
         </div>
@@ -48,19 +48,27 @@
         <div class="toolbox">
             <div class="tools-container tools">
                 <div class="tools-container__wrapper">
-                    <button id="js-bucket" class="tools-container__tool">
+                    <button id="js-brush" class="tools__tool tools-container__tool">
+                        <i class="tools-container__tool-icon fas fa-paint-brush"></i>
+                        <span class="tools-container__tool-name tools__tool-name">Brush</span>
+                    </button>
+                    <button id="js-erase" class="tools__tool tools-container__tool">
+                        <i class="tools-container__tool-icon fas fa-eraser"></i>
+                        <span class="tools-container__tool-name tools__tool-name">Erase</span>
+                    </button>
+                    <button id="js-bucket" class="tools__tool tools-container__tool">
                         <i class="tools-container__tool-icon fas fa-fill"></i>
                         <span class="tools-container__tool-name tools__tool-name">Paint Bucket</span>
                     </button>
-                    <button id="js-eye-drop" class="tools-container__tool">
+                    <button id="js-eye-drop" class="tools__tool tools-container__tool">
                         <i class="tools-container__tool-icon fas fa-eye-dropper"></i>
-                        <span class="tools-container__tool-name tools__tool-name">Choose Color</span>
+                        <span class="tools-container__tool-name tools__tool-name">Pick Color</span>
                     </button>
-                    <button id="js-move" class="tools-container__tool tools-container__tool--line-over">
+                    <button id="js-move" class="tools__tool tools-container__tool tools-container__tool--line-over">
                         <i class="tools-container__tool-icon fas fa-arrows-alt"></i>
                         <span class="tools-container__tool-name tools__tool-name">Move</span>
                     </button>
-                    <button id="js-transform" class="tools-container__tool">
+                    <button id="js-transform" class="tools__tool tools-container__tool">
                         <i class="tools-container__tool-icon fas fa-exchange-alt"></i>
                         <span class="tools-container__tool-name tools__tool-name">Transform</span>
                     </button>
@@ -91,13 +99,9 @@
             <div id="js-canvas" class="canvas"></div>
         </div>
     </main>
-
     <script type="module" src="./src/js/index.js"></script>
 </body>
 
-<!-- TODO: fix the move bug in Mozilla -->
-<!-- TODO: replace with brush -->
-<!-- TODO: add eraser -->
-<!-- TODO: Add real Bucket -->
+<!-- TODO: try to make a cursor -->
 
 </html>
