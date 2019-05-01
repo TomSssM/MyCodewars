@@ -178,27 +178,27 @@
     background: transparent;
 
     &--tool-bucket {
-        cursor: url('../../assets/bucket.png'), pointer;
+        cursor: url('../../assets/bucket.png') 4 12, pointer;
     }
 
     &--tool-eye-drop {
-        cursor: url('../../assets/eye-drop.png'), pointer;
+        cursor: url('../../assets/eye-drop.png') 4 12, pointer;
     }
 
     &--tool-move {
-        cursor: url('../../assets/move.png'), pointer;
+        cursor: url('../../assets/move.png') 4 12, pointer;
     }
 
     &--tool-transform {
-        cursor: url('../../assets/transform.png'), pointer;
+        cursor: url('../../assets/transform.png') 3 3, pointer;
     }
 
     &--tool-erase {
-        cursor: url('../../assets/erase.png'), pointer;
+        cursor: url('../../assets/erase.png') 4 12, pointer;
     }
 
     &--tool-brush {
-        cursor: url('../../assets/brush.png'), pointer;
+        cursor: url('../../assets/brush.png') 4 12, pointer;
     }
 
     &__elem {

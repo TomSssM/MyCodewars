@@ -16,11 +16,12 @@ export default class {
         });
 
         document.addEventListener('keydown', (e) => {
-            e.preventDefault();
             if(e.code === 'ArrowUp') {
                 this.onKeyUp();
+                e.preventDefault();
             } else if(e.code === 'ArrowDown') {
                 this.onKeyDown();
+                e.preventDefault();
             }
         });
     }
