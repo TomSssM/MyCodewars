@@ -14,7 +14,10 @@ export default class extends Tool {
         };
         this.events['mouseleave'] = (e) => {
             this.onMouseUp();
-        }
+        };
+        this.events['dragstart'] = (e) => {
+            e.preventDefault();
+        };
     }
 
     onMouseDown(e) {
