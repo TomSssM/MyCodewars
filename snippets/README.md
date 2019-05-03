@@ -15,6 +15,5 @@
 - [Timers](./timers/README.md)
 - [HTML5 API](./html5-api/README.md)
 - [Private Properties](./private.js)
-- [Server Sent Events (SSE)](./sse/server-evts.js)
 - [Errors](./errors.js)
 - [JS Animations](./anim/README.md)

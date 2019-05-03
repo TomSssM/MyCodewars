@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script>
+        let eventSource;
+
+        function start() {
+
+            if (!window.EventSource) {
+                alert('No EventSource Support in this browser');
+                return;
+            }
+
+            eventSource = new EventSource('digits');
+
+            eventSource.onopen = function (e) {
+                log("Connection Open");
+            };
+
+            eventSource.onerror = function (e) {
+                if (this.readyState == EventSource.CONNECTING) {
+                    log("Connection Interrupted, Reconnecting...");
+                } else {
+                    log("Error, state: " + this.readyState);
+                }
+            };
+
+            eventSource.addEventListener('bye', function (e) {
+                log("Bye: " + e.data);
+            }, false);
+
+            eventSource.onmessage = function (e) {
+                console.log(e);
+                log(e.data);
+            };
+        }
+
+        function stop() {
+            eventSource.close();
+            log("Connection Closed");
+        }
+
+        function log(msg) {
+            logElem.innerHTML += msg + "<br>";
+        }
+    </script>
+</head>
+
+<body>
+
+    <button onclick="start()">Start</button>
+    <button onclick="stop()">Stop</button>
+
+    Press Start to begin
+    <div id="logElem"></div>
+
+
+</body>
+
+</html>
