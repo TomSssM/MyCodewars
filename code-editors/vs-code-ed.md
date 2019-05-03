@@ -29,10 +29,6 @@ code --install-extension PKief.material-icon-theme
 
 code --install-extension obrejla.netbeans-light-theme
 code --install-extension dracula-theme.theme-dracula
-code --install-extension johnpapa.winteriscoming
-code --install-extension Heron.firefox-devtools-theme
-code --install-extension linking.evo-theme
-code --install-extension zoxon.monokai-light
 ```
 # Default Editor for Git
 Change the config:
