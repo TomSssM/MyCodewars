@@ -248,8 +248,3 @@ eventSource.addEventListener('message', function(e) {
 ```
 
 [Here](./code-2/index.html) is the demo of the stuff we just talked about :)
-
-TODO: try CLOSED
-TODO: try message vs onmessage
-TODO: try on your own custom events
-TODO: try cross domain SSE
