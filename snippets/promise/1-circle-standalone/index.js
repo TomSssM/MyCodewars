@@ -48,6 +48,7 @@ function showCircle(cx, cy, radius, callback) {
     div.style.top = cy + 'px';
     div.className = 'circle';
     document.body.append(div);
+
     setTimeout(() => {
         div.style.width = radius * 2 + 'px';
         div.style.height = radius * 2 + 'px';
@@ -57,5 +58,4 @@ function showCircle(cx, cy, radius, callback) {
         }
         div.addEventListener('transitionend', cb);
     }, 0);
-
 }

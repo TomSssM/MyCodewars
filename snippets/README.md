@@ -3,9 +3,7 @@
 ## Main
 - [Data Structures](./Data%20Structures/README.md)
 - [Algorithms](./algorithms/README.md)
-- [Markdown Cheatsheet](./markdownCheatSheet.md)
-- [git cheatsheet](./git-cheatsheet.md)
-- [Promise](./promise/README.md)
+- [Promise](./promise/promise.md)
 - [Server Side JS](./server-side-js/README.md)
 - [JSON](./myJSON.js)
 - [Iterators and Generators](./iterators/README.md)
@@ -18,3 +16,7 @@
 - [Private Properties](./private.js)
 - [Errors](./errors.js)
 - [JS Animations](./anim/README.md)
+
+## CheatSheets
+- [Markdown Cheatsheet](./markdownCheatSheet.md)
+- [git cheatsheet](./git-cheatsheet.md)
