@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Iframe Stuff</title>
+</head>
+<body>
+    <iframe src="none" frameborder="1" id="frameHere" name="frameHere"></iframe>
+    <form action="./please-post" target="frameHere" method="POST" enctype="multipart/form-data">
+        <label for="content">
+            The Content doesn't matter here 
+            but we would use it in real life
+        </label>
+        <input type="text" name="content" id="content">
+        <input type="submit" value="Send">
+    </form>
+</body>
+</html>

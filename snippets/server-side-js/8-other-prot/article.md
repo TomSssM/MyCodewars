@@ -248,3 +248,15 @@ eventSource.addEventListener('message', function(e) {
 ```
 
 [Here](./code-2/index.html) is the demo of the stuff we just talked about :)
+
+# Post Almost Without XHR
+
+In the past we have looked at fetching data from the server via creating `script` tags and having
+the server write the arguments to functions and those arguments were data from the server. But how can 
+we _post_ something to the server in a similar manner? Well nowadays it is irrelevant but in the past
+an approach such as we will take a quick peek at was used in old IE to post data to the server ( even
+with COMET! Despite the fact no WebSocket existed ). For that we would create an iframe and send some
+data to it via the proper use of a form. All we have to do in order for such a form to write stuff into
+iframe is specify the `id` of the iframe in the form's `target` attribute and have the server correctly
+handle such a request by writing the info that should go into that iframe ( for example `<script>` tag ).
+[Here](./code-3/) is the demo of this approach ( although as of now it is almost obsolete ).
