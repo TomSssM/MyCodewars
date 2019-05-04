@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+    .circle {
+        transition-property: width, height, margin-left, margin-top;
+        transition-duration: 3s;
+        transition-timing-function: ease-out;
+        position: fixed;
+        transform: translateX(-50%) translateY(-50%);
+        background-color: red;
+        border-radius: 50%;
+    }
+    .message-ball {
+        font-size: 20px;
+        line-height: 200px;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+
+<button id="js-button">showCircle(150, 150, 100)</button>
+
+<script src="./index.js"></script>
+
+</body>
+</html>

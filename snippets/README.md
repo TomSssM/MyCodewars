@@ -5,6 +5,7 @@
 - [Algorithms](./algorithms/README.md)
 - [Markdown Cheatsheet](./markdownCheatSheet.md)
 - [git cheatsheet](./git-cheatsheet.md)
+- [Promise](./promise/README.md)
 - [Server Side JS](./server-side-js/README.md)
 - [JSON](./myJSON.js)
 - [Iterators and Generators](./iterators/README.md)
