@@ -596,3 +596,13 @@ new Promise((resolve, reject) => {
 // do note that this ------^ isn't '0<' because
 // line (***) is ignored
 ```
+
+Do note as well that only errors inside `Promise` and `resolve` or `reject` trigger `catch`. For
+instance the following code won't trigger catch as an error is thrown on the `window` level:
+```javascript
+new Promise(function(resolve, reject) {
+    setTimeout(() => {
+        throw new Error("Whoops!");
+    }, 1000);
+}).catch(alert);
+```
