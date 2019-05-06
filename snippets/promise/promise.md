@@ -4,7 +4,7 @@
 
 ### Callback-Based Style of Asynchronous Programming
 
-This style of programming is applied for functions if the functions we use are _asynchronous_. 
+This style of programming is applied for functions if the functions we use are _asynchronous_.
 Here is an example of such a function:
 ```javascript
 function loadScript(url, callback) {
@@ -24,7 +24,7 @@ loadScript('https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js', s
 
 ### Error-First Callback Style of Asynchronous Programming
 
-In the above example we didn’t consider errors. What if the script loading fails? Our callback 
+In the above example we didn’t consider errors. What if the script loading fails? Our callback
 should be able to react on that. Here is an improved version of loadScript that tracks loading errors:
 ```javascript
 function loadScript(src, callback) {
@@ -48,7 +48,7 @@ loadScript('/my/script.js', function(error, script) {
 
 ### Callback in Callback
 
-But how should we be able to load script `b.js` after `a.js` loads? We would need to put a callback 
+But how should we be able to load script `b.js` after `a.js` loads? We would need to put a callback
 inside a callback. It sounds complicated but is better illustrated with code:
 ```javascript
 loadScript('./a.js', function(err, script) {
@@ -144,7 +144,7 @@ Also a great attribute, as always, is to be addressed to `javascript.info` for a
 tutorial of the topic._
 
 Promises are used to run asynchronous code and work with functions that come from the Event Queue
-a promise instance is instantiated via calling a `Promise` constructor. The point here is the 
+a promise instance is instantiated via calling a `Promise` constructor. The point here is the
 kind of argument we need to pass to it: it is a callback! This callback has a name of `executor`.
 ```javascript
 let promise;
@@ -152,7 +152,7 @@ if(Math.random() < 0.5) {
     promise = new Promise(function(resolve, reject) {
         //                ^ I am talking about this callback :)
         setTimeout(() => resolve("done"), 1000);
-    //  ^ asynchronous code 
+    //  ^ asynchronous code
     });
 } else {
     // this here is an example of an unsuccessful promise
@@ -185,7 +185,7 @@ then() -> res = <actual function>
 So the arguments we pass to `then` are actually going to become the values (function bodies) of the
 parameters `resolve` and `reject` correspondingly.
 
-`then` is actually called `consumer` (there are many of them). Thus it is as though in the 
+`then` is actually called `consumer` (there are many of them). Thus it is as though in the
 constructor (in the `executor`) we call some function called `reject` and then in the `consumer` we
 define this function. Here is another example:
 ```javascript
@@ -206,6 +206,269 @@ promise.then(
 // log: 24
 ```
 
+So in summary the point of `Promise` is that it calls `resolve` even in asynchronous code assuming
+control of the Event Queue and ( we were able to do that before ) most importantly promises save
+us from the Node.js `tree of doom`
+
+---
+
+## Promise Chaining
+
+### How to implement Promise Chaining
+
+It looks like this:
+```javascript
+new Promise(function(resolve, reject) {
+
+    setTimeout(() => resolve(1), 1000);
+
+}).then(function(result) {
+
+    console.log(result); // 1
+    return result * 2; // (*)
+
+}).then(function(result) { // (**)
+
+    console.log(result); // 2
+    return result * 2;
+
+}).then(function(result) { // (***)
+
+    console.log(result); // 4
+    return result * 2;
+
+});
+
+// after one second:
+// log: 1
+// log: 2
+// log: 4
+```
+Everything is as usual until line `(*)`: we make a Promise then call function `resolve` which is defined
+in the following `then` call. Nice and easy ( if not read the prev section ). But what happens to the
+return value of any function `then`? Turns out whenever `then` returns a value ( in line `(*)` ),
+this value will become the parameter of the function in line `(**)` ( of the function passed as the
+first argument to the following call to `then` ). Here is a somewhat diagram:
+```
+promise
+    .then(
+        resolve <- Pass as an argument our data
+        resolve()
+        -> Return Value 1
+    )
+    .then(
+        resolve <- Return Value 1
+        resolve()
+        -> Return Value 2
+    )
+    .then(
+        resolve <- Return Value 2
+        resolve()
+        -> Return Value 3
+    )
+    ...
+    .then(
+        resolve <- Return Value n - 1
+        resolve()
+        -> Return Value n
+    )
+    ...
+```
+
+### Chaining vs multiple .then()
+
+It is a common error because we can add many `then()` handlers to a single `Promise` like this:
+```javascript
+// not chaining:
+const promise1 = new Promise(res => {
+    setTimeout(() => res(2), 1000);
+});
+
+promise1.then(val => {
+    console.log(`Handler 1 same value: ${val}`);
+    return ':)'; // ignored
+});
+promise1.then(val => {
+    console.log(`Handler 2 same value: ${val}`);
+    return ':-)'; // ignored
+});
+promise1.then(val => {
+    console.log(`Handler 3 same value: ${val}`);
+    return '>0'; // ignored
+});
+
+// chaining
+const promise2 = new Promise(res => {
+    setTimeout(() => res(12), 1000);
+});
+promise2
+    .then(val => {
+        console.log(`Handler 1 init value: ${val}`);
+        return ':)'; // not ignored
+    })
+    .then(val => {
+        console.log(`Handler 2 smile value: ${val}`);
+        return ':-)'; // not ignored
+    })
+    .then(val => {
+        console.log(`Handler 3 nose-smile value: ${val}`);
+        return '>0'; // ignored
+    });
+
+// after one second:
+// log: Handler 1 same value: 2
+// log: Handler 2 same value: 2
+// log: Handler 3 same value: 2
+// log: Handler 1 init value: 12
+// log: Handler 2 smile value: :)
+// log: Handler 3 nose-smile value: :-)
+```
+But this is not chaining ( though it looks like it ) because in `promise1` we do not in any way use
+the Return Value of `then`. Why use it at all you may ask? Well, read on to find out what
+happens if this value is a Promise :)
+
+### How to use Promise Chaining
+
+We still haven't unriddled how to fix the `tree of doom`. Even if we rewrite a previous function with
+Promises it still grows to the right:
+```javascript
+// let's pretend that the server needs 1 second to load a script
+// and instead of creating a server just do a setTimeout()
+function loadScript(url) {
+    return new Promise(res => {
+        setTimeout(() => res(url), 1000);
+    });
+}
+
+loadScript('./a.js').then(data1 => {
+    console.log(data1);
+    loadScript('./b.js').then(data2 => {
+        console.log(data2);
+        loadScript('./c.js').then(data3 => {
+            console.log(data3);
+            // done, all 3 scripts are loaded
+        });
+    });
+});
+
+// after 1 second:
+// log: './a.js'
+
+// after another second:
+// log: './b.js'
+
+// after yet another second:
+// log: './c.js'
+```
+To fix this let's see what happens when we return a promise in a `then()` function:
+```javascript
+new Promise(function(resolve, reject) {
+
+    setTimeout(() => resolve(1), 1000);
+
+}).then(function(result) {
+
+    alert(result); // 1
+
+    return new Promise((resolve, reject) => { // (*)
+        setTimeout(() => resolve(result * 2), 1000);
+    });
+
+}).then(function(result) { // (**)
+
+    alert(result); // 2
+
+    return new Promise((resolve, reject) => {
+        setTimeout(() => resolve(result * 2), 1000);
+    });
+
+}).then(function(result) {
+
+    alert(result); // 4
+
+});
+```
+
+When we return a Promise in line `(*)` the function in line `(**)` doesn't have `result` set to the
+returned promise as it was with primitives. What happens is the function in line `(**)` is instead
+set to be the `resolve` function of the promise returned in `(*)`. And guess what, because the function
+passed as an argument to second `then` in line `(**)` is `resolve` function of the promise returned
+in line `(*)` it (function) will be called only when the promise (the one on line `(*)`) will call it,
+which is in a second. Thus in the example above the output is: one second -> `1`,
+another second -> `2` and after yet another second -> `4`. Here is a somewhat algorithm:
+```
+promise
+    .then(
+        resolve <- Pass as an argument our data
+        resolve()
+        -> promise 1
+    )
+    .then(
+        resolve <- value defined in promise 1
+        [promise 1].resolve()
+        -> promise 2
+    )
+    .then(
+        resolve <- value defined in promise 2
+        [promise 2].resolve()
+        -> promise 3
+    )
+    ...
+    .then(
+        resolve <- value defined in promise n - 1
+        [promise n - 1].resolve()
+        -> promise n
+    )
+    ...
+```
+
+Thus it lets us at long last get rid of the `tree of doom` and kind of perform asynchronous
+actions sequentially:
+```javascript
+function loadScript(url) {
+    return new Promise(res => {
+        setTimeout(() => res(url), 1000);
+    });
+}
+
+loadScript('./a.js')
+    .then(data1 => {
+        console.log(data1);
+        return loadScript('./b.js');
+    }).then(data2 => {
+        console.log(data2);
+        return loadScript('./c.js');
+    }).then(data3 => {
+        console.log(data3);
+        // we are done all 3 scripts are loaded
+    });
+
+// same output: one url per second
+```
+So we when a is loaded we load b, after b has finished loading we load c and no matter how
+many resources we have to load the code isn't going to grow to the right, only down :)
+
+This approach has but one disadvantage: we don't have a closure of all variables like we did when
+we built the `tree of doom`:
+```javascript
+loadScript("/article/promise-chaining/one.js").then(script1 => {
+    loadScript("/article/promise-chaining/two.js").then(script2 => {
+        loadScript("/article/promise-chaining/three.js").then(script3 => {
+            // this function has access to variables script1, script2 and script3
+            one();
+            two();
+            three();
+        });
+    });
+});
+```
+
+In the example above the most nested callback has access to all variables `script1`, `script2`,
+`script3`. But that’s an exception rather than a rule.
+
+Look for a project called `first ever fetch + Promise example` in the `projects` section where we use
+this very technique when working with `fetch`.
+
 ---
 
 ## Promise Details
@@ -213,7 +476,7 @@ promise.then(
 ### States
 
 Naturally a Promise has two states: `pending` and `fulfilled` / `rejected`. `pending` is when the
-asynchronous code is being executed and `fulfilled` / `rejected` is when either `resolve` or 
+asynchronous code is being executed and `fulfilled` / `rejected` is when either `resolve` or
 `reject` is called upon the completion of the execution of the asynchronous code. The result of the
 promise is also always only one: either what is passed into `resolve` (some data usually) or what is
 passed into `reject` (usually an error).
@@ -320,9 +583,14 @@ new Promise((resolve) => {
 // finally 3
 ```
 
+### Thenables
+
+aa
+
 ---
 
 ## Promise Projects
 
 - [Delay with a Promise](./2-delay/index.js)
 - [Animated Circle with a Promise](./3-anim-promise/index.js)
+- [first ever fetch + Promise example](./4-fetch-plus-promise/index.js)
