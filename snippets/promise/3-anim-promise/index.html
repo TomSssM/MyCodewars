@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .circle {
+            transition-property: width, height, margin-left, margin-top;
+            transition-duration: 3s;
+            transition-timing-function: ease-out;
+            position: fixed;
+            transform: translateX(-50%) translateY(-50%);
+            background-color: red;
+            border-radius: 50%;
+        }
+        .message-ball {
+            font-size: 20px;
+            line-height: 200px;
+            text-align: center;
+        }
+    </style>
+    <title>Animated Circle with Promise</title>
+</head>
+<body>
+    <button id="js-button">showCircle(150, 150, 100)</button>
+    <script src="./index.js"></script>
+</body>
+</html>

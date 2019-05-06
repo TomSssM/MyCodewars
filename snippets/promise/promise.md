@@ -324,5 +324,5 @@ new Promise((resolve) => {
 
 ## Promise Projects
 
-- Delay with a Promise
-- Next
+- [Delay with a Promise](./2-delay/index.js)
+- [Animated Circle with a Promise](./3-anim-promise/index.js)
