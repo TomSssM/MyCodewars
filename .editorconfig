@@ -1,12 +1,12 @@
-# top-most EditorConfig file
 root = true
 
-# Matches multiple files with brace expansion notation
-# Set default charset
-[*.{js,py}]
-charset = utf-8
-
-# 4 space indentation
 [*]
+charset = utf-8
+end_of_line = lf
 indent_style = space
 indent_size = 4
+insert_final_newline = false
+trim_trailing_whitespace = true
+
+[*.{html,json}]
+indent_size = 2
