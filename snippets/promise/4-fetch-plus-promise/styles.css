@@ -1,0 +1,13 @@
+.github-pic {
+    position: fixed;
+    left: 100px;
+    top: 200px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 2s all ease-out;
+}
+.github-pic.fade {
+    transform: scale(1);
+}
