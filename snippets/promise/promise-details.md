@@ -1,0 +1,320 @@
+# Promise Details
+
+## States
+
+Naturally a Promise has two states: `pending` and `fulfilled` / `rejected`. `pending` is when the
+asynchronous code is being executed and `fulfilled` / `rejected` is when either `resolve` or
+`reject` is called upon the completion of the execution of the asynchronous code. The result of the
+promise is also always only one: either what is passed into `resolve` (some data usually) or what is
+passed into `reject` (usually an error).
+
+## Only a Single Result or a Single Error
+
+We call either `resolve` or `reject` (whichever executes first) and the promise is done:
+```javascript
+const promise = new Promise((res, rej) => {
+    setTimeout(() => res(1), 0); // ignored
+    res(2);
+    rej(1); // ignored
+    setTimeout(() => rej(2), 0); // ignored
+    res(3); // ignored
+});
+promise.then(
+    (num) => console.log(`success: ${num}`),
+    (num) => console.log(`fail: ${num}`)
+);
+// log: success: 2
+```
+As you might have guessed in reality the code inside a `Promise` doesn't have to be asynchronous :)
+
+## Not calling .then() for too long
+
+Imagine we write this:
+
+```javascript
+const promise = new Promise(function(resolve) {
+
+    setTimeout(() => {
+        console.log('one second passed');
+        resolve('OK');
+    }, 1000);
+
+});
+```
+
+And then we wait for __2__ seconds doing nothing. What is going to happen is: the setTimeout will in
+fact execute but the promise will be pending and waiting for you to pass in the value of the `resolve`
+and at the same moment as you do so it will be resolved:
+```javascript
+const promise = new Promise(function(resolve) {
+
+    setTimeout(() => {
+        console.log('one second passed');
+        resolve('OK');
+    }, 1000);
+
+});
+
+// one second passed...
+// log: 'one second passed'
+
+// we wait an hour...
+
+// after an hour:
+promise.then(
+    data => console.log(data)
+);
+// log: 'OK' (instantly cause the promise got resolved ages ago)
+
+// a little note here:  upon termination of the timeout, Promise will call resolve
+// function, except since we haven't defined it yet it is as though this function is
+// just (() => {}) before we call then. What is important to note is that as soon as
+// the promise does that it is considered resolved
+```
+
+Check out this curious example (do note that we call `resolve()` before the log):
+```javascript
+const then = Date.now();
+const promise = new Promise((res) => {
+    setTimeout(() => {
+        res(12);
+        console.log(`async code - time elapsed: ${Date.now() - then}`);
+    }, 1000);
+});
+setTimeout(() => {
+    console.log(`resolve - time elapsed: ${Date.now() - then}`);
+    promise.then(
+        (data) => console.log(data)
+    );
+}, 3000);
+
+// after 1 second:
+// log: async code - time elapsed: ~1000
+
+// after 3 seconds:
+// log: resolve - time elapsed: ~3000
+// log: 12
+```
+
+## .finally() intricacies
+
+This method cannot have any arguments as it is used similar to `finally` in `try catch`: for
+cleanup purposes and all. Also do note that it can be executed before `then`:
+```javascript
+new Promise((resolve) => {
+    setTimeout(() => resolve('success'), 2000);
+}).finally(() => console.log('finally 1'))
+  .then(result => console.log(result))
+  .finally(() => console.log('finally 2'))
+  .finally(() => console.log('finally 3'))
+// after 2 seconds:
+// finally 1
+// success
+// finally 2
+// finally 3
+```
+
+## Thenables
+
+When we return a Promise in a `then` function it actually doesn't have to be an instance of the Promise
+constructor. It should be any interface that implements its own `then` method:
+```javascript
+class Thenable {
+    constructor(num) {
+        this.num = num;
+    }
+
+    then(fun) {
+        // fun === callback is false
+        // I know it is confusing the browser
+        // creates some sort of wrapper around it
+        // yet doesn't matter, when fun() is called
+        // callback is also going to be called
+        fun(this.num);
+    }
+}
+
+const callback = (num) => {
+    console.log(num);
+    return ':)';
+}
+
+new Promise(res => {
+        setTimeout(() => res(2), 1000);
+    })
+    .then(
+        data => new Thenable(data)
+    )
+    .then(callback)
+    .then(
+        val => console.log(`< ${val} />`)
+    );
+
+// after one second:
+// log: 2
+// log: < :) />
+```
+The idea is that external libraries may need this functionality.
+
+## catch vs second callback
+
+Are these code fragments equal? In other words, do they behave the same way in any
+circumstances, for any handler functions?
+```javascript
+promise.then(f1).catch(f2);
+```
+Versus:
+```javascript
+promise.then(f1, f2);
+```
+The short answer is: no, they are not the equal:
+
+The difference is that if an error happens in `f1`, then it is handled by `.catch` here:
+```javascript
+promise
+  .then(f1)
+  .catch(f2);
+```
+…But not here:
+```javascript
+promise
+  .then(f1, f2);
+```
+That’s because an error is passed down the chain, and in the second code piece there’s
+no chain below `f1`.
+
+In other words, `.then` passes results / errors to the next `.then/catch`. So in
+the first example, there’s a catch below, and in the second one – there isn’t, so the error
+is unhandled:
+
+```javascript
+// error handled:
+function one() {
+
+    const promise = new Promise(res => {
+        setTimeout(() => {
+
+            res(12);
+
+        }, 1000);
+    });
+    promise
+        .then(
+            data => {
+                throw new Error('tar-tar sauce')
+            }
+        )
+        .catch(err => {
+            console.log(err);
+        });
+}
+
+// error unhandled:
+function two() {
+    const promise2 = new Promise((res, rej) => {
+        setTimeout(() => {
+            res(12);
+        }, 1000);
+    });
+
+    promise2.then(
+        data => {
+            throw new Error('tar-tar sauce');
+        },
+        err => {
+            console.log(`warning error: ${err.message}`);
+        }
+    );
+}
+
+one();
+// after a second:
+// log: Error
+
+two();
+// after a second:
+// throw: Error
+```
+
+## Consumers returning Promises
+
+TODO: add it :)
+
+```javascript
+// points:
+// the asynchcronous code isn't waited for to be completed
+// it is handled as it arrives from the Event Queue
+// there are exceptions:
+// if we return a promise - then the other `then`s actually do
+// wait for it to finish async code, and here is another exception:
+// you see finally, too, can return a Promise, but this one won't affect
+// the other `then`s (thus it won't be part of the chain so to speak)
+// but just like with the promises returned by `then`s, this one (returned by finally)
+// will be waited for until it resolves before all the other `then`s may continue executing
+
+// 1)
+new Promise(res => {
+    console.log('enter 1st async');
+    setTimeout(() => {
+        console.log('one second passed');
+        res(12);
+    }, 1000);
+}).finally(
+    () => {
+        new Promise(res => {
+            console.log('enter 2nd async');
+            setTimeout(() => {
+                console.log('four seconds passed');
+                res('finally');
+            }, 3000);
+        }).then(finallyData => console.log(`log from finally: ${finallyData}`));
+    }
+).then(
+    data => {
+        console.log(`enter 3rd async: ${data}`);
+        setTimeout(() => {
+            console.log('five seconds passed');
+        }, 1000);
+    }
+).then(
+    data => {
+        console.log(`enter 4th async: ${data}`);
+        setTimeout(() => {
+            console.log('seven seconds passed');
+        }, 2000);
+    }
+)
+
+// 2)
+new Promise(res => {
+    console.log('enter 1st async');
+    setTimeout(() => {
+        console.log('one second passed');
+        res(12);
+    }, 1000);
+}).finally(
+    () => {
+        return new Promise(res => {
+            console.log('enter 2nd async');
+            setTimeout(() => {
+                console.log('four seconds passed');
+                res('finally');
+            }, 3000);
+        }).then(finallyData => console.log(`log from finally: ${finallyData}`));
+    }
+).then(
+    data => {
+        console.log(`enter 3rd async: ${data}`);
+        setTimeout(() => {
+            console.log('five seconds passed');
+        }, 1000);
+    }
+).then(
+    data => {
+        console.log(`enter 4th async: ${data}`);
+        setTimeout(() => {
+            console.log('seven seconds passed');
+        }, 2000);
+    }
+)
+```
