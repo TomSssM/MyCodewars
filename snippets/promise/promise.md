@@ -471,6 +471,136 @@ this very technique when working with `fetch`.
 
 ---
 
+## Error Handling
+
+Whenever any error ( actual error or an explicit `throw` ) occurs the control goes to any error handler
+( whichever is first ) of our promise. For instance here we have two error handlers and only the
+first one ( `reject` argument ) is called:
+```javascript
+new Promise((res, rej) => {
+    setTimeout(() => {
+        rej(new Error('tar-tar sauce'));
+    }, 1000);
+})
+.then(
+    () => console.log('everything is OK'),
+    (err) => console.log(`reject - ${err}`)
+)
+.catch(err => console.log(`catch - ${err}`));
+
+// after one second:
+// log: reject - Error: tar-tar sauce
+// that's it .catch() isn't called
+```
+Here the `reject` argument handler isn't defined and thus `catch` is called:
+```javascript
+new Promise((res, rej) => {
+    // we could throw new Error here and either
+    // reject or catch would be called
+    setTimeout(() => {
+        rej(new Error('tar-tar sauce'));
+    }, 1000);
+})
+.then(
+    () => console.log('everything is OK'),
+    // (err) => console.log(`reject - ${err}`)
+)
+.catch(err => console.log(`catch - ${err}`));
+
+// after one second:
+// log: catch - Error: tar-tar sauce
+```
+Only `catch` would be called if an error occurred and `catch` came before `reject` handler
+( however resolve() would be called ):
+```javascript
+new Promise((res, rej) => {
+    throw new Error('wow');
+    setTimeout(() => {
+        res('text');
+    }, 1000);
+})
+.catch(err => console.log(`catch - ${err}`))
+.then(
+    () => console.log('everything is OK'),
+    (err) => console.log(`reject - ${err}`)
+)
+
+// after one second:
+// log: catch - Error: tar-tar sauce
+// log: everything is OK
+
+// here the only difference between reject and catch is that after handling error as
+// you can see Promise calls resolve(), however, if catch were to come after then(),
+// we would call either resolve() or reject() ( we would call reject() obviously ) and
+// thus resolve() would never be called ( unlike with catch() )
+```
+
+If we rethrow an error in one catch it goes straight to the next one ignoring all
+than along the way:
+```
+catch {
+    throw ------
+}               |
+then() {        |
+    // ignored  |
+}               |
+catch {         |
+    handle ? <--|
+}
+then() {
+    // happy ever after :)
+}
+```
+
+Here is an example:
+
+```javascript
+// the execution: catch -> catch -> then
+new Promise((resolve, reject) => {
+
+    throw new Error("Whoops!");
+
+}).catch(function(error) { // (*)
+
+    if (error instanceof URIError) {
+        // handle it
+        return 'man';
+    } else {
+        alert("Can't handle such error");
+        throw error; // throwing this or another error jumps to the next catch
+    }
+
+}).then(function() {
+
+    /* never runs here */
+    alert('I won\'t be alerted'); // (***)
+    return '>0'; // ignored ( obviously )
+
+}).catch(error => { // (**)
+
+    alert(`The unknown error has occurred: ${error}`);
+
+    // after this line => execution goes the normal way
+    return ':)';
+
+}).then(
+    data => {
+        alert(`I will be alrted ${data}`);
+    }
+);
+
+// instantly:
+// alert: Can't handle such error
+// alert: The unknown error has occurred
+// alert: I will be alrted :)
+// do note that this ------^ isn't '0<' because
+// line (***) is ignored
+```
+
+Look at the project `error-handling` for more stuff :)
+
+---
+
 ## Promise Details
 
 ### States
@@ -537,8 +667,12 @@ const promise = new Promise(function(resolve) {
 promise.then(
     data => console.log(data)
 );
-// instantly the promise is resolved:
-// log: 'OK' (instantly cause it should have been resolved ages ago)
+// log: 'OK' (instantly cause the promise got resolved ages ago)
+
+// a little note here:  upon termination of the timeout, Promise will call resolve
+// function, except since we haven't defined it yet it is as though this function is
+// just (() => {}) before we call then. What is important to note is that as soon as
+// the promise does that it is considered resolved
 ```
 
 Check out this curious example (do note that we call `resolve()` before the log):
@@ -711,4 +845,5 @@ two();
 
 - [Delay with a Promise](./2-delay/index.js)
 - [Animated Circle with a Promise](./3-anim-promise/index.js)
-- [first ever fetch + Promise example](./4-fetch-plus-promise/index.js)
+- [First ever Fetch + Promise Example](./4-fetch-plus-promise/index.js)
+- [Error Handling](./5-error-handle-promise/index.js)
