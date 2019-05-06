@@ -3,7 +3,7 @@
 ## Main
 - [Data Structures](./Data%20Structures/README.md)
 - [Algorithms](./algorithms/README.md)
-- [Promise](./promise/promise.md)
+- [Promise](./promise/README.md)
 - [Server Side JS](./server-side-js/README.md)
 - [JSON](./myJSON.js)
 - [Iterators and Generators](./iterators/README.md)

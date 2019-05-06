@@ -596,7 +596,3 @@ new Promise((resolve, reject) => {
 // do note that this ------^ isn't '0<' because
 // line (***) is ignored
 ```
-
-Look at the project `error-handling` for more stuff :)
-
----
