@@ -368,7 +368,13 @@ This trick is used in [this](./5-error-handle-promise/index.js) project
 
 ## Promise.all(...) Intricacies
 
-## How Promise.all(...)
+### How Promise.all(...) Works
+
+`vals` ( code below ) is an array of the values which each of the Promises in the `promises` array
+passes to their corresponding `res` function or the return value of `.catch()` or `rej()` of the
+corresponding Promise. This feature to include either an argument to `res()` or the Return value of
+`.catch()` / `rej()` is used in [this](./7-fault-promise-json/index.js) project, thus saving the day.
+Here is the sample code:
 
 ```javascript
 const promises = [
@@ -394,10 +400,6 @@ const promises = [
 
 const promise = Promise.all(promises);
 promise.then(vals => {
-    // 'vals' is an array of the values which each
-    // of the Promises in the 'promises' array
-    // passes to their corresponding 'res' function
-
     // do note that the order of the values is the
     // same as in the initial array 'promises' and not the
     // same as the order in which these promises got resolved
@@ -426,6 +428,39 @@ Promise.all(promises)
         console.log('running catch');
         console.log(err);
     });
+
+// here is proof that 'vals' is going to be either an argument passed to 'res'
+// or the return value of '.catch()' / 'rej()':
+const variousPromises = [
+    new Promise(res => {
+        setTimeout(() => {
+            res('I don\'t fail');
+        }, 1000);
+    }),
+    new Promise(res => {
+        throw new Error('I have en error in code');
+        setTimeout(() => {
+            res('this value doesn\'t get passed');
+        }, 2000);
+    }).catch(err => err),
+    new Promise((res, rej) => {
+        setTimeout(() => {
+            rej(new Error('I get rejected'));
+        }, 3000);
+    }).then(
+        null,
+        err => err
+    )
+];
+
+Promise.all(variousPromises).then(vals => {
+    console.log(vals);
+    // vals: [
+    //     0: "I don't fail",
+    //     1: Error: "I have en error in code",
+    //     2: Error: "I get rejected",
+    // ]
+});
 ```
 
 ### Promise.all(...) allows non-promise items in iterable
@@ -443,3 +478,31 @@ Promise.all([
 ]).then(alert); // 1, 2, 3
 ```
 So we are able to pass non-promise values to Promise.all where convenient.
+
+## catch() in the Promise chain
+
+`catch` ( when an error occurs and it is triggered ) may legimately return a value
+( like an error instance ) and it will be piped successfully through a Promise chain:
+
+```javascript
+new Promise((res, rej) => {
+    throw new Error('tar-tar sauce');
+    setTimeout(() => {
+        res(new Error('tar-tar sauce'));
+    }, 1000);
+}).then(
+    data => console.log(`log from 1 ${data}`),
+).catch(
+    err => {
+        console.log(`log from catch ${err}`);
+        return err;
+    }
+).then(
+    data => console.log(`log from 2: ${data}`),
+);
+```
+
+In the code above 1st `then` is never executed but the 2nd ( following the rules of chaining )
+gets as an argument the value returned by `catch`.
+
+But do note that 2nd `then` will be called even if `.catch()` isn't.
