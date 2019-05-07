@@ -506,3 +506,80 @@ In the code above 1st `then` is never executed but the 2nd ( following the rules
 gets as an argument the value returned by `catch`.
 
 But do note that 2nd `then` will be called even if `.catch()` isn't.
+
+## Promisification
+
+`Promisification` is a process of turning an asynchronous function that takes an error-first
+callback into a Promise like the `loadScript` function we saw in the beginning. Usually a helper
+function is used for that:
+```javascript
+function promisify(f) {
+    return function (...args) { // return a wrapper-function
+        return new Promise((resolve, reject) => {
+            function callback(err, result) { // our custom callback for f
+                if (err) {
+                    return reject(err);
+                } else {
+                    resolve(result);
+                }
+            }
+
+            args.push(callback); // append our custom callback to the end of arguments
+
+            f.call(this, ...args); // call the original function
+        });
+    };
+};
+
+// usage:
+
+function loadScript(src, callback) {
+    const script = document.createElement('script');
+    script.src = src;
+
+    script.onload = () => callback(null, script);
+    script.onerror = () => callback(new Error(`Script load error for ${src}`));
+
+    document.head.append(script);
+}
+
+const loadScriptPromise = promisify(loadScript);
+loadScriptPromise('https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js').then(
+    () => console.log(_),
+    err => alert(`wow: ${err}`)
+);
+```
+
+Here is an improved version to promisify a function whose callback that might expect
+over 2 arguments:
+```javascript
+// promisify(f, true) to get array of results
+function promisify(f, manyArgs = false) {
+    return function (...args) {
+        return new Promise((resolve, reject) => {
+            function callback(err, ...results) { // our custom callback for f
+                if (err) {
+                    return reject(err);
+                } else {
+                    // resolve with all callback results if manyArgs is specified
+                    resolve(manyArgs ? results : results[0]);
+                }
+            }
+
+            args.push(callback);
+
+            f.call(this, ...args);
+        });
+    };
+}
+
+// usage:
+f = promisify(f, true);
+f(...).then(arrayOfResults => ..., err => ...)
+```
+Please note that promisification is a great approach, especially when you use async/await
+but not a total replacement for callbacks.
+
+Remember, a promise may have only one result, but a callback may technically be called many times.
+So promisification is only meant for functions that call the callback once.
+Further calls will be ignored.
