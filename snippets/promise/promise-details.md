@@ -366,7 +366,69 @@ five seconds passed
 
 This trick is used in [this](./5-error-handle-promise/index.js) project
 
-## Promise.all(...) allows non-promise items in iterable
+## Promise.all(...) Intricacies
+
+## How Promise.all(...)
+
+```javascript
+const promises = [
+    new Promise(res => {
+        setTimeout(() => {
+            console.log('three seconds passed');
+            res(12);
+        }, 3000);
+    }),
+    new Promise(res => {
+        setTimeout(() => {
+            console.log('two seconds passed');
+            res('man');
+        }, 2000);
+    }),
+    new Promise(res => {
+        setTimeout(() => {
+            console.log('one second passed');
+            res(true);
+        }, 1000);
+    }),
+];
+
+const promise = Promise.all(promises);
+promise.then(vals => {
+    // 'vals' is an array of the values which each
+    // of the Promises in the 'promises' array
+    // passes to their corresponding 'res' function
+
+    // do note that the order of the values is the
+    // same as in the initial array 'promises' and not the
+    // same as the order in which these promises got resolved
+    console.log(vals); // [12, 'man', true]
+});
+
+// with Promise.all() either then() or catch() is ever executed, not both:
+
+promises.push(new Promise((res, rej) => {
+    // an error could be thrown here as well,
+    // then catch would be executed at once
+    // ( not after 4 seconds )
+    setTimeout(() => {
+        console.log('four seconds passed');
+        rej(new Error('tar tar sauce'));
+    }, 4000);
+}));
+
+// only catch will be executed:
+Promise.all(promises)
+    .then(vals => { // ignored
+            console.log('running then');
+            console.log(vals);
+    })
+    .catch(err => {
+        console.log('running catch');
+        console.log(err);
+    });
+```
+
+### Promise.all(...) allows non-promise items in iterable
 
 Normally, Promise.all(...) accepts an iterable (in most cases an array) of promises. But if any
 of those objects is not a promise, it’s wrapped in Promise.resolve. For instance, here the
