@@ -606,3 +606,144 @@ new Promise(function(resolve, reject) {
     }, 1000);
 }).catch(alert);
 ```
+
+## Macrotask Queue vs Microtask Queue
+
+You should remember at all times that Promises in fact are asynchronous. It means that the
+code inside the `resolve` ( and so on ) functions is put on the `Event Queue` ( even when a Promise
+is resolved instantly ). But do note that the code inside the promise itself is __synchronous__. Here
+is proof of that:
+```javascript
+new Promise(res => {
+    alert('Hello'); // synchronous
+    res(); // asynchronous
+}).then(() => alert('!'));
+alert('World'); // synchronous
+
+// output:
+// alerts: Hello -> World -> !
+```
+
+Oh, did I say that the asynchronous code of the Promises is put on the `Event Queue`? I meant it is
+put on the `Microtask Queue`. Well, you see all the Web API like `setTimeout` and all are put on the
+regular `Event Queue` and the asynchronous code of the Promises is processed in the same order as it
+is enqueued on the `Microtask Queue`. And the regular `Event Queue` is also sometimes referred to as
+`Macrotask Queue`. What does it mean for us you ask? Well, here is the thing:
+__Microtask queue has a higher priority than the Macrotask Queue.__
+What it means is that the asynchronous code of the Promises is resolved before any other asynchronous
+code _no matter what!_ Here is the proof of that:
+```javascript
+setTimeout(() => {
+    console.log('timeout');
+}, 0);
+
+new Promise(res => res('promise')).then(
+    data => console.log(data)
+);
+
+// output:
+// log: promise
+// log: timeout
+```
+In other words first the browser does the synchronous code, which puts functions both on the
+`Microtask Queue` and the `Event Queue`, then it executes everything from the `Microtask Queue`
+and goes on to dequeue things from the good old `Event Queue`. Also I can't help but adduce a self
+drawn scheme:
+```
+ Call Stack
+ __________
+|__________|
+|__________|
+|__________|
+|__________|
+|__________|
+|__________|
+|          |   __________       ________________       _____________
+         <--- (Event Loop) <-- | Microtask Queue| <-- | Event Queue |
+```
+So we cannot oftentimes guarantee that one asynchrnous action will be done right after the other
+because for instance `setTimeout` may make a Promise and it will be next like here:
+
+```javascript
+// compare this:
+setTimeout(() => {
+    console.log('one');
+    new Promise(res => res('two')).then(
+        data => console.log(data),
+    );
+}, 0);
+setTimeout(() => {
+    console.log('three');
+}, 0);
+
+// vs this one:
+setTimeout(() => {
+    console.log('one');
+    setTimeout(() => {
+        console.log('three');
+    }, 0);
+}, 0);
+setTimeout(() => {
+    console.log('two');
+}, 0);
+```
+
+In the first one by all means the second `setTimeout` ought to be next after the 1st
+`setTimeout` finished working but since the 1st `setTimeout` puts a task on the `Microtask Queue`
+the browser cannot go on to the next task on the `Event Queue` ( which is 2nd setTimeout ) until
+the `Microtask Queue` is empty ( so it executes the asynchronous code of the `Promise` next instead )
+
+If the order does matter to us we could do smth like this:
+```javascript
+Promise.resolve()
+    .then(() => alert('one'))
+    .then(() => alert('two'))
+    .then(() => alert('three'));
+```
+
+Now, with the understanding of microtasks, we can formalize the `unhandledrejection` event:
+__"Unhandled rejection" is when a promise error is not handled at the end of the microtask queue.__
+
+For instance, consider this code:
+```javascript
+const promise = Promise.reject(new Error("Promise Failed!"));
+
+window.addEventListener('unhandledrejection', event => {
+  alert(event.reason); // Promise Failed!
+});
+```
+
+We wouldn’t have it if we added .catch, like this:
+```javascript
+const promise = Promise.reject(new Error("Promise Failed!"));
+promise.catch(err => alert('caught'));
+
+// no error, all quiet
+window.addEventListener('unhandledrejection', event => alert(event.reason));
+```
+Now let’s say, we’ll be catching the error, but after `setTimeout`:
+```javascript
+const promise = Promise.reject(new Error("Promise Failed!"));
+setTimeout(() => promise.catch(err => alert('caught')));
+
+// Error: Promise Failed!
+window.addEventListener('unhandledrejection', event => alert(event.reason));
+```
+Now the unhandled rejection appears again. Why? Because `unhandledrejection` triggers when the
+`Microtask Queue` is empty. The engine examines promises and, if any of them is in _rejected_ state,
+then the event is generated.
+
+In the example, the `.catch` added by `setTimeout` triggers too, of course it does, but later, after
+`unhandledrejection` has already occurred. Thus the output is going to be:
+
+```
+...
+nothing on the event queue, generate the event:
+alert: error
+...
+now that we are done with the Microtask Queue let's see
+if there is anything on the Event Queue and execute it:
+alert: caught
+```
+
+## Async / Await
