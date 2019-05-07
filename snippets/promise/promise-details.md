@@ -365,3 +365,19 @@ five seconds passed
 ```
 
 This trick is used in [this](./5-error-handle-promise/index.js) project
+
+## Promise.all(...) allows non-promise items in iterable
+
+Normally, Promise.all(...) accepts an iterable (in most cases an array) of promises. But if any
+of those objects is not a promise, it’s wrapped in Promise.resolve. For instance, here the
+results are [1, 2, 3]:
+```javascript
+Promise.all([
+  new Promise((resolve, reject) => {
+    setTimeout(() => resolve(1), 1000)
+  }),
+  2, // treated as Promise.resolve(2)
+  3  // treated as Promise.resolve(3)
+]).then(alert); // 1, 2, 3
+```
+So we are able to pass non-promise values to Promise.all where convenient.
