@@ -238,21 +238,11 @@ two();
 
 ## Consumers returning Promises
 
-TODO: add it :)
+The asynchcronous code isn't waited for to be completed. If one of `then`s launches a `setTimeout` for
+3 seconds the next `then` won't wait till 3 seconds are up, instead it is going to be executed straight
+away. Take a look at the following code:
 
 ```javascript
-// points:
-// the asynchcronous code isn't waited for to be completed
-// it is handled as it arrives from the Event Queue
-// there are exceptions:
-// if we return a promise - then the other `then`s actually do
-// wait for it to finish async code, and here is another exception:
-// you see finally, too, can return a Promise, but this one won't affect
-// the other `then`s (thus it won't be part of the chain so to speak)
-// but just like with the promises returned by `then`s, this one (returned by finally)
-// will be waited for until it resolves before all the other `then`s may continue executing
-
-// 1)
 new Promise(res => {
     console.log('enter 1st async');
     setTimeout(() => {
@@ -284,8 +274,35 @@ new Promise(res => {
         }, 2000);
     }
 )
+```
+The engine will wait for the `setTimeout` in the initial promise and log:
+```
+enter 1st async
+one second passed
+```
+After no more `setTimeout`s are waited for, at first the engine executes all `then`s and `finally` and
+deals with asynchronous code as it arrives from the Event Queue. Thus the output is going to be:
+```
+enter 2nd async
+enter 3rd async: 12
+enter 4th async: undefined
+...
+after some time:
+...
+five seconds passed
+seven seconds passed
+four seconds passed
+log from finally: finally
+```
+However there are exceptions: if we return a promise - then the other `then`s actually do
+wait for it to finish async code. Remember? That is how chaining works. Executing asynchronous
+code _sequentially_. That is OK. But here is another exception: you see `finally`, too, can
+return a Promise, but this one won't affect arguments of the other `then`s ( thus it won't be part
+of the chain so to speak ) but just like with the promises returned by `then`s, this one
+( returned by `finally` ) will be waited for until it resolves before all the other `then`s
+may continue executing. Here is the same code as above except there is a return statement in line `(*)`:
 
-// 2)
+```javascript
 new Promise(res => {
     console.log('enter 1st async');
     setTimeout(() => {
@@ -294,7 +311,12 @@ new Promise(res => {
     }, 1000);
 }).finally(
     () => {
-        return new Promise(res => {
+        // because here is a return we wait for
+        // the async code in the promise below
+        // before executing the other then()s
+        // if we didn't return the other then()s
+        // would be executed immediately ( not after 3 seconds )
+        return new Promise(res => { // (*)
             console.log('enter 2nd async');
             setTimeout(() => {
                 console.log('four seconds passed');
@@ -303,18 +325,43 @@ new Promise(res => {
         }).then(finallyData => console.log(`log from finally: ${finallyData}`));
     }
 ).then(
-    data => {
+    data => { // (**)
         console.log(`enter 3rd async: ${data}`);
         setTimeout(() => {
             console.log('five seconds passed');
         }, 1000);
     }
 ).then(
-    data => {
+    data => { // (***)
         console.log(`enter 4th async: ${data}`);
         setTimeout(() => {
             console.log('seven seconds passed');
-        }, 2000);
+        }, 500);
     }
 )
 ```
+
+The functions on lines `(**)` and `(***)` aren't chaining ( don't return anything ) and thus are
+both executed at the same time and their asynchronous code is dealt as it arrives from the Event
+Queue instead of _sequentially_ here is the output:
+```
+log: enter 1st async
+...
+after one second:
+log: one second passed
+log: enter 2nd async
+...
+after four seconds:
+log: four seconds passed
+log: log from finally: finally
+log: enter 3rd async: 12
+log: enter 4th async: undefined
+...
+after 500 ms:
+seven seconds passed
+...
+after 1 second:
+five seconds passed
+```
+
+This trick is used in [this](./5-error-handle-promise/index.js) project
