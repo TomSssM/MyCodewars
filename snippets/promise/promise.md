@@ -473,7 +473,8 @@ this very technique when working with `fetch`.
 
 ## Error Handling
 
-Whenever any error ( actual error or an explicit `throw` ) occurs the control goes to any error handler
+Whenever any error ( actual error or an explicit `throw` ) occurs the control goes to
+any error handler
 ( whichever is first ) of our promise. For instance here we have two error handlers and only the
 first one ( `reject` argument ) is called:
 ```javascript
@@ -638,6 +639,7 @@ then // NOT ignored
 
 Do note that `then`s after `catch` are not ignored and we can even implement _chaining_ if
 we return smth from `catch`:
+
 ```javascript
 new Promise(res => res(12))
     .then(
@@ -663,7 +665,6 @@ new Promise(res => res(12))
     );
 
 // we can also have Chaining:
-
 new Promise(res => res(12))
     .then(
         data => console.log(data), // 12
@@ -832,3 +833,314 @@ alert: caught
 ```
 
 ## Async / Await
+
+### Async
+
+Basically `async / await` allow us not to use `.then()` with Promises, it is simply more convenient
+sometimes to use them instead.
+In a nutshell `async` makes a function return a Promise and allows us to use `await` inside a function
+preceeded by `async`. Even if a primitive is returned by an `async` function it gets wrapped into
+`Promise.resolve()`:
+```javascript
+// this:
+async function one() {
+    return 1;
+}
+
+// is the same as this:
+function two() {
+    return Promise.resolve(1);
+}
+
+one().then(alert); // 1
+two().then(alert); // 1
+
+// can't use await in a non-async function:
+function usual() {
+    await new Promise();
+}
+async function asyncFun() {
+    await new Promise(res => res(12));
+}
+
+usual(); // SyntaxError: await is only valid in async function
+asyncFun(); // OK
+```
+Just so you don't get confused if we don't return anything from an `async` function, it still
+implicitly returns a Promise except it is tantamount to `Promise.resolve(undefined)`:
+```javascript
+async function explicit() {
+    return ':)';
+}
+
+explicit().then(data => {
+    alert(data); // :)
+});
+
+async function implicit() {
+    12 + 12;
+    // implicitly: return Promise.resolve(Return Value);
+    // - what is Return Value?
+    // - undefined!
+}
+
+implicit().then(
+    data => {
+        alert(data); // undefined
+    }
+);
+```
+
+So, once again, `async function` is just a usual _synchronous_ function that can resolve Promises
+via `await` keyword and always returns a Promise ( in addition ). However, a rather important detail
+is how it processes multiple `await` statements. Before we get into it here is proof that an
+`async function` is synchronous:
+
+```javascript
+(async () => {
+    console.log('async');
+})();
+
+console.log('main stream');
+
+// output:
+// log: async
+// log: main stream
+```
+OK, here is the workflow of how such a function processes multiple `await` statements:
+- Do everything synchronously until encountering the 1st `await`
+- Run the synchronous part of the Promise:
+    - Until encountering Web API like `setTimeout`
+    - Until encountering a call of `resolve` / `reject`
+- Put the asynchronous part of that 1st Promise into the `Microtask Queue`
+- Run the rest of the Main code
+- Resolve that 1st Promise
+    - It basically means returning an argument passed to `resolve`
+- Usual Workflow:
+    - Go to the next `await`
+    - Wait till both synchronous and asynchronous parts of it are done
+    - Resolve a Promise
+    - Go to the next `await`
+- Finish Executing
+
+That is quite a handful and here is an example of that:
+```javascript
+async function f() {
+    console.log('enter async');
+    await new Promise(res => {
+        console.log('enter first promise');
+        res();
+    }).then(() => {
+        console.log('resolve 1st promise');
+    });
+    console.log('in between');
+    await new Promise(res => {
+        console.log('enter second promise');
+        setTimeout(() => {
+            res();
+        }, 3000);
+    }).then(
+        () => console.log('resolve 2nd promise')
+    );
+    console.log(`in between 2`);
+    await new Promise(res => {
+        console.log('enter third promise');
+        setTimeout(() => {
+            res();
+        }, 3000);
+    }).then(
+        () => console.log('resolve third promise')
+    );
+    console.log('leaving async');
+}
+
+f();
+
+console.log('main stream');
+```
+The output is going to be:
+```
+log: enter async
+log: enter first promise
+now go ahead and do the rest of the main script
+log: main stream
+after the main script is done resolve that pending promise
+log: resolve 1st promise
+log: in between
+log: enter second promise
+while second promise is pending stop execution of the function
+...
+after 3 seconds:
+log: resolve 2nd promise
+log: in between 2
+log: enter third promise
+while third promise is pending stop execution of the function
+...
+after 3 seconds:
+log: resolve third promise
+log: leaving async
+```
+
+### Await
+
+Then there is the `await` keyword, what it does is wait for a promise to call `resolve` function
+and then it returns the argument which Promise passed to `resolve`:
+```javascript
+async function name() {
+    const promise = new Promise(resolve => {
+        setTimeout(() => {
+            resolve(':)');
+        }, 1000);
+    });
+    const res = await promise;
+    console.log(res);
+}
+name();
+
+// output:
+// after 1 second:
+// log: ':)'
+```
+
+### Errors and Async / Await
+
+If the Promise calls `reject` or has some other Error inside it, then `await` is syntactically
+tantamount to the `throw` expression:
+```javascript
+async function name() {
+    const res = await new Promise((resolve, reject) => {
+        setTimeout(() => {
+            reject(new Error('tar-tar sauce'));
+        }, 1000);
+    });
+    console.log(res); // ignored
+}
+name();
+
+// output:
+// after one second:
+// Uncaught (in promise) Error: tar-tar sauce
+
+// or the same if there is simply some error in the Promise itself:
+async function two() {
+    const res = await new Promise((resolve, reject) => {
+        throw new Error('tar-tar sauce');
+        setTimeout(() => {
+            resolve(':)');
+        }, 1000);
+    });
+    console.log(res); // ignored
+}
+two();
+
+// output:
+// instantly:
+// Uncaught (in promise) Error: tar-tar sauce
+```
+
+Now how can we catch errors in `async / await`? Well, since this:
+```javascript
+async function f() {
+    await Promise.reject(new Error('tar-tar sauce'));
+}
+```
+is the same as this:
+```javascript
+async function f() {
+    throw new Error('tar-tar sauce');
+}
+```
+we have two options:
+- use a `try catch` block ( exception will be caught )
+- call `catch()` after an `async` function ( because it does return a Promise )
+
+Here is an example of how we could use a `try catch` block:
+
+```javascript
+async function f(url) {
+    try {
+        const resp = await fetch(url);
+        const json = await resp.json();
+        alert(json);
+    } catch (error) {
+        alert(error);
+    }
+}
+
+f('http://no-such-url');
+
+// after some time:
+// alert: TypeError: Failed to fetch
+```
+
+Or we could use a `catch` method instead:
+```javascript
+async function f(url) {
+    const resp = await fetch(url);
+    const json = await resp.json();
+    alert(json);
+}
+
+f('http://no-such-url').catch(alert);
+
+// after some time:
+// alert: TypeError: Failed to fetch
+```
+Also do note that when using `async / await` one might get an impression that we don't ever
+need to use `then` with them. However we actually do as it is the only way to interact with a promise
+outside the function `f()`:
+```javascript
+async function f() {
+    const promise = new Promise(res => {
+        setTimeout(() => {
+            res(':)');
+        }, 1000);
+    });
+    const smile = await promise;
+    console.log(smile);
+}
+
+f().finally(
+    () => {
+        console.log('some cleaning up here');
+    }
+);
+
+// after one second:
+// log: :)
+// log: some cleaning up here
+```
+
+At the top level of the code, when we are outside of any async function, we are syntactically
+unable to use await, so it is a normal practice to add `.then/catch` to handle the final result
+or falling-through errors.
+
+Here is an example of how an `async / await` function might look like:
+```javascript
+async function showAvatar() {
+    // read our JSON
+    const response = await fetch('./user.json');
+    const user = await response.json();
+
+    // read github user
+    const githubResponse = await fetch(`https://api.github.com/users/${user.name}`);
+    const githubUser = await githubResponse.json();
+
+    // show the avatar
+    const img = document.createElement('img');
+    img.src = githubUser.avatar_url;
+    img.className = "promise-avatar-example";
+    document.body.append(img);
+
+    // wait 3 seconds ( and nothing more )
+    await new Promise(resolve => setTimeout(resolve, 3000));
+
+    img.remove();
+    return githubUser;
+}
+showAvatar().catch(alert);
+```
+
+- Thenables
+- Add const val = await Promise.then
+- async methods
