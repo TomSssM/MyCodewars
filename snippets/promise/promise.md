@@ -607,6 +607,91 @@ new Promise(function(resolve, reject) {
 }).catch(alert);
 ```
 
+It should be added that if an error happens inside any of `then()`s all the further `then`s until
+`catch` are going to be ignored. Take a look at the following code:
+```javascript
+new Promise(
+    res => res(12),
+).then(
+    data => console.log(data), // 12
+).then(
+    data => {
+        throw new Error('tar-tar sauce');
+    }
+).then(
+    data => console.log(data), // NOT: :)
+).catch(err => ':)');
+```
+Here is a scheme:
+```
+then -> OK
+then -> OK
+then -> Error ---
+then // ignored  |
+then // ignored  |
+then // ignored  |
+catch <----------|
+then // NOT ignored
+then // NOT ignored
+...
+```
+
+Do note that `then`s after `catch` are not ignored and we can even implement _chaining_ if
+we return smth from `catch`:
+```javascript
+new Promise(res => res(12))
+    .then(
+        data => console.log(data), // 12
+    )
+    .then(
+        data => {
+            console.log(data); // undefined !!!
+            throw new Error('tar-tar sauce');
+        }
+    )
+    .then(
+        () => console.log('I will be ignred'), // ignored
+    )
+    .catch(
+        err => console.log(err), // Error: tar-tar sauce
+    )
+    .then(
+        () => console.log('I wont \'t be ignored'), // NOT ignored
+    )
+    .then(
+        () => console.log('Me too!'), // NOT ignored
+    );
+
+// we can also have Chaining:
+
+new Promise(res => res(12))
+    .then(
+        data => console.log(data), // 12
+    )
+    .then(
+        data => {
+            console.log(data); // undefined
+            throw new Error('tar-tar sauce');
+        }
+    )
+    .then(
+        () => console.log('I will be ignred'), // ignored
+    )
+    .catch(
+        err => {
+            console.log(err); // Error: tar-tar sauce
+            return ':)';
+        }
+    )
+    .then(
+        data => {
+            console.log(data); // :)
+            return 'man';
+        }
+    )
+    .then(console.log); // 'man'
+```
+
 ## Macrotask Queue vs Microtask Queue
 
 You should remember at all times that Promises in fact are asynchronous. It means that the
