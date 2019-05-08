@@ -1,0 +1,19 @@
+* body unknowntag html .className #idName::before div:nth-child(12) {
+    color: #ffffff;
+    color: #f0f0f020;
+    background-image: url('./');
+    background-image: url("./");
+}
+@media all and (max-width: 200px) {
+    .tag {
+        background-color: yellow;
+    }
+}
+@keyframes name {
+    from {
+        color: yellow;
+    }
+    to {
+        color: blue;
+    }
+}

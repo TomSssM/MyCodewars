@@ -52,11 +52,17 @@ new Man(1, 'two');
 const man = new Man(1, 'two');
 
 // 4) FP
-
 // parameters:
 const fun = function name(param1, param2) {
     param1;
 }
+
+// spread operator
+const funSpread = (man, ...params) => {
+    man;
+    params.forEach();
+}
+funSpread('man', 1, true);
 
 // arguments:
 fun(true, 'okay');

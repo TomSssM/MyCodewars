@@ -23,3 +23,16 @@
         }
     }
 }
+@media all and (max-width: 200px) {
+    .tag {
+        background-color: yellow;
+    }
+}
+@keyframes name {
+    from {
+        color: yellow;
+    }
+    to {
+        color: blue;
+    }
+}
