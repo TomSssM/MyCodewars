@@ -6,3 +6,4 @@
 - [Error Handling](./5-error-handle-promise/index.js)
 - [Fault-tolerant Promise.all](./6-fault-promise-all/index.js)
 - [Fault-tolerant fetch with JSON](./7-fault-promise-json/index.js)
+- [Async / Await loadJson](./8-asaw-one/index.js)
