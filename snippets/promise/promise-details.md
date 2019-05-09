@@ -584,9 +584,7 @@ Remember, a promise may have only one result, but a callback may technically be 
 So promisification is only meant for functions that call the callback once.
 Further calls will be ignored.
 
-## Random Details
-
-### PromiseState and PromiseResult
+## PromiseState and PromiseResult
 
 The internal `PromiseState` property is pretty straightforward: when we create a Promise, it equals
 to `pending` and as soon as the Promise calls either `reject` or `resolve`, `PromiseState` becomes
@@ -610,7 +608,7 @@ const promise1 = new Promise(res => {
 // promise1[[PromsieResult]]: ":)"
 ```
 
-### PromiseFullfilReactions and PromiseRejectReactions
+## PromiseFullfilReactions and PromiseRejectReactions
 Whenever we call `then()` what happens internally is it puts the callbacks ( for error
 and success ) into the internal array property called `PromiseFullfilReactions` for
 callbacks to be called when the Promsie calls `resolve` ( first argument to `then` ) and
@@ -638,3 +636,91 @@ Do note that if we don't pass either of the arguments to `then`, there will stil
 either into `PromiseFullfilReactions` or `PromiseRejectReactions`. If we omit 1st function
 `val => val` is put into `PromiseFullfilReactions` and if we omit 2nd argument,
 `arg => { throw arg }` is put into `PromiseRejectReactions`.
+
+## A Note on the Order in which Tasks are Processed on the Microtask Queue
+
+It is not so crucial in which order the tasks were put on the `Microtask Queue` via calling
+`then()` method. What I mean by that is if we have 2+ Promises each of which put their tasks
+via their own `then` method the order that those tasks are going to be handled is as follows:
+first handle the task put by the uppermost `then` of the 1st Promise, after that the one put by the
+uppermose `then` of the 2nd Promsie, then the one put by the uppermost `then` of the 3rd Promise.
+After all that is done, handle the task put by the second `then` of the 1st Promise, second `then`
+of the 2nd Promise, second `then` of the 3rd Promise and so on.
+Here is the code as an example:
+
+```javascript
+console.log(1);
+
+setTimeout(() => console.log(2), 0);
+
+Promise.resolve(3)
+    .then(a => {
+        console.log(a); // 3
+        return a + 1; // 4
+    })
+    .then(a => {
+        console.log(a); // 4
+        return Promise.resolve(a + 1) // 5
+    })
+    .then(a => console.log(a)); // 5
+
+Promise.resolve(6)
+    .then(a => console.log(a));
+
+console.log(7);
+```
+
+Here is a scheme:
+```
+The Order in which tasks are going to be handled is ( 1 - 9 ):
+promsie1
+    .then <-- 1
+    .then <-- 4
+    .then <-- 7
+    .then <-- 9
+
+promise2
+    .then <-- 2
+    .then <-- 5
+    .then <-- 8
+
+promise3
+    .then <-- 3
+    .then <-- 6
+...
+```
+Here is the same code as the scheme above:
+```javascript
+Promise.resolve()
+    .then(() => {
+        console.log(1);
+    })
+    .then(() => {
+        console.log(4);
+    })
+    .then(() => {
+        console.log(7);
+    })
+    .then(() => {
+        console.log(9);
+    });
+
+Promise.resolve()
+    .then(() => {
+        console.log(2);
+    })
+    .then(() => {
+        console.log(5);
+    })
+    .then(() => {
+        console.log(8);
+    });
+
+Promise.resolve()
+    .then(() => {
+        console.log(3);
+    })
+    .then(() => {
+        console.log(6);
+    });
+```
