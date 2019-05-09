@@ -1141,6 +1141,77 @@ async function showAvatar() {
 showAvatar().catch(alert);
 ```
 
-- Thenables
-- Add const val = await Promise.then
-- async methods
+Also `await` accepts a 'thenable' object. The `then` method defined on such an object should have
+`resolve` / `reject` as parameters and call them with some value. However, since we don't define
+this function ( `resolve` for instance ) in the following `then()` invocation the actual `resolve`
+function that a 'thenable' instance is going to call will be a function with a native code passed
+by the engine. Here is the example:
+```javascript
+class Thenable {
+    constructor(val) {
+        this.val = val;
+    }
+
+    then(res, rej) {
+        alert(res); // function () { [native code] }
+        alert(rej); // function () { [native code] }
+        setTimeout(() => {
+            res(this.val);
+        }, 2000);
+    }
+}
+
+(async () => {
+    const value = await new Thenable(':)');
+    // after 2 second...
+    alert(value); // :)
+})();
+
+// output:
+// instantly:
+// alert: function () { [native code] }
+// alert: function () { [native code] }
+// after 2 seconds:
+// alert: :)
+```
+
+In a like manner we can define `async` methods:
+```javascript
+class SomeClass {
+    constructor(name) {
+        this.name = name;
+    }
+    async method() {
+        const val = await new Promise(res => {
+            setTimeout(() => {
+                res(this.name);
+            }, 2000);
+        });
+        alert(val);
+    }
+}
+
+new SomeClass('John').method();
+// after 2 seconds:
+// alert: John
+```
+
+There would be no error if we call `then()` on the Promise that comes after `await` but the
+resulting value will be the Return Value of `then`:
+```javascript
+(async () => {
+    const val = await new Promise(res => {
+        setTimeout(() => {
+            res(12);
+        }, 2000);
+    }).then(data => {
+        return data + ':)';
+    });
+    alert(val);
+})();
+
+// output:
+// after 2 seconds:
+// alert: 12:)
+```
+And there you have it :)
