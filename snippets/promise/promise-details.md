@@ -583,3 +583,58 @@ but not a total replacement for callbacks.
 Remember, a promise may have only one result, but a callback may technically be called many times.
 So promisification is only meant for functions that call the callback once.
 Further calls will be ignored.
+
+## Random Details
+
+### PromiseState and PromiseResult
+
+The internal `PromiseState` property is pretty straightforward: when we create a Promise, it equals
+to `pending` and as soon as the Promise calls either `reject` or `resolve`, `PromiseState` becomes
+either `resolved` or `rejected` depending on whichever one of the two functions was called.
+
+`PromsieResult` property is `undefined` until the Promise has gotten settled. Then this property
+becomes the argument passed either to `resolve` or `reject`. Here is an example:
+```javascript
+const promise1 = new Promise(res => {
+    setTimeout(() => {
+        res(':)');
+    }, 2000);
+});
+
+// promise1[[PromiseState]]: "pending"
+// promise1[[PromsieResult]]: undefined
+
+// after 2 second promise1 calls res() with the argument ":)"
+// thus after 2 seconds:
+// promise1[[PromiseState]]: "resolved"
+// promise1[[PromsieResult]]: ":)"
+```
+
+### PromiseFullfilReactions and PromiseRejectReactions
+Whenever we call `then()` what happens internally is it puts the callbacks ( for error
+and success ) into the internal array property called `PromiseFullfilReactions` for
+callbacks to be called when the Promsie calls `resolve` ( first argument to `then` ) and
+it puts callbacks to be called when the Promsie calls `reject` ( second argument to `then` )
+into the internal array property called `PromiseRejectReactions`. Here is an example:
+```javascript
+const promise1 = new Promise(res => {
+    setTimeout(() => {
+        res(':)');
+    }, 2000);
+});
+promise1.then(
+    foo,
+    err => console.log(new InheritedError(err))
+);
+promise1.then(
+    console.log,
+    alert
+);
+
+// promise1[[PromiseFullfilReactions]]: [f, console.log]
+// promise1[[PromiseRejectReactions]]: [anonymous, alert]
+```
+Do note that if we don't pass either of the arguments to `then`, there will still be a function put
+either into `PromiseFullfilReactions` or `PromiseRejectReactions`. If we omit 1st function
+`val => val` is put into `PromiseFullfilReactions` and if we omit 2nd argument,
+`arg => { throw arg }` is put into `PromiseRejectReactions`.
