@@ -724,3 +724,119 @@ Promise.resolve()
         console.log(6);
     });
 ```
+
+## Real Life Example of Running two async Functions at the same time
+
+```javascript
+console.log('start running');
+
+async function fun1() {
+    console.log('enter fun1');
+    const val = await new Promise(res => {
+        // console.log('fun1 one sync code');
+        res('fun1 one executed');
+    });
+    console.log(val);
+
+    const val2 = await new Promise(res => {
+        // console.log('fun1 two sync code');
+        res('fun1 two executed');
+    });
+    console.log(val2);
+    console.log('leaving fun1');
+}
+
+fun1();
+
+console.log('between functions');
+
+async function fun2() {
+    console.log('enter fun2');
+    const val = await new Promise(res => {
+        // console.log('fun2 one sync code');
+        res('fun2 one executed');
+    });
+    console.log(val);
+
+    const val2 = await new Promise(res => {
+        // console.log('fun2 two sync code');
+        res('fun2 two executed');
+    }).then(data => {
+        return data;
+    });
+    console.log(val2);
+    console.log('leaving fun2');
+}
+
+fun2();
+
+console.log('finishing main thread');
+```
+
+As you can see in the code above the engine first executes the 1st `await` of the first function. then
+the 1st `await` of the 2nd function, after that the two 2nd `await`s first of the first function, then
+of the second function. Here is a scheme:
+```
+fun1() {
+    await <-- 1
+    await <-- 4
+    await <-- 7
+    await <-- 9
+}
+
+fun2() {
+    await <-- 2
+    await <-- 5
+    await <-- 8
+}
+
+fun3() {
+    await <-- 3
+    await <-- 6
+}
+...
+```
+
+Here is proof:
+```javascript
+async function fun1() {
+    const val1 = await Promise.resolve(1);
+    console.log(val1);
+
+    const val2 = await Promise.resolve(4);
+    console.log(val2);
+
+    const val3 = await Promise.resolve(7);
+    console.log(val3);
+
+    const val4 = await Promise.resolve(9);
+    console.log(val4);
+}
+
+async function fun2() {
+    const val1 = await Promise.resolve(2);
+    console.log(val1);
+
+    const val2 = await Promise.resolve(5);
+    console.log(val2);
+
+    const val3 = await Promise.resolve(8);
+    console.log(val3);
+}
+
+async function fun3() {
+    const val1 = await Promise.resolve(3);
+    console.log(val1);
+
+    const val2 = await Promise.resolve(6);
+    console.log(val2);
+}
+
+fun1();
+fun2();
+fun3();
+```
+
+So the moral is: the order of executing asynchronous functions is obscure in any case which is why
+it is a bad idea to rely on it and, if have to, one should avoid invoking over one `async` function
+at the same time or calling `then` on over two different Promises at the same time.
