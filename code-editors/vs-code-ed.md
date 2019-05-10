@@ -3,7 +3,7 @@
 Tab the following code on Machine A:
 ```bash
 code --list-extensions | xargs -L 1 echo code --install-extension
-``` 
+```
 and run the output on Machine Z
 
 Here is the extensions list:
@@ -23,12 +23,14 @@ code --install-extension streetsidesoftware.code-spell-checker
 code --install-extension EditorConfig.EditorConfig
 code --install-extension mrmlnc.vscode-scss
 code --install-extension bierner.markdown-emoji
+code --install-extension dbaeumer.vscode-eslint
 
 code --install-extension robertohuertasm.vscode-icons
 code --install-extension PKief.material-icon-theme
 
 code --install-extension obrejla.netbeans-light-theme
 code --install-extension dracula-theme.theme-dracula
+code --install-extension karsany.vscode-ideal-theme
 ```
 # Default Editor for Git
 Change the config:
