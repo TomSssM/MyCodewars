@@ -41,7 +41,7 @@ if(req.url === './someScript.js') {
 }
 ```
 
-Thus when `someScript.js` loads, the `window` object is going to be logged. What we want to do with JSONP is 
+Thus when `someScript.js` loads, the `window` object is going to be logged. What we want to do with JSONP is
 invoke our callback function `` and pass to it the right data:
 ```javascript
 callbackName; // get it from the url somehow === CallbackRegistry[randomId]
@@ -66,18 +66,18 @@ So that when such a response script arrives the callback is going to be invoked 
 
 Before we get into it [here](../../sse/server-evts.js) is the old original code.
 
-So yeah SSE is almost the same as WebSocket except it works over HTTP and is less powerful. Also SSE suppose that the 
-server sends messages to the browser but can't close the connection and the browser 
-( while listening for server messages ) can't send its messages to the server but should be able to close the 
-connection. They should be preferred when simplicity and one-direction communication from the server to the client are 
-priorities ( WebSocket is vice versa: different protocol plus communication both ways ). Let's take a closer look at what 
+So yeah SSE is almost the same as WebSocket except it works over HTTP and is less powerful. Also SSE suppose that the
+server sends messages to the browser but can't close the connection and the browser
+( while listening for server messages ) can't send its messages to the server but should be able to close the
+connection. They should be preferred when simplicity and one-direction communication from the server to the client are
+priorities ( WebSocket is vice versa: different protocol plus communication both ways ). Let's take a closer look at what
 happens under the hood.
 
 When we do `new EventSource('some-url')` the browser establishes a connection between itself and the server whose
 url is specified. Until the server closes a connection ( for instance via `response.end()` in Node.js ) it remains
 open and the client fires an `onmessage` event whenever a server sends a message, for instance in Node.js
 it means doing `res.write()`. However here is a peculiarity: when the server does close a connection via `res.end()`
-the `onerror` event is triggered on the client and the browser will try to reconnect again, and again... The few ways 
+the `onerror` event is triggered on the client and the browser will try to reconnect again, and again... The few ways
 that a server can force-close such a connection is via a response with a status other than 200 or via a response
 whose `Content-Type` header isn't `text/event-stream`. If we put the details aside here is the algorithm:
 ```
@@ -110,7 +110,7 @@ Here is the algorithm of this format:
 - the contents of each messgae is after `data:\s?` (the \s? means that if there is a space it is ignored)
 - each 2 messages ( `data:` lines ) are separated via `\n\n`
 - if one message is multiline ( meaning it contains '\n' inside of it ) two `data:\s?` are created
-(for instance if a message is `Message 3\nis multi line` then the response would be like above) Do note that 
+(for instance if a message is `Message 3\nis multi line` then the response would be like above) Do note that
 such parts of the response are separated with only one `\n` (it is actually the one in the message itself)
 
 Because of the inconvenience described above it is a lot easier to use JSON. Here is an example of how it
@@ -127,9 +127,9 @@ retry: 15000
 data: I set a 15-second delay
 ```
 
-While it is difficult for the server to close a connection ( though not entirely impossible see above ) it is 
+While it is difficult for the server to close a connection ( though not entirely impossible see above ) it is
 incredibly ease for the browser because SSE supposes that the server sends messages to the browser but can't close
-the connection and the browser ( while listening for server messages ) can't send its messages to the server but 
+the connection and the browser ( while listening for server messages ) can't send its messages to the server but
 should be able to close the connection. This can be done on the Frontend via:
 ```javascript
 const eventSource = new EventSource(...);
@@ -151,7 +151,7 @@ data: is multi line
 id: 3
 ```
 
-Do note that `id`s come right _after_ `data` so we can be sure that upon reading `id` we have compeltely read the 
+Do note that `id`s come right _after_ `data` so we can be sure that upon reading `id` we have compeltely read the
 message that it is the id of. Also we can always access the last read id in `event.lastEventId`
 
 ## readyState property and its usage
@@ -163,7 +163,7 @@ const unsigned short OPEN = 1;       // connected
 const unsigned short CLOSED = 2;     // closed (by the browser)
 ```
 
-We can use these for instance in the `onerror` event to determine whether a real error occured or whether 
+We can use these for instance in the `onerror` event to determine whether a real error occured or whether
 the server simply decreed to close the connection:
 ```javascript
 const eventSource = new EventSource('digits');
@@ -178,7 +178,7 @@ eventSource.onerror = function(e) {
 
 ## Custom Events
 
-We can generate ( on the server ) our custom Server Sent Events if we add an extra detail to the response: 
+We can generate ( on the server ) our custom Server Sent Events if we add an extra detail to the response:
 `event:\s?` followed by the name of the event:
 ```
 event: join
@@ -213,7 +213,7 @@ eventSource.addEventListener('leave', function(e) {
 });
 ```
 
-An interesting detail is that even though we omitted the `event` for default messages, this property does exist for 
+An interesting detail is that even though we omitted the `event` for default messages, this property does exist for
 them and it is implicit:
 ```
 event: message
@@ -230,7 +230,7 @@ That is exactly what we did above see? :)
 ## Cross Domain SSE
 
 Since SSE work over HTTP the cross domain rules ( and the entire system really ) are the same as for XML Request.
-The server needs to mention our domain or `*` in `Access-Control-Allow-Origin` before we can start getting 
+The server needs to mention our domain or `*` in `Access-Control-Allow-Origin` before we can start getting
 messages from it. If we want to also send cookies we need to add to a request the `withCredentials` header.
 This can be accomplished with SSE if we provide a second argument:
 ```javascript
@@ -249,14 +249,20 @@ eventSource.addEventListener('message', function(e) {
 
 [Here](./code-2/index.html) is the demo of the stuff we just talked about :)
 
-# Post Almost Without XHR
+# Request Almost Without XHR
 
 In the past we have looked at fetching data from the server via creating `script` tags and having
-the server write the arguments to functions and those arguments were data from the server. But how can 
-we _post_ something to the server in a similar manner? Well nowadays it is irrelevant but in the past
-an approach such as we will take a quick peek at was used in old IE to post data to the server ( even
-with COMET! Despite the fact no WebSocket existed ). For that we would create an iframe and send some
+the server write the arguments to functions and those arguments were data from the server. Well nowadays
+it is irrelevant but in the past an approach such as we will take a quick peek at was used in old IE
+to exchange data with the server ( even with COMET! Despite the fact no WebSocket existed ).
+For that we would create an iframe and send some
 data to it via the proper use of a form. All we have to do in order for such a form to write stuff into
 iframe is specify the `id` of the iframe in the form's `target` attribute and have the server correctly
 handle such a request by writing the info that should go into that iframe ( for example `<script>` tag ).
 [Here](./code-3/) is the demo of this approach ( although as of now it is almost obsolete ).
+
+__Note:__ you might think that since we _post_ data to an iframe we should always use `POST` method but this
+isn't in fact necessary. With `POST` we can simply send info in a more elegant way ( `text/plain` as JSON )
+or via some other encoding, but we can also send all the input data in `application/x-www-form-urlencoded`
+as part of the request url if we use 'GET'. Doesn't matter because so long as we have `target` set to an
+iframe on the form element whatever response the server gives will become the HTML of an iframe.
