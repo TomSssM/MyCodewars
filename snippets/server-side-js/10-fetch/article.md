@@ -120,9 +120,11 @@ specify the body of the request. `body` property of this second argument object 
 Example of how to use a different method and send a body:
 
 - [With JSON](./1-with-json/index.js)
-- With `FormData`
-- Send an image with `Blob`
-- Send an image with `FormData`
+- [With `FormData`](./2-with-form/index.js)
+- [Send an image with `Blob`](./3-with-blob/index.js)
+- [Send an image with `FormData`](./4-with-blob-plus-form/index.js)
+
+---
 
 ## Next
 
