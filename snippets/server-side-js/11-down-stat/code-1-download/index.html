@@ -4,61 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Requests</title>
+    <title>Download Stats</title>
 </head>
 <body>
-    <h1>Hello Server 1</h1>
-    <form name="upload">
-        <input type="file" name="myfile">
-        <input type="submit" value="Upload">
-    </form>
-    <span id="log"></span>
+    <h1>download Stats</h1>
+    <input type="button" value="Download from Server" id="butt">
+    <input type="button" value="Download and Show a lil File" id="butt-small">
     <br>
+    <span id="log"></span>
     <span id="log-percent"></span>
-      
-<script>
-    document.forms.upload.onsubmit = function() {
-        const input = this.elements.myfile;
-        const file = input.files[0];
-        if (file) {
-            upload(file);
-        }
-        return false;
-    }
-
-    function upload(file) {
-        var xhr = new XMLHttpRequest();
-
-        // upload part:
-        xhr.upload.onprogress = function(event) {
-            log(event.loaded + ' / ' + event.total);
-
-            // alternative in %
-            const prc = Math.floor(100 * event.loaded / event.total);
-            percentLog(`${prc}%`);
-        }
-
-        xhr.onload = xhr.onerror = function() {
-            if (this.status === 200) {
-                log("success");
-                percentLog("success");
-            } else {
-                log("error " + this.status + this.statusText);
-                percentLog("error " + this.status + this.statusText);
-            }
-        };
-
-        xhr.open("POST", "upload", true);
-        xhr.send(file);
-    }
-
-    function log(html) {
-        document.getElementById('log').innerHTML = html;
-    }
-
-    function percentLog(html) {
-        document.querySelector('#log-percent').innerHTML = html;
-    }
-</script>
+    <code id="log-small"></code>
+<script src="./index.js"></script>
 </body>
 </html>
