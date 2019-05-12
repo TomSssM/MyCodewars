@@ -6,6 +6,7 @@
 - [Projects from the Tutorial](./projects-from-the-tutorial/README.md) :page_facing_up:
 - [Cool Projects](./cool-projects/README.md) :whale:
 - [Snippets](./snippets/README.md) :seedling:
+
 ---
 
 ### The Tools :coffee:
@@ -13,6 +14,7 @@
 - [Laboratory](./toolshed/Laboratory.js) :bulb:
 - [HTML](./toolshed/index.html) :fax:
 - [Environment Config](./code-editors/README.md) :wrench:
+
 ---
 
 ### Log :orange_book:
@@ -32,4 +34,5 @@
   - [Polyfill.js](./Polyfill.js)
   - [Hardcore](./cheatsheet/README.md)
   - [CoreJS CodeJam](./corejs-codejam/README.md)
+
   ---
