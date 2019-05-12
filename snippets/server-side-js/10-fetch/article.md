@@ -119,7 +119,7 @@ specify the body of the request. `body` property of this second argument object 
 
 Example of how to use a different method and send a body:
 
-- With JSON
+- [With JSON](./1-with-json/index.js)
 - With `FormData`
 - Send an image with `Blob`
 - Send an image with `FormData`
