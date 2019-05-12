@@ -1,0 +1,10 @@
+* {
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+}
+#headerJS {
+  padding: 0 .4rem;
+}

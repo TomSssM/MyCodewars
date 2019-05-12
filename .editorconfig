@@ -8,5 +8,5 @@ indent_size = 4
 insert_final_newline = false
 trim_trailing_whitespace = true
 
-[*.{html,json}]
+[*.{html,json,css}]
 indent_size = 2
