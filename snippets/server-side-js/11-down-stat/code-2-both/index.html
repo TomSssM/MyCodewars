@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Requests</title>
+</head>
+<body>
+    <h1>Hello Server 1</h1>
+    <form name="upload">
+        <input type="file" name="myfile">
+        <input type="submit" value="Upload">
+    </form>
+    <span id="log"></span>
+    <br>
+    <span id="log-percent"></span>
+      
+<script>
+    document.forms.upload.onsubmit = function() {
+        const input = this.elements.myfile;
+        const file = input.files[0];
+        if (file) {
+            upload(file);
+        }
+        return false;
+    }
+
+    function upload(file) {
+        var xhr = new XMLHttpRequest();
+
+        // upload part:
+        xhr.upload.onprogress = function(event) {
+            log(event.loaded + ' / ' + event.total);
+
+            // alternative in %
+            const prc = Math.floor(100 * event.loaded / event.total);
+            percentLog(`${prc}%`);
+        }
+
+        xhr.onload = xhr.onerror = function() {
+            if (this.status === 200) {
+                log("success");
+                percentLog("success");
+            } else {
+                log("error " + this.status + this.statusText);
+                percentLog("error " + this.status + this.statusText);
+            }
+        };
+
+        xhr.open("POST", "upload", true);
+        xhr.send(file);
+    }
+
+    function log(html) {
+        document.getElementById('log').innerHTML = html;
+    }
+
+    function percentLog(html) {
+        document.querySelector('#log-percent').innerHTML = html;
+    }
+</script>
+</body>
+</html>
