@@ -2,12 +2,12 @@
 
 ## Simple vs Complex Requests
 
-We didn't use to be able to use XHR to make a request 
-to a different domain/port/protocol ( the browser would throw an error ). 
+We didn't use to be able to use XHR to make a request
+to a different domain/port/protocol ( the browser would throw an error ).
 For security reasons requests are put into 2 categories:
 
 - Simple if:
-    - Simple Methods: 
+    - Simple Methods:
         - `GET`
         - `POST`
         - `HEAD`
@@ -39,7 +39,7 @@ Origin:http://javascript.com
 ```
 The only way that a server response is going to be different from the non-cross-domain response is that
 it is also going to include a new header: `Access-Control-Allow-Origin`. If this header equals to either
-`*` or `javascript.com` then it means the server grants access and the request is a 
+`*` or `javascript.com` then it means the server grants access and the request is a
 success (`onload`), otherwise fail and naturally the `onerror` event triggers in the Frontend.
 Here is the algorithm:
 ```
@@ -78,8 +78,8 @@ xhr.withCredentials = true;
 xhr.open('POST', 'http://anywhere.com/request', true)
 ...
 ```
-In this case server needs to give a response with a yet another type of header 
-`Access-Control-Allow-Credentials` for such a response to be considered 
+In this case server needs to give a response with a yet another type of header
+`Access-Control-Allow-Credentials` for such a response to be considered
 successful (otherwise fail of course):
 ```
 HTTP/1.1 200 OK
@@ -118,11 +118,11 @@ Access-Control-Allow-Methods: PROPFIND, PROPPATCH, COPY, MOVE, DELETE, MKCOL, LO
 Access-Control-Allow-Headers: Overwrite, Destination, Content-Type, Depth, User-Agent, ...
 Access-Control-Max-Age: 86400
 ```
-Since `Access-Control-Allow-Methods` in the response includes `COPY` (the same for 
+Since `Access-Control-Allow-Methods` in the response includes `COPY` (the same for
 `Access-Control-Allow-Headers`) the request is success.
 Also take a look at the response `header` of `Access-Control-Max-Age` the value (in ms) indicates for
 how long to cache the response. During this time that the response is cached the browser doesn't have to
-send the additional preflight request each time it needs to send a request to a cross-domain server.  
+send the additional preflight request each time it needs to send a request to a cross-domain server.
 Here is what the algorithm looks like:
 ```
  __________________________________________________________________________________
@@ -179,7 +179,7 @@ Access-Control-Allow-Origin: http://javascript.com
 
 ...body...
 ```
-Also do __note__ that we use `Origin` header when we make any cross-browser request 
+Also do __note__ that we use `Origin` header when we make any cross-browser request
 (for example from our website to google.com):
 ```
 ...
@@ -194,7 +194,7 @@ We use `Origin` _in addition_ to `Referrer` because it is more reliable :)
 
 ## Cool Example
 
-Go to [this folder](./code-1). Do `npm install` and `npm start` for both `someserver-1` 
+Go to [this folder](./code-1). Do `npm install` and `npm start` for both `someserver-1`
 and `someserver-2`. `someserver-1` will log to the console the json `responseText`. You
 see, these two servers are opened on different domains and via setting the right header
 in `someserver-2` that gives the response `someserver-1` is able to obtain the json response.
@@ -228,4 +228,6 @@ if(req.url === '/file.json') {
 The `OPTIONS` method is actually used to ask a server which other methods and headers it can handle. It doesn't
 seem to have anything to do with security. Thus we use it only with the complex requests (because they use
 non-standard methods and/ro headers). But we also check that the client be authorized to make these complex
-requests in addition to the server's ability to handle them.
+requests in addition to the server's ability to handle them when we do the main request after the preflight request
+and the way we check that the client is authorized is if the server includes the client's domain in the
+`Access-Control-Allow-Origin` header.

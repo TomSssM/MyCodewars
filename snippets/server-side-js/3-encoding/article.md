@@ -60,7 +60,7 @@ Normally the type of encoding can also be set via the `encoding` attribute in HT
 </form>
 ```
 Let's look into `multipart/form-data`.
-__Do note__ that `application/x-www-form-urlencoded` is the only encoding that can be used with GET. 
+__Do note__ that `application/x-www-form-urlencoded` is the only encoding that can be used with GET.
 
 ---
 
@@ -162,3 +162,6 @@ xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 xhr.onreadystatechange = ...;
 xhr.send(json);
 ```
+
+Do note that since all the JSON we send is string, by default the `Content-type` is set as `text/plain` which we
+would want to change to `application/json` if the sting we send is _in JSON format_.
