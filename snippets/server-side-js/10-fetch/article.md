@@ -2,6 +2,8 @@
 
 ## Overview
 
+### Basics
+
 Calling the `fetch` function:
 ```javascript
 const promise = fetch(url, { options });
@@ -59,12 +61,69 @@ Response body can also be attained in any format via calling:
 These methods return another Promise whose `[[value]]` is going to be the body of the response in the
 corresponding format.
 
-- Exercise: Try responding with a JSON on the server yet reading the data as text is it simply a string in
-  valid JSON format??
-- Calling methods like `.json()`, `text()` etc. only once
-- setting and getting headers
-- Example of how to use a different method and sending a body
-    - With JSON
-    - With Form
-    - Image With Blob
-    - Image as Part of the Form
+Also here are a few things to note. First, if the server responds with JSON and we choose to get the body
+of the response as `text()`, then we get a text in valid JSON format. Thus as you can see we need to know what
+server needs to respond with before we process the response. Second, do note that once the `response` Promise
+has been resolved ( we called methods like `.json()`, `.text()`, `blob()` etc. ) we cannot get the body of the
+response in yet another format. Thus the following code will produce an error:
+```javascript
+const res = await fetch(url);
+const json = await res.json();
+const text = await res.text(); // error
+```
+
+### Setting and Getting Headers
+
+Headers are contained in a `headers` property of the `response` object and are a Map like object:
+```javascript
+const res = await fetch('./sampleJSON.json');
+[...res.headers] //  [Array(2), Array(2), Array(2), Array(2), Array(2), Array(2), Array(2), Array(2)]
+```
+We can get the value of each header like so:
+```javascript
+response.headers.get('Content-Type'); // application/json; charset=utf-8
+```
+Or we could iterate all headers like so:
+```javascript
+for (let [key, value] of response.headers) {
+    alert(`${key} = ${value}`);
+}
+```
+And we can set a header ( of the request on the client side ) like so:
+```javascript
+const response = fetch(protectedUrl, {
+    headers: {
+        Authentication: 'abcdefgh'
+    }
+});
+```
+But remember that not all headers can be set for security reasons. For instance we cannot tell the server
+that we are a different website by changing the `referer` header:
+```javascript
+// will have no effect:
+const res = await fetch('./sampleJSON.json', {
+    headers: {
+        referer: "https://google.com",
+    }
+});
+```
+
+### Complex Requests
+
+Also via defining aright the second argument to `fetch()` we can get to use other methods ( f.e POST ) and
+specify the body of the request. `body` property of this second argument object may be one of the following:
+- a string ( e.g. JSON )
+- `FormData` object ( to submit the data as `form / multipart` )
+- `Blob` or `BufferSource` to send binary data
+- `URLSearchParams`, to submit the data as `x-www-form-urlencoded` ( rarely used )
+
+Example of how to use a different method and send a body:
+
+- With JSON
+- With `FormData`
+- Send an image with `Blob`
+- Send an image with `FormData`
+
+## Next
+
+aa
