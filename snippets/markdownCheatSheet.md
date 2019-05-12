@@ -49,7 +49,7 @@ Use case sensitive text to create a [link][text or Number here] (the link itself
 Go to the very first created file here: [_CodeWarsOne_].
 
 [text or Number here]: https://example.com/
-[_CodeWarsOne_]: ../Laboratory.js
+[_CodeWarsOne_]: ../toolshed/Laboratory.js
 
 # Part 6 list
 #### Unordered List:
@@ -119,7 +119,7 @@ You can either do `space` + `\` to create a new line or simply put 3 `space`s wh
 Here is a \
 new line 1
 
-Here is a   
+Here is a
 new line 2
 
 Here is a

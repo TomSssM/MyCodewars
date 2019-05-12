@@ -10,8 +10,8 @@
 
 ### The Tools :coffee:
 
-- [Laboratory](./Laboratory.js) :bulb:
-- [HTML](./index.html) :fax:
+- [Laboratory](./toolshed/Laboratory.js) :bulb:
+- [HTML](./toolshed/index.html) :fax:
 - [Environment Config](./code-editors/README.md) :wrench:
 ---
 

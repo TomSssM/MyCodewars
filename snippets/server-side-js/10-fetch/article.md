@@ -59,10 +59,8 @@ Response body can also be attained in any format via calling:
 These methods return another Promise whose `[[value]]` is going to be the body of the response in the
 corresponding format.
 
-- init promise resolves if server responded with headers but we don't have body yet
-    - reject === no such site or network errors
-    - http errors === resolve()
-    - HTTP ERRORS MEAN RESOLVE!!!! (thus we check for them + mention `.ok`)
+- Exercise: Try responding with a JSON on the server yet reading the data as text is it simply a string in
+  valid JSON format??
 - Calling methods like `.json()`, `text()` etc. only once
 - setting and getting headers
 - Example of how to use a different method and sending a body
@@ -70,5 +68,3 @@ corresponding format.
     - With Form
     - Image With Blob
     - Image as Part of the Form
-- Exercise: Try responding with a JSON on the server yet reading the data as text is it simply a string in
-  valid JSON format??
