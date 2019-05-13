@@ -263,3 +263,20 @@ fetch('./sampleJSON.json', {
     signal: new AbortController().signal,
 });
 ```
+
+## fetch and CORS
+
+Here is how we can send a `fetch` request to a different Origin with credentials:
+```javascript
+await fetch('http://some.other.domain.com/api/users/1', {
+    method: "PUT",
+    headers: {
+        'Content-Type': 'application/json',
+        'API-Key': '123'
+    },
+    body: JSON.stringify({name: "Tom", age: 18}),
+    credentials: "include"
+});
+```
+
+## fetch API
