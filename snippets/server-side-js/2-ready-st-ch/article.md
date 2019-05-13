@@ -23,6 +23,40 @@ other package. Thus if we look into `textContent` property during the loading pr
 confusing and any operation on it should be avoided. It makes symbols that are represented as 1 byte the
 only reliable data to be checked during the load process.
 
+Another thing to take into serious consideration is that the `onerror` event listener fires only in 2 cases;
+
+- if the internet connection is broken
+- the url is invalid
+
+Otherwise everything is OK. What this means is __even if the server responds with 404 onerror isn't triggered.__
+Here is proof of that:
+```javascript
+const xhr = new XMLHttpRequest();
+xhr.open('GET', "./non-existent.json", true);
+xhr.onreadystatechange = e => {
+    if (xhr.readyState !== 4) return;
+    alert(`status: ${xhr.status}`);
+};
+xhr.send(null);
+
+// when the response arrives:
+// alert: status: 404
+```
+
+And the same thing with modern methods ( more on these later ):
+```javascript
+const xhr = new XMLHttpRequest();
+xhr.open('GET', "./non-existent.json", true);
+xhr.onerror = () => alert('onerror');
+xhr.onload = () => alert('onload');
+xhr.send(null);
+
+// when the response arrives:
+// alert: onload
+```
+
+And that is why in the future we always check that `xhr.status` is 200 :)
+
 ---
 
 ## Headers

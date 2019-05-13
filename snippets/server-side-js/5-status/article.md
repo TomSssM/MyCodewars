@@ -52,6 +52,17 @@ HTTP header `Content-Length` (in this case the server itself doesn't know the am
 In this case `event.lengthComputable` will be `false` and `event.total` will be 0. Do note that 
 if `lengthComputable` is `true` and `total` is 0 it means that the amount of data is actually zero :)
 
+Thus with this info the more accurate download-tracking function will look like this:
+```javascript
+xhr.onprogress = e => {
+    if(e.lengthComputable) {
+        alert(`Received ${e.loaded} of ${e.total} bytes`);
+    } else {
+        alert(`Received ${e.loaded} bytes`)
+    }
+};
+```
+
 Also it is important to understand that the `xhr.upload.onprogress` guarantees that the data was _sent_ to
 the server but it doesn't guarantee that the server processed and wrote the data to the drive. So the upload
 indicator may not always be the thing to rely on. Speaking of which, [here](./code-1/) it is.
@@ -60,7 +71,7 @@ indicator may not always be the thing to rely on. Speaking of which, [here](./co
 
 ## The More Accurate File Upload
 
-Even the demo clearly shows how inaccurate the `onprogress` event really is. it only shows how many bytes the
+Even the demo clearly shows how inaccurate the `onprogress` event really is. It only shows how many bytes the
 _browser_ has been able to send to the server (whilst the server could have died long ago). That is why its primary
 function may remain relegated to creating beautiful progress bars :)
 

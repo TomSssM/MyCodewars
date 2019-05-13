@@ -2,9 +2,9 @@
 
 ___Warning:__ before reading this chapter make sure you know how `fetch` works_ :)
 
-We can do with `fetch` what we couldn't with `XHR` and track the download process
-of our requests. However not vice versa, unfortunately `fetch` provides as of now
-np way to track upload.
+With `fetch` we can track the _download_ status of the response from the server. 
+However not vice versa, unfortunately `fetch` provides as of now no way to track upload.
+As of now only `XMLHttpRequest` is capable of tracking both upload and download status.
 
 Here is how to track the download process with `fetch`. We need to use the `response.body`
 property and get a reader to read the data from the server manually:
@@ -37,3 +37,4 @@ Also we would need to get the total amount of bytes we are going to download. On
 is look at the value of the `Content-Length` header. Do note however that it may sometimes be
 missing for cross-domain requests as the server doesn't really have to provide it. The full code
 for tracking the download process is [here](./code-1-download/index.js)
+So basically to track down the download status of a response we need to read it manually.
