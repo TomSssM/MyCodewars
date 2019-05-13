@@ -36,5 +36,4 @@ a bunch of bytes and interpret them as a certain type of data.
 Also we would need to get the total amount of bytes we are going to download. One way of doing so
 is look at the value of the `Content-Length` header. Do note however that it may sometimes be
 missing for cross-domain requests as the server doesn't really have to provide it. The full code
-for tracking the download process is [here](./code-1-download/index.js) and
-[here](./code-2-both) is the example of tracking both upload and download process of a request.
+for tracking the download process is [here](./code-1-download/index.js)

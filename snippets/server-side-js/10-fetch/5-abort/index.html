@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Aborting</title>
+</head>
+<body>
+  <h1>Each Request to JSON takes 3 seconds</h1>
+  <input type="button" value="Request JSON" id="json-req">
+  <input type="button" value="Abort Request" id="abort-req">
+  <script>
+    let currFetch = null;
+    let currController = null;
+
+    document.querySelector('#json-req').addEventListener('click', () => {
+      if(currFetch) return;
+
+      // do note that we need to create a new controller each time
+      currController = new AbortController();
+
+      currFetch = fetch('./sampleJSON.json', {
+        signal: currController.signal,
+      })
+        .then(res => res.json())
+        .then(json => {
+          alert(JSON.stringify(json, null, 4));
+          currFetch = null;
+          currController = null;
+        })
+        .catch(err => {
+          if(err.name === 'AbortError') {
+            alert('fetch Aborted');
+            currFetch = null;
+            currController = null;
+          } else throw err;
+        });
+    });
+
+    document.querySelector('#abort-req').addEventListener('click', () => currController.abort());
+  </script>
+</body>
+</html>
