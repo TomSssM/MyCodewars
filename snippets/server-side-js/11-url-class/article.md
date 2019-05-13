@@ -76,4 +76,7 @@ url.searchParams.has('test'); // false
 url.searchParams.append('zzz', 'aaa');
 url.searchParams.append('aaa', 'zzz'); // https://google.com/search?zzz=aaa&aaa=zzz
 url.searchParams.sort(); // https://google.com/search?aaa=zzz&zzz=aaa
+
+// plus it has an iterator:
+[...url.searchParams]; // [ ["aaa", "zzz"], ["zzz", "aaa"] ]
 ```
