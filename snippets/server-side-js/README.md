@@ -12,5 +12,6 @@
 10. [Other Protocols](./8-other-prot/article.md)
 11. [XHR - Modern Days](./9-modern-days/article.md)
 12. [fetch](./10-fetch/article.md)
+13. [URL Class](./11-url-class/article.md)
 
 :ledger: _XHR - XMLHttpRequest_
