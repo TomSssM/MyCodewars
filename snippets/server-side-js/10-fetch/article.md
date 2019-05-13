@@ -280,3 +280,50 @@ await fetch('http://some.other.domain.com/api/users/1', {
 ```
 
 ## fetch API
+
+Here’s the full list of all possible fetch options with their default values (alternatives in comments):
+```javascript
+await fetch(url, {
+    method: "GET", // POST, PUT, DELETE, etc.
+    headers: {
+        "Content-Type": "text/plain;charset=UTF-8" // for a string body, depends on body
+    },
+    body: undefined, // string, FormData, Blob, BufferSource, or URLSearchParams
+    referrer: "about:client", // "" for no-referrer, or an url from the current origin
+    referrerPolicy: "no-referrer-when-downgrade", // no-referrer, origin, same-origin...
+    mode: "cors", // same-origin, no-cors
+    credentials: "same-origin", // omit, include
+    cache: "default", // no-store, reload, no-cache, force-cache, or only-if-cached
+    redirect: "follow", // manual, error
+    integrity: "", // a hash, like "sha256-abcdef1234567890"
+    keepalive: false, // true
+    signal: undefined, // AbortController to abort request
+    window: window // null
+});
+```
+
+Thus, judging from the above, we can deduce that client may not send a referrer at all or send a different value 
+if it does't want the server ( and outer world in general ) to see its path for 
+instance: `https://ourwebsite/secret/path`. The `referrerPolicy` property sets geneal rules for defining Referrer,
+`mode` property allows or forbids cross-origin requests, `cache` property can be used to change the behavior of the
+request based on HTTP-cache rules and headers, `redirect` property tells the request what to do if the request
+gets a status 300-399 ( redirect HTTP statuses ) , `integrity` property allows to check if the response matches 
+the known-ahead checksum. More information on all these can be found on MDN and learnjavascript.info.
+
+When the page is closed by the user, normally all server requests are cancelled. However, the `keepalive` property 
+allows the request to _outlive_ the page. For instance if we are gathering statistics and the request to process them
+is still pending on the server, the `keepalive` property ( if set to `true` of course ) will let the server finish
+processing it and maybe write some statistics data to the database. Or as another example, we may be gathering some
+data during the user's visit and then during the `unload` event we may want to send it to the server. We would need
+to specify aright the `keepalive` property so the server can process all this data. Also here are but a few caveats to
+all this:
+
+- we can’t send megabytes: the body limit for keepalive requests is 64kb
+- we don’t get the server response if the request is made onunload, because the document is already unloaded at that time
+
+The first caveat can be actually worked around pretty easily if we send multiple request ( 100 for example ) each 64kb :)
+Or as an alternative we may want to send data regularly instead of in one final request during the `unload` event.
+
+With all this in mind, as of now our primary goal is to learn more in depth perhaps some of these properties of 
+the `Request` object ( 2nd argument to `fetch` ) things like `integrity` and keep learning all the interesting 
+server side stuff :)
