@@ -1,0 +1,18 @@
+# editorconfig
+
+My preferences:
+
+```editorconfig
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+insert_final_newline = false
+trim_trailing_whitespace = true
+
+[*.{html,json,css}]
+indent_size = 2
+```
