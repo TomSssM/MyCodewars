@@ -8,6 +8,7 @@
 - [JSON](./myJSON.js)
 - [Iterators and Generators](./iterators/README.md)
 - [Unit Testing](./unit-testing/README.md)
+- [Confusing Snippets](./ConfSnip.md)
 
 ## Smaller Snippets
 - [Freak Show](./freakshow.js)
