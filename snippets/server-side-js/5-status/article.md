@@ -86,3 +86,7 @@ Here is how you would split the bytes via the `File` API:
 const slice = file.slice(10, 100); // read the bytes 10 - 99 (included)
 xhr.send(slice); // and send them
 ```
+
+## Download Status
+
+[Here](./code-2/index.js) is a demo allowing to track the process of either downloading a file or uploading a file
