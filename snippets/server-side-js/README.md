@@ -10,7 +10,7 @@
 8. [Simple Chat with COMET (Part of Node.js Studies)](./6-simple-chat/article.md)
 9. [Simple Chat with WebSocket](./7-web-sock-chat/article.md)
 10. [Other Protocols](./8-other-prot/article.md)
-11. [XHR - Modern Days](./9-modern-days/article.md)
+11. [XHR - Modern Days](./9-modern-days.md)
 12. [fetch](./10-fetch/article.md)
 13. [URL Class](./12-url-class/article.md)
 
