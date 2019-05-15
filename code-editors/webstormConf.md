@@ -16,9 +16,11 @@
 - Unindent Line or Selection `CTRL + {`
 - Move Caret Backward a Paragarph - `CTRL + UP`
 - Move Caret Forward a Paragarph - `CTRL + DOWN`
+- Move Caret to Line Start - `CTRL + Page Down`
+- Move Caret to Line End - `CTRL + End`
 - Clone Caret Above - `ALT + SHIFT + UP`
 - Clone Caret Below - `ALT + SHIFT + DOWN`
 - Duplicate Line or Selection - `CTRL + D`
 - Delete Line - `CTRL + R`
 - Version Control - `F1`
-- Terminal - `CTRL + \`\`
+- Terminal - `CTRL + \``
