@@ -23,4 +23,4 @@
 - Duplicate Line or Selection - `CTRL + D`
 - Delete Line - `CTRL + R`
 - Version Control - `F1`
-- Terminal - `CTRL + \``
+- Terminal - `CTRL + ``
