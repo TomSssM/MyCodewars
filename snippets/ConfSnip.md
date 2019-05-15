@@ -83,3 +83,17 @@ element is via a variable:
   alert(elem.outerHTML); // Error elem is not defined
 </script>
 ```
+
+## Class Expression
+
+Here is an unorthodox way of defining a class:
+```javascript
+const App = class {
+    constructor(name) {
+        this.name = name;
+    }
+    sayName() {
+        console.log(this.name);
+    }
+};
+```
