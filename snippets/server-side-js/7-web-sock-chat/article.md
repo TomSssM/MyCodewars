@@ -4,9 +4,13 @@
 
 ### Setting the Connection
 
-WebSocket is a protocol: `ws://server.example.com/chat`. Before a WebSocket connection can be 
-established the browser, over HTTP, asks the server whether the server has support for WebSocket.
-If it does we switch from `HTTP -> WS`.
+WebSocket is a protocol: `ws://server.example.com/chat`. As you know HTTP is stateless. What the word _stateless_ means
+in this context is that once an HTTP request is made, the connection between the server and the client is lost as well
+as all the data associated with that request. WebSocket, on the other hand, isn't stateless meaning that a connection
+is always maintained between the two sides. It is good for real-time applications.
+
+Before a WebSocket connection can be established the browser, over HTTP, asks the server whether the server has
+support for WebSocket. If it does we switch from `HTTP -> WS`.
 Here is an example of a request to the server inquiring about the WebSocket support:
 ```
 GET /chat HTTP/1.1
