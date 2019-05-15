@@ -249,6 +249,8 @@ eventSource.addEventListener('message', function(e) {
 
 [Here](./code-2/index.html) is the demo of the stuff we just talked about and [here](./code-4/index.js) is a chat made with SSE :)
 
+---
+
 # Request Almost Without XHR
 
 In the past we have looked at fetching data from the server via creating `script` tags and having
