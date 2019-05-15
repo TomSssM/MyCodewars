@@ -247,7 +247,7 @@ eventSource.addEventListener('message', function(e) {
 });
 ```
 
-[Here](./code-2/index.html) is the demo of the stuff we just talked about :)
+[Here](./code-2/index.html) is the demo of the stuff we just talked about and [here](./code-4/index.js) is a chat made with SSE :)
 
 # Request Almost Without XHR
 
