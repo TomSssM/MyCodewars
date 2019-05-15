@@ -13,3 +13,18 @@
 - [x] Defaults
 - [x] Markdown support
 - [x] NodeJS
+
+## Keymap
+
+- Move Line Down `ALT + DOWN`
+- Move Line Up `ALT + UP`
+- Indent Selection `CTRL + }`
+- Unindent Line or Selection `CTRL + {`
+- Move Caret Backward a Paragarph - `CTRL + UP`
+- Move Caret Forward a Paragarph - `CTRL + DOWN`
+- Clone Caret Above - `ALT + SHIFT + UP`
+- Clone Caret Below - `ALT + SHIFT + DOWN`
+- Duplicate Line or Selection - `CTRL + D`
+- Delete Line - `CTRL + R`
+- Version Control - `F1`
+- Terminal - `CTRL + \`\`
