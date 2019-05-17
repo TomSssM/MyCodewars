@@ -7,6 +7,7 @@
 - [x] Editor > Color Scheme > Console Colors > Background: `#000`
 - [x] Editor > Color Scheme > Console Colors > Standard output: `#dadada`
 - [x] Tools > Terminal > Shell Path: `C:\Program Files\Git\bin\bash.exe`
+- [ ] Appearance & Behavior > System Settings > Use "safe write" ( uncheck )
 
 ## Keymap
 
