@@ -44,6 +44,7 @@
   - [Super Soccer](./drag-n-drop/super-soccer/super-soccer-alt.js)
   - [Drag Demo](./drag-n-drop/drag-demo/drag-demo-OOP.js)
   - [Tom's Draggables](./drag-n-drop/my-task-list/draggable.js)
+  - [Native Drag-n-Drop](./drag-n-drop/native/index.js)
 - [Cookies Example](./cookies/cookies.js)
 - [Keys](./keys)
   - [Keys Teststand](./keys/teststand-keys/teststand.js)
