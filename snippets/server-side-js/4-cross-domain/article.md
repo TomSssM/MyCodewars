@@ -4,7 +4,7 @@
 
 We didn't use to be able to use XHR to make a request to a different Origin ( the browser would throw an error ).
 
-Origin is a domain/port/protocol triplet.
+Origin is a domain/port/protocol triplet. Thus the same origin is when domain, port and protocol are the same.
 The policy that a website cannot fetch data ( even the `index.html` page ) from a different origin 
 without extra headers is called `CORS` ( Cross-Origin Resource Sharing )
 
@@ -24,6 +24,11 @@ For this reason requests are put into 2 categories:
             - `multipart/form-data`
             - `text/plain`
 - Complex otherwise
+
+While the fact that `http://example.com:8080` and `http://example.com:5500` are going to be different origins
+is pretty straightforward ( says above ports must be the same ) do note that `http://example.com` and 
+`http://www.example.com` are also going to be different origins because we need an _exact match_ for everything
+( and here domains differ )
 
 ---
 
