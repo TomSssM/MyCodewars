@@ -16,13 +16,14 @@ alias p='git push'
 alias c='git checkout'
 alias l='git log'
 alias ch='git checkout ./'
+alias cl='git clean -df'
 ```
 
 npm aliases:
 ```
 alias bld='npm run build'
-alias st="npm start"
-alias ts="npm run test"
+alias start="npm start"
+alias test="npm run test"
 ```
 
 __.gitconfig:__
