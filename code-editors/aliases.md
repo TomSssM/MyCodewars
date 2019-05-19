@@ -4,6 +4,8 @@ Here is a list of my most commonly used aliases:
 
 __.bashrc:__
 
+git aliases:
+
 ```bash
 alias st='git status'
 alias com='git add -A && git commit -m'
@@ -14,6 +16,13 @@ alias p='git push'
 alias c='git checkout'
 alias l='git log'
 alias ch='git checkout ./'
+```
+
+npm aliases:
+```
+alias bld='npm run build'
+alias st="npm start"
+alias ts="npm run test"
 ```
 
 __.gitconfig:__

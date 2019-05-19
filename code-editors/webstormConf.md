@@ -25,3 +25,48 @@
 - Delete Line - `CTRL + R`
 - Version Control - `F1`
 - Terminal - `CTRL + `\`
+
+## Snippets ( Live Templates )
+
+_Note: all snippets are only expandable with_ `Tab`
+
+### cc
+
+Syntax:
+```
+console.log($val$);$END$
+```
+- [x] Applicable in: JavaScript Statements Only
+
+### c
+
+Syntax:
+```
+console.log($val$)$END$
+```
+- [x] Applicable in: JavaScript Expressions Only
+
+### $
+
+Syntax:
+```
+document.querySelector("$query$")$END$
+```
+- [x] Applicable in: JavaScript Everywhere
+
+## $$
+
+Syntax:
+```
+document.querySelectorAll("$query$")$END$
+```
+- [x] Applicable in: JavaScript Everywhere
+
+## lis
+
+Syntax:
+```
+.addEventListener($type$, $arg$ => $END$);
+```
+- [x] Applicable in: JavaScript Everywhere
+- [ ] uncheck `Reformat according to style`
