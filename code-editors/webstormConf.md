@@ -25,6 +25,8 @@
 - Delete Line - `CTRL + R`
 - Version Control - `F1`
 - Terminal - `CTRL + `\`
+- Undo - `Ctrl + Z`
+- Redo - `Ctrl + Y`
 
 ## Snippets ( Live Templates )
 
