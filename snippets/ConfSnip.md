@@ -97,3 +97,35 @@ const App = class {
     }
 };
 ```
+
+## async Plus static
+
+The order matters here:
+```javascript
+class SomeClass {
+    constructor(name) {
+        this.name = name;
+    }
+    
+    static async method() {
+        return 'Hello World';
+    }
+}
+```
+
+## await Plus return
+
+Do note that there is no need to write `await` something if we return an asynchronous function call
+in an `async` function:
+```javascript
+// this:
+async function fun() {
+    return await fetch(url);
+}
+
+// is the same as this:
+async function fun2() {
+    return fetch(url);
+}
+```
+But the latter variant is preferred.
