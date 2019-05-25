@@ -7,10 +7,12 @@ __.bashrc:__
 git aliases:
 
 ```bash
+alias cln='git clone'
 alias st='git status'
 alias com='git add -A && git commit -m'
 alias amm='git add -A && git commit --amend'
 alias br='git branch -m'
+alias ba='git branch -a'
 alias pl='git pull'
 alias p='git push'
 alias c='git checkout'
@@ -23,7 +25,8 @@ npm aliases:
 ```
 alias bld='npm run build'
 alias start="npm start"
-alias test="npm run test"
+alias tst="npm run test"
+alias lint="npm run lint"
 ```
 
 __.gitconfig:__
