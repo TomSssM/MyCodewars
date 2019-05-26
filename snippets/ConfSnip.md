@@ -129,3 +129,79 @@ async function fun2() {
 }
 ```
 But the latter variant is preferred.
+
+## Reference type in the prototype
+
+The code below has the output as indicated:
+```javascript
+const User = function() {};
+User.prototype.attributes = { isAdmin: false };
+
+const admin = new User('Sam');
+const guest = new User('Bob');
+
+admin.attributes.isAdmin = true;
+admin.attributes.isAdmin; // true
+guest.attributes.isAdmin; // true
+```
+because the `attributes` property is the _reference_ type of value. If it were a usual value we would have both
+a property on the `admin.attributes` with one value and another property with the same name on 
+`admin.prototype.attributes` but with a different value.
+
+## Invoking a function with null context
+
+Such an action will make the context default to the `window` object:
+```javascript
+function foo() { console.log(this) }
+foo.call(null); // Window
+```
+
+However that isn't the case in strict mode where the function will get as its context exactly the value we pass 
+even if this value is null:
+```javascript
+"use strict";
+function man() { console.log(this) }
+man.call(null); // null
+```
+
+## Accidentally replacing parameters
+
+In the following code, we can see that if we replace a value in the `arguments` object, we also replace the parameter
+itself along with it:
+```javascript
+function foo(a) {
+  console.log(a);
+  arguments[0] = ':)';
+  console.log(a);
+}
+
+foo(12);
+// output:
+// log: 12
+// log: :)
+```
+
+## Fractions as indexes in arrays
+
+We can use fractions as indexes for arrays, however everything that isn't an integer will be coerced to a string and
+stored as a usual object property, that will also render it invisible if we log an array or try to iterate it:
+```javascript
+const arr = [1,2,3,4];
+arr[1.5] = ':)';
+arr; // [1, 2, 3, 4, 1.5: ":)"]
+[...arr]; // [1, 2, 3, 4]
+```
+
+## Wrapper objects for Functions
+
+Functions just like literals don't have most of their properties directly editable. Instead just like with the
+literals wrapper objects are created and suspended:
+```javascript
+function foo() {};
+foo.name; // "foo"
+foo.name = 'other name';
+foo.name; // "foo"
+foo.length; // 0
+delete foo.length; // true
+foo.length; // 0
+```
