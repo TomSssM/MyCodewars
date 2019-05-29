@@ -4,6 +4,7 @@
 
 - [Server Side JS](./server-side-js/README.md)
 - [Promise](./promise/README.md)
+- [Canvas Notes](./canvas-notes.md)
 
 ## Main
 
