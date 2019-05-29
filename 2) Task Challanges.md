@@ -294,4 +294,34 @@ function permutations(str) {
 permutations('boat'); // 24 permutations
 ```
 
-# 29) Next
+# 29) Push Zeros Case
+
+Implement a function which pushes all 0s to the right while keeping the non-zero values in order, use of `push`
+or `splice` is forbidden:
+```javascript
+const arr = [0, 10, 0, 1, 2, 3, 0, 0, 4, 0, 0, 0];
+shiftZeros(arr); // [10, 1, 2, 3, 4, 0, 0, 0, 0, 0, 0, 0];
+
+function shiftZeros(arr) {
+    // first count non-zeros:
+    let nonZeroCount = 0;
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] !== 0) nonZeroCount++;
+    }
+
+    // then loop until all the non-zero
+    // elements have been moved to the beginning
+    let count = 0;
+    let i = 0;
+    while (count < nonZeroCount) {
+        if (arr[i] !== 0) {
+            [arr[i], arr[count]] = [arr[count], arr[i]];
+            count++;
+        }
+        i++;
+    }
+    return arr;
+}
+```
+
+# 30) Next
