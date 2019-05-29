@@ -1,6 +1,8 @@
-# Canvas Notes
+# Graphics Notes
 
-## Setup
+## Canvas
+
+### Setup
 
 In order to work with canvas we need a canvas element:
 
@@ -22,7 +24,7 @@ canvas.width = 200;
 canvas.height = 200;
 ```
 
-## Straight Lines
+### Straight Lines
 
 Here is how to draw lines:
 ```javascript
@@ -53,7 +55,7 @@ context.lineTo(100, 300);
 context.stroke();
 ```
 
-## Why it is a good idea to call beginPath()
+### Why it is a good idea to call beginPath()
 
 The reason we should always go with the workflow: `beginPath -> moveTo -> lineTo -> stroke` is
 because until we call `beginPath` the previous `strokeColor` will override the current one even if
