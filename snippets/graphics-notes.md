@@ -77,3 +77,19 @@ context.stroke();
 Here you might think that the first line (`(*)`) will be colored `#00ff8e` and the second line (`(**)`)
 will be colored `#0013ff`, but in reality it isn't so and both lines end up colored `#0013ff` :) That is why
 we need to uncomment a call to `beginPath()`
+
+### What happens when we call fillRect(), arc() and so on
+
+As you can see, these functions take `x`, `y` coordinates as arguments. It depends on which one of the function
+we call, but internally before a rectangle or arc is created ( because of those coordinates we pass as first 2
+arguments ) first either `lineTo(x, y)` or `moveTo(x,y)` are called. Here is an example:
+```javascript
+ctx.beginPath();
+ctx.moveTo(20, 20);
+ctx.lineTo(20, 100);
+ctx.lineTo(100, 100);
+ctx.fillRect(120, 120, 40, 40); // independent of the current path
+ctx.arc(200, 200, 20, 1, 8); // lineTo(200, 200)
+ctx.rect(250, 250, 40, 30); // moveTo(250, 250)
+ctx.stroke();
+```
