@@ -8,3 +8,20 @@ html, body {
 #headerJS {
   padding: 0 .4rem;
 }
+#my-canvas {
+  position: relative;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 400px;
+  height: 400px;
+  border: 1px solid #000;
+  background: url("https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.alfrescoemporium.com.au%2Fmedia%2Fcatalog%2Fproduct%2Fcache%2F1%2Fsmall_image%2F162x%2F9df78eab33525d08d6e5fb8d27136e95%2Fv%2Fa%2Fvase_filler_sea_glass_small_mixed_1.jpg&f=1") no-repeat;
+  background-size: auto 100%;
+}
+#drawing-canvas {
+  position: absolute;
+}
