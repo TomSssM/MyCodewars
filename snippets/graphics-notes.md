@@ -93,3 +93,11 @@ ctx.arc(200, 200, 20, 1, 8); // lineTo(200, 200)
 ctx.rect(250, 250, 40, 30); // moveTo(250, 250)
 ctx.stroke();
 ```
+
+
+### A quick reminder on scale
+
+When we do `ctx.scale` with `(2,2)` for example and draw a pixel, that pixel is actually going to be 2px wide, the same
+applies to the distance, in pixels, from the origin. Once we do `ctx.restore()` all the further pixels we draw are
+going to be completely normal. However, do note, that the one pixel we painted when the canvas was scaled is going to
+remain just as big as it always were ( 2x2 ).
