@@ -324,4 +324,33 @@ function shiftZeros(arr) {
 }
 ```
 
-# 30) Next
+# 30) 3 Greatest Integers in an Array
+
+Find the greatest 3 elements of the array without using sort of any kind or mutating the source array:
+
+```javascript
+function threeBiggest(arr) {
+    let maxOne = -Infinity;
+    let maxTwo = -Infinity;
+    let maxThree = -Infinity;
+    let elem;
+    for (let i = 0; i < arr.length; i += 1) {
+        elem = arr[i];
+        if (elem > maxOne) {
+            maxThree = maxTwo;
+            maxTwo = maxOne;
+            maxOne = elem;
+        } else if (elem > maxTwo) {
+            maxThree = maxTwo;
+            maxTwo = elem;
+        } else if (elem > maxThree) {
+            maxThree = elem;
+        }
+    }
+    return `first - ${maxOne}, second - ${maxTwo}, third - ${maxThree}`;
+}
+
+threeBiggest([5,4,3,6,7,8,9,10,1,2]); // "first - 10, second - 9, third - 8"
+```
+
+# 31) Next
