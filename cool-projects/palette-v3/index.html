@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" 
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet"> 
+    <link rel="stylesheet" href="./src/css/normalize.css">
+    <link rel="stylesheet" href="./src/css/styles.css">
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <title>Palette</title>
+</head>
+<body>
+<header class="header">
+    <button id="js-header-btn" class="header__btn header__hmbg-btn">
+        <i class="header__btn-icon fas fa-bars"></i>
+    </button>
+    <h1 class="header__h1">CodeJam - Palette</h1>
+    <button id="js-header-sett-btn" class="header__btn header__sett-btn">
+        <i class="header__btn-icon fas fa-ellipsis-v"></i>
+    </button>
+    <div id="js-header-sett" class="header-sett">
+        <span class="header-sett__title"><i class="fas fa-cog"></i> Settings</span>
+        <div id="js-sett-cont" class="header-sett__container">
+            <button id="js-change-grid" class="header-sett__btn">
+                Change the Grid
+            </button>
+            <button id="js-clear-grid" class="header-sett__btn">
+                Clear the Grid
+            </button>
+        </div>
+    </div>
+</header>
+<main class="main">
+    <section class="slides">
+        <div id="js-frames" class="slides__container">
+            <button id="js-frames-control" class="slides__element frame-controller">
+                <i class="frame-controller__icon fas fa-plus"></i>
+                <span class="frame-controller__text">Add new frame</span>
+            </button>
+        </div>
+    </section>
+    <div class="canvas-container">
+        <div id="js-canvas" class="canvas"></div>
+    </div>
+    <section class="animation-player">
+        <div id="js-player-canvas" class="animation-player__canvas"></div>
+        <div id="js-fps-container" class="animation-player__fps-container">
+            <button class="animation-player__fps-setting">2 fps</button>
+            <button class="animation-player__fps-setting">4 fps</button>
+            <button class="animation-player__fps-setting">8 fps</button>
+        </div>
+    </section>
+    <aside class="main__toolbox">
+        <div class="tools-container tools">
+            <div class="tools-container__wrapper">
+                <button id="js-brush" class="tools__tool tools-container__tool">
+                    <i class="tools-container__tool-icon fas fa-paint-brush"></i>
+                    <span class="tools-container__tool-name tools__tool-name">Brush</span>
+                </button>
+                <button id="js-erase" class="tools__tool tools-container__tool">
+                    <i class="tools-container__tool-icon fas fa-eraser"></i>
+                    <span class="tools-container__tool-name tools__tool-name">Erase</span>
+                </button>
+                <button id="js-bucket" class="tools__tool tools-container__tool">
+                    <i class="tools-container__tool-icon fas fa-fill"></i>
+                    <span class="tools-container__tool-name tools__tool-name">Paint Bucket</span>
+                </button>
+                <button id="js-eye-drop" class="tools__tool tools-container__tool">
+                    <i class="tools-container__tool-icon fas fa-eye-dropper"></i>
+                    <span class="tools-container__tool-name tools__tool-name">Pick Color</span>
+                </button>
+                <button id="js-move" class="tools__tool tools-container__tool tools-container__tool--line-over">
+                    <i class="tools-container__tool-icon fas fa-arrows-alt"></i>
+                    <span class="tools-container__tool-name tools__tool-name">Move</span>
+                </button>
+                <button id="js-transform" class="tools__tool tools-container__tool">
+                    <i class="tools-container__tool-icon fas fa-exchange-alt"></i>
+                    <span class="tools-container__tool-name tools__tool-name">Transform</span>
+                </button>
+            </div>
+        </div>
+        <div id="js-colors-cont" class="tools-container colors">
+            <div class="tools-container__list tools-container__wrapper">
+                <button id="js-curr-col" class="colors__color tools-container__tool">
+                    <div class="colors__color-cir" data-color="#ff0000"></div>
+                    <span class="tools-container__tool-name colors__color-name">Current Color</span>
+                </button>
+                <button id="js-prev-col" class="colors__color tools-container__tool">
+                    <div class="colors__color-cir" data-color="#0000ff"></div>
+                    <span class="tools-container__tool-name colors__color-name">Prev Color</span>
+                </button>
+                <button data-sugg-colors="true" class="colors__color tools-container__tool tools-container__tool--line-over">
+                    <div class="colors__color-cir" data-color="#000000"></div>
+                    <span class="tools-container__tool-name colors__color-name">Black</span>
+                </button>
+                <button data-sugg-colors="true" class="colors__color tools-container__tool">
+                    <div class="colors__color-cir" data-color="#ffffff"></div>
+                    <span class="tools-container__tool-name colors__color-name">White</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+    <form id="js-modal-wind" class="modal-window" action="#" method="get">
+        <span class="modal-window__title">Choose the Ratio</span>
+        <input class="modal-window__input" type="text">
+        <span id="js-modal-window-output" class="modal-window__output"></span>
+        <input class="modal-window__btn modal-window__btn--ok" type="button" value="Cancel">
+        <input class="modal-window__btn" type="submit" value="OK">
+    </form>
+</main>
+<script type="module" src="./src/js/index.js"></script>
+
+</body>
+</html>
