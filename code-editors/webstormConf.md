@@ -80,7 +80,7 @@ Syntax:
 ```
 import $modName$ from '$PATH$';$END$
 ```
-- [x] Applicable in `JavaScript Everywhere`
+- [x] Applicable in `JavaScript Statements Only`
 
 ### Jest Stuff
 
@@ -90,7 +90,7 @@ Syntax:
 ```
 describe('$desc$', () => {$END$});
 ```
-- [x] Applicable in `JavaScript Everywhere`
+- [x] Applicable in `JavaScript Statements Only`
 - [ ] Uncheck `Reformat according to style`
 
 #### desp
@@ -99,7 +99,7 @@ Syntax:
 ```
 describe('$class$.prototype.$method$', () => {$END$});
 ```
-- [x] Applicable in `JavaScript Everywhere`
+- [x] Applicable in `JavaScript Statements Only`
 - [ ] Uncheck `Reformat according to style`
 
 #### tst
@@ -108,7 +108,7 @@ Syntax:
 ```
 test('$desc$', $async$() => {$END$});
 ```
-- [x] Applicable in `JavaScript Everywhere`
+- [x] Applicable in `JavaScript Statements Only`
 - [ ] Uncheck `Reformat according to style`
 
 #### exp
@@ -117,5 +117,5 @@ Syntax:
 ```
 expect($smth$).$matcher$($val$);$END$
 ```
-- [x] Applicable in `JavaScript Everywhere`
+- [x] Applicable in `JavaScript Statements Only`
 - [x] go to `Edit variables` and set `Default value` of `$matcher$` to `"toBe"`
