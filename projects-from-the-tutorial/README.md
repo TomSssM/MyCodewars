@@ -5,6 +5,7 @@
   - [Part One](./object-to-ul/part%20one/Laboratory.js)
   - [Part Two](./object-to-ul/part%20two/Laboratory.js)
 - [Time and Calendar](./calendar-and-time/Laboratory.js)
+- [Canvas Clock](./calendar-and-time/canvas-clock/canvas-clock.js)
 - [Sorting a Table](./sorting-a-table/Laboratory.js)
 - [Note](./note)
   - [Default](./note/default/Laboratory.js)
