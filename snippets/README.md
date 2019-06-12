@@ -4,19 +4,20 @@
 
 - [Server Side JS](./server-side-js/README.md)
 - [Promise](./promise/README.md)
-- [Graphics Notes](./graphics-notes.md)
+- [Binary Data](./binary/README.md)
 
-## Main
+## Main Snippets
 
 - [Data Structures](./Data%20Structures/README.md)
 - [Algorithms](./algorithms/README.md)
+- [Confusing Snippets](./ConfSnip.md)
+
+## Awesome Snippets
+
 - [JSON](./myJSON.js)
 - [Iterators and Generators](./iterators/README.md)
 - [Unit Testing](./unit-testing/README.md)
-- [Confusing Snippets](./ConfSnip.md)
-
-## Small Snippets
-
+- [Graphics Notes](./graphics-notes.md)
 - [Freak Show](./freakshow.js)
 - [Timers](./timers/README.md)
 - [HTML5 API](./html5-api/README.md)
