@@ -250,3 +250,11 @@ line `(**)` and not as a string literal ( but as HTML token instead ) thus it is
 ```
 
 Now we are OK
+
+## Object.keys for a string
+
+Calling this method with string as an argument will first convert the string into its corresponding
+wrapper object ( an array of chars ) and then return the indexes:
+```js
+Object.keys('fun'); // [ "0", "1", "2" ]
+```
