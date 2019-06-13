@@ -205,3 +205,48 @@ foo.length; // 0
 delete foo.length; // true
 foo.length; // 0
 ```
+
+## Weird Lookahead
+
+In RegExp we can actually specify the end of the line as a value that something should be followed with:
+```js
+// the following RegExp look for the last letters of words:
+const regExp1 = /\w(?=\s|$)/g;
+```
+
+## Is primitive an instance of anything?
+
+Primitives are actually not instances of their corresponding classes, they only are 
+when wrapped with corresponding wrapper objects:
+```js
+Number.prototype.checkIt = function() {
+  console.log(this instanceof Number);
+};
+
+12..checkIt(); // true
+12 instanceof Number; // false
+```
+
+## Inserting <script> as innerHTML with caution
+
+Yeap, in __inline scripts__ we gotta be really careful when we do the following:
+```html
+<body>
+<div id="elem"></div>
+<script> // (**)
+  const elem = document.querySelector('#elem'); // (*)
+  elem.innerHTML = 'Some text <script>alert(1)</script>';
+</script>
+</body>
+```
+
+You see it the browser may think the text inside `''` ( below line `(*)` ) as the closing tag of the `<script>` in
+line `(**)` and not as a string literal ( but as HTML token instead ) thus it is better to escape it:
+```html
+<script>
+  // ...
+  elem.innerHTML = 'Some text <script>alert(1)<\/script>';
+</script>
+```
+
+Now we are OK
