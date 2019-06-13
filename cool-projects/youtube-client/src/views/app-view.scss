@@ -1,0 +1,52 @@
+@import "./_scroll.scss";
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.main {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-box {
+  position: fixed;
+  top: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1rem;
+  border-radius: 4px;
+  background-color: rgba(224, 180, 0, 0.8);
+  color: #444;
+  font-family: Consolas, sans-serif;
+}
+
+.tooltip {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  border-radius: 4px;
+  background-color: #e9fc00;
+  font-weight: bold;
+  color: gray;
+  font-size: 1.2rem;
+  font-family: monospace;
+  transform: translateY(10px);
+  opacity: 0;
+  transition: all .2s ease-out;
+
+  &--fadein {
+    transform: none;
+    opacity: 1;
+  }
+}
