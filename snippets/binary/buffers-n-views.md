@@ -135,6 +135,10 @@ let arr = new Uint16Array(4); // create typed array for 4 integers
 alert( Uint16Array.BYTES_PER_ELEMENT ); // 2 bytes per integer
 alert( arr.byteLength ); // 8 (size in bytes)
 ```
+__Note:__ A `length` argument is the number of elements, if it is a `Unit16` view, then each element 
+is 16 bits or 2 bytes, thus the `byteLength` of such an array is: amount of bytes needed to 
+comprise a single element ( 2 ) multiplied by the number of elements contained in the view. 
+Thus the meaning of the `BYTES_PER_ELEMENT` property.
 
 - Without arguments, creates an zero-length typed array.
 
@@ -210,6 +214,21 @@ alert(uint8array[1]); // 1
 It saves 255 for any number that is greater than 255, and 0 for any negative number. 
 That behavior is useful for image processing.
 
+### Buffers and Views are References
+
+Since both buffers and views reference the same contiguous area of memory, changes to view `a` created over
+buffer `a`, will also affect view `b` if view `b` was created over the same buffer `a`:
+```js
+const buffer = new ArrayBuffer(16);
+const view1 = new Uint16Array(buffer); // [ 0, 0, 0, 0, 0, 0, 0, 0 ]
+const view2 = new Uint16Array(buffer); // [ 0, 0, 0, 0, 0, 0, 0, 0 ]
+view1[2] = 22;
+
+view1; // [ 0, 0, 22, 0, 0, 0, 0, 0 ]
+view2; // [ 0, 0, 22, 0, 0, 0, 0, 0 ]
+const view3 = new Uint8Array(buffer); // [ 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, … ]
+```
+
 ## TypedArray methods
 
 `TypedArray` has regular `Array` methods, with notable exceptions.
@@ -229,7 +248,20 @@ starting at position `offset` (0 by default).
 - `arr.subarray([begin, end])` creates a new view of the same type 
 from `begin` to `end` (exclusive). That's similar to `slice` method 
 (that's also supported), but doesn't copy anything -- just creates 
-a new view, to operate on the given piece of data.
+a new view, to operate on the given piece of data. It means that if we mutate
+a resulting subarray we also mutate the source view that this subarray was derived from:
+```js
+const buffer = new ArrayBuffer(16);
+const view16 = new Uint16Array(buffer); // [ 0, 0, 0, 0, 0, 0, 0, 0 ]
+view16[2] = 22;
+view16[5] = 4;
+view16; // [ 0, 0, 22, 0, 0, 4, 0, 0 ]
+const sub = view16.subarray(2,6); // [ 22, 0, 0, 4 ]
+sub[0] = 33; // [ 33, 0, 0, 4 ]
+view16; // [ 0, 0, 33, 0, 0, 4, 0, 0 ]
+```
+If we were to do `slice`, `sub` would be simply a copy of the view, not a _reference_ to a part of it, and thus
+the source view would remain unchanged ( only `sub` would change )
 
 These methods allow us to copy typed arrays, mix them, create new arrays from existing ones, and so on.
 
@@ -278,6 +310,53 @@ dataView.setUint32(0, 0); // set 4-byte number to zero, thus setting all bytes t
 `DataView` is great when we store mixed-format data in the same buffer. 
 E.g we store a sequence of pairs (16-bit integer, 32-bit float).
 Then `DataView` allows to access them easily.
+
+Do note however that writing numbers to dataView affects the buffer and thus, all the dependent views over it.
+For instance if we have a view of 8 bit numbers and we write to `DataView` instance a number that spans
+25 bits, then the first 5 numbers in an 8-bit view are going to be distorted. Here is an example:
+
+```js
+const uint8View = new Uint8Array([255, 3, 5, 12]);
+const buffer = uint8View.buffer;
+const dataView = new DataView(buffer);
+// the length of number 150000000 in bits is 28:
+150000000..toString(2).length; // 28
+dataView.setUint32(0, 150000000);
+// it means that the first 4 numbers of uint8View are going
+// to be distorted. Ooops! It is all numbers :)
+uint8View; // [ 8, 240, 209, 128 ]
+```
+
+## Task
+
+### Concat Uint8Arrays
+
+Given an array of `Uint8Array`, write a function `concat(arrays)` that returns a concatenation of them 
+into a single array.
+
+```js
+function concat(arrays) {
+    const totalLength = arrays.reduce((t, arr) => t + arr.length, 0);
+    const freshBuffer = new ArrayBuffer(totalLength);
+    const uint8Array = new Uint8Array(freshBuffer);
+    let elementsWritten = 0;
+    for (const array of arrays) {
+        uint8Array.set(array, elementsWritten);
+        elementsWritten += array.length;
+    }
+    return uint8Array;
+}
+
+const chunks = [
+    new Uint8Array([0, 1, 2]),
+    new Uint8Array([3, 4, 5]),
+    new Uint8Array([6, 7, 8])
+];
+
+console.log(Array.from(concat(chunks))); // 0, 1, 2, 3, 4, 5, 6, 7, 8
+
+console.log(concat(chunks).constructor.name); // Uint8Array
+```
 
 ## Summary
 
