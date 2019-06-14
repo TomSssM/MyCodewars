@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Display Drag-n-Drop</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    h1 {
+      margin: 0;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    body {
+      padding: .7rem;
+    }
+    img {
+      border: 2px solid #000;
+      padding: .7rem;
+      border-radius: 4px;
+      margin: .3rem;
+    }
+  </style>
+</head>
+<body>
+<h1>Drag or Upload Stuff in here <span id="dragging-toggle" hidden>Now Drop it :)</span> </h1>
+<input type="file" name="uploadedFile" id="file-input">
+<input type="button" value="Upload" id="upload-button">
+<br>
+<script src="index.js"></script>
+</body>
+</html>
