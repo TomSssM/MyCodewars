@@ -80,3 +80,5 @@ url.searchParams.sort(); // https://google.com/search?aaa=zzz&zzz=aaa
 // plus it has an iterator:
 [...url.searchParams]; // [ ["aaa", "zzz"], ["zzz", "aaa"] ]
 ```
+
+It also has 2 static methods described [here](../../binary/blob-article.md)
