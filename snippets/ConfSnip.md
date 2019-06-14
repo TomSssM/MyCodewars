@@ -258,3 +258,44 @@ wrapper object ( an array of chars ) and then return the indexes:
 ```js
 Object.keys('fun'); // [ "0", "1", "2" ]
 ```
+
+## What does immutable mean?
+
+If an object is _immutable_ it means that we cannot change its properties or its value in general. To understand it
+one needs to forget about variables as it is confusing in this context. And let's also refer to the assemblage of
+key / value pairs inside an object as its _value_, OK? Now immutable then simply means we cannot change that value.
+For instance we can modify values stored under certain keys within an object, if we look back at the comparison
+above, then what we do is we simply change the _value_ of an object in this case. But we can never change the value
+of any number. For instance 2 is always 2. This here is important to forget about variables. We can write 3 into
+a variable if we do `let x = 2 + 1` but writing like that into a variable changes neither the value of 2 nor the value
+of 3. And since we cannot say something like: `3 = ':)'` and then have JS do this: `1 + 3 === "1:)"` we say that 3
+is immutable. But we can, on the other hand, change the value of any object by simply modifying its key / value pairs:
+```javascript
+const obj1 = {
+    name: "Tom",
+    method: code(),
+};
+obj1; // initial value is: { name: "Tom", method: code() }
+obj1.name = "NewName";
+obj1; // we just changed the value of an object from { name: "Tom", method: code() } to { name: "NewName", method: code() }
+// no way to do so with numbers:
+2 = 'blaBlaBla'; // ReferenceError: invalid assignment left-hand side
+```
+Since it is so obvious it may seem like it isn't important but here this term can be used to answer
+why, for instance, `String` data type is actually immutable, because we cannot change the value 
+of a string like so `'man' = 'bob'` just like with the numbers. Here is an example showing that an array is mutable 
+and a string is immutable:
+```js
+const str = 'man';
+const arr = [1,2];
+
+// can modify the value of an array:
+arr[0] = ':)';
+arr; // [ ":)", 2 ]
+// hence Array is mutable ( possible to mutate / change / modify / etc. )
+
+// yet cannot modify the value of a string:
+str[0] = 'c';
+str; // "man"
+// hence String is immutable
+```
