@@ -280,6 +280,18 @@ let blob = await new Promise(resolve => canvasElem.toBlob(resolve, 'image/png'))
 For screenshotting a page, we can use a library such as `<https://github.com/niklasvh/html2canvas>` 
 What it does is just walks the page and draws it on `<canvas>`. Then we can get a blob of it the same way as above.
 
+### String to Blob
+
+We can use `FileEncoder` to convert any JS string to a Blob:
+
+```js
+const textEncoder = new TextEncoder();
+const buffer = textEncoder.encode('Hi!').buffer;
+const blob = new Blob([buffer], {
+    type: 'text/plain',
+});
+```
+
 ## Summary
 
 While `ArrayBuffer`, `Uint8Array` and other `BufferSource` are "binary data", a Blob represents "binary data with type".
