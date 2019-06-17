@@ -294,4 +294,63 @@ function permutations(str) {
 permutations('boat'); // 24 permutations
 ```
 
-# 29) Next
+# 29) Push Zeros Case
+
+Implement a function which pushes all 0s to the right while keeping the non-zero values in order, use of `push`
+or `splice` is forbidden:
+```javascript
+const arr = [0, 10, 0, 1, 2, 3, 0, 0, 4, 0, 0, 0];
+shiftZeros(arr); // [10, 1, 2, 3, 4, 0, 0, 0, 0, 0, 0, 0];
+
+function shiftZeros(arr) {
+    // first count non-zeros:
+    let nonZeroCount = 0;
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] !== 0) nonZeroCount++;
+    }
+
+    // then loop until all the non-zero
+    // elements have been moved to the beginning
+    let count = 0;
+    let i = 0;
+    while (count < nonZeroCount) {
+        if (arr[i] !== 0) {
+            [arr[i], arr[count]] = [arr[count], arr[i]];
+            count++;
+        }
+        i++;
+    }
+    return arr;
+}
+```
+
+# 30) 3 Greatest Integers in an Array
+
+Find the greatest 3 elements of the array without using sort of any kind or mutating the source array:
+
+```javascript
+function threeBiggest(arr) {
+    let maxOne = -Infinity;
+    let maxTwo = -Infinity;
+    let maxThree = -Infinity;
+    let elem;
+    for (let i = 0; i < arr.length; i += 1) {
+        elem = arr[i];
+        if (elem > maxOne) {
+            maxThree = maxTwo;
+            maxTwo = maxOne;
+            maxOne = elem;
+        } else if (elem > maxTwo) {
+            maxThree = maxTwo;
+            maxTwo = elem;
+        } else if (elem > maxThree) {
+            maxThree = elem;
+        }
+    }
+    return `first - ${maxOne}, second - ${maxTwo}, third - ${maxThree}`;
+}
+
+threeBiggest([5,4,3,6,7,8,9,10,1,2]); // "first - 10, second - 9, third - 8"
+```
+
+# 31) Next

@@ -2,9 +2,13 @@
 
 ## Simple vs Complex Requests
 
-We didn't use to be able to use XHR to make a request
-to a different domain/port/protocol ( the browser would throw an error ).
-For security reasons requests are put into 2 categories:
+We didn't use to be able to use XHR to make a request to a different Origin ( the browser would throw an error ).
+
+Origin is a domain/port/protocol triplet. Thus the same origin is when domain, port and protocol are the same.
+The policy that a website cannot fetch data ( even the `index.html` page ) from a different origin 
+without extra headers is called `CORS` ( Cross-Origin Resource Sharing )
+
+For this reason requests are put into 2 categories:
 
 - Simple if:
     - Simple Methods:
@@ -20,6 +24,11 @@ For security reasons requests are put into 2 categories:
             - `multipart/form-data`
             - `text/plain`
 - Complex otherwise
+
+While the fact that `http://example.com:8080` and `http://example.com:5500` are going to be different origins
+is pretty straightforward ( says above ports must be the same ) do note that `http://example.com` and 
+`http://www.example.com` are also going to be different origins because we need an _exact match_ for everything
+( and here domains differ )
 
 ---
 
@@ -66,9 +75,31 @@ Access-Control-Allow-Origin: http://javascript.com
 
 If `Access-Control-Allow-Origin` were missing the request fails.
 
+Also note that when we make a cross-origin request, we can read with JavaScript only simple header, which include:
+- Cache-Control
+- Content-Language
+- Content-Type
+- Expires
+- Last-Modified
+- Pragma
+
+If we want to read any other response headers ( take a good look, it means even `Content-Length` :) ) the server needs
+to explicitly enlist those in the `Access-Control-Expose-Headers` header like so:
+```
+200 OK
+Content-Type:text/html; charset=UTF-8
+Content-Length: 12345
+API-Key: 2c9de507f2c54aa1
+Access-Control-Allow-Origin: https://javascript.info
+Access-Control-Expose-Headers: Content-Length,API-Key
+```
+
+With such `Access-Control-Expose-Headers` header, the script is allowed to access `Content-Length` and 
+`API-Key` headers of the response.
+
 ---
 
-## Cookies and Authorization
+## Cookies and Credentials
 
 In order to send cookies and HTTP authorization along with a request we need to
 set `withCredentials ` to true:
@@ -78,7 +109,7 @@ xhr.withCredentials = true;
 xhr.open('POST', 'http://anywhere.com/request', true)
 ...
 ```
-In this case server needs to give a response with a yet another type of header
+In this case server needs to give a response with yet another type of header
 `Access-Control-Allow-Credentials` for such a response to be considered
 successful (otherwise fail of course):
 ```
@@ -87,7 +118,8 @@ Content-Type:text/html; charset=UTF-8
 Access-Control-Allow-Origin: http://javascript.com
 Access-Control-Allow-Credentials: true
 ```
-An important detail is that in this case `Access-Control-Allow-Origin` can't be `*`.
+An important detail is that in this case `Access-Control-Allow-Origin` can't be `*`. 
+That’s an additional safety measure, to ensure that the server really knows who it trusts.
 
 ---
 
@@ -188,7 +220,7 @@ Host:google.com
 Origin:http://javascript.com
 Referer:http://javascript.com/some/url
 ```
-We use `Origin` _in addition_ to `Referrer` because it is more reliable :)
+We use `Origin` _in addition_ to `Referrer` because it is more reliable :) Sometimes `Referer` is absent.
 
 ---
 

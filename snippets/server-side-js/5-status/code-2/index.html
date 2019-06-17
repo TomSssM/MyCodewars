@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Requests</title>
+</head>
+<body>
+<h1>Hello Server 1</h1>
+<section class="status">
+  <form id="js-form" class="status__form" name="upload">
+    <input type="file" name="myfile">
+    <input id="js-upload-btn" type="submit" value="Upload">
+  </form>
+  <div id="js-upload-bar" class="status__box status__box--upload">
+    <div class="status__progress status__progress--upload"></div>
+    <span class="status__text status__text--upload">Upload Progress</span>
+  </div>
+  <input id="js-download-btn" class="status__button" type="button" value="Download File">
+  <div id="js-download-bar" class="status__box status__box--download">
+    <div class="status__progress status__progress--download"></div>
+    <span class="status__text status__text--download">Download Progress</span>
+  </div>
+</section>
+<script src="./index.js"></script>
+</body>
+</html>

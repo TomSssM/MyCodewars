@@ -1,0 +1,50 @@
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: aquamarine;
+}
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #000;
+  width: 120px;
+  height: 120px;
+  margin-right: 1.4rem;
+  background: #fff;
+}
+.box--hovered {
+  border-style: dashed;
+  background: #ddd;
+}
+.box--last {
+  margin: 0;
+}
+.elem {
+  width: 100px;
+  height: 100px;
+  border: 2px solid #ccc;
+  background: url("./image.jpg") no-repeat center / 100% #000;
+}
+
+#copy {
+  position: relative;
+}
+#copy:before {
+  content: 'Copy Element';
+  position: absolute;
+  background: yellow;
+  top: 0;
+  left: 0;
+  transform: translate(0, -100%);
+  border-bottom: 1px solid #000;
+}

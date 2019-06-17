@@ -54,7 +54,7 @@ function createClock() {
   hh.textContent = time.getHours() < 10 ? `0${time.getHours()}` : time.getHours();
   mm.textContent = time.getMinutes() < 10 ? `0${time.getMinutes()}` : time.getMinutes();
   ss.textContent = time.getSeconds() < 10 ? `0${time.getSeconds()}` : time.getSeconds();
-};
+}
 
 createClock();
 setInterval(createClock, 1000);

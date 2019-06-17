@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    .messages {
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      border: 1px solid #000;
+      min-height: 40px;
+    }
+    .message {
+      box-shadow: 0 0 4px 0 #ccc;
+      text-align: center;
+      color: #888;
+      font-size: 1.3rem;
+      padding: .3rem;
+      margin: .4rem;
+    }
+  </style>
+  <title>Chat with SSE</title>
+</head>
+<body>
+  <form action="" id="message-form">
+    <input type="text" name="message" placeholder="type your message here...">
+    <input id="submit-btn" type="submit" value="Post Message">
+  </form>
+  <div class="messages"></div>
+  <script src="./index.js"></script>
+</body>
+</html>

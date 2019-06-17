@@ -66,12 +66,14 @@ So that when such a response script arrives the callback is going to be invoked 
 
 Before we get into it [here](../../sse/server-evts.js) is the old original code.
 
-So yeah SSE is almost the same as WebSocket except it works over HTTP and is less powerful. Also SSE suppose that the
-server sends messages to the browser but can't close the connection and the browser
-( while listening for server messages ) can't send its messages to the server but should be able to close the
-connection. They should be preferred when simplicity and one-direction communication from the server to the client are
-priorities ( WebSocket is vice versa: different protocol plus communication both ways ). Let's take a closer look at what
-happens under the hood.
+So yeah SSE is almost the same as WebSocket except it works over HTTP and is less powerful. Good examples of its being
+less powerful are that it allows communication only in one direction ( server -> client ), doesn't allow sending
+binary data and so on. Also SSE suppose that the server sends messages to the browser but can't close the connection 
+and the browser ( while listening for server messages ) can't send its messages to the server but should be able to 
+close the connection. They should be preferred when simplicity and one-direction communication from the server to the 
+client are priorities ( WebSocket is vice versa: different protocol plus communication both ways ). 
+
+Let's take a closer look at what happens under the hood.
 
 When we do `new EventSource('some-url')` the browser establishes a connection between itself and the server whose
 url is specified. Until the server closes a connection ( for instance via `response.end()` in Node.js ) it remains
@@ -247,7 +249,9 @@ eventSource.addEventListener('message', function(e) {
 });
 ```
 
-[Here](./code-2/index.html) is the demo of the stuff we just talked about :)
+[Here](./code-2/index.html) is the demo of the stuff we just talked about and [here](./code-4/index.js) is a chat made with SSE :)
+
+---
 
 # Request Almost Without XHR
 

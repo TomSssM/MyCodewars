@@ -1,0 +1,53 @@
+.status {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    'f b'
+    'u d';
+  grid-gap: 20px;
+  align-items: center;
+  justify-items: start;
+}
+
+.status__box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 200px;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid #444;
+  overflow: hidden;
+}
+.status__box--download {
+  grid-area: d;
+}
+.status__box--upload {
+  grid-area: u;
+}
+
+.status__text {
+  color: #b5b5b5;
+  font-size: 1.2rem;
+  position: relative;
+}
+.status__progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+.status__progress--upload {
+  background-color: yellow;
+}
+.status__progress--download {
+  background-color: aquamarine;
+}
+
+.status__button {
+  grid-area: b;
+}
+.status__form {
+  grid-area: f;
+}

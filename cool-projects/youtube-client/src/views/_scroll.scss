@@ -1,0 +1,219 @@
+$primary-color: #444;
+$secondary-color: #eee;
+
+.scroll {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  position: relative;
+  min-height: 70px;
+  overflow: hidden;
+
+  &__load-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    opacity: 0;
+    transition: .2s opacity ease-out;
+    border: 10px solid transparent;
+
+    &--loading {
+      opacity: 1;
+      animation: load 1s linear infinite;
+
+      @at-root {
+        @keyframes load {
+          0% {
+            transform: translate(-50%, -50%) rotate(0);
+            border-color: red transparent transparent transparent;
+          }
+          25% {
+            border-color: red yellow transparent transparent;
+          }
+          50% {
+            border-color: red yellow green transparent;
+          }
+          75% {
+            border-color: red yellow green blue;
+          }
+          100% {
+            border-color: lawngreen;
+            transform: translate(-50%, -50%) rotate(360deg);
+          }
+        }
+      }
+    }
+  }
+
+  &__slider {
+    display: none;
+    grid-template-rows: 450px;
+    grid-auto-flow: column;
+    margin: 1rem 0;
+    cursor: grab;
+
+    &--smooth {
+      transition-property: transform;
+      transition-timing-function: ease-out;
+    }
+
+    &--grabbing {
+      cursor: grabbing;
+    }
+  }
+}
+
+.scroll-search {
+  width: 70%;
+  padding: .7rem;
+  padding-left: 2.5rem;
+  margin: .7rem 0;
+  background: #fff url("../assets/search-solid.svg") no-repeat .4rem .59rem;
+  background-size: 1.5rem auto;
+  border-radius: 3px;
+  outline: none;
+  border: none;
+  box-shadow: 0 0 4px 0 $primary-color;
+  transition: all .2s ease-in-out;
+  font-size: 1.2rem;
+
+  &:focus {
+    box-shadow: 0 0 4px 1px #000;
+  }
+}
+
+.scroll-controls {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  width: 100%;
+
+  &__button {
+    background-color: #fff;
+    margin: 0 .2rem;
+    padding: 0;
+    border: 2px solid $primary-color;
+    width: 2rem;
+    height: 2rem;
+    font-weight: bold;
+    transition: all .2s ease-out;
+    color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+
+    &:hover {
+      background-color: red;
+    }
+
+    &--active {
+      background-color: $primary-color;
+
+      &:hover {
+        background-color: $primary-color;
+      }
+    }
+  }
+}
+
+.scroll-card {
+  width: 250px;
+  height: 400px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  justify-self: center;
+  align-self: center;
+  padding: .5rem 0;
+  border-radius: 4px;
+  box-shadow: 0 0 0 3px #ccc;
+  transition: all .1s ease-out;
+  user-select: none;
+  overflow: hidden;
+
+  &__link-container {
+    display: block;
+    padding: 2.5rem 0;
+    margin-bottom: .7rem;
+    text-align: center;
+    position: relative;
+    transition: all .1s ease-out;
+  }
+
+  &__link-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("https://i.ytimg.com/vi/8_JbZvHc92U/hqdefault.jpg") no-repeat center #fff;
+    background-size: cover;
+    transition: all .1s ease-out;
+  }
+
+  &__link {
+    display: block;
+    position: relative;
+    color: $secondary-color;
+    font-size: 1.2rem;
+    background-color: rgba(0, 128, 0, 0.71);
+    padding: .7rem 0;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__row {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: start;
+    align-items: center;
+    margin: .4rem 0;
+    padding: 0 1rem;
+  }
+
+  &__text {
+    flex-grow: 1;
+    font-family: sans-serif;
+    color: $primary-color;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  &__icon {
+    width: 4rem;
+    text-align: center;
+    color: $primary-color;
+    font-size: 1.7rem;
+  }
+
+  &__description {
+    padding: 0 .7rem;
+    color: $primary-color;
+    font-style: italic;
+    height: 140px;
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    transform: scale(1.04);
+    box-shadow: none;
+    background-color: $secondary-color;
+
+    & .scroll-card {
+
+      &__link-image {
+        transform: rotate(-4deg) scale(.9);
+      }
+    }
+  }
+}

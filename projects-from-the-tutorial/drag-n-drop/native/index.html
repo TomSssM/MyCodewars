@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Native Drag-n-Drop</title>
+</head>
+<body>
+  <!-- div elements aren't draggable by default ( only <img> and <a> are )
+  which is why we need to set draggable to true -->
+  <div class="box">
+    <div id="elem" class="elem" draggable="true"></div>
+  </div>
+  <div class="box"></div>
+  <div id="copy" class="box"></div>
+  <div class="box"></div>
+  <script src="./index.js"></script>
+</body>
+</html>

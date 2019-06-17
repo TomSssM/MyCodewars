@@ -693,6 +693,43 @@ new Promise(res => res(12))
     .then(console.log); // 'man'
 ```
 
+Thus we can derive a much more aacurate diagram of error-handling than before:
+```
+catch {
+    throw --------------|
+}                       |
+then() {                |
+    resolve // ignored  |
+}                       |
+then {                  |
+    resolve // ignored  |
+    reject {            |
+         <--------------|
+         
+         // try to handle
+         // no I can't...
+         
+         throw ---------|
+    }                   |
+}                       |
+then() {                |
+    resolve // ignored  |
+}                       |
+.catch() {              |
+    <-------------------|
+    
+    // try to handle
+    // yes I can!
+}
+then() {
+    // happy ever after :)
+    // *can do chaining here
+}
+```
+
+Do note that in the diagram above the rethrown error goes _either_ to the next `catch` or to the next`reject`. 
+It is true, check it out!
+
 ## Macrotask Queue vs Microtask Queue
 
 You should remember at all times that Promises in fact are asynchronous. It means that the

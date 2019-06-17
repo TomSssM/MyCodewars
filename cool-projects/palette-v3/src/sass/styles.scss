@@ -1,0 +1,474 @@
+@import './variables';
+@import './mixins-n-placeholders';
+@import './modal-styles';
+
+* {
+  box-sizing: border-box;
+  font-family: $primary-font-family;
+  color: $primary-col;
+
+  &::-webkit-scrollbar {
+    padding: .4rem;
+    width: 14px;
+    height: 14px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: lighten($primary-col, 40);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: lighten($primary-col, 10);
+  }
+}
+
+html {
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: start;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: .5rem;
+  background: #fff;
+  box-shadow: 0 0 7px 0 #aaa;
+  z-index: 1;
+
+  &__h1 {
+    flex: 1;
+    margin: 0;
+    font-size: 1.2rem;
+    padding-left: 2rem;
+  }
+
+  &__btn {
+    @extend %button-reset;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    transition: all .2s ease-in;
+
+    &:hover {
+      box-shadow: $primary-shadow;
+    }
+  }
+}
+
+.header-sett {
+  display: none;
+  position: fixed;
+  top: 7px;
+  right: 7px;
+  opacity: 0;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: $primary-shadow;
+  padding: .5rem;
+  transition: all .2s ease-in-out;
+
+  &__title {
+    font-size: 1.2rem;
+  }
+
+  &__container {
+    border-top: 1px solid $primary-col;
+    padding: 0;
+    padding-top: .4rem;
+    margin: .5rem 0 0 0;
+  }
+
+  &__btn {
+    @extend %button-reset;
+    width: 100%;
+    text-align: left;
+    padding: .7rem;
+    cursor: pointer;
+    transition: all .2s ease-out;
+    border-radius: 40px;
+
+    &:hover {
+      background: $hover-col;
+    }
+  }
+}
+
+.main {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: 87vh;
+  grid-gap: 10px;
+  padding: 4rem 1rem 0 80px;
+  transition: padding-left .2s ease-out;
+  min-height: 100vh;
+
+  &__toolbox {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: start;
+    height: 87vh;
+    position: fixed;
+    top: 4rem;
+    left: 0;
+    transition: all .2s ease-out;
+  }
+
+  &--collapsed {
+    padding-left: 1rem;
+  }
+
+  &--collapsed &__toolbox {
+    left: -100px;
+  }
+}
+
+.tools-container {
+  width: 64px;
+  padding-bottom: .4rem;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: $primary-shadow;
+  transition: all .2s 0s ease-out;
+
+  &:hover {
+    transition-delay: 1s;
+    width: 100%;
+  }
+
+  &__wrapper {
+    min-width: 250px;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__tool {
+    @extend %button-reset;
+    width: 100%;
+    padding: 1rem;
+    transition: all .2s ease-out;
+
+    &:hover {
+      background: $hover-col;
+    }
+
+    &--line-over {
+      border-top: 1px solid #ddd;
+    }
+
+    &--active {
+      cursor: default;
+      background: #e0e0e0;
+
+      &:hover {
+        background: #e0e0e0;
+      }
+    }
+  }
+
+  &__tool-icon {
+    padding-left: .5rem;
+    color: $secondary-col;
+  }
+
+  &__tool-name {
+    color: transparent;
+    transition: color .2s 0s ease-out;
+  }
+
+  &:hover &__tool-name {
+    color: $secondary-col-light;
+    transition-delay: 1s;
+  }
+}
+
+.tools {
+  margin-bottom: .4rem;
+
+  &__tool-name {
+    padding: 0 3rem 0 2rem;
+  }
+}
+
+.colors {
+
+  &__color {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: start;
+    padding: 1rem 1.3rem;
+  }
+
+  &__color-cir {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #000;
+    border-radius: 50%;
+  }
+
+  &__color-name {
+    padding-left: 1rem;
+  }
+}
+
+.canvas-container {
+  align-self: center;
+  justify-self: center;
+  width: 470px;
+  height: 470px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-image: url('../../assets/canvas-background.png');
+  background-size: 16px 16px;
+  background-position: -4px -4px;
+}
+
+.slides {
+  position: relative;
+  align-self: stretch;
+  width: 140px;
+  min-width: 140px;
+  box-shadow: $primary-shadow;
+
+  &__container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: start;
+    align-items: center;
+    height: 100%;
+    overflow: auto;
+  }
+
+  &__element {
+    width: 108px;
+    height: 108px;
+    margin: 10px 0;
+    border: 4px solid $secondary-col;
+    box-shadow: 2px 2px 4px 0 #909090;
+    user-select: none;
+
+    &--translucent {
+      min-height: 108px;
+      border-style: dashed;
+      box-shadow: none;
+      border-radius: 4px;
+      background-color: #00000040;
+    }
+
+    &--dragbox {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      top: 0;
+      width: 100%;
+      position: absolute;
+    }
+  }
+}
+
+.frame-controller {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  height: auto;
+  cursor: pointer;
+  padding: .4rem;
+  outline: none;
+  transition: all .1s ease-out;
+
+  &__text {
+    font-size: .9rem;
+    flex-grow: 1;
+  }
+
+  &__icon {
+    color: #fff;
+    font-size: 1.4rem;
+  }
+
+  &:hover {
+    border-color: $hover-orange;
+  }
+}
+
+.slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 108px;
+  position: relative;
+  background-color: $secondary-col;
+  transition: all .1s ease-out;
+
+  &__tool {
+    color: #eee;
+    position: absolute;
+    padding: .4rem;
+    background-color: $secondary-col;
+    cursor: pointer;
+    transition: all .1s ease-out;
+
+    &--slide-number {
+      font-weight: bold;
+      top: -4px;
+      left: -4px;
+      cursor: default;
+    }
+
+    &--delete {
+      top: -4px;
+      right: -4px;
+    }
+
+    &--move {
+      cursor: move;
+      left: -4px;
+      bottom: -4px;
+    }
+
+    &--copy {
+      right: -4px;
+      bottom: -4px;
+    }
+  }
+
+  &__icon {
+    color: #eee;
+  }
+
+  &__canvas {
+    background-image: url('../../assets/canvas-background.png');
+    background-size: 8px 8px;
+    background-position: -2px -2px;
+  }
+
+  &:hover {
+    border-color: $hover-orange;
+    background-color: $hover-orange;
+  }
+
+  &:hover &__tool {
+    color: $primary-col;
+    background-color: $hover-orange;
+  }
+
+  &:hover &__icon {
+    color: $primary-col;
+  }
+
+  &--active {
+    border-color: $hover-orange;
+    background-color: $hover-orange;
+  }
+
+  &--active &__tool {
+    color: $primary-col;
+    background-color: $hover-orange;
+  }
+
+  &--active &__icon {
+    color: $primary-col;
+  }
+
+  &--first &__tool {
+    &--delete {
+      display: none;
+    }
+  }
+
+  &--dragging {
+    margin: 0;
+  }
+}
+
+.canvas {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+
+  &--tool-bucket {
+    cursor: url('../../assets/bucket.png') 4 12, pointer;
+  }
+
+  &--tool-eye-drop {
+    cursor: url('../../assets/eye-drop.png') 4 12, pointer;
+  }
+
+  &--tool-move {
+    cursor: url('../../assets/move.png') 4 12, pointer;
+  }
+
+  &--tool-transform {
+    cursor: url('../../assets/transform.png') 3 3, pointer;
+  }
+
+  &--tool-erase {
+    cursor: url('../../assets/erase.png') 4 12, pointer;
+  }
+
+  &--tool-brush {
+    cursor: url('../../assets/brush.png') 4 12, pointer;
+  }
+
+  &__elem {
+    user-select: none;
+
+    &--transformed {
+      border-radius: 50%;
+    }
+  }
+}
+
+.animation-player {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  box-shadow: $primary-shadow;
+  background-image: url(../../assets/canvas-background.png);
+  background-size: 12px 12px;
+  background-position: -2px -2px;
+
+  &__fps-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    padding: .4rem;
+    background-color: $secondary-col-light;
+  }
+
+  &__canvas {
+    width: 300px;
+    height: 300px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+
+  &__fps-setting {
+    @extend %button-reset;
+    padding: .5rem 1rem;
+    border-radius: 30px;
+    background-color: $primary-col;
+    color: #fff;
+    transition: all .2s ease-out;
+
+    &:hover {
+      background-color: darken($primary-col, 10);
+    }
+
+    &--active {
+      box-shadow: 0 0 0 2px $hover-orange;
+    }
+  }
+}
