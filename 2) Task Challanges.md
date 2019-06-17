@@ -59,7 +59,7 @@ function randomInc(min, max) {
 }
 ```
 ## Random between a to b if we have random for a
-In this example the task is: how to get a random number between 5 to 7 
+In this example the task is: how to get a random number between 5 to 7
 if we have a random function to get 1 to 5
 ```javascript
 function rand5() {
@@ -98,7 +98,7 @@ function missingNumber(arr) {
 missingNumber([5, 2, 6, 1, 3]); // 4
 ```
 # 24) Sum of two equal to a number
-__Question:__ From a unsorted array, check whether there are any two numbers that will sum 
+__Question:__ From a unsorted array, check whether there are any two numbers that will sum
 up to a given number?
 
 __Answer:__ Simplest thing in the world: double loop:
@@ -160,7 +160,7 @@ function topSum(arr) {
 
   if (len < 2) return null;
   if (biggest < second) [biggest, second] = [second, biggest];
-  
+
   while(i < len) {
     if(arr[i] > biggest) {
       second = biggest;
@@ -179,9 +179,9 @@ __Question:__ Count Total number of zeros from 1 upto n?
 
 __Answer:__ If n = 50. number of 0 would be 11 (0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100). Please note that 100 has two 0. This one looks simple but little tricky
 
-__Explanation:__ So the tick here is. If you have a number 1 to 50 the value is 5. 
-just 50 divided by 10. However, if the value is 100. the value is 11. 
-You will get by 100/10 = 10 and 10/10. Thats how you will 
+__Explanation:__ So the tick here is. If you have a number 1 to 50 the value is 5.
+just 50 divided by 10. However, if the value is 100. the value is 11.
+You will get by 100/10 = 10 and 10/10. Thats how you will
 get in the more zeros in one number like (100, 200, 1000)
 
 ```javascript
@@ -256,12 +256,12 @@ This task is for __*Recursive Backtracking*__
 
 __Explanation:__
 
-__Idea:__ Idea is very simple. We will convert the string to an array. from the array we will pick one character and then permute rest of it. 
+__Idea:__ Idea is very simple. We will convert the string to an array. from the array we will pick one character and then permute rest of it.
 After getting the permutation of the rest of the characters, we will concatenate each of them with the character we have picked.
 
 __step-1__ First copy original array to avoid changing it while picking elements
 
-__step-2__ Use splice to removed element from the copied array. We copied the array because splice will remove the item from the array. 
+__step-2__ Use splice to removed element from the copied array. We copied the array because splice will remove the item from the array.
 We will need the picked item in the next iteration.
 
 __step-3__ `[1,2,3,4].splice(2,1)` will return `[3]` and remaining array = `[1,2,4]`
@@ -277,7 +277,7 @@ function permutations(str) {
   let picked;
   let restPerms;
   let next;
-  
+
   if (arr.length === 1) return [str];
   for (let i = 0; i < arr.length; i++) {
     rest = [...arr];
@@ -379,4 +379,58 @@ function serialProcess(arr, cb) {
 }
 ```
 
-# 32) Next
+# 32) bind() Upgraded
+
+Write `bind` that can be chained like so `fun.bind().bind().bind()`. Each new call to `bind` should replace
+the context and all but beware as the source function should remain the same ( or else Maximum Call
+Stack exceeded ):
+
+```javascript
+Function.prototype.bind = (function() {
+    let fun = null;
+    let context = null;
+    let firstParams = null;
+
+    return function() {
+        context = arguments[0];
+        firstParams = Array.prototype.slice.call(arguments, 1);
+        if (!fun) {
+            fun = this;
+        }
+
+        return function() {
+            const secondParams = Array.prototype.slice.call(arguments);
+            const funToCall = fun;
+            fun = null;
+            return funToCall.apply(context, firstParams.concat(secondParams));
+        }
+    }
+}());
+
+class Cat {
+    constructor(name) {
+        this.name = name;
+        this.x = 12;
+        this.y = 11;
+    }
+
+    danceAround(param1, param2) {
+        this.name += this.x + this.y + param1;
+        this.param2 = param2;
+    }
+}
+
+const cat = new Cat('Tom');
+
+const rightObject = { name: 'Holmes', x: 'node', y: 'Nose' };
+
+cat.danceAround
+        .bind({ name: 'Cool', x: 'wow', y: 0 }, ':)', '>0')
+        .bind({ name: 'Another dide', x: 'what', y: 'where' }, '--)')
+        .bind(rightObject, 'coolFirstPar')('coolSecond Par');
+
+rightObject; // { name: 'HolmesnodeNosecoolFirstPar, x: 'node', y: 'Nose', param2: 'coolSecond Par' }
+console.log(rightObject);
+```
+
+# 33) Next
