@@ -325,3 +325,103 @@ function factoryFunction() {
 
 factoryFunction(); // Object { }
 ```
+
+## Class Declarations are not Hoisted
+
+```js
+const p = new Rectangle(2);
+
+class Rectangle {
+    constructor(val) {
+        this.sides = val;
+    }
+}
+
+// ReferenceError: Cannot access 'Rectangle' before initialization
+```
+
+## Class methods in the Wrong Context
+
+If we take one method of the ES2015 Class and try to use it on its own ( like `method` instead 
+of `instance.method` ) most other functions will just dynamically replace this with `widnow`. 
+But if we lend a method from ES2015 Class like this, the method lent will not dynamically replace `this`
+with `window`, instead `this` will be `undefined` in the global context:
+
+```js
+class Laboratory {
+    constructor(name) {
+        this.laboratoryName = name;
+    }
+
+    speak() {
+        return this;
+    }
+
+    static someMethod() {
+        return this;
+    }
+}
+
+const lab = new Laboratory('c');
+lab.speak(); // this -> Laboratory { }
+
+// lend method:
+const speak = lab.speak;
+speak(); // undefined( because this -> undefined; usual functions would return window )
+
+const someStaticMethd = Laboratory.someMethod;
+someStaticMethd(); // undefined
+```
+
+An important detail is that `this === undefined` because these methods behave as though in `strict mode` but
+they will have `this` as whatever if we pass them as method to an object:
+
+```js
+const someStaticMethd = Laboratory.someMethod;
+const object = {};
+object.usualFun = function () { return this };
+object.staticMethod = someStaticMethd;
+
+object.usualFun(); // this -> object
+object.staticMethod(); // this -> object
+object.usualFun() === object.staticMethod(); // true
+```
+
+## Extend Class From Object
+
+Normally we can't do it:
+
+```js
+const objecto = {
+    sayName() {
+        return `My Name is ${this.name}`;
+    }
+};
+
+class Person extends objecto {
+    constructor(name) {
+        this.name = name;
+    }
+}
+
+// TypeError: Class extends value #<Object> is not a constructor or null
+```
+
+But here is a workaround ( gotta use good old Constructor Functions ):
+
+```js
+const objecto = {
+    sayName() {
+        return `My Name is ${this.name}`;
+    }
+};
+
+function Person(name) {
+    this.name = name;
+}
+
+Object.setPrototypeOf(Person.prototype, objecto);
+
+const john = new Person('John');
+john.sayName(); // My Name is John
+```
