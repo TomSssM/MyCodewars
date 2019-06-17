@@ -353,4 +353,30 @@ function threeBiggest(arr) {
 threeBiggest([5,4,3,6,7,8,9,10,1,2]); // "first - 10, second - 9, third - 8"
 ```
 
-# 31) Next
+# 31) Serial Process
+
+Write a function that works like so:
+
+```js
+serialProcess([1,2,3,4,5], (el, index, list, done) => {
+    setTimeout(() => { done(el + el); });
+}).then(console.log); // [1,4,9,16,25]
+```
+
+Takes in an array and a callback ( which modifies each array item in a certain way ). Beware that the callback
+only calls its last parameter ( another callback ) in `setTimeout`. The return value should be a Promise with
+an array of modified items as seen above. Here is the solution:
+
+```js
+function serialProcess(arr, cb) {
+    return Promise.all(
+        arr.map((value, index, array) => {
+            return new Promise((resolve) => {
+                cb(value, index, array, resolve);
+            })
+        })
+    );
+}
+```
+
+# 32) Next
