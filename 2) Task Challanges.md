@@ -430,7 +430,6 @@ cat.danceAround
         .bind(rightObject, 'coolFirstPar')('coolSecond Par');
 
 rightObject; // { name: 'HolmesnodeNosecoolFirstPar, x: 'node', y: 'Nose', param2: 'coolSecond Par' }
-console.log(rightObject);
 ```
 
 # 33) Next
