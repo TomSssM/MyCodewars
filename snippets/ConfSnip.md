@@ -299,3 +299,29 @@ str[0] = 'c';
 str; // "man"
 // hence String is immutable
 ```
+
+## Constructor vs Factory Functions
+
+In JS we the name of a Constructor function to the function which we invoke with `new` and which returns an
+instance of itself. A Factory function is just a usual function which we invoke without `new`. However to be
+called a Factory function, a function actually needs to return an object. Consider the following code:
+
+```js
+function ConstructorFunction() {
+    this.someProp = 1;
+    this.someOtherProp = 2;
+}
+ConstructorFunction.prototype.method = function () { /* ... */ };
+
+new ConstructorFunction(); // ConstructorFunction { }
+
+function factoryFunction() {
+    return {
+        someProp: 1,
+        someOtherProp: 2,
+        method() { /* ... */ },
+    };
+}
+
+factoryFunction(); // Object { }
+```
