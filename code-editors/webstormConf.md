@@ -28,6 +28,8 @@
 - Terminal - `CTRL + `\`
 - Undo - `Ctrl + Z`
 - Redo - `Ctrl + Y`
+- Increase Font Size - `Ctrl + =`
+- Decrease Font-Size - `Ctrl + Minus`
 
 ## Snippets ( Live Templates )
 
