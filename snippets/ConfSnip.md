@@ -106,7 +106,7 @@ class SomeClass {
     constructor(name) {
         this.name = name;
     }
-    
+
     static async method() {
         return 'Hello World';
     }
@@ -145,7 +145,7 @@ admin.attributes.isAdmin; // true
 guest.attributes.isAdmin; // true
 ```
 because the `attributes` property is the _reference_ type of value. If it were a usual value we would have both
-a property on the `admin.attributes` with one value and another property with the same name on 
+a property on the `admin.attributes` with one value and another property with the same name on
 `admin.prototype.attributes` but with a different value.
 
 ## Invoking a function with null context
@@ -156,7 +156,7 @@ function foo() { console.log(this) }
 foo.call(null); // Window
 ```
 
-However that isn't the case in strict mode where the function will get as its context exactly the value we pass 
+However that isn't the case in strict mode where the function will get as its context exactly the value we pass
 even if this value is null:
 ```javascript
 "use strict";
@@ -216,7 +216,7 @@ const regExp1 = /\w(?=\s|$)/g;
 
 ## Is primitive an instance of anything?
 
-Primitives are actually not instances of their corresponding classes, they only are 
+Primitives are actually not instances of their corresponding classes, they only are
 when wrapped with corresponding wrapper objects:
 ```js
 Number.prototype.checkIt = function() {
@@ -282,8 +282,8 @@ obj1; // we just changed the value of an object from { name: "Tom", method: code
 2 = 'blaBlaBla'; // ReferenceError: invalid assignment left-hand side
 ```
 Since it is so obvious it may seem like it isn't important but here this term can be used to answer
-why, for instance, `String` data type is actually immutable, because we cannot change the value 
-of a string like so `'man' = 'bob'` just like with the numbers. Here is an example showing that an array is mutable 
+why, for instance, `String` data type is actually immutable, because we cannot change the value
+of a string like so `'man' = 'bob'` just like with the numbers. Here is an example showing that an array is mutable
 and a string is immutable:
 ```js
 const str = 'man';
@@ -342,8 +342,8 @@ class Rectangle {
 
 ## Class methods in the Wrong Context
 
-If we take one method of the ES2015 Class and try to use it on its own ( like `method` instead 
-of `instance.method` ) most other functions will just dynamically replace this with `widnow`. 
+If we take one method of the ES2015 Class and try to use it on its own ( like `method` instead
+of `instance.method` ) most other functions will just dynamically replace this with `widnow`.
 But if we lend a method from ES2015 Class like this, the method lent will not dynamically replace `this`
 with `window`, instead `this` will be `undefined` in the global context:
 
@@ -424,4 +424,65 @@ Object.setPrototypeOf(Person.prototype, objecto);
 
 const john = new Person('John');
 john.sayName(); // My Name is John
+```
+
+## Default Values in Destructuring
+
+We can asign default values when doing destructuring ( don't forget about it :) ):
+
+```js
+// arrays:
+const [a='one', b='two', c='three'] = [1, 2];
+a; // 1
+b; // 2
+c; // three
+
+// objects:
+const o = {
+    propOne: '>0',
+};
+const { propOne, propTwo = 'man' } = o;
+propOne; // >0
+propTwo; // man
+
+// Assigning to new variables names and providing default values
+const o2 = {
+    code: 'JS',
+};
+const { code: language = 'not provided', fw: framework = 'not provided either' } = o2;
+language; // JS
+framework; // not provided either
+```
+
+Also note that while by using default values we can cover cases when the value we want to destructure
+is `undefined`, but an error is going to be thrown if that which we destructure ( usually an object or
+an array ) is `undefined` itelf like so:
+
+```js
+const { radius = 0 } = { radius: 12 };
+radius; // 12
+
+const { radiusTwo = 0 } = { radiusTwo: undefined };
+radiusTwo; // 0
+
+const weirdObj = undefined;
+const { radiusThree = 0 } = weirdObj;
+// TypeError: Cannot destructure property `radiusThree`
+// of 'undefined' or 'null'.
+```
+
+The way you can workaround this limitation ( in functions ) is by providing default parameters:
+
+```js
+function drawES2015Chart({size = 'big', coords = {x: 0, y: 0}, radius = 25} = {}) {
+    console.log(size, coords, radius);
+    // do some chart drawing
+}
+
+drawES2015Chart({
+    coords: {x: 18, y: 30},
+    radius: 30
+});
+
+drawES2015Chart(); // doesn't fail though arguments[0] === undefined
 ```
