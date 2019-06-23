@@ -539,4 +539,64 @@ btn.addEventListener('click', async () => {
 
 ## Export Confusion
 
-here
+We cannot do this:
+
+```js
+export default const val = 12;
+```
+
+Instead we should do this:
+
+```js
+export default 12;
+```
+
+But we cannot do this:
+
+```js
+const val = 12;
+export val;
+```
+
+So why can we do `export default 'val'` but not `export 12`? Because if you think of module as an object literal,
+in the first situation we make it like so: `{ default: 'val' }` and in the second JS doesn't know which key name
+to use: `{ default: 'val', ???: 12 }`. Thus:
+
+```js
+const val = 12;
+
+// instead of this:
+export val;
+
+// do this:
+export { val };
+
+// or this:
+export { val as newName };
+```
+
+And why cannot we do `export default const a = 12` you ask? Because the syntax is: `export default <expression>`
+and `const` is a `statement` :)
+
+We cannot have duplicate `export default`s:
+
+```js
+export default class SomeClass {};
+export { default } from './someModule2.js';
+```
+
+The Code above will give an error!
+
+However either this:
+
+```js
+export { default } from './someModule2.js';
+```
+
+Or this:
+
+```js
+export default class SomeClass {};
+```
+
+will give no error.
