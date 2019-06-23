@@ -31,6 +31,8 @@
 - Increase Font Size - `Ctrl + =`
 - Decrease Font Size - `Ctrl + Minus`
 - Open previously Copied Stuff - `Ctrl + Shift + V`
+- Git Commit - `Ctrl + K`
+- Git Push - `Ctrl + Shift + K`
 
 ## Snippets ( Live Templates )
 
