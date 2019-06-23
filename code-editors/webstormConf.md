@@ -29,7 +29,8 @@
 - Undo - `Ctrl + Z`
 - Redo - `Ctrl + Y`
 - Increase Font Size - `Ctrl + =`
-- Decrease Font-Size - `Ctrl + Minus`
+- Decrease Font Size - `Ctrl + Minus`
+- Open previously Copied Stuff - `Ctrl + Shift + V`
 
 ## Snippets ( Live Templates )
 
