@@ -407,6 +407,8 @@ class Person extends objecto {
 // TypeError: Class extends value #<Object> is not a constructor or null
 ```
 
+Because there is no `constructor`.
+
 But here is a workaround ( gotta use good old Constructor Functions ):
 
 ```js
@@ -424,6 +426,55 @@ Object.setPrototypeOf(Person.prototype, objecto);
 
 const john = new Person('John');
 john.sayName(); // My Name is John
+```
+
+Do note though that we _can_ inherit one Class A from Class B even if Class B has no `constructor`:
+
+```js
+class JustMethods {
+    sayHi() {
+        console.log(`${this.name} says Hi!`);
+    }
+}
+
+class SomeOtherClass extends JustMethods {
+    constructor(name) {
+        super(name);
+        this.name = name;
+    }
+
+    makeNoise() {
+        console.log(`${this.name} makes noise`);
+    }
+}
+
+const man = new SomeOtherClass('John');
+man.sayHi(); // John says Hi!
+man.makeNoise(); // John makes noise
+
+// no errors :)
+```
+
+In fact with ES2015 `class`es we can do even this:
+
+```js
+class JustMethods {
+    sayHi() {
+        console.log(`${this.name} says Hi!`);
+    }
+}
+
+class SomeOtherClass extends JustMethods {
+    makeNoise() {
+        console.log(`${this.name} makes noise`);
+    }
+}
+
+const man = new SomeOtherClass('John');
+man.sayHi(); // undefined says Hi!
+man.makeNoise(); // undefined makes noise
+
+// no errors :)
 ```
 
 ## Default Values in Destructuring
