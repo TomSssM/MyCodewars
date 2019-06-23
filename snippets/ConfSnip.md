@@ -486,3 +486,57 @@ drawES2015Chart({
 
 drawES2015Chart(); // doesn't fail though arguments[0] === undefined
 ```
+
+## Import Confusion
+
+The second ( `<two>` ) thing in `import <one>, <two> from ...` is actually the _whole_ module 
+( don't forget about it ):
+
+```js
+// someModule1.js:
+export default 12;
+export const notDefault1 = ':)';
+export const notDefault2 = '>0';
+
+// some other file:
+import defVal, * as smth from './someModule1.js';
+
+defVal; // 12
+smth; // Module { default: ..., notDefault1: ..., notDefault2: ... }
+```
+
+Sometimes we want to import a module only for its side-effects:
+
+```js
+// someModule1.js:
+(function () {
+    console.log('Hi! From Module');
+}());
+
+// Laboratory.js:
+import './someModule1.js';
+console.log('Hi! From Laboratory');
+
+// output:
+// Hi! From Module
+// Hi! From Laboratory
+```
+
+There is also a Promise-based _dynamic_ import. _Dynamic_ simply means that we import a module based on some user 
+action rather than as soon as the page has been loaded. An example:
+
+```js
+// someModule1.js:
+export default 12;
+
+// Laboratory.js:
+const btn = document.querySelector('#our-button');
+btn.addEventListener('click', async () => {
+    const module1 = await import('./someModule1.js');
+    console.log(module1.default); // 12
+});
+```
+
+## Export Confusion
+
+here
