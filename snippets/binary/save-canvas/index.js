@@ -50,8 +50,9 @@ function initBtn() {
 }
 
 async function saveAsImage() {
+    const finalImageCanvas = createFinalCanvas();
     const blob = await new Promise((resolve) => {
-        canvas.toBlob(resolve, `image/${extension}`);
+        finalImageCanvas.toBlob(resolve, `image/${extension}`);
     });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
@@ -63,4 +64,21 @@ async function saveAsImage() {
         URL.revokeObjectURL(link.href);
         link.remove();
     });
+}
+
+function createFinalCanvas() {
+    const finalCanvas = document.createElement('canvas');
+    const finalSize = document.querySelector('#final-size').value || canvas.width;
+    finalCanvas.width = finalSize;
+    finalCanvas.height = finalSize;
+    const finalCtx = finalCanvas.getContext('2d');
+    finalCtx.imageSmoothingEnabled = false;
+    finalCtx.drawImage(
+        canvas,
+        0,
+        0,
+        finalSize,
+        finalSize,
+    );
+    return finalCanvas;
 }
