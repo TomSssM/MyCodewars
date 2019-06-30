@@ -18,7 +18,7 @@
 - Unindent Line or Selection `CTRL + {`
 - Move Caret Backward a Paragraph - `CTRL + UP`
 - Move Caret Forward a Paragraph - `CTRL + DOWN`
-- Move Caret to Line Start - `CTRL + l`
+- Move Caret to Line Start - `CTRL + Shift + ;`
 - Move Caret to Line End - `CTRL + ;`
 - Clone Caret Above - `ALT + SHIFT + UP`
 - Clone Caret Below - `ALT + SHIFT + DOWN`
