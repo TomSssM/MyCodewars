@@ -98,3 +98,4 @@
   - [Selection List (Custom Events)](./comp-com/sel-list/index.js)
   - [Custom Dropdown](./comp-com/cust-dropdown/index.js)
   - [Slider (Custom Events)](./comp-com/slider/index.js)
+- [Piskel Draft Algorithms](./piskel-draft-algorithms)

@@ -1,0 +1,25 @@
+body, html {
+    margin: 0;
+    padding: 0;
+}
+#container {
+    height: 411px;
+    background-image: url('./canvas-background.png');
+    background-size: 16px 16px;
+    background-position: -4px -4px;
+    border: 1px solid #000;
+    position: relative;
+    overflow: hidden;
+}
+#container:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00000080;
+}
+#canvas-background {
+    position: relative;
+}

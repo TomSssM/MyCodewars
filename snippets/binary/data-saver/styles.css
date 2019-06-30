@@ -1,0 +1,37 @@
+body {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+}
+form {
+  align-self: center;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+.button-container {
+  align-self: center;
+  display: flex;
+  flex-flow: column nowrap;
+  padding: .4rem;
+  border: 1px solid #000;
+}
+textarea {
+  resize: none;
+}
+.button-container button {
+  margin-bottom: .4rem;
+}
+.button-container button:last-child {
+  margin-bottom: 0;
+}
+.output-container {
+  border: 1px solid #000;
+}
+.output-container__img {
+  width: 200px;
+  height: 200px;
+  image-rendering: pixelated;
+  padding: .3rem;
+}

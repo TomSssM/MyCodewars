@@ -106,7 +106,7 @@ class SomeClass {
     constructor(name) {
         this.name = name;
     }
-    
+
     static async method() {
         return 'Hello World';
     }
@@ -145,7 +145,7 @@ admin.attributes.isAdmin; // true
 guest.attributes.isAdmin; // true
 ```
 because the `attributes` property is the _reference_ type of value. If it were a usual value we would have both
-a property on the `admin.attributes` with one value and another property with the same name on 
+a property on the `admin.attributes` with one value and another property with the same name on
 `admin.prototype.attributes` but with a different value.
 
 ## Invoking a function with null context
@@ -156,7 +156,7 @@ function foo() { console.log(this) }
 foo.call(null); // Window
 ```
 
-However that isn't the case in strict mode where the function will get as its context exactly the value we pass 
+However that isn't the case in strict mode where the function will get as its context exactly the value we pass
 even if this value is null:
 ```javascript
 "use strict";
@@ -216,7 +216,7 @@ const regExp1 = /\w(?=\s|$)/g;
 
 ## Is primitive an instance of anything?
 
-Primitives are actually not instances of their corresponding classes, they only are 
+Primitives are actually not instances of their corresponding classes, they only are
 when wrapped with corresponding wrapper objects:
 ```js
 Number.prototype.checkIt = function() {
@@ -282,8 +282,8 @@ obj1; // we just changed the value of an object from { name: "Tom", method: code
 2 = 'blaBlaBla'; // ReferenceError: invalid assignment left-hand side
 ```
 Since it is so obvious it may seem like it isn't important but here this term can be used to answer
-why, for instance, `String` data type is actually immutable, because we cannot change the value 
-of a string like so `'man' = 'bob'` just like with the numbers. Here is an example showing that an array is mutable 
+why, for instance, `String` data type is actually immutable, because we cannot change the value
+of a string like so `'man' = 'bob'` just like with the numbers. Here is an example showing that an array is mutable
 and a string is immutable:
 ```js
 const str = 'man';
@@ -342,8 +342,8 @@ class Rectangle {
 
 ## Class methods in the Wrong Context
 
-If we take one method of the ES2015 Class and try to use it on its own ( like `method` instead 
-of `instance.method` ) most other functions will just dynamically replace this with `widnow`. 
+If we take one method of the ES2015 Class and try to use it on its own ( like `method` instead
+of `instance.method` ) most other functions will just dynamically replace this with `widnow`.
 But if we lend a method from ES2015 Class like this, the method lent will not dynamically replace `this`
 with `window`, instead `this` will be `undefined` in the global context:
 
@@ -407,6 +407,8 @@ class Person extends objecto {
 // TypeError: Class extends value #<Object> is not a constructor or null
 ```
 
+Because there is no `constructor`.
+
 But here is a workaround ( gotta use good old Constructor Functions ):
 
 ```js
@@ -425,3 +427,227 @@ Object.setPrototypeOf(Person.prototype, objecto);
 const john = new Person('John');
 john.sayName(); // My Name is John
 ```
+
+Do note though that we _can_ inherit one Class A from Class B even if Class B has no `constructor`:
+
+```js
+class JustMethods {
+    sayHi() {
+        console.log(`${this.name} says Hi!`);
+    }
+}
+
+class SomeOtherClass extends JustMethods {
+    constructor(name) {
+        super(name);
+        this.name = name;
+    }
+
+    makeNoise() {
+        console.log(`${this.name} makes noise`);
+    }
+}
+
+const man = new SomeOtherClass('John');
+man.sayHi(); // John says Hi!
+man.makeNoise(); // John makes noise
+
+// no errors :)
+```
+
+In fact with ES2015 `class`es we can do even this:
+
+```js
+class JustMethods {
+    sayHi() {
+        console.log(`${this.name} says Hi!`);
+    }
+}
+
+class SomeOtherClass extends JustMethods {
+    makeNoise() {
+        console.log(`${this.name} makes noise`);
+    }
+}
+
+const man = new SomeOtherClass('John');
+man.sayHi(); // undefined says Hi!
+man.makeNoise(); // undefined makes noise
+
+// no errors :)
+```
+
+## Default Values in Destructuring
+
+We can asign default values when doing destructuring ( don't forget about it :) ):
+
+```js
+// arrays:
+const [a='one', b='two', c='three'] = [1, 2];
+a; // 1
+b; // 2
+c; // three
+
+// objects:
+const o = {
+    propOne: '>0',
+};
+const { propOne, propTwo = 'man' } = o;
+propOne; // >0
+propTwo; // man
+
+// Assigning to new variables names and providing default values
+const o2 = {
+    code: 'JS',
+};
+const { code: language = 'not provided', fw: framework = 'not provided either' } = o2;
+language; // JS
+framework; // not provided either
+```
+
+Also note that while by using default values we can cover cases when the value we want to destructure
+is `undefined`, but an error is going to be thrown if that which we destructure ( usually an object or
+an array ) is `undefined` itelf like so:
+
+```js
+const { radius = 0 } = { radius: 12 };
+radius; // 12
+
+const { radiusTwo = 0 } = { radiusTwo: undefined };
+radiusTwo; // 0
+
+const weirdObj = undefined;
+const { radiusThree = 0 } = weirdObj;
+// TypeError: Cannot destructure property `radiusThree`
+// of 'undefined' or 'null'.
+```
+
+The way you can workaround this limitation ( in functions ) is by providing default parameters:
+
+```js
+function drawES2015Chart({size = 'big', coords = {x: 0, y: 0}, radius = 25} = {}) {
+    console.log(size, coords, radius);
+    // do some chart drawing
+}
+
+drawES2015Chart({
+    coords: {x: 18, y: 30},
+    radius: 30
+});
+
+drawES2015Chart(); // doesn't fail though arguments[0] === undefined
+```
+
+## Import Confusion
+
+The second ( `<two>` ) thing in `import <one>, <two> from ...` is actually the _whole_ module 
+( don't forget about it ):
+
+```js
+// someModule1.js:
+export default 12;
+export const notDefault1 = ':)';
+export const notDefault2 = '>0';
+
+// some other file:
+import defVal, * as smth from './someModule1.js';
+
+defVal; // 12
+smth; // Module { default: ..., notDefault1: ..., notDefault2: ... }
+```
+
+Sometimes we want to import a module only for its side-effects:
+
+```js
+// someModule1.js:
+(function () {
+    console.log('Hi! From Module');
+}());
+
+// Laboratory.js:
+import './someModule1.js';
+console.log('Hi! From Laboratory');
+
+// output:
+// Hi! From Module
+// Hi! From Laboratory
+```
+
+There is also a Promise-based _dynamic_ import. _Dynamic_ simply means that we import a module based on some user 
+action rather than as soon as the page has been loaded. An example:
+
+```js
+// someModule1.js:
+export default 12;
+
+// Laboratory.js:
+const btn = document.querySelector('#our-button');
+btn.addEventListener('click', async () => {
+    const module1 = await import('./someModule1.js');
+    console.log(module1.default); // 12
+});
+```
+
+## Export Confusion
+
+We cannot do this:
+
+```js
+export default const val = 12;
+```
+
+Instead we should do this:
+
+```js
+export default 12;
+```
+
+But we cannot do this:
+
+```js
+const val = 12;
+export val;
+```
+
+So why can we do `export default 'val'` but not `export 12`? Because if you think of module as an object literal,
+in the first situation we make it like so: `{ default: 'val' }` and in the second JS doesn't know which key name
+to use: `{ default: 'val', ???: 12 }`. Thus:
+
+```js
+const val = 12;
+
+// instead of this:
+export val;
+
+// do this:
+export { val };
+
+// or this:
+export { val as newName };
+```
+
+And why cannot we do `export default const a = 12` you ask? Because the syntax is: `export default <expression>`
+and `const` is a `statement` :)
+
+We cannot have duplicate `export default`s:
+
+```js
+export default class SomeClass {};
+export { default } from './someModule2.js';
+```
+
+The Code above will give an error!
+
+However either this:
+
+```js
+export { default } from './someModule2.js';
+```
+
+Or this:
+
+```js
+export default class SomeClass {};
+```
+
+will give no error.

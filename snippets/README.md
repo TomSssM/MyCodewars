@@ -6,10 +6,14 @@
 - [Promise](./promise/README.md)
 - [Binary Data](./binary/README.md)
 
-## Snippets
+## CS Snippets
 
 - [Data Structures](./Data%20Structures/README.md)
 - [Algorithms](./algorithms/README.md)
+- [Design Patterns](./design-patterns/README.md)
+
+## Main Snippets
+
 - [Confusing Snippets](./ConfSnip.md)
 - [JSON](./myJSON.js)
 - [Iterators and Generators](./iterators/README.md)

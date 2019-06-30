@@ -18,8 +18,8 @@
 - Unindent Line or Selection `CTRL + {`
 - Move Caret Backward a Paragraph - `CTRL + UP`
 - Move Caret Forward a Paragraph - `CTRL + DOWN`
-- Move Caret to Line Start - `CTRL + Page Down`
-- Move Caret to Line End - `CTRL + End`
+- Move Caret to Line Start - `CTRL + l`
+- Move Caret to Line End - `CTRL + ;`
 - Clone Caret Above - `ALT + SHIFT + UP`
 - Clone Caret Below - `ALT + SHIFT + DOWN`
 - Duplicate Line or Selection - `CTRL + D`
@@ -28,6 +28,11 @@
 - Terminal - `CTRL + `\`
 - Undo - `Ctrl + Z`
 - Redo - `Ctrl + Y`
+- Increase Font Size - `Ctrl + =`
+- Decrease Font Size - `Ctrl + Minus`
+- Open previously Copied Stuff - `Ctrl + Shift + V`
+- Git Commit - `Ctrl + K`
+- Git Push - `Ctrl + Shift + K`
 
 ## Snippets ( Live Templates )
 
