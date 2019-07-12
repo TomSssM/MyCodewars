@@ -651,3 +651,23 @@ export default class SomeClass {};
 ```
 
 will give no error.
+
+## getters/setters and syntax
+
+Remember that we can never use an accessor as though it were a method. Here is what I mean:
+
+```js
+// ok:
+const o1 = {
+  get name() {
+    return 'Tom';
+  }
+};
+
+// error:
+const o2 = {
+    get surname: function() {
+      return 'Smith';
+    },
+};
+```
