@@ -671,3 +671,54 @@ const o2 = {
     },
 };
 ```
+
+## First confusion with new fields syntax
+
+We have to use an arrow function as a field instead of a usual method only if it is an event 
+listener( I apologize for JSX in this repo ):
+
+```jsx harmony
+class App extends Component {
+  validateField = 'validation succeeded';
+
+  eventListener = () => {
+    this.helperFunction('Hello World'); // (*)
+  };
+
+  helperFunction(message) {
+    console.log(message, this.validateField);
+    console.log(this);
+  }
+
+  render() {
+    return (
+        <h1
+            style={{backgroundColor: 'yellow'}}
+            onClick={this.eventListener}
+        >
+          Hello Redux
+        </h1>
+    );
+  }
+}
+```
+
+You see since the context was already bound when we called `helperFunction` in line `(*)` we don't need to
+write `helperFunction` as arrow function like that:
+
+```jsx harmony
+class App extends Component {
+  // ...
+
+  helperFunction = (message) => {
+    console.log(message, this.validateField);
+    console.log(this);
+  };
+  
+  // ...
+}
+```
+
+Thus if we write as arrow-functions-fields only those methods that serve as event listeners 
+( like `this.eventListener` in `App` ) we should be alright not redefining context for the rest 
+of the methods ( like `this.helperFunction` in `App` ).
