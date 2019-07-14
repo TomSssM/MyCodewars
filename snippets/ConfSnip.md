@@ -722,3 +722,20 @@ class App extends Component {
 Thus if we write as arrow-functions-fields only those methods that serve as event listeners 
 ( like `this.eventListener` in `App` ) we should be alright not redefining context for the rest 
 of the methods ( like `this.helperFunction` in `App` ).
+
+## Arrow Functions really shouldn't be used as methods
+
+```js
+const o = {
+    name: 'Tom',
+    bound: () => {
+        return this.name;
+    },
+    notBound() {
+        return this.name;
+    },
+};
+
+o.bound(); // "" ( or undefined )
+o.notBound(); // "Tom"
+```
