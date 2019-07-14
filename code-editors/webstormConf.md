@@ -8,6 +8,7 @@
 - [x] Editor > Color Scheme > Console Colors > Standard output: `#dadada`
 - [x] Tools > Terminal > Shell Path: `C:\Program Files\Git\bin\bash.exe`
 - [ ] Appearance & Behavior > System Settings > Use "safe write" ( uncheck )
+- [ ] Editor > Inspections > JavaScript > Code style issues > Unterminated Statement
 - [x] Languages & Frameworks > JavaScript > Code Quality Tools > ESLint > Automatic ESLint configuration
 
 ## Keymap
