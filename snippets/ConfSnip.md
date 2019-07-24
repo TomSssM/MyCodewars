@@ -609,6 +609,13 @@ const val = 12;
 export val;
 ```
 
+( _Note: we we want to do like above we need to do:_ 
+```js
+const man = ':)';
+export { man };
+```
+note ending. )
+
 So why can we do `export default 'val'` but not `export 12`? Because if you think of module as an object literal,
 in the first situation we make it like so: `{ default: 'val' }` and in the second JS doesn't know which key name
 to use: `{ default: 'val', ???: 12 }`. Thus:
