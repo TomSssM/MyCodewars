@@ -432,4 +432,91 @@ cat.danceAround
 rightObject; // { name: 'HolmesnodeNosecoolFirstPar, x: 'node', y: 'Nose', param2: 'coolSecond Par' }
 ```
 
-# 33) Next
+# 33) Request Managing
+
+## Difficulty 1
+
+Here is a task I come up with: we have `n` number of requests, make JS fetch them one after another:
+
+```js
+const urlCount = 30;
+const baseURI = 'https://jsonplaceholder.typicode.com/todos/';
+const urls = [];
+
+let i = 0;
+while (i < urlCount) {
+    urls[i] = `${baseURI}${i}`;
+    i += 1;
+}
+
+function getRandom() {
+    Promise.all(urls.map((url, i) => fetch(url).then(res => {
+        // console.log(`Getting: ${i}`);
+        return  res.json();
+    }))).then(console.log);
+}
+
+function getOrdered() {
+    urls.reduce((t, url, i) => {
+        return t.then(() => {
+            return fetch(url).then(res => {
+                // console.log(`Getting ${i}`);
+                return res.json();
+            }).then(console.log);
+        });
+    }, Promise.resolve());
+}
+
+function getOrderedToo() {
+    urls.reduce((t, url, i) => {
+        return t.then(() => fetch(url)).then(res => {
+            // console.log(`Getting ${i}`);
+            return res.json();
+        }).then(console.log);
+    }, Promise.resolve());
+}
+```
+
+## Difficulty 2
+
+Now let's make it harder. Imagine that our server can handle only `m` number of requests at a time, thus you should
+fetch `m` out of `n` urls, and only after they have arrived, fetch another `m` urls and so on until we are done.
+
+Here is the solution:
+
+```js
+const n = 30;
+const m = 4;
+
+const baseURI = 'https://jsonplaceholder.typicode.com/todos/';
+const urls = [];
+
+fillURLs();
+doStuff();
+
+function fillURLs() {
+    let i = 0;
+    while (i < n) {
+        urls[i] = `${baseURI}${i}`;
+        i += 1;
+    }
+}
+
+function doStuff() {
+    let promise = Promise.resolve();
+    for (let i = 0; i < n; i += m) {
+        const urlsToFetchAtATime = urls.slice(i, Math.min(i + m, n));
+        promise = promise.then(() => {
+            return Promise.all(urlsToFetchAtATime.map(url => {
+                return fetch(url).then(res => res.json());
+            })).then(responses => {
+                console.log('I have fetched:', responses);
+            });
+        });
+    }
+}
+```
+
+It is awesome!
+
+# 34) Next

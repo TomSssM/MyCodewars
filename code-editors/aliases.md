@@ -2,7 +2,7 @@
 
 Here is a list of my most commonly used aliases:
 
-__.bashrc:__
+__.bashrc (windows) / .bash_profile(mac):__
 
 git aliases:
 

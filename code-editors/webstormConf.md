@@ -8,6 +8,7 @@
 - [x] Editor > Color Scheme > Console Colors > Standard output: `#dadada`
 - [x] Tools > Terminal > Shell Path: `C:\Program Files\Git\bin\bash.exe`
 - [ ] Appearance & Behavior > System Settings > Use "safe write" ( uncheck )
+- [ ] Editor > Inspections > JavaScript > Code style issues > Unterminated Statement
 - [x] Languages & Frameworks > JavaScript > Code Quality Tools > ESLint > Automatic ESLint configuration
 
 ## Keymap
@@ -18,7 +19,7 @@
 - Unindent Line or Selection `CTRL + {`
 - Move Caret Backward a Paragraph - `CTRL + UP`
 - Move Caret Forward a Paragraph - `CTRL + DOWN`
-- Move Caret to Line Start - `CTRL + l`
+- Move Caret to Line Start - `CTRL + Shift + ;`
 - Move Caret to Line End - `CTRL + ;`
 - Clone Caret Above - `ALT + SHIFT + UP`
 - Clone Caret Below - `ALT + SHIFT + DOWN`

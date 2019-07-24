@@ -274,3 +274,11 @@ $ git checkout master
 $ git merge upstream/master
 ```
 And then simply push your changes :)
+
+## Completely clearing the working directory
+
+```bash
+$ git clean -dfx
+```
+
+Destroys even the files that are in `.gitignore` ( like `node_modules` ).
