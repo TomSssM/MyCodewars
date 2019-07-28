@@ -90,3 +90,15 @@ xhr.send(slice); // and send them
 ## Download Status
 
 [Here](./code-2/index.js) is a demo allowing to track the process of either downloading a file or uploading a file
+
+## Summary
+
+When the request comes we may respond with a huge string but this string is also data which needs to be downloaded 
+thus is the download progress as the bits of the string are flowing back to us over the web. It doesn't have to
+be a string but Download Process is the process of downloading the response of the server. The server can response 
+even with 5GB of data, in which case we are going to download it without problems. The only difference is that the
+server needs to use streams to do that ( more on Streams in the NodeJS studies ).
+
+The Upload Status is sending files from the client to the server. The files come to the client from file inputs or 
+drag-n-drop and coming from these places they are not limited in size at all and since request ( in NodeJS ) is also
+a stream we are not limited in sending files of _any_ size ( even 5GB+ no problem )
