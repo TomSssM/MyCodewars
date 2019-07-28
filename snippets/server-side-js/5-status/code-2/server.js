@@ -9,10 +9,10 @@ http.createServer(function(req, res) {
             // don't do anything with the incoming data:
             length += chunk.length;
 
-            if (length > 50 * 1024 * 1024) {
-                res.statusCode = 413;
-                res.end("File too big");
-            }
+            // if (length > 50 * 1024 * 1024) {
+            //     res.statusCode = 413;
+            //     res.end("File too big");
+            // }
         }).on('end', () => {
             res.end('Ok');
         });        
