@@ -97,7 +97,10 @@ When the request comes we may respond with a huge string but this string is also
 thus is the download progress as the bits of the string are flowing back to us over the web. It doesn't have to
 be a string but Download Process is the process of downloading the response of the server. The server can response 
 even with 5GB of data, in which case we are going to download it without problems. The only difference is that the
-server needs to use streams to do that ( more on Streams in the NodeJS studies ).
+server needs to use streams to do that ( more on Streams in the NodeJS studies ). An important aside here not 
+mentioned in the article is that server might write in very tiny chunks it doesn't matter, on the client AJAX starts 
+downloading the response of the server in as big or as little chunks as it needs as soon as we call `end()` on the 
+response on the server.
 
 The Upload Status is sending files from the client to the server. The files come to the client from file inputs or 
 drag-n-drop and coming from these places they are not limited in size at all and since request ( in NodeJS ) is also
