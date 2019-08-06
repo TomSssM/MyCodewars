@@ -38,9 +38,14 @@ Set upstream for a branch (for every branch that you did -u for there is then in
 ``` bash
 $ git push <remote> <branch> -u
 ```
+
 List local + remote branches
 ``` bash
 $ git branch -a
+```
+List only local branches
+```bash
+$ git branch --list
 ```
 
 Delete a branch
@@ -171,6 +176,7 @@ If you made some commits on your `master` branch (it can be any branch `master` 
 
 ```bash
 $ git pull origin master --rebase
+$ git pull origin master -r           ( less verbose )
 ```
 But you should never do that if the commits that are going to be overwritten are already being used and have been pulled by somebody in this case do merge
 
