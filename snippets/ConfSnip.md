@@ -739,3 +739,23 @@ const o = {
 o.bound(); // "" ( or undefined )
 o.notBound(); // "Tom"
 ```
+
+## Default Parameters Functions have separate Scope
+
+If we assign a callback as a default parameter this callback will refer to Global Scope and not to Scope of the
+function wherein it was declared:
+
+```js
+var b = ':)';
+
+function test() {
+    return (function(a = function() {
+        return b;
+    }) {
+        var b = 1;
+        return a();
+    }());
+}
+
+test(); // :)
+```
