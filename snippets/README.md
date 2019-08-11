@@ -15,6 +15,7 @@
 ## Main Snippets
 
 - [Confusing Snippets](./ConfSnip.md)
+- [New in JS](./new-in-js.md)
 - [JSON](./myJSON.js)
 - [Iterators and Generators](./iterators/README.md)
 - [Unit Testing](./unit-testing/README.md)
