@@ -759,3 +759,23 @@ function test() {
 
 test(); // :)
 ```
+
+## ![]
+
+Don't forget that if we apply the `!` operator to some value: `!<value>` we check whether `<value>` is _truthy_
+or _falsey_ and convert it to either `true` or `false` ( to the opposite ). Don't get confused if the `<value>`
+is an `object` as we don't first convert `<value>` to a primitive and then see whether it is truthy or falsey;
+if `<value>` is an object we see whether it is truthy ( without calling `toPrimitive()` and yeap even empty objects
+are truthy ) and then convert it to either `true` or `false`. Here is proof:
+
+```js
+!![] // true ( since [] is truthy )
+![] // false ( since !<truthy> is false )
+```
+
+If we were to first convert `[]` to a primitive, the result would be the opposite:
+
+```js
+!!'' // false ( cause '' is falsy )
+!'' // true
+```
