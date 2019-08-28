@@ -70,3 +70,11 @@ const fun = async () => {
     }
 };
 ```
+
+The output is:
+
+```
+1
+2
+3
+```
