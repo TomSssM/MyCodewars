@@ -740,6 +740,11 @@ o.bound(); // "" ( or undefined )
 o.notBound(); // "Tom"
 ```
 
+Since `bound` is an arrow function it uses the `this` defined by the nearest regular function or the one
+that lies in the global scope ( out in the open if you do: `console.log(this)` it returns the window object ).
+In our case since we didn't _define_ ( define cause Lexical this remember ) `bound` inside another function
+its `this` is going to be the same `this` as the one in the global scope. Thus it is going to be the window object.
+
 ## Default Parameters Functions have separate Scope
 
 If we assign a callback as a default parameter this callback will refer to Global Scope and not to Scope of the
@@ -778,4 +783,46 @@ If we were to first convert `[]` to a primitive, the result would be the opposit
 ```js
 !!'' // false ( cause '' is falsy )
 !'' // true
+```
+
+## HTML Comments are Valid in JS
+
+It is true! For instance the following code runs OK:
+
+```js
+const dude = {
+    name: 'Tom',
+    age: 12,
+};
+
+<!-- dude is Tom -->
+
+console.log(dude);
+```
+
+## undefined properties revealed by in
+
+You are not going to believe it but the following code is self explanatory:
+
+```js
+const obj = {};
+
+'o' in obj; // false
+
+obj.o = undefined;
+
+'o' in obj; // true
+```
+
+## Interesting feature of labels
+
+The execution of code inside a label is interrupted by the `break` keyword. Literally, just
+take a look at the following code:
+
+```js
+dude: {
+    console.log('tsup');
+    break dude;
+    console.log('how are you doing');
+}
 ```
