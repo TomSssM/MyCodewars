@@ -597,4 +597,79 @@ body {
 ]
 ```
 
-# 35) Next
+# 35) Composable Array Sort
+
+Imagine the situation where we have `items`:
+
+```js
+const items = [
+    {name: 'Zh', surname: 'Pak', age: 19},
+    {name: 'Va',  surname: 'In',  age: 26},
+    {name: 'An',   surname: 'Ik', age: 27},
+    {name: 'Mi',  surname: 'Tr', age: 30},
+    {name: 'Ma',  surname: 'Pv', age: 30},
+];
+```
+
+And we want to sort them first by name and then by surname. So the logic would look like this:
+
+```js
+items.sort((left, right) => {
+    const firstCharLeft = left.name[0];
+    const firstCharRight = right.name[0];
+
+    // if the first 2 letters are the same then sort by surname
+    if (firstCharLeft === firstCharRight) {
+        return sortBySurname(left, right);
+    }
+
+    return firstCharLeft > firstCharRight ? 1 : -1;
+});
+
+function sortBySurname(left, right) {
+    const firstCharLeft = left.surname[0];
+    const firstCharRight = right.surname[0];
+
+    if (firstCharLeft === firstCharRight) return 0;
+
+    return firstCharLeft > firstCharRight ? 1 : -1;
+}
+```
+
+But what if the surnames are the same too? Then we would want to sort by *age*. Well, it is good but getting
+the sort for age into our existing code is starting to make our code look like shit. Thus we need to write
+a composable sort that would look like this:
+
+```js
+composeSort(sortByName, sortBySurname, sortByAge);
+```
+
+Such a call to `composeSort` will return a callback we should be able to pass like so:
+
+```js
+items.sort(composeSort(sortByName, sortBySurname, sortByAge));
+```
+
+to the `.sort` method. And such a callback returned by `composeSort` should thus sort all the values
+
+- first by `sortByName`
+- then in case `sortByName` encounters the same 2 first letters, then sort by `sortBySurname`
+- and if the same story happens to `sortBySurname`, then sort with `sortByAge`
+
+So we want a utility to make possible our logic that we just now came up with above.
+
+Here is the implementation:
+
+```js
+function composeSort(...sortCbs) {
+    return (left, right) => {
+        return sortCbs.reduce((t, cb) => t || cb(left, right), 0);
+    };
+}
+```
+
+So the resulting callback from `composeSort` looks at the value ( either -1 or 1 ) returned by the *first* callback, 
+then if it is 0 it checks that the next callback returns either 1 or -1 and not 0, yet if it also retruns 0 it looks at 
+the value returned by the 3rd callback and so on all that by *reducing* the array of callbacks.
+
+# 36) Next

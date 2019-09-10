@@ -826,3 +826,23 @@ dude: {
     console.log('how are you doing');
 }
 ```
+
+## How JS comparison algorithm works under the hood
+
+Here is the explanation in the extract of one out of the few fathomable entries in the spec:
+
+---
+
+Else, both px and py are Strings
+    a. If *py* is a prefix of *px*, return **false**. ( A String value *p* is a prefix of String value *q* if *q* 
+       can be the result of concatenating *p* and some other String *r*. Note that any String is a prefix of itself, 
+       because *r* may be the empty String. )
+    b. If *px* is a prefix of *py*, return **true**.
+    c. Let *k* be the smallest non-negative integer such that the character at position *k* within *px* is different 
+       from the character at position *k* within *py*. ( There must be such a *k*, for neither String is a prefix 
+       of the other. )
+    d. Let *m* be the integer that is the code unit value for the character at position *k* within *px*.
+    e. Let *n* be the integer that is the code unit value for the character at position *k* within *py*.
+    f. If *m < n*, return **true**. Otherwise, return **false**.
+
+---
