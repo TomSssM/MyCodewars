@@ -630,6 +630,8 @@ function sortBySurname(left, right) {
     const firstCharLeft = left.surname[0];
     const firstCharRight = right.surname[0];
 
+    // normally if the callback provided to Array.prototype.sort returns 0, then
+    // JS will not swap the two elements for whose comparison the callback returned 0
     if (firstCharLeft === firstCharRight) return 0;
 
     return firstCharLeft > firstCharRight ? 1 : -1;
