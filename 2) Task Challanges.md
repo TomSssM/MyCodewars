@@ -573,7 +573,7 @@ body {
 `);
 ```
 
-`ast` will look like this:
+`ast` ( Abstract Syntax Tree ) will look like this:
 
 ```json
 [
