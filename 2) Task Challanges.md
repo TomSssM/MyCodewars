@@ -674,4 +674,92 @@ So the resulting callback from `composeSort` looks at the value ( either -1 or 1
 then if it is 0 it checks that the next callback returns either 1 or -1 and not 0, yet if it also retruns 0 it looks at 
 the value returned by the 3rd callback and so on all that by *reducing* the array of callbacks.
 
-# 36) Next
+# 36) Transactions
+
+Implement a `Transation` class that would behave like so:
+
+```js
+function Transaction(arr) {
+    ...
+}
+
+const arr = [];
+
+const tA = new Transaction(arr);
+const tB = new Transaction(arr);
+const tC = new Transaction(arr);
+
+tA.push('A1');
+tA.push('A2');
+
+tB.push('B1');
+tB.push('B2');
+
+tC.unshift('C1');
+tC.push('C2');
+
+tB.push('B3');
+
+tA.push('A3');
+
+console.log('1st', arr); // 1st: ['C1', 'A1', 'A2', 'B1', 'B2', 'C2', 'B3', 'A3']
+
+tB.rollback();
+console.log('2nd', arr); // 2nd: ['C1', 'A1', 'A2', 'C2', 'A3']
+
+tA.commit();
+tA.rollback();
+console.log('3rd', arr); // 3rd: ['C1', 'A1', 'A2', 'C2', 'A3']
+
+tC.rollback();
+console.log('4th', arr); // 4th: ['A1', 'A2', 'A3']
+```
+
+Here is the implementation:
+
+```js
+function Transaction(arr) {
+    this.hash = String(Math.random()).slice(2);
+
+    if (!Transaction.array) {
+        Transaction.array = arr;
+    }
+}
+
+Transaction.array = null;
+Transaction.hashesArr = [];
+
+Transaction.prototype.push = function (val) {
+    this.constructor.array.push(val);
+    this.constructor.hashesArr.push(this.hash);
+};
+
+Transaction.prototype.unshift = function (val) {
+    this.constructor.array.unshift(val);
+    this.constructor.hashesArr.unshift(this.hash);
+};
+
+Transaction.prototype.rollback = function () {
+    const array = this.constructor.array;
+    const hashesArray = this.constructor.hashesArr;
+
+    for (let i = array.length; i >= 0; i -= 1) {
+        if (hashesArray[i] === this.hash) {
+            array.splice(i, 1);
+            hashesArray.splice(i, 1);
+        }
+    }
+};
+
+Transaction.prototype.commit = function () {
+    const hashesArray = this.constructor.hashesArr;
+
+    for (let i = hashesArray.length; i >= 0; i -= 1) {
+        if (hashesArray[i] === this.hash) {
+            delete hashesArray[i];
+        }
+    }
+};
+```
+
+# 37) Next
