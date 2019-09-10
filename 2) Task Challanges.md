@@ -715,7 +715,7 @@ tC.rollback();
 console.log('4th', arr); // 4th: ['A1', 'A2', 'A3']
 ```
 
-Here is the implementation:
+Here is the implementation ( it is one of those tasks that you solve by using 2 arrays ):
 
 ```js
 function Transaction(arr) {
