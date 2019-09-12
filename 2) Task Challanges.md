@@ -762,4 +762,71 @@ Transaction.prototype.commit = function () {
 };
 ```
 
-# 37) Next
+# 37) Tickets Orderizer
+
+Imagine we have the following tickets:
+```js
+[
+    { from: 'London', to: 'Washington' },
+    { from: 'NY', to: 'London' },
+    { from: 'Washington', to: 'Texas' },
+    ...
+]
+```
+
+Out of these tickets we can build a straight route from a to b. Thus we are going to fly from New York to Texas 
+according to the following route:
+
+```
+NY -> London -> Washington -> Texas
+```
+
+We can tell so by looking at the _sorted_ tickets below:
+
+```js
+[
+    { from: 'NY', to: 'London' },
+    { from: 'London', to: 'Moscow' },
+    { from: 'Moscow', to: 'SPb' },
+    ...
+]
+```
+
+We need to implement a function which would order the tickets like above so that we can trace them and get the route 
+from a to b.
+
+Here is the awesome implementation:
+
+```js
+function getRoute(tickets = []) {
+    const result = [];
+    const length = tickets.length;
+    const destinationRegistry = {};
+    const departureRegistry = {};
+
+    for (let i = 0; i < length; i += 1) {
+        const ticket = tickets[i];
+        destinationRegistry[ticket.to] = ticket;
+        departureRegistry[ticket.from] = ticket;
+    }
+
+    const currentTicket = tickets[0];
+    result.push(currentTicket);
+
+    let destTicket = departureRegistry[currentTicket.to];
+    while(destTicket) {
+        result.push(destTicket);
+        destTicket = departureRegistry[destTicket.to];
+    }
+
+    let departureTicket = destinationRegistry[currentTicket.from];
+    while(departureTicket) {
+        result.unshift(departureTicket);
+        departureTicket = destinationRegistry[departureTicket.from];
+    }
+
+    return result;
+}
+```
+
+# 38) Next
