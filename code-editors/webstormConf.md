@@ -13,6 +13,8 @@
 
 ## Keymap
 
+### windows
+
 - Move Line Down `ALT + DOWN`
 - Move Line Up `ALT + UP`
 - Indent Line or Selection `CTRL + }`
@@ -34,6 +36,33 @@
 - Open previously Copied Stuff - `Ctrl + Shift + V`
 - Git Commit - `Ctrl + K`
 - Git Push - `Ctrl + Shift + K`
+
+### mac
+
+- Move Line Down `COMMAND + DOWN`
+- Move Line Up `COMMAND + UP`
+- Indent Line or Selection `COMMAND + }`
+- Unindent Line or Selection `COMMAND + {`
+- Move Caret Backward a Paragraph - `OPTION + UP`
+- Move Caret Forward a Paragraph - `OPTION + DOWN`
+- Move Caret to Line Start - `COMMAND LEFT-ARROW`
+- Move Caret to Line End - `COMMAND RIGHT-ARROW`
+- Clone Caret Above - `SHIFT + COMMAND + UP`
+- Clone Caret Below - `SHIFT + COMMAND + DOWN`
+- Duplicate Line or Selection - `COMMAND + D`
+- Delete Line - `COMMAND + R`
+- Version Control - `F1`
+- Terminal - `CTRL + `\`
+- Undo - `COMMAND + Z`
+- Redo - `COMMAND + SHIFT + Z`
+- Increase Font Size - `COMMAND + =`
+- Decrease Font Size - `COMMAND + Minus`
+- Open previously Copied Stuff - `Ctrl + Shift + V`
+- Git Commit - `Ctrl + K`
+- Git Push - `Ctrl + Shift + K`
+- Preferences - `COMMAND + ,`
+- Add Selection for Next Occurrence - `COMMAND + G`
+- Find in Path - `SHIFT + COMMAND + F`
 
 ## Snippets ( Live Templates )
 
