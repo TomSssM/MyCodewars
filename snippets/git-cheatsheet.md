@@ -291,4 +291,23 @@ Destroys even the files that are in `.gitignore` ( like `node_modules` ).
 
 ## Managing Multiple Accounts and GitHubs with SSH
 
-TODO: here
+- ssh-keygen -t rsa -C "your-email-address"
+- ssh-add ~/.ssh/<private-key-name>
+- Make:
+```
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_rsa
+
+Host <variable-a>
+  HostName github.com
+  User git
+  IdentityFile <path-to-private-key>
+```
+- Variable-a:
+    - git@<here>:<path-to-repo>
+- WARNING: `HostName` ought to be the same as the name of the domain ( explain why on the example of yandex-team )
+- Add an example of my current config
+- Add on GitHub
+- Use by adding the origin in the SSH form and cloning via SSH
