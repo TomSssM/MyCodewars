@@ -291,7 +291,7 @@ Destroys even the files that are in `.gitignore` ( like `node_modules` ).
 
 ## Managing Multiple Accounts and GitHubs with SSH
 
-Imagine you have 2 github accounts and on the same machine you have 2 repos. You want to contribute to the 1st one 
+Imagine you have 2 GitHub accounts and on the same machine you have 2 repos. You want to contribute to the 1st one 
 with the 1st account and to the other with the 2nd account. One solution would be to keep changing username and 
 password before contributing to the repo. A better solution would be to generate two SSH keys: one for the 1st account, 
 the other for the 2nd account. Then clone the first repo thru the 1st SSH key and the second repo thru the 2nd SSH key. 
@@ -299,13 +299,15 @@ Now if you push to, say, the first repo, which is associated with the 1st SSH ke
 pushing commits on behalf of the 1st account because it _is_ the account associated with the 1st SSH key; likewise 
 for the 2nd repo thus eliminating the need for repetitively entering login and password all the time.
 
-Since you cannot be logged to 2 accounts at the same time, when you try to pull push, GitHub will constantly ask 
-you to authenticate.
+It solves the problem that since you cannot be logged to 2 accounts at the same time, when you try to pull / push, 
+GitHub will constantly ask you to authenticate.
 
-The solution to this is quite simple. Create two SSH keys: `a` and `b`. Associate `key a` with 1st account and `key b` 
-with 2nd account. Then clone any repo that is created with 1st account using SSH `key a`, and then clone any repo that 
-is created with 2nd account using SSH `key b`. Now if you go to any one of the two cloned repositories GitHub will no 
-longer ask you to sign in as we didn't use login and password to clone the repos, but instead SSH. 
+The solution to this is quite simple. Create two SSH keys: `a` and `b`. Associate `key a` with the 1st account and 
+`key b` with the 2nd account. Then clone any repo that is created with the 1st account using `key a`, and then 
+clone any repo that is created with the 2nd account using `key b`. Now if you go to any one of the two cloned 
+repositories and pull / push, GitHub will no longer ask you to sign in as we didn't use login and password to clone 
+the repos, but instead SSH.
+
 On the other hand were we to clone via http we may end up constantly having to enter credentials ( login and password ) 
 if we switch to the 1st repo after committing to the 2nd repo and vice versa as the 2 repos are created on 
 different accounts. With SSH such a problem ceases to exist any more.
@@ -318,8 +320,8 @@ $ ssh-keygen -t rsa -C "ilyashome3@gmail.com"
 
 This way we are telling to associate the key we are creating with the email named `ilyashome3@gmail.com`.
 
-Then go to GitHub and add this key which is associated with `ilyashome3@gmail.com` to the account that uses the 
-email `ilyashome3@gmail.com`. 
+Then go to GitHub and add this key we just created ( which is associated with `ilyashome3@gmail.com` ), add it to the 
+account that uses the email `ilyashome3@gmail.com`. 
 
 Likewise create another SSH key and associate it with a different email:
 
@@ -327,13 +329,26 @@ Likewise create another SSH key and associate it with a different email:
 $ ssh-keygen -t rsa -C "ilyasflat3@gmail.com"
 ```
 
-Now go to the 2nd account that uses the email `ilyasflat3@gmail.com` and add the ssh key just created.
+Now go to the 2nd account that uses the email `ilyasflat3@gmail.com` and add the SSH key just created.
 
-But that isn't all yet. We need to tell SSH agent what key to look at to make sure that we are the owner of the repo. 
+Just to be safe we can do
+
+```console
+$ ssh-add ~/.ssh/home
+$ ssh-add ~/.ssh/work
+```
+
+`ssh-add` adds private key identities ( from your `~/.ssh` directory ) to the authentication agent ( `ssh-agent` ), 
+so that the SSH Agent can take care of the authentication for you, and you don’t have type in passwords 
+at the terminal.
+
+But that isn't all yet. We need to tell SSH Agent what key to look at to make sure that we are the owner of the repo. 
 In other words when we clone via SSH from `account1`, we need to tell SSH agent to use the key 
 associated with `account1`, and likewise if we clone repos created with `account 2`, SSH agent should use the key 
 associated with `account2`. This way SSH will use the correct keys when it does the handshake and repos will be 
-cloned successfully. 
+cloned successfully. I mean we wouldn't want SSH Agent to use one and same key to do the handshake _every_ time.
+There are 2 different keys associated with 2 different accounts and in order to skip having to enter the credentials
+we need to establish the connection with the first account via one key and with the other account via the other key. 
 
 We can do that pretty easily by properly tweaking the SSH config file. For that go to the good old `~/.ssh` and create 
 a file called `config` ( no extension ). There we need to write something like this:
@@ -345,7 +360,9 @@ Host github.com
   IdentityFile ~/.ssh/id_rsa
 ```
 
-In order to understand what everything is for in here let's take a look at the url via which SSH clones repositories:
+In order to understand what everything is for in here let's take a look at the url via which SSH clones 
+repositories ( in fact it is a url just like `https://github.com/...` it simply uses a different _protocol_ not 
+HTTP but SSH ):
 
 ```
 git@github.com:TomSssM/lib-docs.git
@@ -353,8 +370,8 @@ git@github.com:TomSssM/lib-docs.git
 
 See this value right here between `@` and `:` ( `github.com` )?
 
-This value should be the same as `Host`. In other words if we were to change `Host` in the config file 
-to `cool` like this:
+This value should be the same as `Host` in the `config`. In other words if we were to change `Host` in the `config`
+file to `cool` like this:
 
 ```
 Host cool
@@ -427,8 +444,8 @@ Now upon cloning a repo from github SSH will ask you to confirm that you want to
 file in the `.ssh` directory so that our SSH agent knows that it can safely allow github.com to use the ssh protocol 
 to communicate with our machine.
 
-__Note__: if your company uses an enterprise version of GitHub ( it is located not on github.com but on 
-github.yandex-team.com for instance ) then you also need to consider the `HostName` field: 
+__Note__: if your company uses an enterprise version of GitHub ( it is located not on _github.com_ but on 
+_github.yandex-team.com_ for instance ) then you also need to consider the `HostName` field: 
 
 ```
 Host github-work
@@ -437,7 +454,7 @@ Host github-work
   ...
 ```
 
-`HostName` should match exactly the host name that you clone repos from. For instance if you are going to clone via 
+`HostName` should match exactly the _origin_ that you clone repos from. For instance if you are going to clone via 
 SSH from _github.yandex-team.com_ then you need to change `HostName` to:
 
 ```
@@ -461,14 +478,28 @@ Host github.yandex-team.ru
   IdentityFile ~/.ssh/work
 ```
 
+**Also Note:** since we are using SSH now if you do `git remote get-url origin` the url is going to look something
+like this:
+
+```
+git@github.com:TomSssM/MyCodewars.git
+```
+
+Just as we said, the url is going to be using a different protocol. Keep it in mind if you want to init a git SSH
+( and not the usual HTTP ) repository. When you thus add the origin for the first time make sure to add the origin
+like this:
+
+```console
+$ git add remote origin git@github.com:TomSssM/<some-name>.git
+```
+
+Though of course all this information will be on GitHub when you create a repository.
+
 ## Syncing 2 emails
 
 ## TODO
 
-- Add an example of my current config
-- validate that GitHub indeed asks you to sign in all the time
-- do what is written in the explanation
-- try:
+- try to do and write:
 ```
 [user]
     name = Pavan Kataria
@@ -477,5 +508,7 @@ Host github.yandex-team.ru
 [includeIf "gitdir:~/work/"]
     path = ~/work/.gitconfig
 ```
+- validate that GitHub indeed asks you to sign in all the time
+- do what is written in the explanation
 - fix the account issue on turbo
 - try the 2 accounts SSH hack in practice with IlyaKkk & TomSssM
