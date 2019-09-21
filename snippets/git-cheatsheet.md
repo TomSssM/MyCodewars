@@ -497,18 +497,54 @@ Though of course all this information will be on GitHub when you create a reposi
 
 ## Syncing 2 emails
 
-## TODO
+When you make a commit some metadata is automatically attached to it. This metadata also holds the
+_email_ from which you made the commit. Where does this info about email come from? Perforce
+git looks into the `<path-to-project>/.git/config` file *in the root of your project.* If it doesn't find the
+email information there, then git is going to look at the _global_ `.gitconfig` file which lives inside 
+the `HOME` directory.
 
-- try to do and write __TO the syncing EMAILS SECTION:__
+But what if you have 2 repositories ( like in the previous section ) and you need to make commits in the 1st repo
+with one email and in the 2nd repo with another email. SSH keys will not solve this problem :)
+
+Instead we need to tweak the git config stuff.
+
+First solution would be to set the `git config` values **without** the `--global` flag like so:
+
+```console
+$ git config user.name <name>
+$ git config user.email <email>
+```
+
+This will efficiently add the username and email you typed to the `<project-path>/.git/config` file ( NOT to
+the `~/.gitconfig` file as the same action but with the `--global` flag would ). And since, as we
+have discussed, git first checks this ( `.../.git/config` ) file _before_ the global one ( `~/.gitconfig` )
+to retrieve information, since it is so, now the commits will have the email value in their metadata set to
+whatever value the `email` field inside the `.../.git/config` file has. Thus it has solved our problem. This way
+we can configure every project to have its own email and user as the contributor by specifying it in the 
+`.../.git/config` file with `git config` commands without the `--global` flag.
+
+Another solution is to write this magic stuff:
+
+```
+[includeIf "gitdir:~/work/"]
+    path = ~/work/.gitconfig
+```
+
+to the `~/.gitconfig` file so that it looks something like this:
+
 ```
 [user]
-    name = Pavan Kataria
-    email = defaultemail@gmail.com
+    name = TomSssM
+    email = ilyashome3@gmail.com
 
 [includeIf "gitdir:~/work/"]
     path = ~/work/.gitconfig
 ```
+
+The stuff above tells git: _if we are inside the `~/work/` directory, instead of the `~/.gitconfig` use the file
+located at `~/work/.gitconfig` for global git configurations_
+
+## TODO
+
 - validate that GitHub indeed asks you to sign in all the time
 - do what is written in the explanation
-- fix the account issue on turbo
-- try the 2 accounts SSH hack in practice with IlyaKkk & TomSssM
