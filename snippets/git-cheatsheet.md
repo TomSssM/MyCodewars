@@ -291,23 +291,191 @@ Destroys even the files that are in `.gitignore` ( like `node_modules` ).
 
 ## Managing Multiple Accounts and GitHubs with SSH
 
-- ssh-keygen -t rsa -C "your-email-address"
-- ssh-add ~/.ssh/<private-key-name>
-- Make:
+Imagine you have 2 github accounts and on the same machine you have 2 repos. You want to contribute to the 1st one 
+with the 1st account and to the other with the 2nd account. One solution would be to keep changing username and 
+password before contributing to the repo. A better solution would be to generate two SSH keys: one for the 1st account, 
+the other for the 2nd account. Then clone the first repo thru the 1st SSH key and the second repo thru the 2nd SSH key. 
+Now if you push to, say, the first repo, which is associated with the 1st SSH key, you are going to be making and 
+pushing commits on behalf of the 1st account because it _is_ the account associated with the 1st SSH key; likewise 
+for the 2nd repo thus eliminating the need for repetitively entering login and password all the time.
+
+Since you cannot be logged to 2 accounts at the same time, when you try to pull push, GitHub will constantly ask 
+you to authenticate.
+
+The solution to this is quite simple. Create two SSH keys: `a` and `b`. Associate `key a` with 1st account and `key b` 
+with 2nd account. Then clone any repo that is created with 1st account using SSH `key a`, and then clone any repo that 
+is created with 2nd account using SSH `key b`. Now if you go to any one of the two cloned repositories GitHub will no 
+longer ask you to sign in as we didn't use login and password to clone the repos, but instead SSH. 
+On the other hand were we to clone via http we may end up constantly having to enter credentials ( login and password ) 
+if we switch to the 1st repo after committing to the 2nd repo and vice versa as the 2 repos are created on 
+different accounts. With SSH such a problem ceases to exist any more.
+
+In order to do that we need to create the first key ( we called it `key a` in the previous example ) like this:
+
+```console
+$ ssh-keygen -t rsa -C "ilyashome3@gmail.com"
+```
+
+This way we are telling to associate the key we are creating with the email named `ilyashome3@gmail.com`.
+
+Then go to GitHub and add this key which is associated with `ilyashome3@gmail.com` to the account that uses the 
+email `ilyashome3@gmail.com`. 
+
+Likewise create another SSH key and associate it with a different email:
+
+```console
+$ ssh-keygen -t rsa -C "ilyasflat3@gmail.com"
+```
+
+Now go to the 2nd account that uses the email `ilyasflat3@gmail.com` and add the ssh key just created.
+
+But that isn't all yet. We need to tell SSH agent what key to look at to make sure that we are the owner of the repo. 
+In other words when we clone via SSH from `account1`, we need to tell SSH agent to use the key 
+associated with `account1`, and likewise if we clone repos created with `account 2`, SSH agent should use the key 
+associated with `account2`. This way SSH will use the correct keys when it does the handshake and repos will be 
+cloned successfully. 
+
+We can do that pretty easily by properly tweaking the SSH config file. For that go to the good old `~/.ssh` and create 
+a file called `config` ( no extension ). There we need to write something like this:
+
 ```
 Host github.com
   HostName github.com
   User git
   IdentityFile ~/.ssh/id_rsa
+```
 
-Host <variable-a>
+In order to understand what everything is for in here let's take a look at the url via which SSH clones repositories:
+
+```
+git@github.com:TomSssM/lib-docs.git
+```
+
+See this value right here between `@` and `:` ( `github.com` )?
+
+This value should be the same as `Host`. In other words if we were to change `Host` in the config file 
+to `cool` like this:
+
+```
+Host cool
   HostName github.com
   User git
-  IdentityFile <path-to-private-key>
+  IdentityFile ~/.ssh/id_rsa
 ```
-- Variable-a:
-    - git@<here>:<path-to-repo>
-- WARNING: `HostName` ought to be the same as the name of the domain ( explain why on the example of yandex-team )
+
+then we would use an url like this:
+
+```
+git@cool:TomSssM/lib-docs.git
+```
+
+To clone repositories like that:
+
+```console
+$ git clone git@cool:TomSssM/lib-docs.git
+```
+
+Thus the url is of the form ( `User` and `Host` correspond to the same entries in the SSH `config` file ):
+
+```
+<User>:<Host>:<github-user>/<github-repo>
+```
+
+In `~/.ssh/config` the last line:
+
+```
+  IdentityFile ~/.ssh/id_rsa
+```
+
+says the following: if `Host` matches the one that is used in the url ( that one between `@` and `:` remember? ) 
+then use the key that is located at this path: `~/.ssh/id_rsa`
+
+So in order to manage multiple accounts we could for instance create a config like this:
+
+```
+Host github-work
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/work
+
+Host github-home
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/home
+```
+
+And then clone repositories created with the work account like so:
+
+```console
+$ git clone git@github-work:TomSssM/lib-docs.git
+```
+
+And for the other account ( home account ) we would clone like so:
+
+```console
+$ git clone git@github-home:TomSssM/lib-docs.git
+```
+
+Now for every url that starts `git@github-home:...` SSH agent will use the `~/.ssh/home` key and for every url that
+starts with `git@github-work:...` SSH agent will use the `~/.ssh/work` key. As you remember the `~/.ssh/home` key 
+will hold the credentials for the home account that has the email `ilyashome3@gmail.com` ( because when we generated 
+it we added `... -t rsa -C "ilyashome3@gmail.com"` ) and likewise the `~/.ssh/work` key will be associated with the
+`ilyasflat3@gmail.com` email for the same reason. This will eliminate the need to enter the credentials for every
+commit we make. 
+
+Now upon cloning a repo from github SSH will ask you to confirm that you want to add github.com to the `known_hosts` 
+file in the `.ssh` directory so that our SSH agent knows that it can safely allow github.com to use the ssh protocol 
+to communicate with our machine.
+
+__Note__: if your company uses an enterprise version of GitHub ( it is located not on github.com but on 
+github.yandex-team.com for instance ) then you also need to consider the `HostName` field: 
+
+```
+Host github-work
+  HostName github.com
+  ^---------------------- HERE ---
+  ...
+```
+
+`HostName` should match exactly the host name that you clone repos from. For instance if you are going to clone via 
+SSH from _github.yandex-team.com_ then you need to change `HostName` to:
+
+```
+Host github-work
+  HostName github.yandex-team.com
+  User git
+  IdentityFile ~/.ssh/work
+```
+
+For instance here is my `config` file:
+
+```
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/home
+
+Host github.yandex-team.ru
+  HostName github.yandex-team.ru
+  User git
+  IdentityFile ~/.ssh/work
+```
+
+## Syncing 2 emails
+
+## TODO
+
 - Add an example of my current config
-- Add on GitHub
-- Use by adding the origin in the SSH form and cloning via SSH
+- validate that GitHub indeed asks you to sign in all the time
+- do what is written in the explanation
+- try:
+```
+[user]
+    name = Pavan Kataria
+    email = defaultemail@gmail.com
+
+[includeIf "gitdir:~/work/"]
+    path = ~/work/.gitconfig
+```
+- fix the account issue on turbo
+- try the 2 accounts SSH hack in practice with IlyaKkk & TomSssM
