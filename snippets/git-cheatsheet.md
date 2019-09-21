@@ -499,7 +499,7 @@ Though of course all this information will be on GitHub when you create a reposi
 
 ## TODO
 
-- try to do and write:
+- try to do and write __TO the syncing EMAILS SECTION:__
 ```
 [user]
     name = Pavan Kataria

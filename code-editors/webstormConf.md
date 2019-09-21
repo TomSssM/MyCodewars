@@ -10,6 +10,7 @@
 - [ ] Appearance & Behavior > System Settings > Use "safe write" ( uncheck )
 - [ ] Editor > Inspections > JavaScript > Code style issues > Unterminated Statement
 - [x] Languages & Frameworks > JavaScript > Code Quality Tools > ESLint > Automatic ESLint configuration
+- [x] Editor > Code Style > EditorConfig > Scheme > Project
 
 ## Keymap
 
@@ -63,6 +64,8 @@
 - Preferences - `COMMAND + ,`
 - Add Selection for Next Occurrence - `COMMAND + G`
 - Find in Path - `SHIFT + COMMAND + F`
+- Toggle italic mode ( Plugins -> Markdown Support ) - `COMMAND + I`
+- Toggle bold mode ( Plugins -> Markdown Support ) - `COMMAND + B`
 
 ## Snippets ( Live Templates )
 
