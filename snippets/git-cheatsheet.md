@@ -543,8 +543,3 @@ to the `~/.gitconfig` file so that it looks something like this:
 
 The stuff above tells git: _if we are inside the `~/work/` directory, instead of the `~/.gitconfig` use the file
 located at `~/work/.gitconfig` for global git configurations_
-
-## TODO
-
-- validate that GitHub indeed asks you to sign in all the time
-- do what is written in the explanation
