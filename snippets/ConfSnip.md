@@ -846,3 +846,24 @@ Else, both px and py are Strings
     f. If *m < n*, return **true**. Otherwise, return **false**.
 
 ---
+
+## The return statement in finally is favored over try
+
+Believe it or not but the result of executing this function:
+
+```js
+(() => {
+  try {
+    return 2;
+  } finally {
+    return 3;
+  }
+})();
+```
+
+is going to be `3`.
+
+Even if no error is thrown in the `try` block, since `finally` is always executed and since `finally` _is executed
+right before the return statement inside `try` or `catch` block,_ for this very reason if we return something inside
+`finally` then this return statement will become the final return statement of the function ( just like in the
+example above ).
