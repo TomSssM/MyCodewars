@@ -66,6 +66,8 @@
 - Find in Path - `SHIFT + COMMAND + F`
 - Toggle italic mode ( Plugins -> Markdown Support ) - `COMMAND + I`
 - Toggle bold mode ( Plugins -> Markdown Support ) - `COMMAND + B`
+- Select Next Tab - `OPTION + COMMAND + RIGHT-ARROW`
+- Select Tab - `OPTION + COMMAND + LEFT-ARROW`
 
 ## Snippets ( Live Templates )
 
