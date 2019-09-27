@@ -793,20 +793,20 @@ Here is what I mean:
 
 ```js
 setTimeout(() => { // (*)
-	console.log('one');
+    console.log('one');
 });
 
 new Promise((res) => { // don't forget that code inside new Promise(...) is synchrous
-	setTimeout(() => { // (**)
-		console.log('two');
-		res('three');
-	});
+    setTimeout(() => { // (**)
+        console.log('two');
+        res('three');
+    });
 }).then((arg) => { // (****)
     console.log(arg);
 });
 
 setTimeout(() => { // (***)
-	console.log('four');
+    console.log('four');
 });
 ```
 
@@ -826,7 +826,7 @@ and logs `'one'` to the console. Then the 2nd callback in line `(**)` logs `'two
 does something else: it calls `res('three');` which results in _scheduling a task into Microtask Queue._ To put it
 simply JS puts the callback passed to the `then` method ( in our case the callback in line `(****)` ) into the 
 Microtask Queue ( just like `setTimeout` puts callbacks passed to it to the Event Queue ). We also tell to invoke
-in line `(****)` with the argument `'three'`. So what do we have as of now? There are 2 asynchronous callbacks
+the callback in line `(****)` with the argument `'three'`. So what do we have as of now? There are 2 asynchronous callbacks
 waiting to be executed: one callback in the Event Queue ( the one in line `(***)`, it was put there when the main 
 synchronous script was executed ) and there is another callback waiting in the Microtask Queue ( the one in line 
 `(****)`, it was put there by another asynchronous callback, the one in line `(**)` ). And here is the thing:
@@ -838,47 +838,47 @@ in line `(***)`.
 Just to be sure let me draw a diagram as I am much fond of.
 
 So when we first went thru the code _synchronously_ and scheduled the _asynchronous_ tasks the Event Queue and
-Macrotask Queue looked like this:
+Microtask Queue looked like this:
 
 ```
-Macrotask Queue: []
+Microtask Queue: []
 Event Queue: [ (*), (**), (***) ]
 ```
 
 then we executed the first callback `(*)` and the things looked like this:
 
 ```
-Macrotask Queue: []
+Microtask Queue: []
 Event Queue: [ (**), (***) ]
 ```
 
-then when we were executing the 2nd callback `(**)` it, during the process of its execution, scheduled a Microtask
+then when we were executing the 2nd callback `(**)`, it, during the process of its execution, scheduled a Microtask
 like this:
 
 ```
-Macrotask Queue: [ (****) ]
+Microtask Queue: [ (****) ]
 Event Queue: [ (**), (***) ]
 ```
 
 and finished executing:
 
 ```
-Macrotask Queue: [ (****) ]
+Microtask Queue: [ (****) ]
 Event Queue: [ (***) ]
 ```
 
-after that we couldn't proceed with the Event Queue because there was stuff in the Macrotask Queue, thus we executed
+after that we couldn't proceed with the Event Queue because there was stuff in the Microtask Queue, thus we executed
 the `(****)` callback:
 
 ```
-Macrotask Queue: [ ]
+Microtask Queue: [ ]
 Event Queue: [ (***) ]
 ```
 
 after which we went on and executed the `(***)` callback ( last in the Event Queue ):
 
 ```
-Macrotask Queue: [ ]
+Microtask Queue: [ ]
 Event Queue: [ ]
 ```
 
@@ -888,19 +888,19 @@ callback, instead of that in the following code the same callback schedules a us
 
 ```js
 setTimeout(() => { // (*)
-	console.log('one');
+    console.log('one');
 });
 
 setTimeout(() => { // (**)
-	console.log('two');
+    console.log('two');
 
-	setTimeout(() => { // (***)
-		console.log('three');
-	});
+    setTimeout(() => { // (***)
+	      console.log('three');
+    });
 });
 
 setTimeout(() => { // (****)
-	console.log('four');
+    console.log('four');
 });
 ```
 
@@ -918,14 +918,14 @@ The same way here is a scheme of how we proceeded:
 First we ran the synchronous code and scheduled callbacks:
 
 ```
-Macrotask Queue: [ ]
+Microtask Queue: [ ]
 Event Queue: [ (*), (**), (****) ]
 ```
 
 after which we ran the `(*)` callback:
 
 ```
-Macrotask Queue: [ ]
+Microtask Queue: [ ]
 Event Queue: [ (**), (****) ]
 ```
 
@@ -933,7 +933,7 @@ then we ran the `(**)` callback and it scheduled ( which is to say _put into the
 and things started looking like:
 
 ```
-Macrotask Queue: [ ]
+Microtask Queue: [ ]
 Event Queue: [ (****), (***) ]
 ```
 
