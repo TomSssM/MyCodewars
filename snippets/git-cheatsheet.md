@@ -495,6 +495,26 @@ $ git add remote origin git@github.com:TomSssM/<some-name>.git
 
 Though of course all this information will be on GitHub when you create a repository.
 
+**Still Note:** if you have `~/.ssh/config` like this one:
+
+```
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/home
+
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/work
+```
+And you `git clone` something like this: `git@github.com:IlyaKkk/Git-Training.git` then you might get a feeling that
+when you clone a repo or push to a repo ( these are the 2 situations when SSH Agent would go thru the `config` file 
+to check whether you have the right private keys ), you might get a feeling that SSH Agent would check both the
+`~/.ssh/home` key _and_ the `~/.ssh/work` key. But it isn't so unfortunately: SSH Agent doesn't check each
+`IdentityFile` under _every_ matching `Host`, instead SSH Agent would go to the _first_ matching `Host` and, in our case,
+always check only the `~/.ssh/home` key and then if `~/.ssh/home` doesn't work, it throws an error.
+
 ## Syncing 2 emails
 
 When you make a commit some metadata is automatically attached to it. This metadata also holds the
