@@ -11,6 +11,7 @@
 - [Data Structures](./Data%20Structures/README.md)
 - [Algorithms](./algorithms/README.md)
 - [Design Patterns](./design-patterns/README.md)
+- [String Encoding and Character Sets](./str-encoding-n-charsets.md)
 
 ## Main Snippets
 
