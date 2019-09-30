@@ -29,14 +29,14 @@
 - Duplicate Line or Selection - `CTRL + D`
 - Delete Line - `CTRL + R`
 - Version Control - `F1`
-- Terminal - `CTRL + `\`
-- Undo - `Ctrl + Z`
-- Redo - `Ctrl + Y`
-- Increase Font Size - `Ctrl + =`
-- Decrease Font Size - `Ctrl + Minus`
-- Open previously Copied Stuff - `Ctrl + Shift + V`
-- Git Commit - `Ctrl + K`
-- Git Push - `Ctrl + Shift + K`
+- Terminal - ``CTRL + `\``
+- Undo - `CTRL + Z`
+- Redo - `CTRL + Y`
+- Increase Font Size - `CTRL + =`
+- Decrease Font Size - `CTRL + -`
+- Open previously Copied Stuff - `CTRL + SHIFT + V`
+- Git Commit - `CTRL + K`
+- Git Push - `CTRL + SHIFT + K`
 
 ### mac
 
@@ -46,28 +46,28 @@
 - Unindent Line or Selection `COMMAND + {`
 - Move Caret Backward a Paragraph - `OPTION + UP`
 - Move Caret Forward a Paragraph - `OPTION + DOWN`
-- Move Caret to Line Start - `COMMAND LEFT-ARROW`
-- Move Caret to Line End - `COMMAND RIGHT-ARROW`
+- Move Caret to Line Start - `COMMAND LEFT`
+- Move Caret to Line End - `COMMAND RIGHT`
 - Clone Caret Above - `SHIFT + COMMAND + UP`
 - Clone Caret Below - `SHIFT + COMMAND + DOWN`
 - Duplicate Line or Selection - `COMMAND + D`
 - Delete Line - `COMMAND + R`
 - Version Control - `F1`
-- Terminal - `CTRL + `\`
+- Terminal - ``CONTROL + `\``
 - Undo - `COMMAND + Z`
 - Redo - `COMMAND + SHIFT + Z`
 - Increase Font Size - `COMMAND + =`
 - Decrease Font Size - `COMMAND + Minus`
-- Open previously Copied Stuff - `Ctrl + Shift + V`
-- Git Commit - `Ctrl + K`
-- Git Push - `Ctrl + Shift + K`
+- Open previously Copied Stuff - `COMMAND + Shift + V`
+- Git Commit - `COMMAND + K`
+- Git Push - `COMMAND + Shift + K`
 - Preferences - `COMMAND + ,`
 - Add Selection for Next Occurrence - `COMMAND + G`
 - Find in Path - `SHIFT + COMMAND + F`
 - Toggle italic mode ( Plugins -> Markdown Support ) - `COMMAND + I`
 - Toggle bold mode ( Plugins -> Markdown Support ) - `COMMAND + B`
-- Select Next Tab - `OPTION + COMMAND + RIGHT-ARROW`
-- Select Tab - `OPTION + COMMAND + LEFT-ARROW`
+- Select Next Tab - `OPTION + COMMAND + RIGHT`
+- Select Tab - `OPTION + COMMAND + LEFT`
 
 ## Snippets ( Live Templates )
 
