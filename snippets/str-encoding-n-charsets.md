@@ -14,7 +14,7 @@ Encoding is how these numbers are translated into binary numbers to be stored in
 
 `UTF-8` Encoding will store `"hello"` like this ( binary ): `01101000 01100101 01101100 01101100  01101111`
 
-Encoding translates numbers into binary. Character Sets translates characters to numbers.
+Character Sets translates characters to numbers. Encoding translates numbers into binary.
 
 ## Continued
 
