@@ -68,11 +68,12 @@ letters :smile: ).
  
 There are many Encodings for `Unicode`: `UTF-8`, `UTF-16` and so on.
 
-In `UTF-8` we store `Code Point`s between `U+0` and `U+255` as one byte ( because one byte is enough to fit them ), 
-after that we store `Code Point`s, which need 2 bytes to encode them, as 2 bytes, that need 3 bytes as 3 bytes and so on 
-( that need `n` bytes as `n` bytes ), very efficient. In `UTF-16` we store `Code Point`s starting at 2 bytes,
-so `U+255` would be stored as `0000000011111111`, which may not be that much sufficient in terms of memory because 
-of all the 0s there.
+In `UTF-8` we store `Code Point`s between `U+0` and `U+255` as one byte ( because one byte is enough to fit them, also 
+it makes `UTF-8` completely compatible with `ASCII` ), after that we store `Code Point`s, which need 2 bytes to 
+encode them, as 2 bytes, that need 3 bytes as 3 bytes and so on ( that need `n` bytes as `n` bytes ), very efficient.
+
+In `UTF-16` we store `Code Point`s starting at 2 bytes, so `U+255` would be stored as `0000000011111111`, which may 
+not be that much sufficient in terms of memory because of all the 0s there but it probably has good reasons to do that.
 
 ## In Real Life
 
@@ -118,7 +119,110 @@ Thus each `p` below will correctly render the copyright symbol:
                                   the hexadecimal number "AE" by "x" --> 
 ```
 
-## TODO
+## How UTF-8 and Percent Encoding Works
 
-- unriddle and add the URL example
-- how UTF-8 works, how come the byte stuff is so weird?
+Sometimes we need to encode a certain character when it is sent as part of the URL ( in GET requests for instance ).
+For example if we send cyrillic letters or reserved characters ( reserved character is a character which, if used as
+part of the URL, has a special meaning, for instance the character `/` is _reserved_ as it is used as part of the 
+`path` part of the URL to separate directories ).
+
+Let's see, first, how to encode in `UTF-8`. If we take a look at the raw binary data encoded via `UTF-8` it is going to
+have a certain structure. The first couple of bits in every byte thus encoded will have certain meaning. For instance
+some `Code Point`s need 2 and more bytes to encode them. It means that some bytes are going to be intermediate bytes
+comprising a `Code Point`.
+
+For instance if a `Code Point` is stored in just one byte ( like number `71` ), then the first bit is going to be `0`:
+
+```
+0xxxxxxx
+```
+
+where `x` are the bits that are going to be used for the mantissa of the number ( of the `Code Point` ).
+
+If there are going to be 2 bytes used to store the `Code Point` then the first byte is going to be:
+
+```
+110xxxxx
+```
+
+and the 2nd byte is going to be:
+
+```
+10xxxxxx
+```
+
+The `110` part of the 1st byte tells that there are going to be 2 bytes used to represent a `Code Point`. The `10` part
+of the 2nd byte tells: _hey, I am a continuation byte_.
+
+Likewise if we use 3 bytes to represent a `Code Point`, then the 1st byte is going to start:
+
+```
+1110xxxx 10xxxxxx 10xxxxxx
+```
+
+If we use 4 bytes to represent a `Code Point`, then the 1st byte is going to be:
+
+```
+11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+```
+
+and so on.
+
+Here is a table to sum things up:
+
+![1](../data/unicode-expl/1.png)
+
+**Example**
+
+So imagine we need to encode the character `"€"`. Its `Code Point` is `U+20AC`. `20AC` in binary is:
+
+![2](../data/unicode-expl/2.png)
+
+Because the final output would be stored in 3 bytes, we need to prefix the 1st byte by `1110`.
+Since the first 4 bits of the 1st byte are already occupied by `1110`, we can only take out the 1st four bits 
+_out of the number itself_ ( `0010` ) to put into the 1st byte and thus the first byte of _the result_ is going 
+to look like:
+
+![3](../data/unicode-expl/3.png)
+
+Since we need to prefix the 2nd byte of _the result_ by `10` to indicate that it is a continuation
+byte, we have only 6 bits of the 2nd byte ( of _the result_ ) available to put stuff in:
+
+```
+1 0 x x x x x x
+```
+
+Thus we take out the next 6 bits out of _the number_ ( the green ones in the picture above ) and put 
+them instead of those `x`s. The 2nd byte of the result is going to look like:
+
+![4](../data/unicode-expl/4.png)
+
+Likewise for the 3rd byte. The full result of encoding the Unicode `Code Point` `U+20AC` is going
+to look like ( 3 bytes ):
+
+![5](../data/unicode-expl/5.png)
+
+That is how `UTF-8` works :smile:
+
+Do note that every byte of the result ( `11100010`, `10000010` and `10101100` ) can be represented
+as a hexadecimal number. For instance if we convert `11100010` ( 1st byte ) from binary to hexadecimal 
+we get `E2`. Thus if we convert every byte to hexadecimal we get the following sequence of numbers:
+
+```
+E2 82 AC
+```
+
+That is exactly how weird Unicode characters are also encoded ( percent encoded ) when we send them
+as part of the url. We can clearly see that especially if we send a character the encoding of which
+requires more than 1 byte ( like `"€"` ). For instance the result of encoding `"€"` as a URI 
+component is going to be:
+
+```js
+encodeURIComponent('€');
+// "%E2%82%AC"
+```
+
+Which corresponds perfectly to the sequence of hexadecimal numbers we just distilled as the result of
+encoding the `Code Point` `U+20AC` via `UTF-8`.
+
+And that is why you see several hexadecimal numbers when encoding, for instance, 1 cyrillic character.
