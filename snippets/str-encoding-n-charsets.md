@@ -226,3 +226,6 @@ Which corresponds perfectly to the sequence of hexadecimal numbers we just disti
 encoding the `Code Point` `U+20AC` via `UTF-8`.
 
 And that is why you see several hexadecimal numbers when encoding, for instance, 1 cyrillic character.
+
+**Note:** This isn't meant to be a complete overview of `UTF-8` but merely a nice example of how Encodings work and
+how they differ from Character Sets.
