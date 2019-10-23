@@ -840,3 +840,104 @@ fun3();
 So the moral is: the order of executing asynchronous functions is obscure in any case which is why
 it is a bad idea to rely on it and, if have to, one should avoid invoking over one `async` function
 at the same time or calling `then` on over two different Promises at the same time.
+
+## Promise.resolve(\<another promise\>) ( amazing !! )
+
+Have you ever wondered what this code would do:
+
+```js
+(async () => {
+    const val = await Promise.resolve(Promise.resolve(Promise.resolve(':)')));
+    console.log('---->', val);
+})();
+```
+
+What would be printed to the `console`?
+
+Well, let's think, a call to `Promise.resolve` returns another Promise so logically the value inside the `val` variable
+should be `Promise { "fulfilled" }`, shouldn't it? Well, believe it or not but no.
+
+As we have once discussed Promises are _Monads_. And what is a Monad? It is something that is supposed to flatten the
+value of the Promise if this value is another promise. Remember? That is, we said, exactly why in the line `(*)` below:
+
+```js
+Promise.resolve()
+    .then(() => {
+        return new Promise(res => { // (**)
+            setTimeout(() => res(':)'), 2000);
+        });
+    })
+    .then(value => { // (*)
+        console.log(value);
+    });
+```
+
+We get the value which the Promise in line `(**)` evaluates to ( the value `:)` ) instead of the
+Promise in line `(**)` itself.
+
+Just take a look at it. If, in the console in the developer's tools, you write something like this:
+
+```js
+Promise.resolve(Promise.resolve(Promise.resolve(':)')));
+```
+
+Take a look at the output:
+
+```
+Promise { "fulfilled" }
+  <state>: "fulfilled"
+  <value>: ":)"
+```
+
+Despite the fact that by looking at: `Promise.resolve(Promise.resolve(...))` we logically infer that such an expression
+is supposed to produce a Promise which evaluates to another Promise, despite that, just because Promises are Monads if
+you take a look at the `<value>` field ( in the output in the developer's tools ) you are going to see that all the
+further Promises got flattened to `":)"`.
+
+That is also the reason why, if you run the code below:
+
+```js
+(async () => {
+    const val = await Promise.resolve( // (*)
+            new Promise(res => { // (**)
+                setTimeout(() => {res(':)')}, 2000);
+            })
+         );
+    console.log('---->', val);
+})();
+```
+
+after 2 seconds you are going to see the following `console.log`:
+
+```
+----> :)
+```
+
+first the JS compiler sees that the Promise in line `(*)` evaluates to another promise, thus because Promises are Monads
+it waits then for what the Promise in line `(**)` evaluates to and if the Promise in line `(**)` should have evaluated
+to yet another Promise it would even wait for that 3rd Promise to evaluate to something and so on ( luckily the Promise
+in line `(**)` evaluated instead to `":)"` so that is what we get, after 2 seconds, in the variable called `val` ).
+
+The same logic is the reason why in this code:
+
+```js
+Promise.resolve(new Promise((res) => { // (**)
+      setTimeout(() => {
+          res(':)');
+      }, 2000);
+    }))
+    .then(data => { // (*)
+        console.log('---->', data);
+    });
+```
+
+the value of the variable `data` in line `(*)` is going to be _not_ the Promise created in line `(**)` but instead
+the value that this Promise in line `(**)` evaluates to ( the value `":)"` ).
+
+In all other cases the value that the Promise resolves to is going to be passed to the `then` method:
+
+```js
+Promise.resolve(12).then(data => { // the value of data is going to be === 12
+    console.log('---->', data);
+});
+```
