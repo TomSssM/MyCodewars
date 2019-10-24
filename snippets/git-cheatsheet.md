@@ -189,14 +189,23 @@ The `apply` command unstashed the selected (or uppermost) stash without dropping
 The `pop` command applies the uppermost stash and drops it
 The `drop` command deletes the selected stash fromt the list
 The `clear` command drops all the stashes
+The `show` command will show the changes in the topmost stash ( or in the stash whose `<stash-hash>` you provide to it,
+ see below )
+The `$ git stash` command without any arguments would save all the changes ( everything except Untracked Files ( red ): 
+New File ( green ), Modified ( green ), Modified ( red ) )
+
 ``` bash
 $ git stash save <name>
 $ git stash list
 $ git stash apply <stash-hash>
 $ git stash pop
 $ git stash drop <stash-hash>
+$ git stash show <stash-hash>
 $ git stash clear
 ```
+
+Also, instead of using the stash hash or the stash name, you may use the stash index ( for instance the topmost 
+stash is 0, the 1st stash is the one just below the topmost and so on ).
 
 ## Aliases
 There are two ways of creating git aliases
