@@ -40,16 +40,22 @@
 
 ### mac
 
-- Move Line Down `COMMAND + DOWN`
-- Move Line Up `COMMAND + UP`
+- Move Line Down `FN + DOWN`
+- Move Line Up `FN + UP`
 - Indent Line or Selection `COMMAND + }`
 - Unindent Line or Selection `COMMAND + {`
 - Move Caret Backward a Paragraph - `OPTION + UP`
+- Move Caret Backward a Paragraph with Selection - `OPTION + SHIFT + UP`
 - Move Caret Forward a Paragraph - `OPTION + DOWN`
+- Move Caret Forward a Paragraph with Selection - `OPTION + SHIFT + DOWN`
+- Move Caret to Text Start - `COMMAND + UP`
+- Move Caret to Text Start with Selection - `SHIFT + COMMAND + UP`
+- Move Caret to Text Bottom - `COMMAND + DOWN`
+- Move Caret to Text Bottom with Selection - `SHIFT + COMMAND + DOWN`
 - Move Caret to Line Start - `COMMAND LEFT`
 - Move Caret to Line End - `COMMAND RIGHT`
-- Clone Caret Above - `SHIFT + COMMAND + UP`
-- Clone Caret Below - `SHIFT + COMMAND + DOWN`
+- Clone Caret Above - `SHIFT + FN + UP`
+- Clone Caret Below - `SHIFT + FN + DOWN`
 - Duplicate Line or Selection - `COMMAND + D`
 - Delete Line - `COMMAND + R`
 - Version Control - `F1`
