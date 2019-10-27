@@ -941,3 +941,109 @@ Promise.resolve(12).then(data => { // the value of data is going to be === 12
     console.log('---->', data);
 });
 ```
+
+## then() inside then()
+
+So here in the 1st `then` we return a Promise that has its own `then` functions being called:
+
+```js
+Promise.resolve(1)
+    .then(data => {
+        console.log('first one', data);
+        return new Promise((res) => {
+            setTimeout(() => {
+                res(2);
+            }, 2000);
+        })
+            .then((data) => { // (*)
+                console.log('after2 seconds', data);
+                return 4;
+            });
+    })
+    .then((data) => { // data === 4
+        console.log('last one', data); // (**)
+    });
+```
+
+In reality the output is going to be:
+
+```
+first one 1
+
+...2 seconds passed
+
+after2 seconds 2 
+last one 4
+```
+
+It is no secret that if we _return_ a Promise in the `then` function, then JS will wait till the Promise resolves
+and after that it will pass the value that the Promise resolves to to the next `then` function ( in our case to the
+one in line `(*)` ).
+
+**Note:** that wouldn't happen if we were _not_ to return a Promise but simply create it like this:
+
+```js
+Promise.resolve(1)
+    .then(data => {
+        console.log('first one', data);
+        new Promise((res) => { // no return
+            setTimeout(() => {
+                res(2);
+            }, 2000);
+        })
+            .then((data) => {
+                console.log('after2 seconds', data);
+                return 4;
+            });
+    })
+    .then((data) => {
+        ...
+    });
+```
+
+But look at the `then` function in line `(*)` again: it returns a value. And the thing is: because Promises are Monads,
+this value actually gets passed to the _outer_ then in line `(**)`.
+
+**Note:** the `finally` function behaves differently thou. Take a look at the following code:
+
+```js
+Promise.resolve(1) // (**)
+    .finally(data => { // data === undefined (*)
+        console.log('first one', data);
+        return new Promise((res) => { // (****)
+            setTimeout(() => {
+                res(2);
+            }, 2000);
+        })
+            .then((data) => { // (*****)
+                console.log('after2 seconds', data);
+                return 4; // *ignored (**here**)
+            });
+    })
+    .then((data) => { // data === 1 (***)
+        console.log('last one', data); // data === 1
+    });
+```
+
+The output is going to be:
+
+```
+first one undefined
+
+... after 2 seconds
+
+after2 seconds 2
+last one 1
+```
+
+Look, in line `(*)` the value of `data` is going to be `undefined`, so as we can see the value that the Promise in 
+line `(**)` resolved to didn't get passed to `finally`, but instead this value was passed to the _next `then`
+in the chain,_ thus in line `(***)` the value of `data` is `1`.
+
+Also there are 2 more things to note here. First of all, because we _return_ the `Promise` in line `(****)`, the
+execution of all the next `then` in the chain ( the ones in lines `(*****)` and `(***)` ) will wait for it to resolve
+( thus will wait for 2 seconds ); again, wouldn't happen should we not have returned the Promise in line `(****)`.
+Second of all, since the value passed to the `then` in line `(***)` is the value, which the Promise in line `(**)`
+got resolved to, because of that the value returned from the last `then` of the finally method in line `(**here**)`
+is actually ignored. It would be ignored anyways, actually, even if the Promise in line `(**)` were to resolve to
+`undefined`, then the value of `data` in line `(***)` would be `undefined` too.
