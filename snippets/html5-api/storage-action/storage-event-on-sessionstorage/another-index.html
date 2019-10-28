@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AnotherIndex</title>
+</head>
+<body>
+<h1>Another Index</h1>
+<button id="add-cups">Add Cups</button>
+<script>
+    const btn = document.querySelector('#add-cups');
+    let cupIndex = 0;
+
+    btn.addEventListener('click', () => {
+        sessionStorage.setItem(`cup${cupIndex}`, `cup name ${cupIndex}`);
+        cupIndex++;
+    });
+
+    window.addEventListener('storage', ({ storageArea }) => {
+        console.log('sessionStorage [[ another-index.html ]]', storageArea);
+    });
+</script>
+</body>
+</html>

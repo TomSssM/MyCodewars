@@ -2,6 +2,7 @@
 
 - [Geolocation](./geolocation.html)
 - [Web Storage](./storage.html)
+  - [Session Storage Trick](./storage-action/storage-event-on-sessionstorage/session-storage.md)
   - [Storage in Action](./storage-action)
 - [Web Workers](./web-workers)
   - [Points on WW](./web-workers/webw-points.md)
