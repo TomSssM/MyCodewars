@@ -15,6 +15,7 @@ alias cl='git clean -df'
 alias dfx='git clean -dfx ./'
 alias lst='git branch --list'
 alias amend='git add . && git commit --amend --no-edit'
+alias la='ls -a'
 
 # git intergration ( if on MAC )
 

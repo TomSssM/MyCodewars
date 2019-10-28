@@ -52,8 +52,10 @@
 - Move Caret to Text Start with Selection - `SHIFT + COMMAND + UP`
 - Move Caret to Text Bottom - `COMMAND + DOWN`
 - Move Caret to Text Bottom with Selection - `SHIFT + COMMAND + DOWN`
-- Move Caret to Line Start - `COMMAND LEFT`
-- Move Caret to Line End - `COMMAND RIGHT`
+- Move Caret to Line Start with Selection - `SHIFT + COMMAND LEFT`
+- Move Caret to Line End with Selection - `SHIFT + COMMAND RIGHT`
+- Move Caret to Line Start - `COMMAND LEFT` or `SHIFT + COMMAND + ;`
+- Move Caret to Line End - `COMMAND RIGHT` or `COMMAND + ;`
 - Clone Caret Above - `SHIFT + FN + UP`
 - Clone Caret Below - `SHIFT + FN + DOWN`
 - Duplicate Line or Selection - `COMMAND + D`
