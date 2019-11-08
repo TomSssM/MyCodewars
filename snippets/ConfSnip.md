@@ -867,3 +867,37 @@ Even if no error is thrown in the `try` block, since `finally` is always execute
 right before the return statement inside `try` or `catch` block,_ for this very reason if we return something inside
 `finally` then this return statement will become the final return statement of the function ( just like in the
 example above ).
+
+## window.onerror
+
+The global `window.onerror` event listener will be called in case there is ever thrown an error in your code:
+
+```html
+<script>
+    window.onerror = function (smth) {
+        console.log(`Got it: ${smth}`);
+    };
+
+    throw 'what';
+
+    // expected output: Got it: what + error log from the browser DevTools
+</script>
+```
+
+**Note:** errors thrown _by the browser_ also go into the `window.onerror` Event Listener:
+
+```html
+<script>
+    window.onerror = function (smth) {
+        console.log(`Got it: ${smth}`);
+    };
+
+    dmfdksjfkldsfjsdklf();
+
+    // expected output: Got it: Uncaught ReferenceError: dmfdksjfkldsfjsdklf is not defined
+    //                  error log from the browser DevTools
+</script>
+```
+
+**Also Note** The `.onerror` event listener on other HTML elements ( external resources like `<img/>` ) is called if
+we fetch this resource from the server and the request for it fails ( 403 or something ).
