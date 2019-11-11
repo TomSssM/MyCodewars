@@ -572,3 +572,171 @@ to the `~/.gitconfig` file so that it looks something like this:
 
 The stuff above tells git: _if we are inside the `~/work/` directory, instead of the `~/.gitconfig` use the file
 located at `~/work/.gitconfig` for global git configurations_
+
+## git fetch vs git pull
+
+There are local branches and remote branches. So the local branches are the ones you are working on locally, on your
+computer, the remote branches are the copies of your local branches that you `git push`ed to GitHub ( remote branches
+are the ones stored on GitHub ). It is all very clear.
+
+The way that you can switch to a local branch is like this:
+
+```
+$ git checkout <branch-name>
+```
+
+But how to switch to a remote branch ( yeap, the one that lives on GitHub, on the `remote` )? Easy, given that the
+name of the `remote` ( the remote ( meaning the one that is on the Internet ) GitHub repository, not the local
+( meaning on your computer ) `git` repository ); so, given that the name of the `remote` you want to switch to is
+called `origin` for example, you need to do:
+
+```
+$ git checkout origin/<branch-name>
+```
+
+Now you have the same history that you would see if you were to go to `https://github.com` then go to your repository
+and _there_ switch to `<branch-name>`.
+
+But imagine the situation: your master branch, on the `remote`, has the commits:
+
+```
+a -> b -> c
+```
+
+then you checkout a new branch from `master` called `awesome-branch` and just work on it. Meanwhile a certain Jack,
+working on his own computer, updates `master` ( the one on the `remote`, on GitHub ). Now the history of the
+`master` branch ( the `master` branch that lives on GitHub, I mean ) looks like this ( because Jack updated it not
+so long ago ):
+
+```
+a -> b -> c -> 1 -> 2
+```
+
+You go to GitHub and you see that `master` has new commits. OK, that is good. Because you are curious you want to
+see the changes brought about by those commits you do:
+
+```
+$ git checkout origin/master
+```
+
+Now, in your terminal, you have switched to the remote `master` branch, the one that is stored on GitHub, but here
+is a problem: `origin/master` that you just switched to doesn't have the new commits! Instead its history looks
+like this:
+
+```
+a -> b -> c
+```
+
+That is expected. You see, GitHub doesn't update your copy of the remote branch ( like `origin/master` ) when someone
+pushes new commits to this remote branch ( in other words when someone does `$ git push origin master` like John did
+not so long ago, or when someone merges a PR into `master` on GitHub ); instead, you have to do it yourself.
+So in order to see John's commits not only when you are on GitHub but also on your own computer, in the `origin/master`
+branch, you need to download those commits from GitHub, from the `remote`, to your computer, your local machine.
+For that, you need to do:
+
+```
+$ git fetch origin master
+```
+
+What this would do is:
+
+- it will go to the url of `origin` ( will go to GitHub, to the remote repository there )
+- then it will download all the commits of `master` from there into your local `origin/master` branch
+
+After you have done `$ git fetch origin master` you see John's commits on your local machine.
+
+Now that you have the most recent commits from the remote, from `origin`, you can do whatever you want with them,
+you can even switch to the branch you have been working in and rebase it from the remote `master` branch ( so that
+the branch that you are working in has the following commits history: `a -> b -> c -> ...John's commits -> ...your commits` ).
+For that, you need to do:
+
+```
+$ git checkout <your-branch>
+$ git rebase origin/master
+```
+
+Do note though, if you go to the usual `master` branch ( not `origin/master` branch ), it \[ `master` branch \] is not
+going to have Jack's commits, it is still going to have the old commit history. This rises the question: how to make
+`master` branch the same commit history as `origin/master` branch ( make it so that your local `master` branch has the
+most recent commits from `remote` ). In order to do that you need to _merge_ the remote `master` branch into your
+local `master` branch like this:
+
+```
+$ git checkout master
+$ git merge origin/master
+```
+
+And now the commit histories of `master` and `origin/master` branches are like this:
+
+```
+master: a -> b -> c -> 1 -> 2
+origin/master: a -> b -> c -> 1 -> 2
+```
+
+OK, it is `git fetch` command but then what is `git pull`?
+
+You see, sometimes you would find yourself doing `git fetch` just to do `git merge`. In other words, sometimes you
+would only need to download all the commits from the remote branch `<branch-name>` just to later on merge this remote
+branch into your local branch, or, even simpler put, all too often you would need to update your local `<branch-name>`
+so that it has the same commit history as the branch `<branch-name>` on GitHub. As a result, you would end up
+constantly doing:
+
+```
+$ git checkout <branch-name>
+$ git fetch origin <branch-name>
+$ git merge origin/<branch-name>
+```
+
+That is why an alias for the 3 commands above was invented: `git pull`. When you do `git pull origin <some-branch>`,
+the following happens:
+
+- git downlands all the new commits of `<some-branch>` from GitHub to your computer
+- git merges all the new commits it just downloaded into `<some-branch>`
+
+That is why if you just want to update a branch so that it is the same as on the remote you simply do:
+
+```
+$ git pull origin <branch-name>
+```
+
+**Note:** the reason that `git` so seamlessly updates any branch when you do `git pull` is because of something
+called _fast-forward merge_. Hope you remember what that is? A fast-forward merge is when a merge happens but no
+merge commit is created. A fast-forward merge happens when there were no unique commits before the ones that
+you are merging. In other words if you are merging `origin/master` into `master` and the commit histories of
+your branches look like this:
+
+```
+origin/master:    a -> b -> c -> 1 -> 2
+   |
+   |
+   v
+master:           a -> b -> c
+```
+
+If the situation is like above you have a Fast-Forward Merge. But do note that if your branches have commit
+histories like these:
+
+```
+origin/master:    a -> b -> c -> 1 -> 2
+   |
+   |
+   v
+master:           a -> b -> c -> d
+```
+
+then a merge commit **will** be created ( and even merge conflicts might arise ) because there is a unique commit
+`d` after `c` and the commits that you are merging also start after the `c` commit.
+
+So remember one rule of thumb: if you want to `git pull` a branch painlessly, make sure that it has no unique commits
+compared to the remote branch that you are pulling.
+
+**Also Note:** Sometimes you see `git fetch --all`. You see, when you do `git fetch origin master` for instance,
+you are only downloading commits ( tags ) of the `master` branch from the remote called `origin`. But what if you
+have many remotes and many branches?
+
+So what the `--all` flag does is it will make `git fetch` command download new commits of _all_
+the remote branches. If you have many remotes then, git will download _all_ of the remotes as well. In other words
+it will update `origin/master`, `upstream/master`, ... and everything else will be brought to the same state as
+on the remote GitHub repositories.
+
+And thus is the difference between `git fetch` and `git pull`.
