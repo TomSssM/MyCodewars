@@ -740,3 +740,8 @@ it will update `origin/master`, `upstream/master`, ... and everything else will 
 on the remote GitHub repositories.
 
 And thus is the difference between `git fetch` and `git pull`.
+
+**Note:** when you do `git pull`, as was said, git downloads new commits from the specified branch and then tries to
+merge them. I haven't, however, been super clear about where it would try to merge those newly downloaded commits.
+So, yeah, be careful because if you do `git pull origin <branch-name>` git will try to merge the new commits of
+the branch `<branch-name>` **into the branch you are currently on.** 
