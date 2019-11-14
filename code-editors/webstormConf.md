@@ -76,6 +76,7 @@
 - Toggle bold mode ( Plugins -> Markdown Support ) - `COMMAND + B`
 - Select Next Tab - `OPTION + COMMAND + RIGHT`
 - Select Tab - `OPTION + COMMAND + LEFT`
+- Select All - `COMMAND + A`
 
 ## Snippets ( Live Templates )
 
