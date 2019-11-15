@@ -77,6 +77,8 @@
 - Select Next Tab - `OPTION + COMMAND + RIGHT`
 - Select Tab - `OPTION + COMMAND + LEFT`
 - Select All - `COMMAND + A`
+- File - `COMMAND + N`
+- Create new directory or package - `COMMAND + SHIFT + N`
 
 ## Snippets ( Live Templates )
 
