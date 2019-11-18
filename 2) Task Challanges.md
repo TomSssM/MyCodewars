@@ -829,4 +829,92 @@ function getRoute(tickets = []) {
 }
 ```
 
-# 38) Next
+# 38) Flatten the Array Non Recursively
+
+While the recursive solution might blow up the Call Stack in JS, here is the non recursive alternative:
+
+Naive Approach:
+
+```js
+function flattenArrayNonRec(arr) {
+    const flattenedArray = [];
+    let iterable = arr;
+
+    while (iterable.length) {
+        const firstElem = iterable.shift();
+
+        if (!Array.isArray(firstElem)) {
+            flattenedArray.push(firstElem);
+        } else {
+            iterable = [...firstElem, ...iterable];
+        }
+    }
+
+    return flattenedArray;
+}
+```
+
+Something crazy I came up with ( O(n) thou ):
+
+```js
+/**
+    As we go inside inner arrays of the non flattened array, try to think as though we go a level deeper, as though
+    we go to the depth = prevDepth + 1; but we also have to keep track of which index in the array we were at
+    before we fell into the inner array, depthIndexesStack is a stack that holds just that sort of information.
+    For instance in the future it might look something like:
+    [
+        7,
+        4,
+        2,
+        11,
+    ]
+    Thus from the above we can distill that as we were iterating over the source array, at depth 0,
+    at 7th element we ran into the inner array, then we stepped into the inner array and started iterating
+    over it, at depth 1 now, when we found, at index 4, yet another inner array and stepped into that whose
+    2nd element turned out to be still another inner array which we stepped into and now we are there, at depth 3,
+    at the 11th index element. As we step out of the inner array, we pop the last element of depthIndexesStack
+    off the stack. The following algorithm is based on just such an iteration.
+*/
+
+function flattenArrayNonRec(arr) {
+    const depthIndexesStack = [];
+    const flattenedArray = [];
+    const sourceArray = arr.slice();
+
+    depthIndexesStack.push(0);
+
+    while (depthIndexesStack.length) {
+        const depth = depthIndexesStack.length;
+        let iterable = sourceArray;
+        let j = 0;
+
+        while (j < depth - 1) {
+            iterable = iterable[depthIndexesStack[j]];
+            j += 1;
+        }
+
+        const index = depthIndexesStack[depth - 1];
+        const item = iterable[index];
+
+        if (index === iterable.length) {
+            depthIndexesStack.pop();
+            const newDepth = depthIndexesStack.length;
+            const oldIndex = depthIndexesStack[newDepth - 1];
+
+            depthIndexesStack[newDepth - 1] = oldIndex + 1;
+            continue;
+        }
+
+        if (!Array.isArray(item)) {
+            flattenedArray.push(item);
+            depthIndexesStack[depth - 1] = index + 1;
+        } else {
+            depthIndexesStack.push(0);
+        }
+    }
+
+    return flattenedArray;
+}
+```
+
+# 39) Next
