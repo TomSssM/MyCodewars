@@ -3,10 +3,10 @@ __.bash_profile:__
 ```shell
 # aliases
 
-alias cln='git clone'
+# the git ones:
+alias a='git add -A'
 alias st='git status'
 alias com='git add -A && git commit -m'
-alias amm='git add -A && git commit --amend'
 alias pl='git pull'
 alias p='git push'
 alias c='git checkout'
@@ -15,6 +15,8 @@ alias cl='git clean -df'
 alias dfx='git clean -dfx ./'
 alias lst='git branch --list'
 alias amend='git add . && git commit --amend --no-edit'
+
+# the general ones
 alias la='ls -la'
 alias ls='ls -a'
 
@@ -61,13 +63,17 @@ function git_branch {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
 }
 
+function node_version {
+  echo -e "$GREEN ⬢ $(node -v)"
+}
+
 PS1=""
 # If on the server
 if [[ $(git config core.editor) = vim ]]; then
   PS1+="\[$CYAN\]\h "
 fi
 PS1+="\[$YELLOW\]\w"
-PS1+="\[\$(git_color)\]\$(git_branch)\$(git_state)"
+PS1+="\[\$(git_color)\]\$(git_branch)\$(git_state)\$(node_version)"
 PS1+="\[$GRAY\] \n› "
 ```
 
