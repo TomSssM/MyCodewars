@@ -1062,4 +1062,49 @@ The log is going to be:
 0 0 1 0
 ```
 
-# 40) Next
+# 40) bind Polyfill ( without apply, call, etc, )
+
+Here is a polyfill for `bind` but done without using `apply`, `call` or any other functions:
+
+```js
+function bindPolyfill(fn, ctx) {
+    function createFunctionCall(argsCount) {
+        var functionCall = '(';
+
+        for (var i = 0; i < argsCount; i += 1) {
+            var isLastElem = i === argsCount - 1;
+            functionCall += 'arguments[' + i + ']' + (isLastElem ? '' : ',');
+        }
+
+        functionCall += ');';
+
+        return functionCall;
+    }
+
+    return function () {
+        var argsCount = arguments.length;
+        ctx.__fn__ = fn;
+        var result = eval('ctx.__fn__' + createFunctionCall(argsCount));
+        delete ctx.__fn__;
+        return result;
+    };
+}
+
+const testingFunc = function (first, second) {
+    console.log('context:', this);
+    console.log('first', first);
+    console.log('second', second);
+    return this.name;
+};
+const bound = bindPolyfill(testingFunc, { name: 'John' });
+console.log(bound('firstVal', true, 'awesome'));
+```
+
+The expected output:
+
+```
+context: { name: 'John', __fn__: [Function: testingFunc] }
+first firstVal
+second true
+John
+```
