@@ -107,7 +107,7 @@ We can likewise decode the payload:
 ```js
 atob('eyJzdWIiOiI1YmQ2MWFhMWJiNDNmNzI0M2EyOTMxNmQiLCJuYW1lIjoiSm9obiBTbWl0aCIsImlhdCI6MTU0MTI3NjA2MH0')
 // "{"sub":"5bd61aa1bb43f7243a29316d","name":"John Smith","iat":1541276060}"
-//     ↑ subject (e.g. user ID )       ↑ claim(s)          ↑ issued at (in seconds)
+//     ↑ subject ( e.g. user ID )       ↑ claim(s)          ↑ issued at ( in seconds )
 ```
 
 `sub` might be a User ID for MongoDB for instance.
@@ -125,4 +125,17 @@ As yet another security measure, `JWT` tokens are usually very often refreshed, 
 the token, he won't be able to use it for a long time because, sure enough, at a short notice the token expires and needs
 to be refreshed to become valid again.
 
-TODO: continue from 20:20
+The main pros of JWTs are the following:
+
+- server does not need to keep track of user sessions because now we carry all the information about the user in the
+ JWT Token itself ( thus no need to waste memory for the session id to user mappings on the server )
+- horizontal scaling is easier ( any server can verify the token )
+- CORS is not an issue if `Authorization` header is used instead of `Cookie`
+- operational even if cookies are disabled
+
+Thou it is worth mentioning that we would need to keep a list of revoked tokens server side ( revoked tokens are tokens
+that have gotten outdated and need to be refreshed ) so that if the server gets a request with a revoked token in it
+it doesn't grant the access to the website's protected resources for such a request because, well, straight enough,
+the token for this request is stale and as we have talked earlier it is best practice to refresh JWT tokens as
+often as possible. And as it turns out keeping a blacklist of revoked tokens is a lot harder than keeping a white list
+of un-revoked user session ids thus making Session ID authorization a lot more preferable option in most cases.
