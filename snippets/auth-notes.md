@@ -75,4 +75,54 @@ For security reasons, such a token is also sometimes encrypted. It can be encryp
 
 One type of such tokens is called **JSON Web Token** or **JWT**.
 
-TODO: continue from 13:00
+This is what `JWT` might look like ( in the `Authentication` Header ):
+
+```
+HTTP/1.1 200 OK
+Content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YmQ2MWFhMWJiNDNmNzI0M2EyOTMxNmQiLCJuYW1lIjoiSm9obiBTbWl0aCIsImlhdCI6MTU0MTI3NjA2MH0.WDKey8WGO6LENkHWJRy8S0QOCbdGwFFoH5XCAR49g4k
+```
+
+So its structure is as follows:
+
+```
+Bearer <header>.<payload>.<signature>
+```
+
+The token looks like jibberish because it is actually Base64Url encoded, symmetrically. What it means is, it can be
+decoded on the client using the JavaScript function `atob` to see what is in it. Let's do that:
+
+```js
+atob('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'); // JSON: '{"alg":"HS256","typ":"JWT"}'
+```
+
+We have just decoded the `header`!
+
+Do note though that `JWT` tokens are Base64Url encoded not for security reasons but for transport.
+
+`header` typically includes some meta information about the token. For instance, `typ` stands for `type`, which is `JWT`.
+
+We can likewise decode the payload:
+
+```js
+atob('eyJzdWIiOiI1YmQ2MWFhMWJiNDNmNzI0M2EyOTMxNmQiLCJuYW1lIjoiSm9obiBTbWl0aCIsImlhdCI6MTU0MTI3NjA2MH0')
+// "{"sub":"5bd61aa1bb43f7243a29316d","name":"John Smith","iat":1541276060}"
+//     ↑ subject (e.g. user ID )       ↑ claim(s)          ↑ issued at (in seconds)
+```
+
+`sub` might be a User ID for MongoDB for instance.
+
+`JWT` Tokens are also sometimes signed with a secret to guarantee that the token was not tampered with by the client side
+JavaScript because, as we have discussed, any manipulation ( e.g. increasing expiration time ) of the token
+invalidates this token because it has been signed with a secret before, and if the token has been modified
+then its signature ( the one that is the last part of the token: `Bearer <header>.<payload>.<signature>` ) is not going
+to match the `payload` of that token.
+
+Though there is even a spec for how to encrypt `JWT` tokens ( called `JWE` ), they are rarely encrypted because the
+client side needs to actually decrypt the tokens, plus `sessionStorage` isn't super secure.
+
+As yet another security measure, `JWT` tokens are usually very often refreshed, so that even if an attacker does steal
+the token, he won't be able to use it for a long time because, sure enough, at a short notice the token expires and needs
+to be refreshed to become valid again.
+
+TODO: continue from 20:20
