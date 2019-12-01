@@ -2,10 +2,10 @@
 
 ### Archive :books:
 
-- [Articles](./articles/README.md) :newspaper:
 - [Projects from the Tutorial](./projects-from-the-tutorial/README.md) :page_facing_up:
 - [Cool Projects](./cool-projects/README.md) :whale:
-- [Snippets](./snippets/README.md) :seedling:
+- [Snippets](./snippets/README.md) [:seedling:](./data/easter-egg.md)
+- [Legacy](./legacy/README.md) :file_cabinet:
 
 ---
 
@@ -31,8 +31,9 @@
   - [CodeWars ( Task 41 - 50 )](./5\)%20CodeWars.js)
 
 - __Others__ :pineapple:
-  - [Polyfill.js](./Polyfill.js)
   - [Hardcore](./cheatsheet/README.md)
   - [CoreJS CodeJam](./corejs-codejam/README.md)
+  - [Polyfill.js](./Polyfill.js)
+  - [Freak Show](./freakshow.js)
 
-  ---
+---

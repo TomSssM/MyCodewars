@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-          
+
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <link href="./Lazy Iterables in JavaScript_files/css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="./Lazy Iterables in JavaScript_files/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="Lazy%20Iterables%20in%20JavaScript_files/stylesheet.css" media="screen">
 
-    <link rel="stylesheet" type="text/css" href="./Lazy Iterables in JavaScript_files/pygment_trac.css" media="screen">
-    <link rel="StyleSheet" href="./Lazy Iterables in JavaScript_files/pygments.css" type="text/css" media="screen">
+    <link rel="stylesheet" type="text/css" href="Lazy%20Iterables%20in%20JavaScript_files/pygment_trac.css" media="screen">
+    <link rel="StyleSheet" href="Lazy%20Iterables%20in%20JavaScript_files/pygments.css" type="text/css" media="screen">
 
 <style type="text/css">
 :root #header + #content > #left > #rlblock_left
@@ -31,24 +31,24 @@
 
         <section id="main_content">
 
-          
-
-
-
-  
-  
-
-  
-
-  
-    
-    
-  
 
 
 
 
-          <p><img src="./Lazy Iterables in JavaScript_files/coffee-labels.jpg" alt="Coffee Labels at the Saltspring Coffee Processing Facility"></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <p><img src="Lazy%20Iterables%20in%20JavaScript_files/coffee-labels.jpg" alt="Coffee Labels at the Saltspring Coffee Processing Facility"></p>
 
 <p><em>Nota Bene: All of the examples in this essay require ECMAScript-6, and were tested with the <a href="https://babeljs.io/">Babel</a> transpiler. You can <a href="https://babeljs.io/docs/using-babel/">integrate Babel into your toolchain</a>, or copy and paste the examples into its <a href="https://babeljs.io/repl">REPL</a> in your browser.</em></p>
 
@@ -73,10 +73,10 @@
     <span class="p">},</span>
     <span class="na">pop</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
       <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">];</span>
-    
+
       <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
-      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> 
-        <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">-=</span> <span class="mi">1</span> 
+      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">-=</span> <span class="mi">1</span>
       <span class="p">}</span>
       <span class="k">return</span> <span class="nx">value</span>
     <span class="p">},</span>
@@ -85,7 +85,7 @@
     <span class="p">},</span>
     <span class="na">iterator</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
       <span class="kd">let</span> <span class="nx">iterationIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">;</span>
-      
+
       <span class="k">return</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">iterationIndex</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">)</span> <span class="p">{</span>
           <span class="nx">iterationIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">;</span>
@@ -128,7 +128,7 @@
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">iteratorSum</span> <span class="o">=</span> <span class="p">(</span><span class="nx">iterator</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="kd">let</span> <span class="nx">eachIteration</span><span class="p">,</span>
       <span class="nx">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  
+
   <span class="k">while</span> <span class="p">((</span><span class="nx">eachIteration</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">(),</span> <span class="o">!</span><span class="nx">eachIteration</span><span class="p">.</span><span class="nx">done</span><span class="p">))</span> <span class="p">{</span>
     <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">eachIteration</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
   <span class="p">}</span>
@@ -152,10 +152,10 @@
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">collectionSum</span> <span class="o">=</span> <span class="p">(</span><span class="nx">collection</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">collection</span><span class="p">.</span><span class="nx">iterator</span><span class="p">();</span>
-  
+
   <span class="kd">let</span> <span class="nx">eachIteration</span><span class="p">,</span>
       <span class="nx">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  
+
   <span class="k">while</span> <span class="p">((</span><span class="nx">eachIteration</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">(),</span> <span class="o">!</span><span class="nx">eachIteration</span><span class="p">.</span><span class="nx">done</span><span class="p">))</span> <span class="p">{</span>
     <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">eachIteration</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
   <span class="p">}</span>
@@ -189,10 +189,10 @@
     <span class="p">},</span>
     <span class="na">pop</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
       <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">];</span>
-    
+
       <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
-      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> 
-        <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">-=</span> <span class="mi">1</span> 
+      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">-=</span> <span class="mi">1</span>
       <span class="p">}</span>
       <span class="k">return</span> <span class="nx">value</span>
     <span class="p">},</span>
@@ -201,7 +201,7 @@
     <span class="p">},</span>
     <span class="na">iterator</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
       <span class="kd">let</span> <span class="nx">iterationIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">;</span>
-      
+
       <span class="k">return</span> <span class="p">{</span>
         <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
           <span class="k">if</span> <span class="p">(</span><span class="nx">iterationIndex</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">)</span> <span class="p">{</span>
@@ -226,10 +226,10 @@
 
 <span class="kd">const</span> <span class="nx">collectionSum</span> <span class="o">=</span> <span class="p">(</span><span class="nx">collection</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">collection</span><span class="p">.</span><span class="nx">iterator</span><span class="p">();</span>
-  
+
   <span class="kd">let</span> <span class="nx">eachIteration</span><span class="p">,</span>
       <span class="nx">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  
+
   <span class="k">while</span> <span class="p">((</span><span class="nx">eachIteration</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">(),</span> <span class="o">!</span><span class="nx">eachIteration</span><span class="p">.</span><span class="nx">done</span><span class="p">))</span> <span class="p">{</span>
     <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">eachIteration</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
   <span class="p">}</span>
@@ -263,10 +263,10 @@
     <span class="p">},</span>
     <span class="na">pop</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
       <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">];</span>
-    
+
       <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
-      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> 
-        <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">-=</span> <span class="mi">1</span> 
+      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">-=</span> <span class="mi">1</span>
       <span class="p">}</span>
       <span class="k">return</span> <span class="nx">value</span>
     <span class="p">},</span>
@@ -275,7 +275,7 @@
     <span class="p">},</span>
     <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
       <span class="kd">let</span> <span class="nx">iterationIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">;</span>
-      
+
       <span class="k">return</span> <span class="p">{</span>
         <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
           <span class="k">if</span> <span class="p">(</span><span class="nx">iterationIndex</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">)</span> <span class="p">{</span>
@@ -300,10 +300,10 @@
 
 <span class="kd">const</span> <span class="nx">collectionSum</span> <span class="o">=</span> <span class="p">(</span><span class="nx">collection</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">collection</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
-  
+
   <span class="kd">let</span> <span class="nx">eachIteration</span><span class="p">,</span>
       <span class="nx">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  
+
   <span class="k">while</span> <span class="p">((</span><span class="nx">eachIteration</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">(),</span> <span class="o">!</span><span class="nx">eachIteration</span><span class="p">.</span><span class="nx">done</span><span class="p">))</span> <span class="p">{</span>
     <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">eachIteration</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
   <span class="p">}</span>
@@ -320,7 +320,7 @@
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">iterableSum</span> <span class="o">=</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="kd">let</span> <span class="nx">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  
+
   <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">num</span> <span class="k">of</span> <span class="nx">iterable</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">num</span><span class="p">;</span>
   <span class="p">}</span>
@@ -346,7 +346,7 @@
     <span class="na">isEmpty</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="kc">false</span><span class="p">,</span>
     <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
       <span class="kd">let</span> <span class="nx">currentPair</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-      
+
       <span class="k">return</span> <span class="p">{</span>
         <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
           <span class="k">if</span> <span class="p">(</span><span class="nx">currentPair</span><span class="p">.</span><span class="nx">isEmpty</span><span class="p">())</span> <span class="p">{</span>
@@ -354,7 +354,7 @@
           <span class="p">}</span>
           <span class="k">else</span> <span class="p">{</span>
             <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">currentPair</span><span class="p">.</span><span class="nx">first</span><span class="p">;</span>
-            
+
             <span class="nx">currentPair</span> <span class="o">=</span> <span class="nx">currentPair</span><span class="p">.</span><span class="nx">rest</span><span class="p">;</span>
             <span class="k">return</span> <span class="p">{</span><span class="na">done</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span>
           <span class="p">}</span>
@@ -365,14 +365,14 @@
 
 <span class="kd">const</span> <span class="nx">list</span> <span class="o">=</span> <span class="p">(...</span><span class="nx">elements</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="kd">const</span> <span class="p">[</span><span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">]</span> <span class="o">=</span> <span class="nx">elements</span><span class="p">;</span>
-  
+
   <span class="k">return</span> <span class="nx">elements</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span>
     <span class="p">?</span> <span class="nx">EMPTY</span>
     <span class="p">:</span> <span class="nx">Pair1</span><span class="p">(</span><span class="nx">first</span><span class="p">,</span> <span class="nx">list</span><span class="p">(...</span><span class="nx">rest</span><span class="p">))</span>
 <span class="p">}</span>
 
 <span class="kd">const</span> <span class="nx">someSquares</span> <span class="o">=</span> <span class="nx">list</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">);</span>
-    
+
 <span class="nx">iterableSum</span><span class="p">(</span><span class="nx">someSquares</span><span class="p">)</span>
   <span class="c1">//=&gt; 55</span>
 </code></pre></div></div>
@@ -389,7 +389,7 @@
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">firstAndSecondElement</span> <span class="o">=</span> <span class="p">(</span><span class="nx">first</span><span class="p">,</span> <span class="nx">second</span><span class="p">)</span> <span class="o">=&gt;</span>
   <span class="p">({</span><span class="nx">first</span><span class="p">,</span> <span class="nx">second</span><span class="p">})</span>
-  
+
 <span class="nx">firstAndSecondElement</span><span class="p">(...</span><span class="nx">stack</span><span class="p">)</span>
   <span class="c1">//=&gt; {"first":5,"second":10}</span>
 </code></pre></div></div>
@@ -407,7 +407,7 @@
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Numbers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="kd">let</span> <span class="nx">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    
+
     <span class="k">return</span> <span class="p">{</span>
       <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span>
         <span class="p">({</span><span class="na">done</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">n</span><span class="o">++</span><span class="p">})</span>
@@ -420,7 +420,7 @@
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="s1">'all the numbers'</span><span class="p">,</span> <span class="p">...</span><span class="nx">Numbers</span><span class="p">]</span>
   <span class="c1">//=&gt; infinite loop!</span>
-  
+
 <span class="nx">firstAndSecondElement</span><span class="p">(...</span><span class="nx">Numbers</span><span class="p">)</span>
   <span class="c1">//=&gt; infinite loop!</span>
 </code></pre></div></div>
@@ -433,11 +433,11 @@
   <span class="p">({</span>
     <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
-      
+
       <span class="k">return</span> <span class="p">{</span>
         <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
           <span class="kd">const</span> <span class="p">{</span><span class="nx">done</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
-    
+
           <span class="k">return</span> <span class="p">({</span><span class="nx">done</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">done</span> <span class="p">?</span> <span class="kc">undefined</span> <span class="p">:</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">value</span><span class="p">)});</span>
         <span class="p">}</span>
       <span class="p">}</span>
@@ -455,7 +455,7 @@
   <span class="p">({</span>
     <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
-      
+
       <span class="k">return</span> <span class="p">{</span>
         <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
           <span class="k">do</span> <span class="p">{</span>
@@ -466,18 +466,18 @@
       <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">});</span>
-  
+
 <span class="kd">const</span> <span class="nx">untilIterable</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
   <span class="p">({</span>
     <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
-      
+
       <span class="k">return</span> <span class="p">{</span>
         <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
           <span class="kd">let</span> <span class="p">{</span><span class="nx">done</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
-          
+
           <span class="nx">done</span> <span class="o">=</span> <span class="nx">done</span> <span class="o">||</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
-    
+
           <span class="k">return</span> <span class="p">({</span><span class="nx">done</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">done</span> <span class="p">?</span> <span class="kc">undefined</span> <span class="p">:</span> <span class="nx">value</span><span class="p">});</span>
         <span class="p">}</span>
       <span class="p">}</span>
@@ -517,11 +517,11 @@
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">firstIterable</span> <span class="o">=</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
   <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]().</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">;</span>
 
-<span class="kd">const</span> <span class="nx">restIterable</span> <span class="o">=</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span> 
+<span class="kd">const</span> <span class="nx">restIterable</span> <span class="o">=</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
   <span class="p">({</span>
     <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
-      
+
       <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
       <span class="k">return</span> <span class="nx">iterator</span><span class="p">;</span>
     <span class="p">}</span>
@@ -544,7 +544,7 @@
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Stack3</span><span class="p">.</span><span class="k">from</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="p">{</span>
   <span class="kd">const</span> <span class="nx">stack</span> <span class="o">=</span> <span class="k">this</span><span class="p">();</span>
-  
+
   <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">element</span> <span class="k">of</span> <span class="nx">iterable</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
   <span class="p">}</span>
@@ -554,7 +554,7 @@
 <span class="nx">Pair1</span><span class="p">.</span><span class="k">from</span> <span class="o">=</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
   <span class="p">(</span><span class="kd">function</span> <span class="nx">interationToList</span> <span class="p">(</span><span class="nx">iteration</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">const</span> <span class="p">{</span><span class="nx">done</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span> <span class="o">=</span> <span class="nx">iteration</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
-    
+
     <span class="k">return</span> <span class="nx">done</span> <span class="p">?</span> <span class="nx">EMPTY</span> <span class="p">:</span> <span class="nx">Pair1</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">interationToList</span><span class="p">(</span><span class="nx">iteration</span><span class="p">));</span>
   <span class="p">})(</span><span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]())</span>
 </code></pre></div></div>
@@ -601,38 +601,38 @@
   <span class="p">}</span>
   <span class="k">return</span> <span class="nx">consumer</span>
 <span class="p">};</span>
-  
+
 <span class="kd">const</span> <span class="nx">mapIterableWith</span> <span class="o">=</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
   <span class="nx">extend</span><span class="p">({</span>
     <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
-      
+
       <span class="k">return</span> <span class="p">{</span>
         <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
           <span class="kd">const</span> <span class="p">{</span><span class="nx">done</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
-    
+
           <span class="k">return</span> <span class="p">({</span><span class="nx">done</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">done</span> <span class="p">?</span> <span class="kc">undefined</span> <span class="p">:</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">value</span><span class="p">)});</span>
         <span class="p">}</span>
       <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">},</span> <span class="nx">LazyIterable</span><span class="p">);</span>
-  
+
 <span class="kd">const</span> <span class="nx">reduceIterableWith</span> <span class="o">=</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">seed</span><span class="p">,</span> <span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
   <span class="kd">let</span> <span class="nx">iterationResult</span><span class="p">,</span>
       <span class="nx">accumulator</span> <span class="o">=</span> <span class="nx">seed</span><span class="p">;</span>
-  
+
   <span class="k">while</span> <span class="p">((</span><span class="nx">iterationResult</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">(),</span> <span class="o">!</span><span class="nx">iterationResult</span><span class="p">.</span><span class="nx">done</span><span class="p">))</span> <span class="p">{</span>
     <span class="nx">accumulator</span> <span class="o">=</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">accumulator</span><span class="p">,</span> <span class="nx">iterationResult</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
   <span class="p">}</span>
   <span class="k">return</span> <span class="nx">accumulator</span><span class="p">;</span>
 <span class="p">};</span>
-  
+
 <span class="kd">const</span> <span class="nx">filterIterableWith</span> <span class="o">=</span> <span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
   <span class="nx">extend</span><span class="p">({</span>
     <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
-      
+
       <span class="k">return</span> <span class="p">{</span>
         <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
           <span class="k">do</span> <span class="p">{</span>
@@ -648,50 +648,50 @@
   <span class="nx">extend</span><span class="p">({</span>
     <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
-    
+
       <span class="k">return</span> <span class="p">{</span>
         <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
           <span class="kd">let</span> <span class="p">{</span><span class="nx">done</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
-        
+
           <span class="nx">done</span> <span class="o">=</span> <span class="nx">done</span> <span class="o">||</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
-  
+
           <span class="k">return</span> <span class="p">({</span><span class="nx">done</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">done</span> <span class="p">?</span> <span class="kc">undefined</span> <span class="p">:</span> <span class="nx">value</span><span class="p">});</span>
         <span class="p">}</span>
       <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">},</span> <span class="nx">LazyIterable</span><span class="p">);</span>
-  
+
 <span class="kd">const</span> <span class="nx">firstIterable</span> <span class="o">=</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
   <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]().</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">;</span>
 
-<span class="kd">const</span> <span class="nx">restIterable</span> <span class="o">=</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span> 
+<span class="kd">const</span> <span class="nx">restIterable</span> <span class="o">=</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
   <span class="nx">extend</span><span class="p">({</span>
     <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
-      
+
       <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
       <span class="k">return</span> <span class="nx">iterator</span><span class="p">;</span>
     <span class="p">}</span>
   <span class="p">},</span> <span class="nx">LazyIterable</span><span class="p">);</span>
-  
+
 <span class="kd">const</span> <span class="nx">takeIterable</span> <span class="o">=</span> <span class="p">(</span><span class="nx">numberToTake</span><span class="p">,</span> <span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
   <span class="nx">extend</span><span class="p">({</span>
     <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="kd">const</span> <span class="nx">iterator</span> <span class="o">=</span> <span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]();</span>
       <span class="kd">let</span> <span class="nx">remainingElements</span> <span class="o">=</span> <span class="nx">numberToTake</span><span class="p">;</span>
-    
+
       <span class="k">return</span> <span class="p">{</span>
         <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
           <span class="kd">let</span> <span class="p">{</span><span class="nx">done</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span> <span class="o">=</span> <span class="nx">iterator</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
-        
+
           <span class="nx">done</span> <span class="o">=</span> <span class="nx">done</span> <span class="o">||</span> <span class="nx">remainingElements</span><span class="o">--</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>
-  
+
           <span class="k">return</span> <span class="p">({</span><span class="nx">done</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">done</span> <span class="p">?</span> <span class="kc">undefined</span> <span class="p">:</span> <span class="nx">value</span><span class="p">});</span>
         <span class="p">}</span>
       <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">},</span> <span class="nx">LazyIterable</span><span class="p">);</span>
-    
+
 <span class="kd">const</span> <span class="nx">LazyIterable</span> <span class="o">=</span> <span class="p">{</span>
    <span class="na">map</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
      <span class="k">return</span> <span class="nx">mapIterableWith</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
@@ -734,7 +734,7 @@
     <span class="na">isEmpty</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="kc">false</span><span class="p">,</span>
     <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
       <span class="kd">let</span> <span class="nx">currentPair</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-      
+
       <span class="k">return</span> <span class="p">{</span>
         <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
           <span class="k">if</span> <span class="p">(</span><span class="nx">currentPair</span><span class="p">.</span><span class="nx">isEmpty</span><span class="p">())</span> <span class="p">{</span>
@@ -742,7 +742,7 @@
           <span class="p">}</span>
           <span class="k">else</span> <span class="p">{</span>
             <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">currentPair</span><span class="p">.</span><span class="nx">car</span><span class="p">;</span>
-            
+
             <span class="nx">currentPair</span> <span class="o">=</span> <span class="nx">currentPair</span><span class="p">.</span><span class="nx">cdr</span><span class="p">;</span>
             <span class="k">return</span> <span class="p">{</span><span class="na">done</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span>
           <span class="p">}</span>
@@ -754,10 +754,10 @@
 <span class="nx">Pair</span><span class="p">.</span><span class="k">from</span> <span class="o">=</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="o">=&gt;</span>
   <span class="p">(</span><span class="kd">function</span> <span class="nx">interationToList</span> <span class="p">(</span><span class="nx">iteration</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">const</span> <span class="p">{</span><span class="nx">done</span><span class="p">,</span> <span class="nx">value</span><span class="p">}</span> <span class="o">=</span> <span class="nx">iteration</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
-    
+
     <span class="k">return</span> <span class="nx">done</span> <span class="p">?</span> <span class="nx">EMPTY</span> <span class="p">:</span> <span class="nx">Pair</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">interationToList</span><span class="p">(</span><span class="nx">iteration</span><span class="p">));</span>
   <span class="p">})(</span><span class="nx">iterable</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]());</span>
-  
+
 <span class="c1">// Stack</span>
 
 <span class="kd">const</span> <span class="nx">Stack</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span>
@@ -769,10 +769,10 @@
     <span class="p">},</span>
     <span class="na">pop</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
       <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">];</span>
-    
+
       <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
-      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> 
-        <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">-=</span> <span class="mi">1</span> 
+      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">-=</span> <span class="mi">1</span>
       <span class="p">}</span>
       <span class="k">return</span> <span class="nx">value</span>
     <span class="p">},</span>
@@ -781,7 +781,7 @@
     <span class="p">},</span>
     <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
       <span class="kd">let</span> <span class="nx">iterationIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">;</span>
-      
+
       <span class="k">return</span> <span class="p">{</span>
         <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
           <span class="k">if</span> <span class="p">(</span><span class="nx">iterationIndex</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">)</span> <span class="p">{</span>
@@ -797,10 +797,10 @@
       <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">},</span> <span class="nx">LazyIterable</span><span class="p">);</span>
-  
+
 <span class="nx">Stack</span><span class="p">.</span><span class="k">from</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="p">{</span>
   <span class="kd">const</span> <span class="nx">stack</span> <span class="o">=</span> <span class="k">this</span><span class="p">();</span>
-  
+
   <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">element</span> <span class="k">of</span> <span class="nx">iterable</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
   <span class="p">}</span>
@@ -808,19 +808,19 @@
 <span class="p">}</span>
 
 <span class="c1">// Pair and Stack in action</span>
-  
+
 <span class="nx">Stack</span><span class="p">.</span><span class="k">from</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
   <span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">first</span><span class="p">()</span>
 
 <span class="c1">//=&gt; 100</span>
-  
+
 <span class="nx">Pair</span><span class="p">.</span><span class="k">from</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
   <span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">seed</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">seed</span> <span class="o">+</span> <span class="nx">element</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-  
+
 <span class="c1">//=&gt; 220</span>
 </code></pre></div></div>
 
@@ -834,7 +834,7 @@
   <span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">seed</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">seed</span> <span class="o">+</span> <span class="nx">element</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-  
+
 <span class="nx">Pair</span><span class="p">.</span><span class="k">from</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
   <span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
@@ -923,7 +923,7 @@
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Numbers</span> <span class="o">=</span> <span class="nx">extend</span><span class="p">({</span>
   <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="kd">let</span> <span class="nx">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    
+
     <span class="k">return</span> <span class="p">{</span>
       <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span>
         <span class="p">({</span><span class="na">done</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">n</span><span class="o">++</span><span class="p">})</span>
@@ -982,7 +982,7 @@
        <span class="k">return</span> <span class="nx">gatherable</span><span class="p">.</span><span class="k">from</span><span class="p">(</span><span class="nx">takeIterable</span><span class="p">(</span><span class="nx">numberToTake</span><span class="p">,</span> <span class="k">this</span><span class="p">));</span>
      <span class="p">}</span>
   <span class="p">})</span>
-  
+
 <span class="kd">const</span> <span class="nx">EagerStack</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span>
   <span class="nx">extend</span><span class="p">({</span>
     <span class="na">array</span><span class="p">:</span> <span class="p">[],</span>
@@ -992,10 +992,10 @@
     <span class="p">},</span>
     <span class="na">pop</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
       <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">];</span>
-    
+
       <span class="k">this</span><span class="p">.</span><span class="nx">array</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
-      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> 
-        <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">-=</span> <span class="mi">1</span> 
+      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">index</span> <span class="o">-=</span> <span class="mi">1</span>
       <span class="p">}</span>
       <span class="k">return</span> <span class="nx">value</span>
     <span class="p">},</span>
@@ -1004,7 +1004,7 @@
     <span class="p">},</span>
     <span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
       <span class="kd">let</span> <span class="nx">iterationIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">;</span>
-      
+
       <span class="k">return</span> <span class="p">{</span>
         <span class="na">next</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
           <span class="k">if</span> <span class="p">(</span><span class="nx">iterationIndex</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">index</span><span class="p">)</span> <span class="p">{</span>
@@ -1020,10 +1020,10 @@
       <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">},</span> <span class="nx">EagerIterable</span><span class="p">(</span><span class="nx">EagerStack</span><span class="p">));</span>
-  
+
 <span class="nx">EagerStack</span><span class="p">.</span><span class="k">from</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">iterable</span><span class="p">)</span> <span class="p">{</span>
   <span class="kd">const</span> <span class="nx">stack</span> <span class="o">=</span> <span class="k">this</span><span class="p">();</span>
-  
+
   <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">element</span> <span class="k">of</span> <span class="nx">iterable</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">stack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
   <span class="p">}</span>
@@ -1033,7 +1033,7 @@
 <span class="nx">EagerStack</span>
   <span class="p">.</span><span class="k">from</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
   <span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
-  
+
 <span class="c1">//=&gt; {"array":[10,8,6,4,2],"index":4}</span>
 </code></pre></div></div>
 
@@ -1073,11 +1073,11 @@
 
         </section>
 
-        
+
 
 
       </div>
     </div>
 
-    
+
 </body></html>
