@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .text {
+            display: inline-block;
+            user-select: none;
+            cursor: pointer;
+            padding: .3rem;
+            border-radius: 4px;
+        }
+        .text_type_selected {
+            background-color: purple;
+        }
+    </style>
+    <title>JS Transition Camp</title>
+</head>
+<body>
+<h1>JS Transition Camp</h1>
+Now click the span below many times :)
+<br>
+<span id="select-elem" class="text">Click</span>
+<script>
+    let isTransitioning = false;
+    const elemToSelect = document.querySelector('#select-elem');
+
+    elemToSelect.addEventListener('mousedown', () => { // !! for some reason the effect works only for 'mousedown'
+        highlightElem(elemToSelect);
+    });
+
+
+    function highlightElem() {
+        if (isTransitioning) {
+            isTransitioning = false;
+            elemToSelect.removeEventListener('transitionend', handleTransitionend);
+            elemToSelect.style.transition = ''; // (*)
+        }
+
+        // since no transition is specified, the change of the CSS property is going to be
+        // without transition, going to be abrupt
+        elemToSelect.classList.add('text_type_selected');
+
+        setTimeout(() => {
+            // now that the change to the purple background CSS property has been processed by the browser
+            // ( because this code is in a setTimeout ), we need to add a CSS transition property so that
+            // the change to a transparent background is smoothly transitioned
+            isTransitioning = true;
+            elemToSelect.style.transition = 'background-color 1s ease-out';
+            elemToSelect.classList.remove('text_type_selected');
+            elemToSelect.addEventListener('transitionend', handleTransitionend);
+
+            // Note: if the user were to click while the transition is still in progress, then we simply
+            // need to show the purple background back abruptly ( without transition ), in order for that
+            // to work, we need to first set the transition CSS property to none, then set the purple
+            // background color, which is exactly what happens in line (*)
+        });
+    }
+
+    function handleTransitionend() {
+        elemToSelect.style.transition = '';
+        elemToSelect.removeEventListener('transitionend', handleTransitionend);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .text {
+            display: inline-block;
+            user-select: none;
+            cursor: pointer;
+            padding: .3rem;
+            border-radius: 4px;
+        }
+        .fade-in {
+            background-color: purple;
+            transition: none;
+        }
+        .fade-out {
+            background-color: transparent;
+            transition: background-color 1s ease-out;
+        }
+    </style>
+    <title>Selection training</title>
+</head>
+<body>
+<h1>JS Transition Training</h1>
+Now click the span below many times :)
+<br>
+<span id="select-elem" class="text">Click</span>
+<script>
+    let isTransitioning = false;
+    const elemToSelect = document.querySelector('#select-elem');
+
+    elemToSelect.addEventListener('mousedown', () => {
+        highlightElem(elemToSelect);
+    });
+
+
+    function highlightElem() {
+        if (isTransitioning) {
+            isTransitioning = false;
+            elemToSelect.removeEventListener('transitionend', handleTransitionend);
+            handleTransitionend();
+        }
+
+        elemToSelect.classList.add('fade-in');
+
+        setTimeout(() => {
+            isTransitioning = true;
+            elemToSelect.classList.remove('fade-in');
+            elemToSelect.classList.add('fade-out');
+            elemToSelect.addEventListener('transitionend', handleTransitionend);
+        });
+    }
+
+    function handleTransitionend() {
+        elemToSelect.classList.remove('fade-out');
+        elemToSelect.removeEventListener('transitionend', handleTransitionend);
+    }
+</script>
+</body>
+</html>
