@@ -8,5 +8,6 @@
 
 ## Other
 
+- [.gitconfig](./gitconfig.md)
 - [.bash_profile](./bash-profile-settings.md)
 - [.editorconfig](./editorconfigInit.md)

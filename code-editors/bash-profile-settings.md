@@ -1,6 +1,8 @@
-__.bash_profile:__
+__.bash_profile__
 
-```shell
+aliases:
+
+```shell script
 # aliases
 
 # the git ones:
@@ -19,7 +21,11 @@ alias amend='git add . && git commit --amend --no-edit'
 # the general ones
 alias la='ls -la'
 alias ls='ls -a'
+```
 
+GIT:
+
+```shell script
 # git intergration ( if on MAC )
 
 RED="\033[0;31m"
@@ -75,21 +81,4 @@ fi
 PS1+="\[$YELLOW\]\w"
 PS1+="\[\$(git_color)\]\$(git_branch)\$(git_state)\$(node_version)"
 PS1+="\[$GRAY\] \n› "
-```
-
-Also here are the same aliases for __.gitconfig:__
-
-```bash
-[alias]
-  st = status
-  cm = commit
-  a = add -A
-  cma = commit --amend
-  p = push
-  l = log
-  c = checkout
-  b = branch
-  ba = branch -a
-  n = branch -m
-  ch = checkout ./
 ```
