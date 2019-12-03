@@ -35,7 +35,7 @@
 - Duplicate Line or Selection - `COMMAND + D`
 - Delete Line - `COMMAND + R`
 - Version Control - `F1`
-- Terminal - ``CONTROL + `\``
+- Terminal - ``CONTROL + ` ``
 - Undo - `COMMAND + Z`
 - Redo - `COMMAND + SHIFT + Z`
 - Increase Font Size - `COMMAND + =`
@@ -53,6 +53,7 @@
 - Select All - `COMMAND + A`
 - File - `COMMAND + N`
 - Create new directory or package - `COMMAND + SHIFT + N`
+- Active Next Window - ``COMMAND + ` ``
 
 ## Snippets ( Live Templates )
 
