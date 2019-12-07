@@ -294,6 +294,72 @@ function permutations(str) {
 permutations('boat'); // 24 permutations
 ```
 
+Here is a real life example of this task asked on the interview:
+
+Given an array of words like this:
+
+```js
+[
+    ['1', '2', '3'],
+    ['true', 'false'],
+    ['NaN', 'undefined', 'null'],
+]
+```
+
+write a function that will print all the possible variations of the words inside inner arrays so that the
+result looks like this:
+
+```
+1,true,NaN
+1,true,undefined
+1,true,null
+1,false,NaN
+1,false,undefined
+1,false,null
+2,true,NaN
+2,true,undefined
+2,true,null
+2,false,NaN
+2,false,undefined
+2,false,null
+3,true,NaN
+3,true,undefined
+3,true,null
+3,false,NaN
+3,false,undefined
+3,false,null
+```
+
+Here is the implementation:
+
+```js
+function wordsPuzzle(words) {
+    function getPermutations(words, iterableIndex) {
+        const lastIndex = words.length - 1;
+
+        if (iterableIndex === lastIndex) {
+            return words[lastIndex].map((word) => [word]);
+        }
+
+        const permutations = getPermutations(words, iterableIndex + 1);
+        const result = [];
+        const iterable = words[iterableIndex];
+
+        for (let i = 0; i < iterable.length; i += 1) {
+            const currentWord = iterable[i];
+
+            for (let j = 0; j < permutations.length; j += 1) {
+                result.push([currentWord, ...permutations[j]]);
+            }
+        }
+
+        return result;
+    }
+
+    return getPermutations(words, 0);
+}
+```
+
 # 29) Push Zeros Case
 
 Implement a function which pushes all 0s to the right while keeping the non-zero values in order, use of `push`
