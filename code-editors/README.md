@@ -8,5 +8,6 @@
 
 ## Other
 
-- [Aliases](./aliases.md)
-- [Editorconfig](./editorconfigInit.md)
+- [.gitconfig](./gitconfig.md)
+- [.bash_profile](./bash-profile-settings.md)
+- [.editorconfig](./editorconfigInit.md)

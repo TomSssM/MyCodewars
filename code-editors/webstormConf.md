@@ -10,30 +10,50 @@
 - [ ] Appearance & Behavior > System Settings > Use "safe write" ( uncheck )
 - [ ] Editor > Inspections > JavaScript > Code style issues > Unterminated Statement
 - [x] Languages & Frameworks > JavaScript > Code Quality Tools > ESLint > Automatic ESLint configuration
+- [x] Editor > Code Style > EditorConfig > Scheme > Project
 
 ## Keymap
 
-- Move Line Down `ALT + DOWN`
-- Move Line Up `ALT + UP`
-- Indent Line or Selection `CTRL + }`
-- Unindent Line or Selection `CTRL + {`
-- Move Caret Backward a Paragraph - `CTRL + UP`
-- Move Caret Forward a Paragraph - `CTRL + DOWN`
-- Move Caret to Line Start - `CTRL + Shift + ;`
-- Move Caret to Line End - `CTRL + ;`
-- Clone Caret Above - `ALT + SHIFT + UP`
-- Clone Caret Below - `ALT + SHIFT + DOWN`
-- Duplicate Line or Selection - `CTRL + D`
-- Delete Line - `CTRL + R`
+- Move Line Down `FN + DOWN`
+- Move Line Up `FN + UP`
+- Indent Line or Selection `COMMAND + }`
+- Unindent Line or Selection `COMMAND + {`
+- Move Caret Backward a Paragraph - `OPTION + UP`
+- Move Caret Backward a Paragraph with Selection - `OPTION + SHIFT + UP`
+- Move Caret Forward a Paragraph - `OPTION + DOWN`
+- Move Caret Forward a Paragraph with Selection - `OPTION + SHIFT + DOWN`
+- Move Caret to Text Start - `COMMAND + UP`
+- Move Caret to Text Start with Selection - `SHIFT + COMMAND + UP`
+- Move Caret to Text Bottom - `COMMAND + DOWN`
+- Move Caret to Text Bottom with Selection - `SHIFT + COMMAND + DOWN`
+- Move Caret to Line Start with Selection - `SHIFT + COMMAND LEFT`
+- Move Caret to Line End with Selection - `SHIFT + COMMAND RIGHT`
+- Move Caret to Line Start - `COMMAND LEFT` or `SHIFT + COMMAND + ;`
+- Move Caret to Line End - `COMMAND RIGHT` or `COMMAND + ;`
+- Clone Caret Above - `SHIFT + FN + UP`
+- Clone Caret Below - `SHIFT + FN + DOWN`
+- Duplicate Line or Selection - `COMMAND + D`
+- Delete Line - `COMMAND + R`
 - Version Control - `F1`
-- Terminal - `CTRL + `\`
-- Undo - `Ctrl + Z`
-- Redo - `Ctrl + Y`
-- Increase Font Size - `Ctrl + =`
-- Decrease Font Size - `Ctrl + Minus`
-- Open previously Copied Stuff - `Ctrl + Shift + V`
-- Git Commit - `Ctrl + K`
-- Git Push - `Ctrl + Shift + K`
+- Terminal - ``CONTROL + ` ``
+- Undo - `COMMAND + Z`
+- Redo - `COMMAND + SHIFT + Z`
+- Increase Font Size - `COMMAND + =`
+- Decrease Font Size - `COMMAND + Minus`
+- Open previously Copied Stuff - `COMMAND + Shift + V`
+- Git Commit - `COMMAND + K`
+- Git Push - `COMMAND + Shift + K`
+- Preferences - `COMMAND + ,`
+- Add Selection for Next Occurrence - `COMMAND + G`
+- Find in Path - `SHIFT + COMMAND + F`
+- Toggle italic mode ( Plugins -> Markdown Support ) - `COMMAND + I`
+- Toggle bold mode ( Plugins -> Markdown Support ) - `COMMAND + B`
+- Select Next Tab - `OPTION + COMMAND + RIGHT`
+- Select Tab - `OPTION + COMMAND + LEFT`
+- Select All - `COMMAND + A`
+- File - `COMMAND + N`
+- Create new directory or package - `COMMAND + SHIFT + N`
+- Active Next Window - ``COMMAND + ` ``
 
 ## Snippets ( Live Templates )
 
@@ -78,50 +98,4 @@ Syntax:
 addEventListener($type$, $arg$ => $END$);
 ```
 - [x] Applicable in `JavaScript Everywhere`
-- [ ] Uncheck `Reformat according to style`
-
-#### mod
-
-Syntax:
-```
-import $modName$ from '$PATH$';$END$
-```
-- [x] Applicable in `JavaScript Statements Only`
-
-### Jest Stuff
-
-#### desc
-
-Syntax:
-```
-describe('$desc$', () => {$END$});
-```
-- [x] Applicable in `JavaScript Statements Only`
-- [ ] Uncheck `Reformat according to style`
-
-#### desp
-
-Syntax:
-```
-describe('$class$.prototype.$method$', () => {$END$});
-```
-- [x] Applicable in `JavaScript Statements Only`
-- [ ] Uncheck `Reformat according to style`
-
-#### tst
-
-Syntax:
-```
-test('$desc$', $async$() => {$END$});
-```
-- [x] Applicable in `JavaScript Statements Only`
-- [ ] Uncheck `Reformat according to style`
-
-#### exp
-
-Syntax:
-```
-expect($smth$).$matcher$($val$);$END$
-```
-- [x] Applicable in `JavaScript Statements Only`
-- [x] go to `Edit variables` and set `Default value` of `$matcher$` to `"toBe"`
+- [ ] `Reformat according to style` ( uncheck )

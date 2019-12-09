@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Main</title>
+</head>
+<body>
+<h1>Main</h1>
+<button id="add-books">Add Books</button>
+<button id="clear-btn">Clear sessionStorage</button>
+<iframe src="./another-index.html"></iframe>
+<script>
+    const btn = document.querySelector('#add-books');
+    const clearBtn = document.querySelector('#clear-btn');
+    let bookIndex = 0;
+
+    btn.addEventListener('click', () => {
+        sessionStorage.setItem(`book${bookIndex}`, `book name ${bookIndex}`);
+        bookIndex++;
+    });
+
+    clearBtn.addEventListener('click', () => {
+        sessionStorage.clear();
+    });
+
+    window.addEventListener('storage', ({ storageArea }) => {
+        console.log('sessionStorage [[ index.html ]]', storageArea);
+    });
+</script>
+</body>
+</html>

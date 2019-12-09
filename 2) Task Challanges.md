@@ -294,6 +294,72 @@ function permutations(str) {
 permutations('boat'); // 24 permutations
 ```
 
+Here is a real life example of this task asked on the interview:
+
+Given an array of words like this:
+
+```js
+[
+    ['1', '2', '3'],
+    ['true', 'false'],
+    ['NaN', 'undefined', 'null'],
+]
+```
+
+write a function that will print all the possible variations of the words inside inner arrays so that the
+result looks like this:
+
+```
+1,true,NaN
+1,true,undefined
+1,true,null
+1,false,NaN
+1,false,undefined
+1,false,null
+2,true,NaN
+2,true,undefined
+2,true,null
+2,false,NaN
+2,false,undefined
+2,false,null
+3,true,NaN
+3,true,undefined
+3,true,null
+3,false,NaN
+3,false,undefined
+3,false,null
+```
+
+Here is the implementation:
+
+```js
+function wordsPuzzle(words) {
+    function getPermutations(words, iterableIndex) {
+        const lastIndex = words.length - 1;
+
+        if (iterableIndex === lastIndex) {
+            return words[lastIndex].map((word) => [word]);
+        }
+
+        const permutations = getPermutations(words, iterableIndex + 1);
+        const result = [];
+        const iterable = words[iterableIndex];
+
+        for (let i = 0; i < iterable.length; i += 1) {
+            const currentWord = iterable[i];
+
+            for (let j = 0; j < permutations.length; j += 1) {
+                result.push([currentWord, ...permutations[j]]);
+            }
+        }
+
+        return result;
+    }
+
+    return getPermutations(words, 0);
+}
+```
+
 # 29) Push Zeros Case
 
 Implement a function which pushes all 0s to the right while keeping the non-zero values in order, use of `push`
@@ -519,4 +585,592 @@ function doStuff() {
 
 It is awesome!
 
-# 34) Next
+# 34) CSS Parser
+
+CSS Parser is a great thing. It may be too complicated to ask at the interview but I need to keep it somewhere:
+
+```js
+function parseCss(text) {
+    let tokenizer = /([\s\S]+?)\{([\s\S]*?)\}/gi,
+        rules = [],
+        rule, token;
+    text = text.replace(/\/\*[\s\S]*?\*\//g, '');
+    while ( (token = tokenizer.exec(text)) ) {
+        const style = parseRule( token[2].trim() );
+        style.cssText = stringifyRule(style);
+        rule = {
+            selectorText : token[1].trim().replace(/\s*\,\s*/, ', '),
+            style,
+        };
+        rule.cssText = rule.selectorText + ' { ' + rule.style.cssText + ' }';
+        rules.push(rule);
+    }
+    return rules;
+}
+
+
+function parseRule(css) {
+    let tokenizer = /\s*([a-z\-]+)\s*:\s*((?:[^;]*url\(.*?\)[^;]*|[^;]*)*)\s*(?:;|$)/gi,
+        obj = {},
+        token;
+    while ( (token=tokenizer.exec(css)) ) {
+        obj[token[1].toLowerCase()] = token[2];
+    }
+    return obj;
+}
+
+function stringifyRule(style) {
+    let text = '',
+        keys = Object.keys(style).sort();
+    for (let i=0; i<keys.length; i++) {
+        text += ' ' + keys[i] + ': ' + style[keys[i]] + ';';
+    }
+    return text.substring(1);
+}
+
+const ast = parseCss(`
+body {
+    color: yellow;
+    font-size: 14px;
+}
+.className {
+    display: flex;
+}
+`);
+```
+
+`ast` ( Abstract Syntax Tree ) will look like this:
+
+```json
+[
+    {
+        "selectorText": "body",
+        "style": {
+            "color": "yellow",
+            "font-size": "14px",
+            "cssText": "color: yellow; font-size: 14px;"
+        },
+        "cssText": "body { color: yellow; font-size: 14px; }"
+    },
+    {
+        "selectorText": ".className",
+        "style": {
+            "display": "flex",
+            "cssText": "display: flex;"
+        },
+        "cssText": ".className { display: flex; }"
+    }
+]
+```
+
+# 35) Composable Array Sort
+
+Imagine the situation where we have `items`:
+
+```js
+const items = [
+    {name: 'Zh', surname: 'Pak', age: 19},
+    {name: 'Va',  surname: 'In',  age: 26},
+    {name: 'An',   surname: 'Ik', age: 27},
+    {name: 'Mi',  surname: 'Tr', age: 30},
+    {name: 'Ma',  surname: 'Pv', age: 30},
+];
+```
+
+And we want to sort them first by name and then by surname. So the logic would look like this:
+
+```js
+items.sort((left, right) => {
+    const firstCharLeft = left.name[0];
+    const firstCharRight = right.name[0];
+
+    // if the first 2 letters are the same then sort by surname
+    if (firstCharLeft === firstCharRight) {
+        return sortBySurname(left, right);
+    }
+
+    return firstCharLeft > firstCharRight ? 1 : -1;
+});
+
+function sortBySurname(left, right) {
+    const firstCharLeft = left.surname[0];
+    const firstCharRight = right.surname[0];
+
+    // normally if the callback provided to Array.prototype.sort returns 0, then
+    // JS will not swap the two elements for whose comparison the callback returned 0
+    if (firstCharLeft === firstCharRight) return 0;
+
+    return firstCharLeft > firstCharRight ? 1 : -1;
+}
+```
+
+But what if the surnames are the same too? Then we would want to sort by *age*. Well, it is good but getting
+the sort for age into our existing code is starting to make our code look like shit. Thus we need to write
+a composable sort that would look like this:
+
+```js
+composeSort(sortByName, sortBySurname, sortByAge);
+```
+
+Such a call to `composeSort` will return a callback we should be able to pass like so:
+
+```js
+items.sort(composeSort(sortByName, sortBySurname, sortByAge));
+```
+
+to the `.sort` method. And such a callback returned by `composeSort` should thus sort all the values
+
+- first by `sortByName`
+- then in case `sortByName` encounters the same 2 first letters, then sort by `sortBySurname`
+- and if the same story happens to `sortBySurname`, then sort with `sortByAge`
+
+So we want a utility to make possible our logic that we just now came up with above.
+
+Here is the implementation:
+
+```js
+function composeSort(...sortCbs) {
+    return (left, right) => {
+        return sortCbs.reduce((t, cb) => t || cb(left, right), 0);
+    };
+}
+```
+
+So the resulting callback from `composeSort` looks at the value ( either -1 or 1 ) returned by the *first* callback, 
+then if it is 0 it checks that the next callback returns either 1 or -1 and not 0, yet if it also retruns 0 it looks at 
+the value returned by the 3rd callback and so on all that by *reducing* the array of callbacks.
+
+# 36) Transactions
+
+Implement a `Transation` class that would behave like so:
+
+```js
+function Transaction(arr) {
+    ...
+}
+
+const arr = [];
+
+const tA = new Transaction(arr);
+const tB = new Transaction(arr);
+const tC = new Transaction(arr);
+
+tA.push('A1');
+tA.push('A2');
+
+tB.push('B1');
+tB.push('B2');
+
+tC.unshift('C1');
+tC.push('C2');
+
+tB.push('B3');
+
+tA.push('A3');
+
+console.log('1st', arr); // 1st: ['C1', 'A1', 'A2', 'B1', 'B2', 'C2', 'B3', 'A3']
+
+tB.rollback();
+console.log('2nd', arr); // 2nd: ['C1', 'A1', 'A2', 'C2', 'A3']
+
+tA.commit();
+tA.rollback();
+console.log('3rd', arr); // 3rd: ['C1', 'A1', 'A2', 'C2', 'A3']
+
+tC.rollback();
+console.log('4th', arr); // 4th: ['A1', 'A2', 'A3']
+```
+
+Here is the implementation ( it is one of those tasks that you solve by using 2 arrays ):
+
+```js
+function Transaction(arr) {
+    this.hash = String(Math.random()).slice(2);
+
+    if (!Transaction.array) {
+        Transaction.array = arr;
+    }
+}
+
+Transaction.array = null;
+Transaction.hashesArr = [];
+
+Transaction.prototype.push = function (val) {
+    this.constructor.array.push(val);
+    this.constructor.hashesArr.push(this.hash);
+};
+
+Transaction.prototype.unshift = function (val) {
+    this.constructor.array.unshift(val);
+    this.constructor.hashesArr.unshift(this.hash);
+};
+
+Transaction.prototype.rollback = function () {
+    const array = this.constructor.array;
+    const hashesArray = this.constructor.hashesArr;
+
+    for (let i = array.length; i >= 0; i -= 1) {
+        if (hashesArray[i] === this.hash) {
+            array.splice(i, 1);
+            hashesArray.splice(i, 1);
+        }
+    }
+};
+
+Transaction.prototype.commit = function () {
+    const hashesArray = this.constructor.hashesArr;
+
+    for (let i = hashesArray.length; i >= 0; i -= 1) {
+        if (hashesArray[i] === this.hash) {
+            delete hashesArray[i];
+        }
+    }
+};
+```
+
+# 37) Tickets Orderizer
+
+Imagine we have the following tickets:
+```js
+[
+    { from: 'London', to: 'Washington' },
+    { from: 'NY', to: 'London' },
+    { from: 'Washington', to: 'Texas' },
+    ...
+]
+```
+
+Out of these tickets we can build a straight route from a to b. Thus we are going to fly from New York to Texas 
+according to the following route:
+
+```
+NY -> London -> Washington -> Texas
+```
+
+We can tell so by looking at the _sorted_ tickets below:
+
+```js
+[
+    { from: 'NY', to: 'London' },
+    { from: 'London', to: 'Moscow' },
+    { from: 'Moscow', to: 'SPb' },
+    ...
+]
+```
+
+We need to implement a function which would order the tickets like above so that we can trace them and get the route 
+from a to b.
+
+Here is the awesome implementation:
+
+```js
+function getRoute(tickets = []) {
+    const result = [];
+    const length = tickets.length;
+    const destinationRegistry = {};
+    const departureRegistry = {};
+
+    for (let i = 0; i < length; i += 1) {
+        const ticket = tickets[i];
+        destinationRegistry[ticket.to] = ticket;
+        departureRegistry[ticket.from] = ticket;
+    }
+
+    const currentTicket = tickets[0];
+    result.push(currentTicket);
+
+    let destTicket = departureRegistry[currentTicket.to];
+    while(destTicket) {
+        result.push(destTicket);
+        destTicket = departureRegistry[destTicket.to];
+    }
+
+    let departureTicket = destinationRegistry[currentTicket.from];
+    while(departureTicket) {
+        result.unshift(departureTicket);
+        departureTicket = destinationRegistry[departureTicket.from];
+    }
+
+    return result;
+}
+```
+
+# 38) Flatten the Array Non Recursively
+
+While the recursive solution might blow up the Call Stack in JS, here is the non recursive alternative:
+
+Naive Approach:
+
+```js
+function flattenArrayNonRec(arr) {
+    const flattenedArray = [];
+    let iterable = arr;
+
+    while (iterable.length) {
+        const firstElem = iterable.shift();
+
+        if (!Array.isArray(firstElem)) {
+            flattenedArray.push(firstElem);
+        } else {
+            iterable = [...firstElem, ...iterable];
+        }
+    }
+
+    return flattenedArray;
+}
+```
+
+Something crazy I came up with ( O(n) thou ):
+
+```js
+/**
+    As we go inside inner arrays of the non flattened array, try to think as though we go a level deeper, as though
+    we go to the depth = prevDepth + 1; but we also have to keep track of which index in the array we were at
+    before we fell into the inner array, depthIndexesStack is a stack that holds just that sort of information.
+    For instance in the future it might look something like:
+    [
+        7,
+        4,
+        2,
+        11,
+    ]
+    Thus from the above we can distill that as we were iterating over the source array, at depth 0,
+    at 7th element we ran into the inner array, then we stepped into the inner array and started iterating
+    over it, at depth 1 now, when we found, at index 4, yet another inner array and stepped into that whose
+    2nd element turned out to be still another inner array which we stepped into and now we are there, at depth 3,
+    at the 11th index element. As we step out of the inner array, we pop the last element of depthIndexesStack
+    off the stack. The following algorithm is based on just such an iteration.
+*/
+
+function flattenArrayNonRec(arr) {
+    const depthIndexesStack = [];
+    const flattenedArray = [];
+    const sourceArray = arr.slice();
+
+    depthIndexesStack.push(0);
+
+    while (depthIndexesStack.length) {
+        const depth = depthIndexesStack.length;
+        let iterable = sourceArray;
+        let j = 0;
+
+        while (j < depth - 1) {
+            iterable = iterable[depthIndexesStack[j]];
+            j += 1;
+        }
+
+        const index = depthIndexesStack[depth - 1];
+        const item = iterable[index];
+
+        if (index === iterable.length) {
+            depthIndexesStack.pop();
+            const newDepth = depthIndexesStack.length;
+            const oldIndex = depthIndexesStack[newDepth - 1];
+
+            depthIndexesStack[newDepth - 1] = oldIndex + 1;
+            continue;
+        }
+
+        if (!Array.isArray(item)) {
+            flattenedArray.push(item);
+            depthIndexesStack[depth - 1] = index + 1;
+        } else {
+            depthIndexesStack.push(0);
+        }
+    }
+
+    return flattenedArray;
+}
+```
+
+# 39) N Queens Problem
+
+Since I have the explanation in the awesome video, here is the solution only:
+
+```js
+// n queens problem
+
+// board: 1 - there is a queen, 0 - the cell is empty
+const BOARD_SIZE = 4;
+const board = createBoard(BOARD_SIZE);
+
+// process:
+queenBacktrack(board);
+console.log(board.map((innerBoard) => innerBoard.join(' ')).join('\n'));
+
+// functions:
+function queenBacktrack(board) {
+    function solve(row = 0) {
+        const boardSize = board.length;
+
+        if (row === boardSize) {
+            return true;
+        }
+
+        for (let i = 0; i < boardSize; i += 1) {
+            if (isQueenSafe(row, i, board)) {
+                board[row][i] = 1;
+
+                if (solve(row + 1)) {
+                    return true;
+                } else {
+                    board[row][i] = 0;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    if (solve()) {
+        return board;
+    } else {
+        throw new Error('Unsolvable');
+    }
+}
+
+function isQueenSafe(row, col, board) {
+    return (
+        checkRowsAndColums(row, col, board) &&
+        checkDiagonals(row, col, board)
+    );
+}
+
+// task helpers:
+
+function createBoard(boardSize) {
+    const arr = [];
+    let i = 0;
+
+    while (i < boardSize) {
+        arr.push(new Array(boardSize).fill(0));
+        i += 1;
+    }
+
+    return arr;
+}
+
+function checkRowsAndColums(row, col, board) {
+    const boardSize = board.length;
+
+    for (let i = 0; i < boardSize; i += 1) {
+        if (board[row][i] === 1) {
+            return false;
+        }
+
+        if (board[i][col] === 1) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function checkDiagonals(row, col, board) {
+    const NUMBER_OF_BOARD_EDGES = 4;
+    const boardSize = board.length;
+
+    // guide on how for the algorithm to attain the top-left, top-right, bottom-left, bottom-right
+    // cells relative to the current cell ( which is board[row][col] ); for instance in order to get
+    // the top left cell relative to the current one, we need to do board[row - 1][col - 1], or -1 -1:
+    const howToGetDiagnals = [
+        [-1, -1],
+        [-1, 1],
+        [1, -1],
+        [1, 1],
+    ];
+    // Note: since we never have any queens *below* the cell we are checking ( we are going top to bottom,
+    // like in the video ), we can make the algorithm a bit more efficient by commenting out the
+    // [-1, 1] and [1, -1] instructions above
+
+    let offset = 1;
+
+    while (true) {
+        let overflowCount = 0;
+        let i = 0;
+
+        while (i < howToGetDiagnals.length) {
+            const instruction = howToGetDiagnals[i];
+            const nextRow = row + offset * instruction[0];
+            const nextColumn = col + offset * instruction[1];
+
+            if (
+                nextRow >= 0 && nextColumn >= 0 &&
+                nextRow < boardSize && nextColumn < boardSize
+            ) {
+                if (board[nextRow][nextColumn] === 1) {
+                    return false;
+                }
+            } else {
+                overflowCount += 1;
+            }
+
+            i += 1;
+        }
+
+        if (overflowCount === NUMBER_OF_BOARD_EDGES) {
+            break;
+        } else {
+            offset += 1;
+        }
+    }
+
+    return true;
+}
+```
+
+The log is going to be:
+
+```
+0 1 0 0
+0 0 0 1
+1 0 0 0
+0 0 1 0
+```
+
+# 40) bind Polyfill ( without apply, call, etc, )
+
+Here is a polyfill for `bind` but done without using `apply`, `call` or any other functions:
+
+```js
+function bindPolyfill(fn, ctx) {
+    function createFunctionCall(argsCount) {
+        var functionCall = '(';
+
+        for (var i = 0; i < argsCount; i += 1) {
+            var isLastElem = i === argsCount - 1;
+            functionCall += 'arguments[' + i + ']' + (isLastElem ? '' : ',');
+        }
+
+        functionCall += ');';
+
+        return functionCall;
+    }
+
+    return function () {
+        var argsCount = arguments.length;
+        ctx.__fn__ = fn;
+        var result = eval('ctx.__fn__' + createFunctionCall(argsCount));
+        delete ctx.__fn__;
+        return result;
+    };
+}
+
+const testingFunc = function (first, second) {
+    console.log('context:', this);
+    console.log('first', first);
+    console.log('second', second);
+    return this.name;
+};
+const bound = bindPolyfill(testingFunc, { name: 'John' });
+console.log(bound('firstVal', true, 'awesome'));
+```
+
+The expected output:
+
+```
+context: { name: 'John', __fn__: [Function: testingFunc] }
+first firstVal
+second true
+John
+```

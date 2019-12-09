@@ -67,6 +67,10 @@ Also it is important to understand that the `xhr.upload.onprogress` guarantees t
 the server but it doesn't guarantee that the server processed and wrote the data to the drive. So the upload
 indicator may not always be the thing to rely on. Speaking of which, [here](./code-1/) it is.
 
+So as a summary: the Upload Status is sending files from the client to the server. The files come to the client from 
+file inputs or drag-n-drop and coming from these places they are not limited in size at all and since request 
+( in NodeJS ) is also a stream we are not limited in sending files of _any_ size ( even 5GB+ no problem )
+
 ---
 
 ## The More Accurate File Upload
@@ -89,16 +93,119 @@ xhr.send(slice); // and send them
 
 ## Download Status
 
-[Here](./code-2/index.js) is a demo allowing to track the process of either downloading a file or uploading a file
+__Note:__ [Here](./code-2/index.js) is a demo allowing to track the process of either downloading a file 
+or uploading a file
 
-## Summary
+__Also Note:__ [Here](../11-down-stat/article.md) is an article telling everything about implementing the 
+tracking of the Download status with _fetch_
 
-When the request comes we may respond with a huge string but this string is also data which needs to be downloaded 
-thus is the download progress as the bits of the string are flowing back to us over the web. It doesn't have to
-be a string but Download Process is the process of downloading the response of the server. The server can response 
-even with 5GB of data, in which case we are going to download it without problems. The only difference is that the
-server needs to use streams to do that ( more on Streams in the NodeJS studies ).
+OK, let's see what the Download Status is. The download status shows how many bytes of the response of the server 
+have been downloaded. All too often the response isn't very huge so we manage to download it in one chunk. But if
+the response is very huge then it needs to be conveyed over the Web from the server to the client chunk by chunk.
+The `xhr.onprocess` event listener fires whenever we get a new chunk of data from the server.
 
-The Upload Status is sending files from the client to the server. The files come to the client from file inputs or 
-drag-n-drop and coming from these places they are not limited in size at all and since request ( in NodeJS ) is also
-a stream we are not limited in sending files of _any_ size ( even 5GB+ no problem )
+It is a little bit abstract let's take a look at an example. NodeJS allows us to very efficiently track when we
+send a chunk. You see when we call the `write()` method on any stream, it means that we send a chunk:
+
+```js
+response.write(val); // sent 1st chunk called 'val'
+response.write(dude); // sent 2nd chunk called 'dude'
+response.write(bob); // sent 3rd chunk called 'bob'
+...
+```
+
+So let's create a server that would write one chunk every second:
+
+```js
+const http = require('http');
+let i = 0;
+let id;
+
+const server = http.createServer((req, res) => {
+    clearInterval(id);
+    i = 0;
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    id = setInterval(() => {
+        i += 1;
+        const message = `hi ${i}`;
+        console.log(message);
+        res.write(message);
+    }, 1000);
+});
+
+server.listen(3000, () => console.log('listening on 3000...'));
+```
+
+And that is how we can track down the download process from the server ( do note though that the download process
+is going to be perpetual since server never stops writing to the response stream ):
+
+```js
+const xhr = new XMLHttpRequest();
+xhr.open('GET', 'http://localhost:3000', true);
+
+xhr.onprogress = e => {
+    console.log('response', xhr.response); // (*)
+};
+
+xhr.send(null);
+```
+
+The code in line `(*)` is going to be triggered every second, just almost as soon as we call `res.write(message)`
+on the server. The same way we could have done by listening to the `readyStateChange` event:
+
+```js
+const xhr = new XMLHttpRequest();
+xhr.open('GET', 'http://localhost:3000', true);
+
+xhr.onreadystatechange = () => {
+    if (xhr.readyState === 3) {
+        console.log('received new chunk');
+        console.log(xhr.responseText);
+    }
+};
+
+xhr.send(null);
+```
+
+Last but not least you can start the same server and run this code below:
+
+```js
+let message = '';
+const decorder = new TextDecoder();
+
+(async () => {
+    try {
+        const res = await fetch('http://localhost:3000'); // (*) 
+
+        console.log('res', res);
+
+        const reader = res.body.getReader();
+
+        console.log('git the reader');
+
+        while(true) {
+            const {done, value} = await reader.read();
+
+            if (done) {
+                break;
+            }
+
+            message += decorder.decode(value);
+
+            console.log(message);
+        }
+
+    } catch (e) {
+        console.log('error', e);
+    }
+})();
+```
+
+It only goes to show that the `fetch` download status tracking behaves _almost_ the same way as `xhr`.
+But there seems to be a tiny difference. You see in the example above we never finished a response on the server.
+Instead we would write into it as into a stream but the response was left _hanging_. But here is a problem: 
+some browsers like Firefox wait for the server to finish the response ( call `res.end()` ) before they allow to move 
+past line `(*)` in the example above and thus call `res.body.getReader()`. So while Chrome would allow to get a reader 
+even for a _hanging_ response and read the chunks out of it as soon as the server decides to write them on its side 
+( kind of how we would write a chink at a time only every second in the example above ), while Chrome behaves this way
+some other browsers don't and will instead wait perpetually for the server to `.end()` the response. 

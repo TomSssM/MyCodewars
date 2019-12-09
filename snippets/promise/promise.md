@@ -784,6 +784,162 @@ drawn scheme:
 |          |   __________       ________________       _____________
          <--- (Event Loop) <-- | Microtask Queue| <-- | Event Queue |
 ```
+
+Also I wasn't very clear about when _a task is put into the Microtask Queue._
+**A task is put into the Microtask Queue when the `resolve` method of the promise is called ( either
+`Promise.resolve()` or `new Prmise((resolve) => {})` ).**
+
+Here is what I mean:
+
+```js
+setTimeout(() => { // (*)
+    console.log('one');
+});
+
+new Promise((res) => { // don't forget that code inside new Promise(...) is synchrous
+    setTimeout(() => { // (**)
+        console.log('two');
+        res('three');
+    });
+}).then((arg) => { // (****)
+    console.log(arg);
+});
+
+setTimeout(() => { // (***)
+    console.log('four');
+});
+```
+
+The output is going to be:
+
+```
+one
+two
+three
+four
+```
+
+So at first the main thread is executed: JS goes thru the code and executes `setTimeout` functions in lines `(*)`,
+`(**)` and `(***)` which results in the callbacks that were passed as arguments to these `setTimeout`s in lines `(*)`,
+`(**)` and `(***)` being put onto the Event Queue. The first callback is executed and it calls `console.log('one');`,
+and logs `'one'` to the console. Then the 2nd callback in line `(**)` logs `'two'`. But wait! Also the 2nd callback
+does something else: it calls `res('three');` which results in _scheduling a task into Microtask Queue._ To put it
+simply JS puts the callback passed to the `then` method ( in our case the callback in line `(****)` ) into the 
+Microtask Queue ( just like `setTimeout` puts callbacks passed to it to the Event Queue ). We also tell to invoke
+the callback in line `(****)` with the argument `'three'`. So what do we have as of now? There are 2 asynchronous callbacks
+waiting to be executed: one callback in the Event Queue ( the one in line `(***)`, it was put there when the main 
+synchronous script was executed ) and there is another callback waiting in the Microtask Queue ( the one in line 
+`(****)`, it was put there by another asynchronous callback, the one in line `(**)` ). And here is the thing:
+**since the Microtask Queue has higher priority than the Event Queue ( Macrotask Queue ), we cannot execute 
+the next task from the Event Queue while there is at least anything left in the Microtask Queue.** Thus in our
+example above we first execute the callback in line `(****)` and only after that we execute the callback
+in line `(***)`.
+
+Just to be sure let me draw a diagram as I am much fond of.
+
+So when we first went thru the code _synchronously_ and scheduled the _asynchronous_ tasks the Event Queue and
+Microtask Queue looked like this:
+
+```
+Microtask Queue: []
+Event Queue: [ (*), (**), (***) ]
+```
+
+then we executed the first callback `(*)` and the things looked like this:
+
+```
+Microtask Queue: []
+Event Queue: [ (**), (***) ]
+```
+
+then when we were executing the 2nd callback `(**)`, it, during the process of its execution, scheduled a Microtask
+like this:
+
+```
+Microtask Queue: [ (****) ]
+Event Queue: [ (**), (***) ]
+```
+
+and finished executing:
+
+```
+Microtask Queue: [ (****) ]
+Event Queue: [ (***) ]
+```
+
+after that we couldn't proceed with the Event Queue because there was stuff in the Microtask Queue, thus we executed
+the `(****)` callback:
+
+```
+Microtask Queue: [ ]
+Event Queue: [ (***) ]
+```
+
+after which we went on and executed the `(***)` callback ( last in the Event Queue ):
+
+```
+Microtask Queue: [ ]
+Event Queue: [ ]
+```
+
+Likewise contemplate the following code where instead of scheduling a Microtask like we did above inside the `(**)`
+callback, instead of that in the following code the same callback schedules a usual Macrotask into the Event Queue
+( Macrotask Queue ):
+
+```js
+setTimeout(() => { // (*)
+    console.log('one');
+});
+
+setTimeout(() => { // (**)
+    console.log('two');
+
+    setTimeout(() => { // (***)
+	      console.log('three');
+    });
+});
+
+setTimeout(() => { // (****)
+    console.log('four');
+});
+```
+
+The output is going to be:
+
+```
+one
+two
+four
+three
+```
+
+The same way here is a scheme of how we proceeded:
+
+First we ran the synchronous code and scheduled callbacks:
+
+```
+Microtask Queue: [ ]
+Event Queue: [ (*), (**), (****) ]
+```
+
+after which we ran the `(*)` callback:
+
+```
+Microtask Queue: [ ]
+Event Queue: [ (**), (****) ]
+```
+
+then we ran the `(**)` callback and it scheduled ( which is to say _put into the Event Queue_ ) another callback
+and things started looking like:
+
+```
+Microtask Queue: [ ]
+Event Queue: [ (****), (***) ]
+```
+
+in the end we executed the callbacks in the Event Queue in the same order as they were there: first the `(****)`
+callback, then the `(***)` callback.
+
 So we cannot oftentimes guarantee that one asynchrnous action will be done right after the other
 because for instance `setTimeout` may make a Promise and it will be next like here:
 

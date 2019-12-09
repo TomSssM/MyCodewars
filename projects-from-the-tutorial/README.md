@@ -99,3 +99,4 @@
   - [Custom Dropdown](./comp-com/cust-dropdown/index.js)
   - [Slider (Custom Events)](./comp-com/slider/index.js)
 - [Piskel Draft Algorithms](./piskel-draft-algorithms)
+- [JS Transitions Camp](./js-transitions/README.md)

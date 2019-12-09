@@ -373,7 +373,7 @@ A partially applied function doesn't care about the number of arguments passed i
 
 A curried function is, indeed, a chain of N functions, each one accepting a single argument; only once all N functions have been called will the original function be invoked with all specified arguments.
 
-![frakensteins monster](../data/fran.jpg)
+![frakensteins monster](../../data/fran.jpg)
 
 ## Partial Applicurrying: Frankenstein's Monster
 Currying is conceptually difficult to understand. It's so often conflated with Partial Application that even after substantial research, I got it wrong in the original version of this article. The curry function I actually wrote was an odd hybrid between partial application and currying. That being said, I want to show you, roughly, the abomination that I had created.

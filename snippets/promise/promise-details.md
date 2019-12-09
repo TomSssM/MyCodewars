@@ -840,3 +840,210 @@ fun3();
 So the moral is: the order of executing asynchronous functions is obscure in any case which is why
 it is a bad idea to rely on it and, if have to, one should avoid invoking over one `async` function
 at the same time or calling `then` on over two different Promises at the same time.
+
+## Promise.resolve(\<another promise\>) ( amazing !! )
+
+Have you ever wondered what this code would do:
+
+```js
+(async () => {
+    const val = await Promise.resolve(Promise.resolve(Promise.resolve(':)')));
+    console.log('---->', val);
+})();
+```
+
+What would be printed to the `console`?
+
+Well, let's think, a call to `Promise.resolve` returns another Promise so logically the value inside the `val` variable
+should be `Promise { "fulfilled" }`, shouldn't it? Well, believe it or not but no.
+
+As we have once discussed Promises are _Monads_. And what is a Monad? It is something that is supposed to flatten the
+value of the Promise if this value is another promise. Remember? That is, we said, exactly why in the line `(*)` below:
+
+```js
+Promise.resolve()
+    .then(() => {
+        return new Promise(res => { // (**)
+            setTimeout(() => res(':)'), 2000);
+        });
+    })
+    .then(value => { // (*)
+        console.log(value);
+    });
+```
+
+We get the value which the Promise in line `(**)` evaluates to ( the value `:)` ) instead of the
+Promise in line `(**)` itself.
+
+Just take a look at it. If, in the console in the developer's tools, you write something like this:
+
+```js
+Promise.resolve(Promise.resolve(Promise.resolve(':)')));
+```
+
+Take a look at the output:
+
+```
+Promise { "fulfilled" }
+  <state>: "fulfilled"
+  <value>: ":)"
+```
+
+Despite the fact that by looking at: `Promise.resolve(Promise.resolve(...))` we logically infer that such an expression
+is supposed to produce a Promise which evaluates to another Promise, despite that, just because Promises are Monads if
+you take a look at the `<value>` field ( in the output in the developer's tools ) you are going to see that all the
+further Promises got flattened to `":)"`.
+
+That is also the reason why, if you run the code below:
+
+```js
+(async () => {
+    const val = await Promise.resolve( // (*)
+            new Promise(res => { // (**)
+                setTimeout(() => {res(':)')}, 2000);
+            })
+         );
+    console.log('---->', val);
+})();
+```
+
+after 2 seconds you are going to see the following `console.log`:
+
+```
+----> :)
+```
+
+first the JS compiler sees that the Promise in line `(*)` evaluates to another promise, thus because Promises are Monads
+it waits then for what the Promise in line `(**)` evaluates to and if the Promise in line `(**)` should have evaluated
+to yet another Promise it would even wait for that 3rd Promise to evaluate to something and so on ( luckily the Promise
+in line `(**)` evaluated instead to `":)"` so that is what we get, after 2 seconds, in the variable called `val` ).
+
+The same logic is the reason why in this code:
+
+```js
+Promise.resolve(new Promise((res) => { // (**)
+      setTimeout(() => {
+          res(':)');
+      }, 2000);
+    }))
+    .then(data => { // (*)
+        console.log('---->', data);
+    });
+```
+
+the value of the variable `data` in line `(*)` is going to be _not_ the Promise created in line `(**)` but instead
+the value that this Promise in line `(**)` evaluates to ( the value `":)"` ).
+
+In all other cases the value that the Promise resolves to is going to be passed to the `then` method:
+
+```js
+Promise.resolve(12).then(data => { // the value of data is going to be === 12
+    console.log('---->', data);
+});
+```
+
+## then() inside then()
+
+So here in the 1st `then` we return a Promise that has its own `then` functions being called:
+
+```js
+Promise.resolve(1)
+    .then(data => {
+        console.log('first one', data);
+        return new Promise((res) => {
+            setTimeout(() => {
+                res(2);
+            }, 2000);
+        })
+            .then((data) => { // (*)
+                console.log('after2 seconds', data);
+                return 4;
+            });
+    })
+    .then((data) => { // data === 4
+        console.log('last one', data); // (**)
+    });
+```
+
+In reality the output is going to be:
+
+```
+first one 1
+
+...2 seconds passed
+
+after2 seconds 2 
+last one 4
+```
+
+It is no secret that if we _return_ a Promise in the `then` function, then JS will wait till the Promise resolves
+and after that it will pass the value that the Promise resolves to to the next `then` function ( in our case to the
+one in line `(*)` ).
+
+**Note:** that wouldn't happen if we were _not_ to return a Promise but simply create it like this:
+
+```js
+Promise.resolve(1)
+    .then(data => {
+        console.log('first one', data);
+        new Promise((res) => { // no return
+            setTimeout(() => {
+                res(2);
+            }, 2000);
+        })
+            .then((data) => {
+                console.log('after2 seconds', data);
+                return 4;
+            });
+    })
+    .then((data) => {
+        ...
+    });
+```
+
+But look at the `then` function in line `(*)` again: it returns a value. And the thing is: because Promises are Monads,
+this value actually gets passed to the _outer_ then in line `(**)`.
+
+**Note:** the `finally` function behaves differently thou. Take a look at the following code:
+
+```js
+Promise.resolve(1) // (**)
+    .finally(data => { // data === undefined (*)
+        console.log('first one', data);
+        return new Promise((res) => { // (****)
+            setTimeout(() => {
+                res(2);
+            }, 2000);
+        })
+            .then((data) => { // (*****)
+                console.log('after2 seconds', data);
+                return 4; // *ignored (**here**)
+            });
+    })
+    .then((data) => { // data === 1 (***)
+        console.log('last one', data); // data === 1
+    });
+```
+
+The output is going to be:
+
+```
+first one undefined
+
+... after 2 seconds
+
+after2 seconds 2
+last one 1
+```
+
+Look, in line `(*)` the value of `data` is going to be `undefined`, so as we can see the value that the Promise in 
+line `(**)` resolved to didn't get passed to `finally`, but instead this value was passed to the _next `then`
+in the chain,_ thus in line `(***)` the value of `data` is `1`.
+
+Also there are 2 more things to note here. First of all, because we _return_ the `Promise` in line `(****)`, the
+execution of all the next `then` in the chain ( the ones in lines `(*****)` and `(***)` ) will wait for it to resolve
+( thus will wait for 2 seconds ); again, wouldn't happen should we not have returned the Promise in line `(****)`.
+Second of all, since the value passed to the `then` in line `(***)` is the value, which the Promise in line `(**)`
+got resolved to, because of that the value returned from the last `then` of the finally method in line `(**here**)`
+is actually ignored. It would be ignored anyways, actually, even if the Promise in line `(**)` were to resolve to
+`undefined`, then the value of `data` in line `(***)` would be `undefined` too.

@@ -739,3 +739,165 @@ const o = {
 o.bound(); // "" ( or undefined )
 o.notBound(); // "Tom"
 ```
+
+Since `bound` is an arrow function it uses the `this` defined by the nearest regular function or the one
+that lies in the global scope ( out in the open if you do: `console.log(this)` it returns the window object ).
+In our case since we didn't _define_ ( define cause Lexical this remember ) `bound` inside another function
+its `this` is going to be the same `this` as the one in the global scope. Thus it is going to be the window object.
+
+## Default Parameters Functions have separate Scope
+
+If we assign a callback as a default parameter this callback will refer to Global Scope and not to Scope of the
+function wherein it was declared:
+
+```js
+var b = ':)';
+
+function test() {
+    return (function(a = function() {
+        return b;
+    }) {
+        var b = 1;
+        return a();
+    }());
+}
+
+test(); // :)
+```
+
+## ![]
+
+Don't forget that if we apply the `!` operator to some value: `!<value>` we check whether `<value>` is _truthy_
+or _falsey_ and convert it to either `true` or `false` ( to the opposite ). Don't get confused if the `<value>`
+is an `object` as we don't first convert `<value>` to a primitive and then see whether it is truthy or falsey;
+if `<value>` is an object we see whether it is truthy ( without calling `toPrimitive()` and yeap even empty objects
+are truthy ) and then convert it to either `true` or `false`. Here is proof:
+
+```js
+!![] // true ( since [] is truthy )
+![] // false ( since !<truthy> is false )
+```
+
+If we were to first convert `[]` to a primitive, the result would be the opposite:
+
+```js
+!!'' // false ( cause '' is falsy )
+!'' // true
+```
+
+## HTML Comments are Valid in JS
+
+It is true! For instance the following code runs OK:
+
+```js
+const dude = {
+    name: 'Tom',
+    age: 12,
+};
+
+<!-- dude is Tom -->
+
+console.log(dude);
+```
+
+## undefined properties revealed by in
+
+You are not going to believe it but the following code is self explanatory:
+
+```js
+const obj = {};
+
+'o' in obj; // false
+
+obj.o = undefined;
+
+'o' in obj; // true
+```
+
+## Interesting feature of labels
+
+The execution of code inside a label is interrupted by the `break` keyword. Literally, just
+take a look at the following code:
+
+```js
+dude: {
+    console.log('tsup');
+    break dude;
+    console.log('how are you doing');
+}
+```
+
+## How JS comparison algorithm works under the hood
+
+Here is the explanation in the extract of one out of the few fathomable entries in the spec:
+
+---
+
+Else, both px and py are Strings
+    a. If *py* is a prefix of *px*, return **false**. ( A String value *p* is a prefix of String value *q* if *q* 
+       can be the result of concatenating *p* and some other String *r*. Note that any String is a prefix of itself, 
+       because *r* may be the empty String. )
+    b. If *px* is a prefix of *py*, return **true**.
+    c. Let *k* be the smallest non-negative integer such that the character at position *k* within *px* is different 
+       from the character at position *k* within *py*. ( There must be such a *k*, for neither String is a prefix 
+       of the other. )
+    d. Let *m* be the integer that is the code unit value for the character at position *k* within *px*.
+    e. Let *n* be the integer that is the code unit value for the character at position *k* within *py*.
+    f. If *m < n*, return **true**. Otherwise, return **false**.
+
+---
+
+## The return statement in finally is favored over try
+
+Believe it or not but the result of executing this function:
+
+```js
+(() => {
+  try {
+    return 2;
+  } finally {
+    return 3;
+  }
+})();
+```
+
+is going to be `3`.
+
+Even if no error is thrown in the `try` block, since `finally` is always executed and since `finally` _is executed
+right before the return statement inside `try` or `catch` block,_ for this very reason if we return something inside
+`finally` then this return statement will become the final return statement of the function ( just like in the
+example above ).
+
+## window.onerror
+
+The global `window.onerror` event listener will be called in case there is ever thrown an error in your code:
+
+```html
+<script>
+    window.onerror = function (smth) {
+        console.log(`Got it: ${smth}`);
+    };
+
+    throw 'what';
+
+    // expected output: Got it: what + error log from the browser DevTools
+</script>
+```
+
+**Note:** errors thrown _by the browser_ also go into the `window.onerror` Event Listener:
+
+```html
+<script>
+    window.onerror = function (smth) {
+        console.log(`Got it: ${smth}`);
+    };
+
+    dmfdksjfkldsfjsdklf();
+
+    // expected output: Got it: Uncaught ReferenceError: dmfdksjfkldsfjsdklf is not defined
+    //                  error log from the browser DevTools
+</script>
+```
+
+**Also Note** The `.onerror` event listener on other HTML elements ( external resources like `<img/>` ) is called if
+we fetch this resource from the server and the request for it fails ( 403 or something ).
