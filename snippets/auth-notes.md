@@ -164,10 +164,58 @@ authenticating the same users that use the bank app, with session based authenti
 the session id to user mappings 5 times to each and every server! With JWT there is no such a problem because the
 user is stored on the client!
 
-I would like to note though that the fact that the JWT is stored on the client makes us very vulnerable to XSS attacks.
-The way we can terminate those in session based authentication is by using `http-only` cookies but with JWT we cannot
-send tokens as cookies because, if we go back to our bank and retirement example, the cookie of the bank server
-is not going to be sent to the retirement server, thus the JWT token needs to be sent not as a cookie but as a usual
-HTTP header in order for the retirement server to be able to read it. Thus the client actually
-*needs* access to JWT. This way any maliciously injected script can steal the JWT token and attach it with every request
-as a usual HTTP header and thus be able to take actions on user's behalf.
+However, there are drawbacks to JWT as well, security being the most notable one. You see cookies are a lot more secure.
+With cookies we are at least somewhat protected against XSS attacks as the client doesn't have access to
+`HTTP Only` cookies. Plus, even if an attacker were to get hold of the secret session id to send as a cookie,
+he won't be able to do it as cookies are not sent from different origins than our own. With the `Authentication` header,
+there is no way to tell the browser: please, don't send this HTTP header; as soon as the attacker gets his hands on the
+JWT token ( which is not super difficult considering most JWT tokens are stored in `localstorage` and an XSS attack
+can compromise that ) he can send this token in `Authentication` header even from his own website. The drawback that
+the cookies themselves suffer from is an XSRF attack, but this one is much more easily mitigated than an XSS attack.
+You would say then, store JWTs in cookies! Well, that might help a little but the very nature of JWT makes them
+insecure in yet another way.
+
+Imagine you spotted a user that has an `admin` role. He started abusing his privileges and thus his role need be
+immediately taken away. With session based auth this would be quite easily: update the database and the session id
+of the user will at once map directly to his roles when he makes an evil request and disallow all admin privileges.
+But what to do if we are using JWT? With JWT all the user's roles are stored in the token itself ( and not in the
+database like with session based auth ). The token might expire only after a week, or a day, and who knows what an
+evil user with admin privileges can do in a day! One solution would be to store on the server a list of revoked
+tokens but that looks a lot like session-based-auth approach to this dilemma and kind of begs the question whether
+it wasn't easier to use session based auth in the first place.
+
+The conclusion seems to be that it is actually better to use session based auth over JWTs for authentication purposes.
+Besides, the main advantage offered by JWTs is kind of dubious anyways as in real life you would extremely rarely
+need the sort of horizontal scaling as was shown in the bank and retirement home example. Thus they're just not suitable
+as a session mechanism.
+
+But here is one thing that JWTs are really good for! The use cases where JWT is particularly effective are typically
+use cases where they are used as a single-use authorization token. From the JSON Web Token specification:
+
+```
+JSON Web Token (JWT) is a compact, URL-safe means of representing claims to be
+transferred between two parties [...] enabling the claims to be digitally signed or
+integrity protected with a Message Authentication Code (MAC) and/or encrypted.
+```
+                                                     
+In this context, _claim_ can be something like a _command_, a one-time authorization, or basically any other scenario
+that you can word as:
+
+> Hello Server B, Server A told me that I could \<claim goes here\>, and here's the ( cryptographic ) proof
+
+For example, you might run a file-hosting service where the user has to authenticate to download their files, but the
+files themselves are served by a separate, stateless ( stateless means no session id to user mappings are stored
+server side ), are served by a separate, stateless _download server_. In this case, you might want to have your
+application server ( Server A ) issue single-use _download tokens_, that the client can then use to download the file
+from a download server ( Server B ).
+
+When using JWT in this manner, there are a few specific properties:
+
+- The tokens are short-lived. They only need to be valid for a few minutes, to allow a client to initiate the download.
+- The token is only expected to be used once. The application server would issue a new token for every download,
+ so any one token is just used to request a file once, and then thrown away. There's no persistent state, at all
+- The application server still uses sessions. It's just the download server that uses tokens to authorize individual
+ downloads, because it doesn't need persistent state
+
+As you can see here, it's completely reasonable to combine sessions and JWT tokens - they each have their own purpose,
+and sometimes you need both.
