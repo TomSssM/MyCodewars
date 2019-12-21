@@ -2,15 +2,19 @@
 
 ## Settings
 
-- [x] Editor > Code Style > JavaScript > Tabs and Indents > Keep indents on empty lines
+- Editor > Code Style
+    - JavaScript, TypeScript
+        - Punctuation
+            - [x] ... Use `single`
+        - Spaces
+            - [x] ES6 import/export braces
 - [x] Editor > Color Scheme > Default
-- [x] Editor > Color Scheme > Console Colors > Background: `#000`
-- [x] Editor > Color Scheme > Console Colors > Standard output: `#dadada`
-- [x] Tools > Terminal > Shell Path: `C:\Program Files\Git\bin\bash.exe`
-- [ ] Appearance & Behavior > System Settings > Use "safe write" ( uncheck )
-- [ ] Editor > Inspections > JavaScript > Code style issues > Unterminated Statement
+- [x] Tools > Terminal > Shell Path: `<which bash>`
+- [ ] Appearance & Behavior > System Settings > Use "safe write"
 - [x] Languages & Frameworks > JavaScript > Code Quality Tools > ESLint > Automatic ESLint configuration
 - [x] Editor > Code Style > EditorConfig > Scheme > Project
+
+**Note:** Empty checkbox means you need to uncheck the setting in the Preferences
 
 ## Keymap
 
@@ -90,12 +94,3 @@ Syntax:
 document.querySelectorAll('$query$')$END$
 ```
 - [x] Applicable in `JavaScript Everywhere`
-
-#### lis
-
-Syntax:
-```
-addEventListener($type$, $arg$ => $END$);
-```
-- [x] Applicable in `JavaScript Everywhere`
-- [ ] `Reformat according to style` ( uncheck )
