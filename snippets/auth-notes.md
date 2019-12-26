@@ -32,7 +32,8 @@ Above, we said that the server creates a temporary user _session_ but what is a 
 going to be just a simple JavaScript object ( in a NodeJS app ). It might have some data in it like
 _session ID_ ( all such session objects are going to be stored in some sort of DB or Cache, thus we can use the
 session ID attribute as a key for that storage ). Also a Session Object might have the user id attribute in it
-so that we know whose session it is.
+so that we know whose session it is. So as you can see, this session object with user data in it stored server side
+and the term _session_ are completely interchangeable.
 
 So as you can see, while there are, for instance, 20 users logged in to our application, there are going to be
 20 Session Objects like these: `{ sessionID: ..., userID: ... }` stored in some Session Storage DB or Cache
