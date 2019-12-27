@@ -58,6 +58,7 @@
 - File - `COMMAND + N`
 - Create new directory or package - `COMMAND + SHIFT + N`
 - Active Next Window - ``COMMAND + ` ``
+- Line/Column - `COMMAND + L`
 
 ## Snippets ( Live Templates )
 
