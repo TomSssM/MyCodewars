@@ -1,0 +1,11 @@
+.contents {
+    display: flex;
+    flex-flow: column nowrap;
+    list-style: none;
+    padding: 0;
+}
+.contents > li {
+    margin: .3rem;
+    padding: .4rem;
+    border: 1px solid #000000;
+}
