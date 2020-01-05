@@ -26,7 +26,11 @@ is implemented, all these characters cannot go in place of "x" ( or "_" ).
 
 <br />
 
-<input type="text" id="mask-input-2" data-mask="____/__*___" />
+<input type="text" id="mask-input-2" data-mask="(___) ___-____">
+
+<br />
+
+<input type="text" id="mask-input-3" data-mask="____/__*___" />
 
 <script src="index.js"></script>
 <script>
@@ -39,6 +43,13 @@ is implemented, all these characters cannot go in place of "x" ( or "_" ).
     new InputMasking({
         element: document.querySelector('#mask-input-2'),
         maskPlaceholderChar: '_',
+        maskValuesRegEx: /\d/g,
+        limitInput: true,
+    });
+    new InputMasking({
+        element: document.querySelector('#mask-input-3'),
+        maskPlaceholderChar: '_',
+        maskVisible: true,
     });
 </script>
 </body>

@@ -3,6 +3,7 @@ class InputMasking {
         element,
         maskPlaceholderChar,
         maskValuesRegEx,
+        maskVisible = false,
         limitInput = false,
     }) {
         /**
@@ -39,7 +40,16 @@ class InputMasking {
          */
         this.limitInput = limitInput;
 
-        element.placeholder = this.mask;
+        /**
+         * @property {boolean} maskVisible
+         */
+        this.maskVisible = maskVisible;
+
+        if (!this.maskVisible) {
+            element.placeholder = this.mask;
+        } else {
+            element.value = this.mask;
+        }
 
         if (maskValuesRegEx && maskValuesRegEx.test(this.mask)) {
             throw new Error('Mask values should not include the characters that the mask itself consists of');
@@ -75,10 +85,59 @@ class InputMasking {
         }
 
         if (!this.maskValuesRegEx.flags.includes('g')) {
-            const regexBody = /^\/(.+)\/.*$/.exec(this.maskValuesRegEx.toString())[1];
-            this.maskValuesRegEx = new RegExp(regexBody, `g${this.maskValuesRegEx.flags}`);
+            /*
+              polyfill for RegExp.prototype.source:
+                const regexBody = /^\/(.+)\/.*$/.exec(this.maskValuesRegEx.toString())[1];
+            */
+            this.maskValuesRegEx = new RegExp(this.maskValuesRegEx.source, `g${this.maskValuesRegEx.flags}`);
         }
     }
+
+    // event listeners:
+    validateKey = (event) => {
+        const { key } = event;
+        if (!this.isValidKeyPressed(event)) {
+            if (key === this.MASK_PLACEHODLER_CHAR) {
+                this.moveCursorBy(1);
+            }
+            event.preventDefault();
+        }
+    };
+
+    handlePaste = (e) => {
+        const data = e.clipboardData.getData('text');
+
+        if (typeof data !== 'string') {
+            return;
+        }
+
+        for (let i = 0; i < data.length; i += 1) {
+            const char = data[i];
+            // make sure that the char can be used in the mask
+            if (char.search(this.maskValuesRegEx) === -1) {
+                e.preventDefault();
+                return;
+            }
+        }
+    };
+
+    handleInput = (e) => {
+        /*
+          the two algorithms below for handling input for invisible
+          vs visible mask ( this.handleVisibleMask vs this.handleInvisibleMask )
+          are intentionally different because why not
+        */
+
+        if (!this.mask) {
+            return;
+        }
+
+        if (this.maskVisible) {
+            this.handleVisibleMask(e);
+        } else {
+            this.handleInvisibleMask(e);
+        }
+    };
 
     // helpers:
     isValidKeyPressed(event) {
@@ -131,50 +190,11 @@ class InputMasking {
         elementToSelect && elementToSelect.focus();
     }
 
-    // event listeners:
-    validateKey = (event) => {
-        const { key } = event;
-        const inputElement = event.currentTarget;
-        const charAtCursor = inputElement.value[inputElement.selectionStart - 1];
+    handleVisibleMask(e) {
+        // TODO: here
+    }
 
-        const isMaskChar = (charAtCursor || '').search(this.maskCharsRegEx) !== -1;
-        const selectionAbsent = inputElement.selectionStart === inputElement.selectionEnd;
-
-        if (key === this.BACKSPACE_KEY && isMaskChar && selectionAbsent) {
-            event.preventDefault();
-            this.moveCursorBy(-1);
-            return;
-        }
-
-        if (!this.isValidKeyPressed(event)) {
-            if (key === this.MASK_PLACEHODLER_CHAR) {
-                this.moveCursorBy(1);
-            }
-            event.preventDefault();
-        }
-    };
-
-    handlePaste = (e) => {
-        const data = e.clipboardData.getData('text');
-
-        if (typeof data !== 'string') {
-            return;
-        }
-
-        for (let i = 0; i < data.length; i += 1) {
-            const char = data[i];
-            // make sure that the char can be used in the mask
-            if (char.search(this.maskValuesRegEx) === -1) {
-                e.preventDefault();
-                return;
-            }
-        }
-    };
-
-    handleInput = (e) => {
-        if (!this.mask) {
-            return;
-        }
+    handleInvisibleMask(e) {
         const input = e.currentTarget;
         const inputValue = input.value;
         const cursorPosition = input.selectionStart;
@@ -200,7 +220,7 @@ class InputMasking {
                   didn't use to be such a character there before, then we need to move
                   the cursor to the right
                  */
-                if (maskIndex <= cursorPosition) {
+                if (maskIndex < newCursorPosition) {
                     if (maskCharsBeforeCursor > 0) {
                         maskCharsBeforeCursor -= 1;
                     } else {
@@ -222,5 +242,5 @@ class InputMasking {
         if (this.limitInput && newInputValue.length >= this.mask.length) {
             this.focusNextTabIndex();
         }
-    };
+    }
 }
