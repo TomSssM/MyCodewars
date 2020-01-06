@@ -912,7 +912,7 @@ Also a KeyBoardEvent, when you press a key, is _always_ going to be triggered on
 - `document` element
 - `window` element
 
-Probably the logic behind this is that they are always selected.
+Probably the logic behind this is that they are always focused.
 
 ## RegEx is always an object
 
