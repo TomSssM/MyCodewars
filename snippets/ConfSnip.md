@@ -913,3 +913,58 @@ Also a KeyBoardEvent, when you press a key, is _always_ going to be triggered on
 - `window` element
 
 Probably the logic behind this is that they are always selected.
+
+## RegEx is always an object
+
+When we create a primitive like so:
+
+```js
+12; // number primitive
+'ok'; // string primitive
+```
+
+then those primitives are not going to be an object ( plus the `typeof` proves that ):
+
+```js
+typeof 12; // "number" 12 is a primitive
+typeof new Number(12); // "object" object wrapper for the primitive 12
+```
+
+As is known, `new Number(...)` is an object wrapper, not a primitive. In fact in devtools we can see
+the primitive value of the `new Number(...)` object via the `[[PrimitiveValue]]` property.
+
+Also primitives like `12` or `"ok"` are not considered to be an instance of their classes like `Number` or `String`,
+because they are not objects, but primitive values. Only object wrappers of the primitives are instances of
+their corresponding classes, here is proof:
+
+```js
+12 instanceof Number; // false
+new Number(12) instanceof Number; // true
+```
+
+But what about RegEx? Clearly we get an object in this case:
+
+```js
+new RegExp('\d', 'g');
+```
+
+But what about this case?
+
+```js
+/\d/g;
+```
+
+Do we get back an object wrapper for a regex or the primitive value of a regex.
+
+In reality, we also get back an object, and there is no primitive value that exists for regex.
+The two slashes `/.../` are just a syntactic sugar for doing `new RegEx(...)`. Thus `/\d/g` is not a primitive.
+In other words, if regex were a number, then doing this: `/.../g` would be the same as doing this: `new Number(...)`.
+We can verify that, when we do this `/.../g` we get back an object wrapper and not a primitive value via
+the following checks:
+
+```js
+typeof /d/g; // "object"
+/d/g instanceof RegExp; // true
+```
+
+So regex is always an object, there is no primitive value for it.
