@@ -901,3 +901,15 @@ The global `window.onerror` event listener will be called in case there is ever 
 
 **Also Note** The `.onerror` event listener on other HTML elements ( external resources like `<img/>` ) is called if
 we fetch this resource from the server and the request for it fails ( 403 or something ).
+
+## Where KeyboardEvents are triggered
+
+When you press a key, a keyboard event is going to be triggered only on the `document.activeElement` ( thus
+only on the currently focused element ) **if** it has an event handler set on it.
+
+Also a KeyBoardEvent, when you press a key, is _always_ going to be triggered on:
+
+- `document` element
+- `window` element
+
+Probably the logic behind this is that they are always selected.
