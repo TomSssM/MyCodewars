@@ -190,10 +190,6 @@ class InputMasking {
         elementToSelect && elementToSelect.focus();
     }
 
-    handleVisibleMask(e) {
-        // TODO: here
-    }
-
     handleInvisibleMask(e) {
         const input = e.currentTarget;
         const inputValue = input.value;
@@ -242,5 +238,18 @@ class InputMasking {
         if (this.limitInput && newInputValue.length >= this.mask.length) {
             this.focusNextTabIndex();
         }
+    }
+
+    /*
+      WARNING!!! At this point you are entering the CS debris shit which has long gone beyond the
+      scope of solving a simple problem, please proceed at your own risk, but fear not nonetheless
+    */
+    handleVisibleMask(e) {
+        // TODO: here
+        // pseudo code:
+            // find a diff between the old and new input value
+            // if something was *just* deleted ( with or without modifying the affected area ) iterate over the non-mask chars and set the mask chars aright between them ( the way we came up with it on Sunday evening )
+            // if something was *just* added ( without deletions ), take the excessive characters, and keep replacing _
+                // if you hit the non-_ character, keep pushing everything to the right
     }
 }
