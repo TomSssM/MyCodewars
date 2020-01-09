@@ -1,8 +1,10 @@
-# `Unicode` vs `ASCII` vs `UTF-8` and so on
+# Unicode vs `ASCII` vs `UTF-8` and so on
+
+> the `*` character means there is some extra data about this part of the article in the [Notes](./str-encoding-n-charsets.md#notes) section
 
 ## From w3schools
 
-**The Difference Between Unicode and UTF-8**
+**The Difference Between Unicode and `UTF-8`**
 
 `Unicode` is a Character Set. `UTF-8` is an Encoding.
 
@@ -72,8 +74,7 @@ In `UTF-8` we store `Code Point`s between `U+0` and `U+255` as one byte ( becaus
 it makes `UTF-8` completely compatible with `ASCII` ), after that we store `Code Point`s, which need 2 bytes to 
 encode them, as 2 bytes, that need 3 bytes as 3 bytes and so on ( that need `n` bytes as `n` bytes ), very efficient.
 
-In `UTF-16` we store `Code Point`s starting at 2 bytes, so `U+255` would be stored as `0000000011111111`, which may 
-not be that much sufficient in terms of memory because of all the 0s there but it probably has good reasons to do that.
+In `UTF-16` we store `Code Point`s starting at 2 bytes, so `U+255` would be stored as `0000000011111111`.
 
 ## In Real Life
 
@@ -119,7 +120,7 @@ Thus each `p` below will correctly render the copyright symbol:
                                   the hexadecimal number "AE" by "x" --> 
 ```
 
-## How UTF-8 and Percent Encoding Works
+## How `UTF-8` and Percent Encoding Works
 
 Sometimes we need to encode a certain character when it is sent as part of the URL ( in GET requests for instance ).
 For example if we send cyrillic letters or reserved characters ( reserved character is a character which, if used as
@@ -229,3 +230,41 @@ And that is why you see several hexadecimal numbers when encoding, for instance,
 
 **Note:** This isn't meant to be a complete overview of `UTF-8` but merely a nice example of how Encodings work and
 how they differ from Character Sets.
+
+## Unicode Planes
+
+There are very many code points in Unicode. Since there are so many of them, it was decided to separate
+all the code points into groups of 2^16 code points called Planes. There are 17 planes overall consisting of 
+17 * ( 2^16 ) = 1114112 code points ( meaning the biggest code point we _could_, in theory, represent is 1114112 - 1
+or 0x10ffff in hexadecimal ), more than enough to represent all the characters on earth.
+
+Why not more you would ask? Recall how `UTF-8` works. In `UTF-8`, the spec says that we shouldn't use more than 4 bytes
+to encode a code point. But in theory we can. Let's see how many code points we can represent if we add
+just a couple of bytes. What if there were 6 bytes, thus the first byte is going to be `1111110x` leaving 31 bits
+( number of `x`s ) for the code point:
+
+```
+1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
+```
+
+Thus with 31 bits the biggest code point we can represent is 2^31 - 1, which is 2^31 characters<small>\*</small>
+and 32 768 planes<small>\*</small>. The reason we have only 17 planes instead of 32 768 is because of `UTF-16`
+Unicode encoding ( we will see how it works in a moment ). The biggest code point `UTF-16` can encode is a 20
+bit integer ( 2^20 - 1 ) and even that not without a trick, which limits us to only 17 planes<small>\*</small>.
+
+TODO: continue from here
+
+Also let's briefly take a look at how much more convenient it is to work with code points if we write them in hex. We know that the biggest number that can be represented using 1 byte is 255, which is 2 ** 8 - 1. The same number can be written in hex as 0xff. And what if we were asked what is the biggest number that can be represented using 2 bytes? We would say instantly 0xffff ( two 'f' chars for each byte ). And vice versa. How many bytes are needed to represent this hexademical number: 0x1234? Since, as we said, every 2 chars in hex correspond to 1 byte and there are 4 chars we can instantly tell: 4 / 2 = 2 bytes. See? Convenient :)
+
+It is even more convenient to use hex for Unicode code points since we can always see in which plane the code point is. Let's see an example of that. The 1st plane is code points 0 - 2 ** 17 or in hexadecimal 0 - 0xffff. What about the 2nd plane? Each Unicode plane has 2 ** 17 chars in it so that the next plane is going to be code points 2 ** 17 - 2 ** 34 or in hexadecimal 0x 10000 - 0x1ffff. The 3rd plane is code points XX - XX in decimal or 0x20000 - 0x2ffff. See the tendency? The first character of the hexadecimal code point corresponds to the plane that the code point comes from ( except for 1st plane code points ). Awesome!
+
+In Unicode the 1st plane has most of the characters that we normally use ( and more ), here is what it looks like: ... while most other planes still are not assigned any characters at all. In fact the 1st Unicode plane is so popular that it has a name BMP. The other planes are called supplementary planes. Among them, the 2nd Unicpde plane called Supplementary Multilingual Plane has emoji characters for instance.
+
+TODO: verify and write that reserved chars are used for fonts
+
+### Notes
+
+TODO: here
+
+In order to get the number of planes, we need to divide the overall amount of characters ( 4 294 967 296 or 2^32 )
+by the amount of characters each plane can hold ( 2^16 ), which is: 2^32 / 2^16 = 32 768.
