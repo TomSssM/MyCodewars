@@ -1,6 +1,6 @@
 # Unicode vs `ASCII` vs `UTF-8` and so on
 
-> the `*` character means there is some extra data about this part of the article in the [Notes](./str-encoding-n-charsets.md#notes) section
+> the `†` character means there is some extra data about this part of the article in the [Notes](./str-encoding-n-charsets.md#notes) section
 
 ## From w3schools
 
@@ -234,9 +234,10 @@ how they differ from Character Sets.
 ## Unicode Planes
 
 There are very many code points in Unicode. Since there are so many of them, it was decided to separate
-all the code points into groups of 2^16 code points called Planes. There are 17 planes overall consisting of 
-17 * ( 2^16 ) = 1114112 code points ( meaning the biggest code point we _could_, in theory, represent is 1114112 - 1
-or 0x10ffff in hexadecimal ), more than enough to represent all the characters on earth.
+all the code points into groups of 2^16 code points called _planes_.
+There are 17 planes overall consisting of 17 * 2^16 = 1114112 code points
+( meaning the biggest code point we _could_, in theory, represent is 1114112 - 1 or 0x10ffff in hexadecimal ),
+more than enough to represent all the characters on earth.
 
 Why not more you would ask? Recall how `UTF-8` works. In `UTF-8`, the spec says that we shouldn't use more than 4 bytes
 to encode a code point. But in theory we can. Let's see how many code points we can represent if we add
@@ -247,10 +248,10 @@ just a couple of bytes. What if there were 6 bytes, thus the first byte is going
 1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
 ```
 
-Thus with 31 bits the biggest code point we can represent is 2^31 - 1, which is 2^31 characters<small>\*</small>
-and 32 768 planes<small>\*</small>. The reason we have only 17 planes instead of 32 768 is because of `UTF-16`
+Thus with 31 bits the biggest code point we can represent is 2^31 - 1, which is 2^31 characters&#x2020;
+and 32 768 planes&#x2020;. The reason we have only 17 planes instead of 32 768 is because of `UTF-16`
 Unicode encoding ( we will see how it works in a moment ). The biggest code point `UTF-16` can encode is a 20
-bit integer ( 2^20 - 1 ) and even that not without a trick, which limits us to only 17 planes<small>\*</small>.
+bit integer ( 2^20 - 1 ) and even that not without a trick, which limits us to only 17 planes.
 
 TODO: continue from here
 
@@ -264,7 +265,13 @@ TODO: verify and write that reserved chars are used for fonts
 
 ### Notes
 
-TODO: here
+&#x2020; You might be wondering, if we can represent 2^31 characters, why is the biggest code point that
+can be represented is 2^31 - 1? The answer is there is also 0. Thus if we can represent a total of 4 characters
+starting at 0, then the biggest character we can represent is 3 ( `0`, `1`, `2`, `3` = a total of 4 characters ).
+This might be particularly confusing when we talk binary. What is the biggest number that can be represented with
+4 bytes or 32 bits in decimal? The answer is 2^32 - 1 ( 32 `1`s ). 2^32 is already 33 bits. Thus it is sometimes a lot
+easier to use hexadecimal to answer the question above. The biggest number that can be represented with 2 bytes is
+`0xffff`. We will get to soon.
 
-In order to get the number of planes, we need to divide the overall amount of characters ( 4 294 967 296 or 2^32 )
-by the amount of characters each plane can hold ( 2^16 ), which is: 2^32 / 2^16 = 32 768.
+&#x2020; In order to get the number of planes, we need to divide the overall amount of characters
+( 4 294 967 296 or 2^32 ) by the amount of characters each plane can hold ( 2^16 ), which is: 2^32 / 2^16 = 32 768.
