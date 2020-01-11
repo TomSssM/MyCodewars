@@ -13,8 +13,6 @@ alias pl='git pull'
 alias p='git push'
 alias c='git checkout'
 alias l='git log'
-alias cl='git clean -df'
-alias dfx='git clean -dfx ./'
 alias lst='git branch --list'
 alias amend='git add . && git commit --amend --no-edit'
 
