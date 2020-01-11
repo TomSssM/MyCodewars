@@ -44,7 +44,7 @@
 - Redo - `COMMAND + SHIFT + Z`
 - Increase Font Size - `COMMAND + =`
 - Decrease Font Size - `COMMAND + Minus`
-- Open previously Copied Stuff - `COMMAND + Shift + V`
+- Paste From History... - `COMMAND + Shift + V`
 - Git Commit - `COMMAND + K`
 - Git Push - `COMMAND + Shift + K`
 - Preferences - `COMMAND + ,`
@@ -59,6 +59,7 @@
 - Create new directory or package - `COMMAND + SHIFT + N`
 - Active Next Window - ``COMMAND + ` ``
 - Line/Column - `COMMAND + L`
+- Show Context Menu - `SHIFT + OPTION + ENTER`
 
 ## Snippets ( Live Templates )
 
