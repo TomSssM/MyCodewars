@@ -250,18 +250,44 @@ just a couple of bytes. What if there were 6 bytes, thus the first byte is going
 
 Thus with 31 bits the biggest code point we can represent is 2^31 - 1, which is 2^31 characters&#x2020;
 and 32 768 planes&#x2020;. The reason we have only 17 planes instead of 32 768 is because of `UTF-16`
-Unicode encoding ( we will see how it works in a moment ). The biggest code point `UTF-16` can encode is a 20
-bit integer ( 2^20 - 1 ) and even that not without a trick, which limits us to only 17 planes.
+Unicode encoding ( we will see how it works in a moment ). The biggest code point `UTF-16` can encode
+is around 0x10ffff ( in hexadecimal ) and even that not without a trick, which limits us to only 17 planes.&#x2020;
 
-TODO: continue from here
+In Unicode the 1st plane has most of the characters that we normally use ( and more ), while most other planes still
+are not assigned any characters at all. In fact the 1st Unicode plane is so popular that it has a name BMP.
+Here is what the BMP plane looks like:
 
-Also let's briefly take a look at how much more convenient it is to work with code points if we write them in hex. We know that the biggest number that can be represented using 1 byte is 255, which is 2 ** 8 - 1. The same number can be written in hex as 0xff. And what if we were asked what is the biggest number that can be represented using 2 bytes? We would say instantly 0xffff ( two 'f' chars for each byte ). And vice versa. How many bytes are needed to represent this hexademical number: 0x1234? Since, as we said, every 2 chars in hex correspond to 1 byte and there are 4 chars we can instantly tell: 4 / 2 = 2 bytes. See? Convenient :)
+![BMP](https://upload.wikimedia.org/wikipedia/commons/0/01/Unifont_Full_Map.png)
 
-It is even more convenient to use hex for Unicode code points since we can always see in which plane the code point is. Let's see an example of that. The 1st plane is code points 0 - 2 ** 17 or in hexadecimal 0 - 0xffff. What about the 2nd plane? Each Unicode plane has 2 ** 17 chars in it so that the next plane is going to be code points 2 ** 17 - 2 ** 34 or in hexadecimal 0x 10000 - 0x1ffff. The 3rd plane is code points XX - XX in decimal or 0x20000 - 0x2ffff. See the tendency? The first character of the hexadecimal code point corresponds to the plane that the code point comes from ( except for 1st plane code points ). Awesome!
+The other planes are called supplementary planes. The 2nd Unicode plane called Supplementary Multilingual Plane
+has emoji characters for instance.
 
-In Unicode the 1st plane has most of the characters that we normally use ( and more ), here is what it looks like: ... while most other planes still are not assigned any characters at all. In fact the 1st Unicode plane is so popular that it has a name BMP. The other planes are called supplementary planes. Among them, the 2nd Unicpde plane called Supplementary Multilingual Plane has emoji characters for instance.
+---
 
-TODO: verify and write that reserved chars are used for fonts
+## How `UTF-16` Works
+
+Utf 16 uses 2 bytes to encode each code point. Remember, utf 8 would use a different amount of bytes depending on how big a code point was ( for this it is sometimes called a varied length encoding ). But utf 16 always uses 2 bytes whether a code point is 0x1 or 0x20ff. For this reason, all the code points of BMP ( the 0x0001 - 0xffff code points ) correspond to their binary representation because we need from 1 to 2 bytes max. to store them in computer memory. But what about code points of the 2nd or the 3rd plane? They need 3 and more bytes to store them. But in utf 16 we can use only 2 bytes ( 16 bits ) to store a single code point. Thus in utf 16 we can work only with the BMP code points. So how does utf 16 handle non BMP code points from 3 - 17 planes ( todo: check that we can encode plane 17 with utf 16 ) you ask? The answer is it uses surrogate pairs.
+
+There is a very good explanation of surrogates in the Modern JavaScript tutorial. Make sure to read it before you continue!
+
+Surrogate pairs are pairs of 2 usual Code Points in the BMP ( 0xsmth - 0xsmth ). These code points 0xsmth are reserved in Unicode to be surrogate characters for the utf 16 encoding and will not be re-assigned in the future. They do not produce any visual character and are used only by utf 16 encoding as surrogate characters in surrogate pairs. Toso: oops surrogate example Here is what the surrogate pair looks like: todo: here; For the parser it is easy to identify a surrogate pair: if it encounters a code point between 0xsmth - 0xsmth it knows that it is a surrogate pair. The code points in the range smth are called high surrogates and the code points in the range smth are called low surrogates: here.
+
+Let's see how surrogate pairs help utf 16 encode code points that require over 2 bytes to be stored ( 0x10000 - 0x1ffff TODO: is it 0x1ffff cause we subtract 1000 ? ). Let's encode the code point ... todo example here ...
+
+Do note that any Unicode code point in the range between hh - hh can be encoded using surrogates. Here are more examples: the smile example.
+
+The same way we decode a pair of surrogates into a code point. In fact because JavaScript uses utf 16 internally that is exactly what codePointAt and TextDecoder do. You can make sure of that by looking at their polyfills. More about codePointAt vs charCodeAt can be found in the tutorial.
+
+## Composite Characters and Emoji
+
+Don't confuse composite chars with surrogates. These are the chars to represent which we need to group 2 code points together. For instance from the tutorial example here is the character s with dots: hh
+To represent it though we need to group the letter s with the special code point hh. Hh means dots below, it is invisible on its own but if preceded by a letter, it adds dots below it: hh.
+
+In fact it is a very common practice in Unicode to group two or more code points to get a character  ( which is different from grouping surrogates make sure not to confuse the two ). It is particularly common with emoji. For example, so far we have seen the hh emoji. To depict it we would use a code point from the 2nd Unicode plane. But sometimes emoji are created by taking an already exisitimg character like hh ( code point: 0xsmth ) and adding a special "smth" code point after it: hh, that is how we get a th emoji.
+
+Some emoji are groups of other emoji with the zwj code point between them: hh. Here is what code points you need to write to get a dunno emoji. Also here are code points to change skin color that can be paired with other emoji code points.
+
+---
 
 ### Notes
 
@@ -271,7 +297,34 @@ starting at 0, then the biggest character we can represent is 3 ( `0`, `1`, `2`,
 This might be particularly confusing when we talk binary. What is the biggest number that can be represented with
 4 bytes or 32 bits in decimal? The answer is 2^32 - 1 ( 32 `1`s ). 2^32 is already 33 bits. Thus it is sometimes a lot
 easier to use hexadecimal to answer the question above. The biggest number that can be represented with 2 bytes is
-`0xffff`. We will get to soon.
+`0xffff`. We will get to it soon.
 
 &#x2020; In order to get the number of planes, we need to divide the overall amount of characters
 ( 4 294 967 296 or 2^32 ) by the amount of characters each plane can hold ( 2^16 ), which is: 2^32 / 2^16 = 32 768.
+
+&#x2020; Also let's briefly take a look at how much more convenient it is to work with code points if we write
+them in hex. We know that the biggest number that can be represented using 1 byte is 255, which is 2^8 - 1.
+The same number can be written in hex as 0xff. Now what if we were asked what is the biggest number that can be
+represented using 2 bytes? We would say, because of what we already learnt about hex - 0xffff ( two 'f' chars
+for each byte ). And vice versa. How many bytes are needed to represent this hexadecimal number: 0x1234?
+Since, as we said, every 2 chars in hex correspond to 1 byte and there are 4 chars we can instantly tell:
+4 / 2 = 2 bytes. See? Convenient :)
+
+It is even more convenient to use hex for Unicode code points since we can always see in which plane the code point is.
+Let's see an example of that. The 1st plane is code points 0 - 2^17 or, in hexadecimal, 0x0 - 0xffff. What about
+the 2nd plane? Each Unicode plane has 2^17 chars in it so that the next plane is going to be code points
+2^17 - 2^34 or, in hexadecimal, 0x10000 - 0x1ffff. The 3rd plane is code points 131072 - 196607 in decimal
+or 0x20000 - 0x2ffff. See the tendency? The first character of the hexadecimal code point corresponds to the plane
+that the code point comes from ( except for 1st plane code points ). Awesome!
+
+## TODO
+
+- verify and write that reserved chars are used for fonts
+- verify that we can use surrogates in utf-8 / utf-16 HTML document
+- read the 2 remaining articles
+- what are private code points used in Unicode
+- what is endianness
+- numbers stuff
+    - add 0.3333... in addition to 0.3(3)
+    - add that most significant means leftmost
+    - clear the numbers section
