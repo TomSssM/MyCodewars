@@ -262,11 +262,62 @@ Here is what the BMP plane looks like:
 The other planes are called supplementary planes. The 2nd Unicode plane called Supplementary Multilingual Plane
 has emoji characters for instance.
 
+| Plane | No. | Abbreviation | Code Points Range |
+| :---: | :---: | :---: | :---: |
+| Basic Multilingual Plane | 0 | BMP | 0000 - FFFF |
+| Supplementary Multilingual Plane | 1 | SMP | 10000 - 1FFFF |
+| Supplementary Ideographic Plane | 2 | SIP | 20000 - 2FFFF |
+| Tertiary Ideographic Plane ( unassigned ) | 3 | TIP (unassigned) | 30000 - 3FFFF |
+| Planes 4 - 13 | 4 - 13 | unassigned | 40000 - DFFFF |
+| Supplementary Special-purpose Plane | 14 | SSP | E0000 - EFFFF |
+| Supplement­ary Private Use Area plane A | 15 | SPUA-A | F0000 - FFFFF |
+| Supplement­ary Private Use Area plane B | 16 | SPUA-B | 100000 - 10FFFF |
+
+Amongst many, the last 2 planes are called Private Use Areas because they will never be assigned characters by the
+Unicode Consortium. Actually, the same is also true about some code points in the BMP plane, these are the
+code points U+E000...U+F8FF. These code points ( U+E000...U+F8FF, U+F0000...U+10FFFF ) are _reserved_ for private use.
+By whom you ask? Why, by font vendors! The creators of fonts may make the character from plane 15 for example appear
+as some SVG image. This way, if you use special font you may use inline images instead of letters. And the font-size
+will correspond to the size of the images.
+
+That is exactly how Font Awesome is built! For instance, let's add the font awesome font to our HTML page:
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Font Awesome Page</title>
+    <style>
+        .page-glyph {
+            /*
+              here we say that we want to use font awesome so that reserved
+              Unicode code points appear as the corresponding Font Awesome
+              SVG images
+            */
+            font-family: FontAwesome;
+        }
+    </style>
+</head>
+<body>
+<span class="page-glyph">&#xf0f4;</span>
+</body>
+</html>
+```
+
+If you check, you will see that the U+F0F4 Unicode Code Point used above is actually reserved for private use so that
+it never collides with the real Unicode characters. And the font awesome creators decided to replace this private
+use code point with a coffee mug svg image.
+
 ---
 
 ## How `UTF-16` Works
 
-Utf 16 uses 2 bytes to encode each code point. Remember, utf 8 would use a different amount of bytes depending on how big a code point was ( for this it is sometimes called a varied length encoding ). But utf 16 always uses 2 bytes whether a code point is 0x1 or 0x20ff. For this reason, all the code points of BMP ( the 0x0001 - 0xffff code points ) correspond to their binary representation because we need from 1 to 2 bytes max. to store them in computer memory. But what about code points of the 2nd or the 3rd plane? They need 3 and more bytes to store them. But in utf 16 we can use only 2 bytes ( 16 bits ) to store a single code point. Thus in utf 16 we can work only with the BMP code points. So how does utf 16 handle non BMP code points from 3 - 17 planes ( todo: check that we can encode plane 17 with utf 16 ) you ask? The answer is it uses surrogate pairs.
+`UTF-16` uses 2 bytes to encode each code point. Remember, utf 8 would use a different amount of bytes depending on how big a code point was ( for this it is sometimes called a varied length encoding ). But utf 16 always uses 2 bytes whether a code point is 0x1 or 0x20ff. For this reason, all the code points of BMP ( the 0x0001 - 0xffff code points ) correspond to their binary representation because we need from 1 to 2 bytes max. to store them in computer memory. But what about code points of the 2nd or the 3rd plane? They need 3 and more bytes to store them. But in utf 16 we can use only 2 bytes ( 16 bits ) to store a single code point. Thus in utf 16 we can work only with the BMP code points. So how does utf 16 handle non BMP code points from 3 - 17 planes ( todo: check that we can encode plane 17 with utf 16 ) you ask? The answer is it uses surrogate pairs.
 
 There is a very good explanation of surrogates in the Modern JavaScript tutorial. Make sure to read it before you continue!
 
@@ -315,15 +366,16 @@ Let's see an example of that. The 1st plane is code points 0 - 2^17 or, in hexad
 the 2nd plane? Each Unicode plane has 2^17 chars in it so that the next plane is going to be code points
 2^17 - 2^34 or, in hexadecimal, 0x10000 - 0x1ffff. The 3rd plane is code points 131072 - 196607 in decimal
 or 0x20000 - 0x2ffff. See the tendency? The first character of the hexadecimal code point corresponds to the plane
-that the code point comes from ( except for 1st plane code points ). Awesome!
+that the code point comes from ( except for 1st plane code points ). Thus, nothing means 1st plane, 1 means 2nd plane
+and so on. For example, 0x**1**1f4a means code point comes from the 2nd plane and so on. Awesome!
 
 ## TODO
 
-- verify and write that reserved chars are used for fonts
+- write everything between `---`
+- don't forget the part about string encoder
+- what is endianness
 - verify that we can use surrogates in utf-8 / utf-16 HTML document
 - read the 2 remaining articles
-- what are private code points used in Unicode
-- what is endianness
 - numbers stuff
     - add 0.3333... in addition to 0.3(3)
     - add that most significant means leftmost
