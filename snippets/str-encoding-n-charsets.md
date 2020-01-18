@@ -560,13 +560,11 @@ width encoding.
 
 ## TODO
 
+- refactor utf-16
 - write everything between `---`
 - write `UCS-2`
-- write what is a variable width encoding
-- don't forget the part about string encoder
 - what is endianness
 - verify that we can use surrogates in utf-8 / utf-16 HTML document
-- read the 2 remaining articles
 - numbers stuff
     - add 0.3333... in addition to 0.3(3)
     - add that most significant means leftmost
