@@ -309,25 +309,197 @@ That is exactly how Font Awesome is built! For instance, let's add the font awes
 </html>
 ```
 
-If you check, you will see that the U+F0F4 Unicode Code Point used above is actually reserved for private use so that
+If you check, you will see that the `U+F0F4` Unicode Code Point used above is actually reserved for private use so that
 it never collides with the real Unicode characters. And the font awesome creators decided to replace this private
 use code point with a coffee mug svg image.
 
----
-
 ## How `UTF-16` Works
 
-`UTF-16` uses 2 bytes to encode each code point. Remember, utf 8 would use a different amount of bytes depending on how big a code point was ( for this it is sometimes called a varied length encoding ). But utf 16 always uses 2 bytes whether a code point is 0x1 or 0x20ff. For this reason, all the code points of BMP ( the 0x0001 - 0xffff code points ) correspond to their binary representation because we need from 1 to 2 bytes max. to store them in computer memory. But what about code points of the 2nd or the 3rd plane? They need 3 and more bytes to store them. But in utf 16 we can use only 2 bytes ( 16 bits ) to store a single code point. Thus in utf 16 we can work only with the BMP code points. So how does utf 16 handle non BMP code points from 3 - 17 planes ( todo: check that we can encode plane 17 with utf 16 ) you ask? The answer is it uses surrogate pairs.
+`UTF-16` uses 2 bytes to encode each code point. Remember, `UTF-8` would use a different amount of bytes depending
+on how big a code point was ( for this, it is sometimes called a varied width encoding&#x2020; ). But `UTF-16`
+always uses 2 bytes whether a code point is 0x0001 or 0x20ff. For this reason, all the code points of BMP
+( the 0x0000 - 0xffff code points ) correspond to their binary representation because we need from 1 to 2 bytes max.
+to store them in computer memory. But what about code points of the 2nd or the 3rd plane? They need 3 and more bytes
+to store them. But in `UTF-16` we can use only 2 bytes ( 16 bits ) to store a single code point, that is it,
+can't have more. So how does `UTF-16` handle non BMP code points from supplementary planes you ask? The answer is it
+uses _surrogate pairs_.
 
-There is a very good explanation of surrogates in the Modern JavaScript tutorial. Make sure to read it before you continue!
+There is a very good explanation of surrogates in the Modern JavaScript tutorial. Make sure to read it before
+you continue!
 
-Surrogate pairs are pairs of 2 usual Code Points in the BMP ( 0xsmth - 0xsmth ). These code points 0xsmth are reserved in Unicode to be surrogate characters for the utf 16 encoding and will not be re-assigned in the future. They do not produce any visual character and are used only by utf 16 encoding as surrogate characters in surrogate pairs. Toso: oops surrogate example Here is what the surrogate pair looks like: todo: here; For the parser it is easy to identify a surrogate pair: if it encounters a code point between 0xsmth - 0xsmth it knows that it is a surrogate pair. The code points in the range smth are called high surrogates and the code points in the range smth are called low surrogates: here.
+Surrogate pairs are pairs of 2 usual Code Points in the BMP. In other words, surrogate characters are _simply_
+BMP code points ( these are the code points 0xD800 - 0xDFFF ). These special code points
+are reserved in Unicode to be used as surrogate characters for the `UTF-16` encoding and will not be re-assigned
+in the future. They do not produce any visual character and are used only by `UTF-16` encoding as surrogate characters
+to form surrogate pairs.
 
-Let's see how surrogate pairs help utf 16 encode code points that require over 2 bytes to be stored ( 0x10000 - 0x1ffff TODO: is it 0x1ffff cause we subtract 1000 ? ). Let's encode the code point ... todo example here ...
+For the parser it is easy to identify a surrogate pair: if it encounters a code point between 0xD800 - 0xDFFF, it knows
+that it is a surrogate pair. The code points in the range 0xD800 - 0xDBFF are called _high_ surrogates and the
+code points in the range 0xDC00 - 0xDFFF are called _low_ surrogates.
 
-Do note that any Unicode code point in the range between hh - hh can be encoded using surrogates. Here are more examples: the smile example.
+Let's see how surrogate pairs help `UTF-16` encode code points that require over 2 bytes to be stored
+( 0x10000 - 0x10ffff ). Let's encode the code point `U+10437`. This code point's binary value is ( 3 bytes ):
 
-The same way we decode a pair of surrogates into a code point. In fact because JavaScript uses utf 16 internally that is exactly what codePointAt and TextDecoder do. You can make sure of that by looking at their polyfills. More about codePointAt vs charCodeAt can be found in the tutorial.
+```
+0000 0001  0000 0100  0011 0111
+```
+
+First we need to subtract the value of 0x10000 ( in hexadecimal ) from the code point. 0x10437 - 0x10000 we get
+0x437. You see, even if we take the biggest possible code point of 10ffff and subtract 0x10000 we are going to
+get 0xfffff, which requires no more than 20 _bits_ to be encoded. Thus we can say that if we subtract
+0x10000 from any code point, the resulting value is going to be no more than 20 bits. Now, the 1st 10 bits of
+this value are going to be part of the first surrogate, and the remaining 10 bits of this value are going to
+be part of the 2nd surrogate.
+
+OK, let's get back to our example. The code point `U+10437`, which we want to encode in `UTF-16` has the follwoing
+binary representation:
+
+```
+1  0000 0100  0011 0111
+```
+
+As per our formula, let's subtract 0x10000 from it we get 0x10437 - 0x10000 = 0x437. The binary representation
+of 0x437 is:
+
+```
+100 0011 0111
+```
+
+Let's pad it with 0s to make exactly 20 bits:
+
+```
+0000 0000 0100 0011 0111
+```
+
+Now let's take its first ( most significant ) 10 bits:
+
+```
+0000 0000 0100 0011 0111
+^^^^ ^^^^ ^^
+```
+
+If we append them to `110110`:
+
+```
+1101 10 + 0000 0000 01
+```
+
+And then convert the binary number `1101100000000001` to hexadecimal, we get 0xD801. But what is 0xD801? Oh wait, it is
+the 1st surrogate!
+
+If we take the code point's 10 least significant bits:
+
+```
+0000 0000 0100 0011 0111
+            ^^ ^^^^ ^^^^
+```
+
+And append them to `110111` ( note that this binary value ends in 1 unlike the previous one ), we get
+`1101110000110111` which is our 2nd surrogate 0xDC37.
+
+Since JavaScript internally uses `UTF-16` we can verify the validity of everything said above by running
+the following code:
+
+```js
+'\uD801\uDC37'; // 𐐷
+'\u{10437}'; // 𐐷
+'\uD801\uDC37' === '\u{10437}'; // true
+```
+
+Here is the script which automates the convection between surrogates and usual code points:
+
+```js
+function convertToSurrogate(num, isBinary = false) {
+    const inputCodePoint = parseInt(num, 16);
+    const subtractVal = 0x10000;
+    let rawInputValue = (inputCodePoint - subtractVal).toString(2);
+
+    if (rawInputValue.length < 20) {
+        rawInputValue = '0'.repeat(20 - rawInputValue.length) + rawInputValue;
+    }
+
+    const lowSurrogate = '110110' + rawInputValue.slice(0, 10);
+    const highSurrogate = '110111' + rawInputValue.slice(10);
+    const surrogates = [lowSurrogate, highSurrogate];
+
+    if (isBinary) {
+        return surrogates.map((surrogate) => {
+            return surrogate.split('').map((char, index) => {
+                const isFourth = index % 4 === 0;
+                if (isFourth) {
+                    return ` ${char}`;
+                }
+                return char;
+            }).join('').trim();
+        });
+    }
+
+    return surrogates.map((surrogate) => {
+        const result = parseInt(surrogate, 2).toString(16);
+        return '0'.repeat(4 - result.length) + result;
+    });
+}
+```
+
+Let's try encoding the biggest possible Unicode code point U+10ffff using the function above:
+
+```js
+convertToSurrogate('10ffff'); // [ 'dbff', 'dfff' ]
+```
+
+Do note that 0xdbff is the biggest possible _high_ surrogate while 0xdfff is the biggest possible _low_ surrogate.
+Oops, looks like we have just proven that any Unicode code point can be encoded using surrogates!
+
+Here are more examples:
+
+```js
+'\u{1f60d}'; // 😍
+'\ud83d\ude0d'; // 😍
+'😍'.charCodeAt(0).toString(16); // d83d
+'😍'.codePointAt(0).toString(16); // 1f60d
+```
+
+More about `codePointAt` vs `charCodeAt` can be found in the tutorial.
+
+Converting between `UTF-16` surrogates and usual code points is exactly what `TextEncoder` and `codePointAt`
+do in JavaScript. You can make sure of that by looking at their [polyfills](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder).
+Here is an example:
+
+```js
+const encoder = new TextEncoder();
+const view = encoder.encode('\u{1f60d}'); // convert JS UTF-16 surrogates to UTF-8 raw binary data
+view; // Uint8Array [ 240, 159, 152, 141 ]
+```
+
+Do note though that `TextEncoder` converts JS `UTF-16` surrogates into `UTF-8` encoded binary data. Here is proof.
+Let's convert the code point above `U+1f60d` into binary data according to `UTF-8` ( the algorithm is described
+in detail above ). The binary representation of 0x1f60d is:
+
+```
+11111 011000 001101
+```
+
+Now let's use the `UTF-8` encoding algorithm to convert it to raw binary data:
+
+```
+11110000  10011111  10011000 10001101
+     ^^^    ^^^^^^    ^^^^^^   ^^^^^^
+```
+
+Highlighted are the bits that make up the binary value of the `U+1f60d` code point ( try following them from right to
+left and you should see the same number ). Now let's interpret every 8 bits as a decimal value by converting
+from binary, we get:
+
+```
+11110000 -> 240
+10011111 -> 159
+10011000 -> 152
+10001101 -> 141
+```
+
+That is exactly the same values as returned by our Uint**8**Array View. Awesome!
+
+---
 
 ## Composite Characters and Emoji
 
@@ -369,9 +541,28 @@ or 0x20000 - 0x2ffff. See the tendency? The first character of the hexadecimal c
 that the code point comes from ( except for 1st plane code points ). Thus, nothing means 1st plane, 1 means 2nd plane
 and so on. For example, 0x**1**1f4a means code point comes from the 2nd plane and so on. Awesome!
 
+&#x2020; A variable width encoding is when in order to represent one code point, the encoding would sometimes use
+1 byte but some other types 2 or more bytes. In formal writing the bytes are also sometimes referred to as _units_.
+Thus, in a variable width encoding some units are going to be _singletons_, which by themselves represent a single code
+point, some are going to be _lead units_, which come first in a multi-unit sequence, and _trail units_, which come
+afterwards in a multi-unit sequence. The reason `UTF-8` is considered a variable width encoding is because
+depending on how large the code point is, it is going to use a different amount of bytes. Consider this string `I♥NY`.
+In `UTF-8` it is going to be encoded as 6 bytes: `49 E2 99 A5 4E 59`, where `49` is a _singleton_ and corresponds
+to the character `I`; `E2` is a _lead unit_, `99` and `A5` are trail units and together `E2 99 A5` can be decoded
+into the `♥` character; both `4E` and `59` are also _singletons_ and decode to the
+characters `N` and `Y` correspondingly.
+
+What is probably less intuitive is that `UTF-16` is also a variable width encoding. The reason for that is that in order
+to encode code points 0x0000-0xffff it uses 2 bytes for each code point but in order to encode code points
+0x10000-0x10ffff `UTF-16` uses 4 bytes ( a surrogate pair ), which means that in order to encode a single code point,
+`UTF-16` uses sometimes one amount of bytes, sometimes another, which, in turn, fits the definition of a variable
+width encoding.
+
 ## TODO
 
 - write everything between `---`
+- write `UCS-2`
+- write what is a variable width encoding
 - don't forget the part about string encoder
 - what is endianness
 - verify that we can use surrogates in utf-8 / utf-16 HTML document
