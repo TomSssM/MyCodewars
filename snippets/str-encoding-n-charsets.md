@@ -263,7 +263,7 @@ The other planes are called supplementary planes. The 2nd Unicode plane called S
 has emoji characters for instance.
 
 | Plane | No. | Abbreviation | Code Points Range |
-| :---: | :---: | :---: | :---: |
+| :--- | :--- | :--- | :--- |
 | Basic Multilingual Plane | 0 | BMP | 0000 - FFFF |
 | Supplementary Multilingual Plane | 1 | SMP | 10000 - 1FFFF |
 | Supplementary Ideographic Plane | 2 | SIP | 20000 - 2FFFF |
@@ -394,8 +394,7 @@ If we take the code point's 10 least significant bits:
             ^^ ^^^^ ^^^^
 ```
 
-And append them to `110111` ( note that this binary value ends in 1 unlike the previous one ), we get
-`1101110000110111` which is our 2nd surrogate 0xDC37.
+And append them to `110111` we get `1101110000110111` which is our 2nd surrogate 0xDC37.
 
 Since JavaScript internally uses `UTF-16` we can verify the validity of everything said above by running
 the following code:
@@ -459,7 +458,7 @@ Here are more examples:
 '😍'.codePointAt(0).toString(16); // 1f60d
 ```
 
-More about `codePointAt` vs `charCodeAt` can be found in the tutorial.
+More about `codePointAt` vs `charCodeAt` can be found in the Tutorial.
 
 Converting between `UTF-16` surrogates and usual code points is exactly what `TextEncoder` and `codePointAt`
 do in JavaScript. You can make sure of that by looking at their [polyfills](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder).
@@ -541,8 +540,8 @@ or 0x20000 - 0x2ffff. See the tendency? The first character of the hexadecimal c
 that the code point comes from ( except for 1st plane code points ). Thus, nothing means 1st plane, 1 means 2nd plane
 and so on. For example, 0x**1**1f4a means code point comes from the 2nd plane and so on. Awesome!
 
-&#x2020; A variable width encoding is when in order to represent one code point, the encoding would sometimes use
-1 byte but some other types 2 or more bytes. In formal writing the bytes are also sometimes referred to as _units_.
+&#x2020; A variable width encoding is when in order to represent a single code point, the encoding would sometimes use
+1 byte but some other times 2 or more bytes. In formal writing the bytes are also sometimes referred to as _units_.
 Thus, in a variable width encoding some units are going to be _singletons_, which by themselves represent a single code
 point, some are going to be _lead units_, which come first in a multi-unit sequence, and _trail units_, which come
 afterwards in a multi-unit sequence. The reason `UTF-8` is considered a variable width encoding is because
@@ -555,15 +554,13 @@ characters `N` and `Y` correspondingly.
 What is probably less intuitive is that `UTF-16` is also a variable width encoding. The reason for that is that in order
 to encode code points 0x0000-0xffff it uses 2 bytes for each code point but in order to encode code points
 0x10000-0x10ffff `UTF-16` uses 4 bytes ( a surrogate pair ), which means that in order to encode a single code point,
-`UTF-16` uses sometimes one amount of bytes, sometimes another, which, in turn, fits the definition of a variable
-width encoding.
+`UTF-16` uses sometimes one amount of bytes, sometimes a different amount of bytes, which, in turn, fits the
+definition of a variable width encoding.
 
 ## TODO
 
-- refactor utf-16
 - write everything between `---`
 - write `UCS-2`
-- what is endianness
 - verify that we can use surrogates in utf-8 / utf-16 HTML document
 - numbers stuff
     - add 0.3333... in addition to 0.3(3)
