@@ -1047,3 +1047,59 @@ Second of all, since the value passed to the `then` in line `(***)` is the value
 got resolved to, because of that the value returned from the last `then` of the finally method in line `(**here**)`
 is actually ignored. It would be ignored anyways, actually, even if the Promise in line `(**)` were to resolve to
 `undefined`, then the value of `data` in line `(***)` would be `undefined` too.
+
+## The Initializing then()
+
+```js
+const pr = new Promise((res) => {
+    setTimeout(() => {
+        res('cool');
+    }, 10);
+}).then((val) => { // (*)
+    console.log('one');
+}).then(() => { // (***)
+    console.log('two');
+});
+
+pr.then(() => { // (*)
+    console.log('three');
+}).then(() => { // (**)
+    console.log('six');
+}).then(() => { // (**)
+    console.log('seven');
+});
+
+pr.then(() => { // (*)
+    console.log('four');
+});
+
+pr.then(() => { // (*)
+    console.log('five');
+});
+```
+
+The expected output of the code above is:
+
+```
+one
+two
+three
+four
+five
+six
+seven
+```
+
+While it is clear why the `then`s in lines `(*)` should be executed before the ones in lines `(**)` ( from the notes
+in previous sections ), why does the `then` in line `(***)` get executed before the rest of the `then`s in lines `(*)`?
+The reason is that the first 2 `then`s ( that log `"one"` and `"two"` ) are used together with the `new Promise`
+in initialization. What I mean by that is the only reference to the promise instance we do have in code above is
+the one in the variable `pr`, and the `pr` variable is the return value of the `then` that logs `"two"`. Well, this
+variable `pr` is actually the result of calling `then()`. As a consequence, all the further `then`s indeed will be
+called in the topmost-first order as in the previous examples, but since the promise itself is created by calling
+the 2 `then`s that log `"one"` and `"two"` accordingly, these 2 `then`s absolutely have to be called before all others
+as they are in a way part of the initialization.
+
+Part of the reason for such a behavior is perhaps that `Promise` might be possible to [polyfill](../../Polyfill.js).
+Just think about it, if the intentional behavior were to execute `then` that logs `"three"` before the `then`
+that logs `"two"`, in this case polyfill-ing `Promise` would be impossible.
