@@ -86,3 +86,87 @@ if (!Array.prototype.mapUsingReduce) {
 [1, 2, , 3].mapUsingReduce(
   (currentValue, index, array) => currentValue + index + array.length
 ); // [5, 7, <1 empty item>, 10]
+
+// Promise polyfill:
+
+class MegaPromise {
+  constructor(data) {
+    if (data instanceof MegaPromise) {
+      this.state = data.state;
+      this._depth = data._depth + 1;
+      this._resolvedValue = data._resolvedValue;
+      this._microtaskQueue = data._microtaskQueue;
+    } else if (typeof data === 'function') {
+      const cb = data;
+      this.state = MegaPromise.STATES.PENDING;
+      this._depth = 0;
+      this._resolvedValue = null;
+      this._microtaskQueue = [];
+      cb(this._resolve.bind(this));
+    }
+  }
+
+  static get STATES() { // read-only ( or "final" in Java terms ) static class field
+    return {
+      PENDING: 'pending',
+      RESOLVED: 'resolved',
+    }
+  }
+
+  static resolve(val) {
+    return new MegaPromise((res) => { res(val) });
+  }
+
+  then(handler) {
+    this._enqueueTask(handler);
+    this._handleNext();
+    return new MegaPromise(this);
+  }
+
+  _resolve(val) {
+    this.state = MegaPromise.STATES.RESOLVED;
+    this._resolvedValue = val;
+    this._handleNext();
+  }
+
+  _handleNext() {
+    if (this._resolvedValue instanceof MegaPromise) {
+      this._resolvedValue.then((data) => {
+        this._resolvedValue = data;
+        this._handleNext();
+      });
+    } else if (this.state !== MegaPromise.STATES.PENDING && !this._isMicrotaskQueueEmpty()) {
+      const handler = this._dequeueTask();
+      this._resolvedValue = handler(this._resolvedValue || undefined);
+      this._handleNext();
+    }
+  }
+
+  _enqueueTask(task) {
+    if (!this._microtaskQueue[this._depth]) {
+      this._microtaskQueue[this._depth] = [];
+    }
+    this._microtaskQueue[this._depth].push(task);
+  }
+
+  _dequeueTask() {
+    return this._checkMicrotaskQueue(true);
+  }
+
+  _isMicrotaskQueueEmpty() {
+    return !this._checkMicrotaskQueue();
+  }
+
+  _checkMicrotaskQueue(dequeue = false) {
+    for (let i = 0; i < this._microtaskQueue.length; i += 1) {
+      if (Array.isArray(this._microtaskQueue[i]) && this._microtaskQueue[i][0]) {
+        return dequeue ? this._microtaskQueue[i].shift() : true;
+      }
+    }
+    return dequeue ? null : false;
+  }
+}
+
+exports.MegaPromise = MegaPromise;
+
+// there are even the units for MegaPromise over there: ./
