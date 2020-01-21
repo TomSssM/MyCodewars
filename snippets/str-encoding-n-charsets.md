@@ -498,18 +498,99 @@ from binary, we get:
 
 That is exactly the same values as returned by our Uint**8**Array View. Awesome!
 
----
+There is also a `UCS-2` encoding which also uses 2 bytes to store each code point but unlike `UTF-16`,
+`UCS-2` is a fixed-width encoding. What it means is that it doesn't use surrogate pairs to depict code
+points outside of BMP. For example `UCS-2` would interpret the 2 code points `\uD834\uDF06` ( both of which
+are surrogate code points ) _not_ as a surrogate pair ( thus converting them to the code point `` ) but as
+2 separate characters. Since neither `\uD834` nor `\uDF06` produce a visible output, nothing would be shown.
+
+Thus `UCS-2` is limited to being able to depict only BMP characters.
 
 ## Composite Characters and Emoji
 
-Don't confuse composite chars with surrogates. These are the chars to represent which we need to group 2 code points together. For instance from the tutorial example here is the character s with dots: hh
-To represent it though we need to group the letter s with the special code point hh. Hh means dots below, it is invisible on its own but if preceded by a letter, it adds dots below it: hh.
+The tutorial also mentions composite characters. Don't confuse composite characters with surrogates.
+Composite Characters are the characters to represent which we need to group 2 code points back to back. For instance,
+from the tutorial example here is the character `s` with _dots above_: `Ṡ`.
 
-In fact it is a very common practice in Unicode to group two or more code points to get a character  ( which is different from grouping surrogates make sure not to confuse the two ). It is particularly common with emoji. For example, so far we have seen the hh emoji. To depict it we would use a code point from the 2nd Unicode plane. But sometimes emoji are created by taking an already exisitimg character like hh ( code point: 0xsmth ) and adding a special "smth" code point after it: hh, that is how we get a th emoji.
+To represent it though we need to group the letter `S` with the special code point `U+0307`. `U+0307` means dots above,
+it is invisible on its own but if preceded by a letter, it adds dots above it: `&#x0307;&#x0307;` = Ṡ.
 
-Some emoji are groups of other emoji with the zwj code point between them: hh. Here is what code points you need to write to get a dunno emoji. Also here are code points to change skin color that can be paired with other emoji code points.
+In fact it is a very common practice in Unicode to group two or more code points to get a character ( which is
+different from grouping surrogates _just_ to get a code point, make sure not to confuse the two ). It is particularly
+common with emoji. For example, so far we have seen the 😍 emoji. To depict it we would use a code point from the
+2nd Unicode plane. But sometimes emoji are created by taking an already existing character like `U+2764`
+( flat same-color 2D heart symbol ) and adding a special `U+FE0F` code point ( VARIATION SELECTOR-16 or VS16 )
+after it:
 
----
+```html
+<span>&#x2764;</span>
+<br>
+<span>&#x2764;&#xFE0F;</span>
+```
+
+`&#x2764;` -> flat heart ( on most systems )
+
+`&#x2764;&#xFE0F;` -> colorful emoji heart
+
+The code point for a heart `U+2764` is called a _base code point_ in this case. We can combine base code points with
+the VS16 code point `U+FE0F` to get an emoji like representation from a non-emoji character ( like we would get an
+emoji heart out of flat heart shape symbol above&#x2020; ).
+
+Just like there is VS16 code point, there is also a VS15 code point `U+FE0E` which makes emoji look like
+the flat characters:
+
+```js
+'\u231B'; // ⌛
+'\u231B\uFE0E'; // ⌛︎ <- tiny sand clock
+```
+
+So V16 and V15 are special code points that make emoji look different. But it doesn't end here! There are also
+special code points to make emoji different skin color! Here are different skin colors:
+
+```js
+'\u{1F3FB}'; // 🏻
+'\u{1F3FD}'; // 🏽
+```
+
+Skin colors are code points `U+1F3FB` – `U+1F3FF`, combine them with human emoji and voila we have
+different-looking dudes:
+
+```js
+'\u{1F468}'; // 👨
+'\u{1F468}\u{1F3FB}'; // 👨🏻
+'\u{1F468}\u{1F3FD}'; // 👨🏽
+```
+
+Some emoji are groups of other emoji with the Zero Width Joiner ( ZWJ for short ) code point between them.
+ZWJ is a code point `U+200D` that is used to tell the compiler that 2 neighboring characters are to be
+interpreted as one ( if possible ). For instance this emoji: &#x1F937;&#x200D;&#x2642;&#xFE0F; is actually
+a combination of a woman shrugging emoji &#x1F937; and male sign ♂️ character. But if we write them like this:
+
+```js
+'\u{1F937}\u2642'; // 🤷♂
+```
+
+we get back 2 separate characters. Looks like we forgot a ZWJ:
+
+```js
+'\u{1F937}\u200D\u2642';
+```
+
+Now if you run this we get back a man shrugging instead. What is interesting is that many emoji are created like this.
+For instance, a family emoji &#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;&#x200D;&#x1F466; is just four separate
+emoji of man, woman, girl and boy joined by a ZWJ code point. Here is proof:
+
+```js
+const man = '\u{1F468}'; // 👨
+const woman = '\u{1F469}'; // 👩
+const girl = '\u{1F467}'; // 👧
+const boy = '\u{1F466}'; // 👦
+[man, woman, girl, boy].join('\u200D');
+// above code equivalent to:
+'\u{1F468}\u200D\u{1F469}\u200D\u{1F467}\u200D\u{1F466}';
+```
+
+See? Knowing Unicode is awesome!
 
 ### Notes
 
@@ -557,12 +638,6 @@ to encode code points 0x0000-0xffff it uses 2 bytes for each code point but in o
 `UTF-16` uses sometimes one amount of bytes, sometimes a different amount of bytes, which, in turn, fits the
 definition of a variable width encoding.
 
-## TODO
-
-- write everything between `---`
-- write `UCS-2`
-- verify that we can use surrogates in utf-8 / utf-16 HTML document
-- numbers stuff
-    - add 0.3333... in addition to 0.3(3)
-    - add that most significant means leftmost
-    - clear the numbers section
+&#x2020; You might have noticed the example above is done via HTML entities. Unfortunately there is no very
+illustrative way of verifying the same point in the JS console as the console for some reason depicts all emoji
+created this way as their corresponding non-emoji base code points.
