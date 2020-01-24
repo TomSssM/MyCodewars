@@ -914,6 +914,58 @@ Also a KeyBoardEvent, when you press a key, is _always_ going to be triggered on
 
 Probably the logic behind this is that they are always focused.
 
+**But it doesn't end here**
+
+Apart from `document.activeElement`, `document` and `window` elements a keyboard event is also going to be triggered
+on the parent elements of `document.activeElement`. Here is an example of that, imagine we have HTML:
+
+```html
+<div id="special">
+  <div id="almost-inner">
+    <div id="elem" tabindex="2">ok</div>
+  </div>
+</div>
+```
+
+And the JS code like this:
+
+```js
+const special = document.querySelector('#special');
+const almostInner = document.querySelector('#almost-inner');
+const elem = document.querySelector('#elem');
+
+elem.addEventListener('keydown', () => {
+    console.log('keydown on elem');
+});
+
+almostInner.addEventListener('keydown', () => {
+    console.log('keydown on almost-inner');
+});
+
+special.addEventListener('keydown', () => {
+    console.log('keydown on special');
+});
+```
+
+Now, because the `#elem` div can be focused on ( the `tabindex` attribute ), keyboard event _are_ going to be triggered
+on it ( if it has an event listener for keyboard events of course ). If you run the code above, then focus on the
+`#elem` div and press a key, you will see that a `keydown` event also triggers on all the parent elements of this
+`#elem` div ( the behavior would be the same if instead of `#elem` div we had an input element, so long as the element
+can be focused on ).
+
+If the `#elem` div were not focused on then a keyboard event wouldn't trigger on it ( do note though, that if
+`#elem` div is focused, keyboard events will still trigger on its parents no matter whether or not the `#elem` div
+itself has a keyboard event listener ).
+
+Thus we can conclude that keyboard events trigger on:
+
+- focusable element that currently has focus ( `document.activeElement` )
+- parents of `document.activeElement`
+- `document` and `window` elements no matter if any of the elements on the page has focus
+ ( no matter if `document.activeElement` exists )
+
+Do note that keyboard event are _not_ going to be triggered on the children of `document.activeElement`.
+
 ## RegEx is always an object
 
 When we create a primitive like so:
