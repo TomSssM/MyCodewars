@@ -460,6 +460,36 @@ Here are more examples:
 
 More about `codePointAt` vs `charCodeAt` can be found in the Tutorial.
 
+Do note though that using surrogaes in `UTF-16` HTML document won't work:
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-16">
+    <title>UTF 16 Doc</title>
+</head>
+<body>
+<span>&#xD801;&#xDC37;</span>
+</body>
+</html>
+```
+
+But you can use non BMP characters _as is_:
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-16">
+    <title>UTF 16 Doc</title>
+</head>
+<body>
+<span>&#x10437;</span>
+</body>
+</html>
+```
+
 Converting between `UTF-16` surrogates and usual code points is exactly what `TextEncoder` and `codePointAt`
 do in JavaScript. You can make sure of that by looking at their [polyfills](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder).
 Here is an example:
