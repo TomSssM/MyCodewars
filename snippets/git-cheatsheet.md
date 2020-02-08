@@ -777,16 +777,17 @@ master: a -> b -> c -> d
 feature1: a -> b -> 1 -> 2 -> 3
 ```
 
-Let's imagine that `a` - `b` and `1` - `3` are commits. Thus `feature1` is a branch whose tip is commit `1`,
-while the tip of `master` branch is commit `d`. If we take a look at the file `refs/heads/master` which represents the
-`master` branch we will see that it simply contains the hash of the commit `d`, which is the tip of the `master` branch.
+Let's imagine that `a` - `b` and `1` - `3` are commits. Thus `feature1` is a branch whose tip is commit `3`
+( the last commit ), while the tip of `master` branch is commit `d`. If we take a look at the file
+`refs/heads/master` which represents the `master` branch we will see that it simply contains the hash of the commit
+`d`, which is the tip of the `master` branch.
 
 As you know when you do `git checkout` you don't necessarily have to specify a branch name, you can also checkout to the
 hash of some commit. In this case you go to the _detached HEAD_ state. Thus it also is possible for HEAD to refer
 to a specific revision that is not associated with a branch name. This situation is called a _detached HEAD_.
 
 If you go to the detached HEAD state by doing `$ git cehckout <hash-of-any-prev-commit>` and then do `$ cat /git/HEAD`
-you will see that `.git/HEAD` is now _not_ this: `ref: heads/<branch-name>` but instead now the `.git/HEAD` file contains
+you will see that `.git/HEAD` is now _not_ this: `ref: refs/heads/<branch-name>` but instead now the `.git/HEAD` file contains
 the hash of the commit you are currently on. That is how GIT knows that we are in the detached HEAD state ( that is, by
 checking that the `.git/HEAD` file is simply a commit hash and not a path to the branch in `.git/refs/heads` directory ).
 
@@ -935,10 +936,10 @@ Let's take a look at what this does:
 $ git push origin master:cool-master
 ```
 
-Now the remote's `cool-master` branch is the same as our local `master` branch.
-
 It tells GIT: push the local `master` branch to remote BUT don't try to merge it with the remote's `master` branch,
 instead merge it into the remote's `cool-master` branch ( or, if `cool-master` doesn't exist on remote, create it ).
+
+Now the remote's `cool-master` branch is the same as our local `master` branch.
 
 As a side note, you can also delete the remote branch by doing this:
 
