@@ -60,6 +60,9 @@
 - Active Next Window - ``COMMAND + ` ``
 - Line/Column - `COMMAND + L`
 - Show Context Menu - `SHIFT + OPTION + ENTER`
+- Main Menu -> Window -> Editor Tabs -> Close - `COMMAND + X`
+- Main Menu -> Navigate -> Jump to Navigation Bar -> Close - `COMMAND + C`
+- Jump to Source - `COMMAND + W`
 
 ## Snippets ( Live Templates )
 
