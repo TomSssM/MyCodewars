@@ -935,6 +935,8 @@ Let's take a look at what this does:
 $ git push origin master:cool-master
 ```
 
+Now the remote's `cool-master` branch is the same as our local `master` branch.
+
 It tells GIT: push the local `master` branch to remote BUT don't try to merge it with the remote's `master` branch,
 instead merge it into the remote's `cool-master` branch ( or, if `cool-master` doesn't exist on remote, create it ).
 
