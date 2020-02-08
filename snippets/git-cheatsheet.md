@@ -39,8 +39,13 @@ Set upstream for a branch (for every branch that you did -u for there is then in
 $ git push <remote> <branch> -u
 ```
 
+In other words, if branch `a` that is on the remote has been set as an upstream branch for the _local_ branch
+`b` that is on your computer, then every time when you are on branch `b` and you do `git push`, GIT will push
+the commits of the local branch `b` to the remote branch `a`.
+
 List local + remote branches
 ``` bash
+$ git branch --all
 $ git branch -a
 ```
 List only local branches
@@ -744,4 +749,199 @@ And thus is the difference between `git fetch` and `git pull`.
 **Note:** when you do `git pull`, as was said, git downloads new commits from the specified branch and then tries to
 merge them. I haven't, however, been super clear about where it would try to merge those newly downloaded commits.
 So, yeah, be careful because if you do `git pull origin <branch-name>` git will try to merge the new commits of
-the branch `<branch-name>` **into the branch you are currently on.** 
+the branch `<branch-name>` **into the branch you are currently on.**
+
+## GIT Refs - GIT Internals
+
+### HEAD
+
+You can think of the HEAD as the _current branch_. When you switch branches with `git checkout`, the HEAD revision
+changes to point to the tip of the new branch.
+
+You can see what HEAD points to by doing:
+
+```shell script
+$ cat .git/HEAD
+```
+
+In my case, the output is:
+
+```
+ref: refs/heads/master
+```
+
+For instance if you have 2 branches:
+
+```
+master: a -> b -> c -> d
+feature1: a -> b -> 1 -> 2 -> 3
+```
+
+Let's imagine that `a` - `b` and `1` - `3` are commits. Thus `feature1` is a branch whose tip is commit `1`,
+while the tip of `master` branch is commit `d`. If we take a look at the file `refs/heads/master` which represents the
+`master` branch we will see that it simply contains the hash of the commit `d`, which is the tip of the `master` branch.
+
+As you know when you do `git checkout` you don't necessarily have to specify a branch name, you can also checkout to the
+hash of some commit. In this case you go to the _detached HEAD_ state. Thus it also is possible for HEAD to refer
+to a specific revision that is not associated with a branch name. This situation is called a _detached HEAD_.
+
+If you go to the detached HEAD state by doing `$ git cehckout <hash-of-any-prev-commit>` and then do `$ cat /git/HEAD`
+you will see that `.git/HEAD` is now _not_ this: `ref: heads/<branch-name>` but instead now the `.git/HEAD` file contains
+the hash of the commit you are currently on. That is how GIT knows that we are in the detached HEAD state ( that is, by
+checking that the `.git/HEAD` file is simply a commit hash and not a path to the branch in `.git/refs/heads` directory ).
+
+In fact writing the name of a branch as in `$ git branch -D master` is just a shorter way
+of writing `$ git branch -D refs/heads/master`.
+
+Thus all local branches are just files in the `.git/refs/heads` directory, like the local branch `master` is in fact
+this file: `.git/refs/heads/master`, which contains the commit hash of `master`'s top-most commit, the commit hash of
+`master`'s tip. But what about _remote_ branches? Well, they are also just files except they don't live in the
+`.git/refs/heads` directory. There can be many remotes. All remotes live in `.git/refs/remotes` and all the branches
+of a certain remote live in their remote's corresponding directory. For instance, all the  branches of the remote called
+`origin` are going to live in the `.git/refs/remotes/origin` directory. If you take a look at the directory of any remote,
+`.git/refs/remotes/origin` for instance, you will see that every remote also has its HEAD and all the branches in there
+( provided that you fetched them beforehand ):
+
+```shell script
+$ ls .git/refs/remotes/origin/
+ HEAD  gh-pages  master
+```
+
+As you can see on the remote there live 2 branches: `master` and `gh-pages`
+
+In the output above `HEAD` is going to be:
+
+```
+ref: refs/remotes/origin/master
+```
+
+while `.git/refs/remotes/origin/master` and `.git/refs/remotes/origin/gh-pages` and whatever else branches there may be
+are simply going to be commit hashes ( the hashes of the commits that are the tips of those branches ).
+
+So now you know what happens under the hood when you do `$ git fetch origin`: GIT is simply going to download all the
+refs of the `origin` into `.git/refs/remotes/origin` so that you can use the branches and commits of
+the `origin` remote.
+
+Thus when you switch to a remote branch like so `$ git checkout origin/master` you simply switch to
+`.git/refs/remotes/origin/master` but do note though that if you switch to a remote branch, you will be
+in a detached HEAD state:
+
+```shell script
+$ git checkout origin/HEAD # or git checkout origin/master
+$ git status
+ HEAD detached at origin/master
+ nothing to commit, working tree clean
+```
+
+Thus now you also understand all this verbose syntax. For instance let's try doing this:
+
+```shell script
+$ git branch --all
+* master
+  piskel-clone
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/animation-player
+  remotes/origin/cv
+  remotes/origin/gh-pages
+  remotes/origin/hexal
+  remotes/origin/master
+  remotes/origin/neutronMail
+  remotes/origin/palette
+  remotes/origin/piskel-clone
+  remotes/origin/youtube-client
+```
+
+As you can see, we are currently on the `master` branch. Also, we have fetched some of the remote branches
+from the remote called `origin` ( `remotes/origin` ), these are the branches like:
+
+- `remotes/origin/animation-player`
+- `remotes/origin/cv`
+- `remotes/origin/gh-pages`
+- `remotes/origin/hexal`
+- `remotes/origin/master`
+- `remotes/origin/neutronMail`
+- `remotes/origin/palette`
+- `remotes/origin/piskel-clone`
+- `remotes/origin/youtube-client`
+
+We also see that on the remote the `HEAD` is at the `master` branch ( `remotes/origin/HEAD -> origin/master` ).
+The `HEAD` on the remote is not the same as our local `HEAD` of course. If the `HEAD` on the remote points to
+the `master` branch for instance then it means that for the remote, `master` is like the default branch. There is not
+probably much else information we can gain from it :)  Also, we see that locally we have only 2 branches:
+`master` and `piskel-clone`.
+
+Here is another example, let's log the last 2 commits of the `master` branch:
+
+```shell script
+$ git log -2 master 
+commit 0a606a52f404f891a2ca464c928ff581a2b9af8b (HEAD -> master, origin/master, origin/HEAD)
+Author: TomSssM <ilyashome3@gmail.com>
+Date:   Sun Jul 21 19:34:21 2019 +0300
+
+    feat: add a link to Piskel Clone
+
+commit 47e9d4e84ec78838461c5b7630095206fe68c591
+Author: TomSssM <43145822+TomSssM@users.noreply.github.com>
+Date:   Sun Jun 9 21:48:11 2019 +0300
+
+    feat: add palette-v3 to README.md
+```
+
+We are interested in these 2 lines:
+
+```
+commit 0a606a52f404f891a2ca464c928ff581a2b9af8b (HEAD -> master, origin/master, origin/HEAD)
+...
+commit 47e9d4e84ec78838461c5b7630095206fe68c591
+```
+
+because as you can see the 1st commit is the tip of 3 branches:
+
+- `master` - local `master` branch
+- `origin/master` - the `master` branch on the remote
+- it is also the tip of the remote's `HEAD`: `origin/HEAD` ( thou we did know that since the remote's `HEAD`
+ actually points to `origin/master` )
+ 
+It also says that currently our _local_ `HEAD` points to the `master` branch ( which we can verify by doing
+`cat .git/HEAD` ).
+
+### Packed Refs
+
+For large repositories, GIT will periodically perform a garbage collection to remove unnecessary objects and
+compress refs into a single file for more efficient performance. You can force this compression with the garbage
+collection command:
+
+```shell script
+$ git gc
+```
+
+This moves all of the individual branch and tag files in the `refs` folder into a single file called `packed-refs`
+located in the top of the `.git` directory. If you open up this file, you’ll find a mapping of commit hashes to refs:
+
+```
+00f54250cf4e549fdfcafe2cf9a2c90bc3800285 refs/heads/feature
+0e25143693cfe9d5c2e83944bbaf6d3c4505eb17 refs/heads/master
+bb883e4c91c870b5fed88fd36696e752fb6cf8e6 refs/tags/v0.9
+```
+
+On the outside, normal GIT functionality won’t be affected in any way. But, if you’re wondering why your `.git/refs`
+folder is empty, this is where the refs went.
+
+## The `git push branch:branch` Syntax
+
+Let's take a look at what this does:
+
+```shell script
+$ git push origin master:cool-master
+```
+
+It tells GIT: push the local `master` branch to remote BUT don't try to merge it with the remote's `master` branch,
+instead merge it into the remote's `cool-master` branch ( or, if `cool-master` doesn't exist on remote, create it ).
+
+As a side note, you can also delete the remote branch by doing this:
+
+```shell script
+$ git push --delete origin cool-master
+```
+
+This tells GIT: go to the remote called `origin` and delete the `cool-master` branch there.
