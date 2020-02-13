@@ -7,6 +7,7 @@ const {
 
 assert.deepEqual(buildSuffixArray('abcdabca'), [0,0,0,0,1,2,3,1]);
 assert.deepEqual(buildSuffixArray('aabaabaaa'), [0,1,0,1,2,3,4,5,2]);
+assert.deepEqual(buildSuffixArray('acacabacacabacacac'), [0,0,1,2,3,0,1,2,3,4,5,6,7,8,9,10,11,4]);
 
 assert.strictEqual(substringSearchU('abxabcabcaby', 'abcaby'), 6);
 assert.strictEqual(substringSearchU('saddssd', 'ok'), -1);

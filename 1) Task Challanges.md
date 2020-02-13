@@ -234,7 +234,6 @@ function Person(firstName, lastName) {
     function(title) {
       return title + ' ' + this.firstName + ' ' + this.lastName;
     },
-
     function() {
       return [this.firstName, this.lastName];
     }.bind(this));
@@ -427,9 +426,7 @@ __Time Complexity:__ O(2^n)
 function greatestCommonDivisor(a, b) {
   let divisor = 2;
   let greatestDivisor = 1;
-
   if (a < 2 || b < 2) return 1;
-  
   while(a >= divisor && b >= divisor) {
    if(a % divisor == 0 && b % divisor ==0) {
       greatestDivisor = divisor;      

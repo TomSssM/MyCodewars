@@ -49,7 +49,7 @@ function buildSuffixArray(str) {
             suffixArr[i] = 0;
         } else {
             j = suffixArr[j - 1];
-            i -= 1;
+            i -= 1; // do note that we need to continue assigning to j the value at the previous position so long as str[i] !== str[j] ( !! THE VIDEO DOESN'T say that )
         }
     }
 

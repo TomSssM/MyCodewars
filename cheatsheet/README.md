@@ -6,6 +6,8 @@
 - [Advanced Zeros](./advanced-zeros.js)
 - [Priority Queue](./priority-queue)
 - [Sudoku](./sudoku.js)
+- [Longest Common Subsequence](./longest-common-subsequence.js)
+- Diff
 - Longest Consequtive Sequence
 - Smart Calculator
 - Sorter
