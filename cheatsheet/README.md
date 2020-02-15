@@ -7,7 +7,7 @@
 - [Priority Queue](./priority-queue)
 - [Sudoku](./sudoku.js)
 - [Longest Common Subsequence](./longest-common-subsequence.js)
-- Diff
+- [Diff](diff/README.md)
 - Longest Consequtive Sequence
 - Smart Calculator
 - Sorter

@@ -91,8 +91,14 @@ const thirdUnit = () => {
     assert.strictEqual(longestCommSubs(firstStr, secondStr), '');
 };
 
-firstUnit();
-secondUnit();
-thirdUnit();
+// don't run units when we reuire() this file
+if (!module.parent) {
+    firstUnit();
+    secondUnit();
+    thirdUnit();
+    console.log('Success');
+}
 
-console.log('Success');
+module.exports = exports = {
+    longestCommSubs,
+};
