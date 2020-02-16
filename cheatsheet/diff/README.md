@@ -23,3 +23,4 @@ $ npm run presentation
 
 - [Presentation](./presentation.js)
 - [Cli Utils](./cli-utils.js)
+- [Functional Programming Utils](./fp-utils.js)
