@@ -64,10 +64,8 @@ function frame (input) {
 function sideBySide (str1, str2) {
     const splitFirstStr = str1.split('\n');
     const splitSecondStr = str2.split('\n');
-    if (splitFirstStr.length < splitSecondStr.length) {
-        while (splitFirstStr.length < splitSecondStr.length) {
-            splitFirstStr.push('');
-        }
+    while (splitFirstStr.length < splitSecondStr.length) {
+        splitFirstStr.push('');
     }
     return _compose(
         _pa(_border, _, { // partially apply _border

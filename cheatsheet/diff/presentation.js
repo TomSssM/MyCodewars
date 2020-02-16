@@ -44,6 +44,9 @@ function compareFiles(file1, file2) {
     while (parsedFile2.length > parsedFile1.length) {
         parsedFile1.push('');
     }
+    while (parsedFile1.length > parsedFile2.length) {
+        parsedFile2.push('');
+    }
     const output = [];
     parsedFile1.forEach((line, index) => {
         output.push(_diffToOutput(line, parsedFile2[index]) || line);
