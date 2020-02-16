@@ -13,19 +13,24 @@ function diff(str1, str2) {
         return null;
     }
 
+    if (str1.includes('\n') || str2.includes('\n')) {
+        throw new Error('Cannot parse string with new lines');
+    }
+
     const subsequence = longestCommSubs(str1, str2);
     const hash1 = buildChangesHash(str1, subsequence);
     const hash2 = buildChangesHash(str2, subsequence);
+    const getFinalValue = getFinalValueRaw.bind(null, hash1, hash2);
     const diffArr = [];
 
+    /*
+     in case str1 and str2 don't have longest common subsequence,
+     for example: they are completely different:
+     */
+    const prependDiff = getFinalValue('-1-0');
+    prependDiff && diffArr.push(prependDiff);
+
     subsequence.split('').forEach((val, index) => {
-        const getFinalValue = getFinalValueRaw.bind(null, hash1, hash2, val);
-
-        if (index === 0) {
-            const prependDiff = getFinalValue('-1-0');
-            prependDiff && diffArr.push(prependDiff);
-        }
-
         const lastDiffArrItem = diffArr[diffArr.length - 1] || {};
         if (lastDiffArrItem.type === TYPES_ENUM.UNCHANGED) {
             lastDiffArrItem.val += val;
@@ -87,7 +92,7 @@ function buildChangesHash (str, subsequence) {
     return map;
 }
 
-function getFinalValueRaw(hash1, hash2, value, key) {
+function getFinalValueRaw(hash1, hash2, key) {
     const firstDiff = hash1[key];
     const secondDiff = hash2[key];
 

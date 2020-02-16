@@ -1,21 +1,23 @@
+const {
+    compose: _compose,
+    partialApplication: _pa,
+    _,
+} = require('./fp-utils');
+
 function _purify(str) {
     return str.replace(/\u001b\[\d*m/g, ''); // replace colors
 }
 
-function _border(
-    input,
-    right = '',
+function _border(input, {
     left = '',
+    right = '',
     top = '',
     bottom = '',
-    [
-        topLeft = '',
-        topRight = '',
-        bottomLeft = '',
-        bottomRight = '',
-
-    ] = [],
-) {
+    topLeft = '',
+    topRight = '',
+    bottomLeft = '',
+    bottomRight = '',
+} = {}) {
     const parsedInput = input.split('\n').map(_purify);
     const frameSize = Math.max(...parsedInput.map(str => str.length)) + left.length + right.length;
     const borderTopSize = frameSize - topLeft.length - topRight.length;
@@ -46,23 +48,17 @@ function _border(
     return output;
 }
 
-function _compose(...fns) {
-    return function (...args) {
-        return fns.reduce((acc, fn) => {
-            return [fn(...acc)];
-        }, args)[0];
-    };
-}
-
 function frame (input) {
-    return _border(
-        input,
-        ' │', // right border
-        '│ ', // left border
-        '─', // border bottom
-        '─', // border top
-        '┌┐└┘'.split(''), // corners
-    );
+    return _border(input, {
+        left: '│ ',
+        right: ' │',
+        bottom: '─',
+        top: '─',
+        topLeft: '┌',
+        topRight: '┐',
+        bottomLeft: '└',
+        bottomRight: '┘',
+    });
 }
 
 function sideBySide (str1, str2) {
@@ -74,9 +70,21 @@ function sideBySide (str1, str2) {
         }
     }
     return _compose(
-        (str) => _border(str, ' ║', '', '═', '═', ['', '╦', '', '╩']),
+        _pa(_border, _, { // partially apply _border
+            right: ' ║',
+            top: '═',
+            bottom: '═',
+            topRight: '╦',
+            bottomLeft: '',
+            bottomRight: '╩',
+        }),
         (str) => {
-            const borderedSecondStr = _border(str2, '', ' ', '═', '═').split('\n');
+            const borderedSecondStr = _border(str2, {
+                top: '═',
+                bottom: '═',
+                left: ' ',
+            }).split('\n');
+
             return str.split('\n').map((line, index) => {
                 return line + borderedSecondStr[index];
             }).join('\n');

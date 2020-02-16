@@ -9,7 +9,7 @@ exports.messages = [
 exports.firstFile = `
 class Node {
   constructor(data, prev) {
-    this.data = _border(str2).split('\n');
+    this.data = _border(str2).split('\\n');
     this.pv = data;
     this.next = null;
   }
@@ -28,7 +28,7 @@ class DoublyLinkedList {
 exports.secondFile = `
 class Node {
   constructor(data, prev) {
-    this.data = str2.split('\n');
+    this.data = str2.split('\\n');
     this.prev = prev;
     this.next = null;
   }

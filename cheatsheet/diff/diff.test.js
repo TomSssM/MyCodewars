@@ -28,6 +28,7 @@ try {
         ],
     );
     console.log('1 OK');
+
     assert.deepEqual(
         diff('abcd', 'abd'),
         [
@@ -46,6 +47,7 @@ try {
         ],
     );
     console.log('2 OK');
+
     assert.deepEqual(
         diff('abcd', 'ababced'),
         [
@@ -72,6 +74,7 @@ try {
         ],
     );
     console.log('3 OK');
+
     assert.deepEqual(
         diff('abcd', 'abbd'),
         [
@@ -90,6 +93,7 @@ try {
         ],
     );
     console.log('4 OK');
+
     assert.deepEqual(
         diff('it is a good day', 'it is an awesome day'),
         [
@@ -124,6 +128,7 @@ try {
         ],
     );
     console.log('5 OK');
+
     assert.deepEqual(
         diff('some word', 'man some word'),
         [
@@ -138,6 +143,7 @@ try {
         ],
     );
     console.log('6 OK');
+
     assert.deepEqual(
         diff('some word', 'some some word'),
         [
@@ -156,6 +162,7 @@ try {
         ],
     );
     console.log('7 OK');
+
     assert.deepEqual(
         diff('some word', 'some word here'),
         [
@@ -170,6 +177,7 @@ try {
         ],
     );
     console.log('8 OK');
+
     assert.deepEqual(
         diff('what', 'is it'),
         [
@@ -184,11 +192,55 @@ try {
         ],
     );
     console.log('9 OK');
-    assert.deepEqual(
+
+    assert.strictEqual(
         diff('same', 'same'),
         null,
     );
     console.log('10 OK');
+
+    assert.deepEqual(
+        diff('1234', 'different'),
+        [
+            {
+                val: 'different',
+                type: TYPES_ENUM.MODIFIED,
+            },
+        ],
+    );
+    console.log('11 OK');
+
+    assert.deepEqual(
+        diff('', 'NEW STUFF'),
+        [
+            {
+                val: 'NEW STUFF',
+                type: TYPES_ENUM.INSERTED,
+            },
+        ],
+    );
+    console.log('12 OK');
+
+    assert.deepEqual(
+        diff('deleted', ''),
+        [
+            {
+                val: 'deleted',
+                type: TYPES_ENUM.DELETED,
+            },
+        ],
+    );
+    console.log('13 OK');
+
+    assert.throws(
+        () => {
+            console.log(diff('wow\nnew\nlines\n', 'wow too'));
+        },
+        {
+            message: 'Cannot parse string with new lines',
+        },
+    );
+    console.log('14 OK');
 } catch (e) {
     console.log('tests fail, but no sweat!\n');
     throw e;
