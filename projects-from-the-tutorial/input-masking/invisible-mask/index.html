@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        code {
+            background-color: lightgray;
+        }
+    </style>
+    <title>Simple Input Masking</title>
+</head>
+<body>
+<h1>Simple Input Masking</h1>
+
+Thou rather raw this simple input masking example is fine. Its only limitation is that, in the input mask,
+there are characters like <code>-</code>, <code>/</code>, <code>*</code> and so on. And the way everything
+is implemented, all these characters cannot go in place of "x" ( or "_" ).
+
+<br />
+<br />
+
+<input type="text" id="mask-input-1" data-mask="xxx-xxx-xxx" />
+
+<br />
+
+<input type="text" id="mask-input-2" data-mask="(___) ___-____">
+
+<br />
+
+<input type="text" id="mask-input-3" data-mask="____/__*___" />
+
+<script src="index.js"></script>
+<script>
+    new InputMasking({
+        element: document.querySelector('#mask-input-1'),
+        maskPlaceholderChar: 'x',
+        maskValuesRegEx: /\d/,
+        limitInput: true,
+    });
+    new InputMasking({
+        element: document.querySelector('#mask-input-2'),
+        maskPlaceholderChar: '_',
+        maskValuesRegEx: /\d/g,
+    });
+    new InputMasking({
+        element: document.querySelector('#mask-input-3'),
+        maskPlaceholderChar: '_',
+        maskValuesRegEx: /\d/g,
+        limitInput: true,
+    });
+</script>
+</body>
+</html>

@@ -100,5 +100,7 @@
   - [Slider (Custom Events)](./comp-com/slider/index.js)
 - [Piskel Draft Algorithms](./piskel-draft-algorithms)
 - [JS Transitions Camp](./js-transitions/README.md)
-- [Input Masking](./input-masking/index.js)
+- [Input Masking](./input-masking)
+  - [Invisible Mask](./input-masking/invisible-mask/index.js)
+  - [Visible Mask](./input-masking/visible-mask/index.js)
 - [Clipboard Revealer](./clipboard-revealer/index.js)

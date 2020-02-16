@@ -13,20 +13,16 @@
     <title>Simple Input Masking</title>
 </head>
 <body>
-<h1>Simple Input Masking</h1>
-
-Thou rather raw this simple input masking example is fine. Its only limitation is that, in the input mask,
-there are characters like <code>-</code>, <code>/</code>, <code>*</code> and so on. And the way everything
-is implemented, all these characters cannot go in place of "x" ( or "_" ).
+<h1>Input Masking ( Visible Mask )</h1>
 
 <br />
 <br />
 
-<input type="text" id="mask-input-1" data-mask="xxx-xxx-xxx" />
+<input type="text" id="mask-input-1" data-mask="(___) ___-____">
 
 <br />
 
-<input type="text" id="mask-input-2" data-mask="(___) ___-____">
+<input type="text" id="mask-input-2" data-mask="--- --- ---" />
 
 <br />
 
@@ -34,22 +30,20 @@ is implemented, all these characters cannot go in place of "x" ( or "_" ).
 
 <script src="index.js"></script>
 <script>
-    new InputMasking({
+    new VisibleInputMasking({
         element: document.querySelector('#mask-input-1'),
-        maskPlaceholderChar: 'x',
+        maskPlaceholderChar: '_',
         maskValuesRegEx: /\d/,
         limitInput: true,
     });
-    new InputMasking({
+    new VisibleInputMasking({
         element: document.querySelector('#mask-input-2'),
-        maskPlaceholderChar: '_',
+        maskPlaceholderChar: '-',
         maskValuesRegEx: /\d/g,
-        limitInput: true,
     });
-    new InputMasking({
+    new VisibleInputMasking({
         element: document.querySelector('#mask-input-3'),
         maskPlaceholderChar: '_',
-        maskVisible: true,
     });
 </script>
 </body>
