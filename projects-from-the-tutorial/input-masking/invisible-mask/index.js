@@ -52,7 +52,15 @@ class InputMasking {
         this.inputElement.addEventListener('input', this.onInput);
         this.inputElement.addEventListener('paste', this.onPaste);
 
-        this.maskCharsRegEx = this.buildMaskCharsRegEx();
+        const charsMap = {};
+        this.mask.split('').forEach((char) => {
+            if (char !== this.MASK_PLACEHODLER_CHAR) {
+                charsMap[char] = true;
+            }
+        });
+
+        const maskCharsString = Object.keys(charsMap).map(InputMasking.charToCharCode).join('');
+        this.maskCharsRegEx = new RegExp(`[${maskCharsString}]`, 'gu');
 
         if (!this.maskValuesRegEx) {
             this.maskValuesRegEx = new RegExp(`[^${maskCharsString}]`, 'gu');
@@ -69,21 +77,6 @@ class InputMasking {
             );
         }
     }
-
-    /*
-     * The RegEx that will be used to get
-     * the raw data to operate on
-     * */
-    buildMaskCharsRegEx() {
-        const charsMap = {};
-        this.mask.split('').forEach((char) => {
-            if (char !== this.MASK_PLACEHODLER_CHAR) {
-                charsMap[char] = true;
-            }
-        });
-        const maskCharsString = Object.keys(charsMap).map(InputMasking.charToCharCode).join('');
-        return new RegExp(`[${maskCharsString}]`, 'gu');
-    };
 
     onKeyDown = (event) => {
         const { key } = event;
@@ -148,6 +141,12 @@ class InputMasking {
         this.element.selectionStart = this.element.selectionEnd = newCursorPosition;
     }
 
+    setInputValueTo(value) {
+        const currentCursorPosition = this.inputElement.selectionStart;
+        this.inputElement.value = value;
+        this.moveCursorTo(currentCursorPosition);
+    }
+
     applyMask(inputValue, cursorPosition) {
         const data = inputValue.replace(this.maskCharsRegEx, '');
         let maskCharsBeforeCursor =
@@ -194,6 +193,13 @@ class InputMasking {
         };
     }
 
+    shouldFocusNext() {
+        return (
+            this.limitInput &&
+            this.inputElement.value.length >= this.mask.length
+        );
+    }
+
     handleInput() {
         const inputValue = this.inputElement.value;
         const cursorPosition = this.inputElement.selectionStart;
@@ -203,10 +209,10 @@ class InputMasking {
             newCursorPosition,
         } = this.applyMask(inputValue, cursorPosition);
 
-        this.inputElement.value = newInputValue;
+        this.setInputValueTo(newInputValue);
         this.moveCursorTo(newCursorPosition);
 
-        if (this.limitInput && newInputValue.length >= this.mask.length) {
+        if (this.shouldFocusNext()) {
             InputMasking.focusNextTabIndex();
         }
     }

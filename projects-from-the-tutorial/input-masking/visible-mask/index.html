@@ -10,7 +10,7 @@
             background-color: lightgray;
         }
     </style>
-    <title>Simple Input Masking</title>
+    <title>Visible Input Masking</title>
 </head>
 <body>
 <h1>Input Masking ( Visible Mask )</h1>
@@ -28,7 +28,8 @@
 
 <input type="text" id="mask-input-3" data-mask="____/__*___" />
 
-<script src="index.js"></script>
+<script src="../invisible-mask/index.js"></script>
+<script src="./index.js"></script>
 <script>
     new VisibleInputMasking({
         element: document.querySelector('#mask-input-1'),

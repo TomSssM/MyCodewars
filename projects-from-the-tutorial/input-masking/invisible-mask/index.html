@@ -10,7 +10,7 @@
             background-color: lightgray;
         }
     </style>
-    <title>Simple Input Masking</title>
+    <title>Invisible Input Masking</title>
 </head>
 <body>
 <h1>Simple Input Masking</h1>
@@ -48,8 +48,6 @@ is implemented, all these characters cannot go in place of "x" ( or "_" ).
     new InputMasking({
         element: document.querySelector('#mask-input-3'),
         maskPlaceholderChar: '_',
-        maskValuesRegEx: /\d/g,
-        limitInput: true,
     });
 </script>
 </body>
