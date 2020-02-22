@@ -1,0 +1,125 @@
+# Confusing Snippets 2
+
+## Static Properties in inheritance
+
+You see, when we _extend_ one class from another, the child class is going to have all the **static** properties
+and methods of its parent class directly accessible on it. Here is an example:
+
+```javascript
+class Laboratory {
+    static explode() {
+        return 'laboratory exploded!';
+    }
+
+    static address() {
+        return '123';
+    }
+
+    method() {
+        return 'lab';
+    }
+}
+
+class Scientist extends Laboratory {
+    static address() {
+        return 'human';
+    }
+
+    method() {
+        return 'scientist';
+    }
+}
+
+const l = new Laboratory();
+const s = new Scientist();
+
+l.method(); // "lab"
+s.method(); // "scientist"
+
+Scientist.explode(); // "laboratory exploded!"
+Scientist.address(); // "human"
+Laboratory.explode(); // "laboratory exploded!"
+Laboratory.address(); // "123"
+```
+
+As you can see, we can easily access the `explode` method _directly_ on the `Scientist` class _even thou_
+we never defined it on the `Scientist` class ( only on the `Laboratory` class, then when we extended the
+`Scientist` class from the `Laboratory` class, the `Scientist` class simply inherited the `explode` property ).
+
+It may not be so obvious at first because if we were to extend non-ES2015 functions from each other using our
+good old algorithm:
+
+```javascript
+function extend(Child, Parent) {
+    Object.setPrototypeOf(Child.prototype, Parent.prototype);
+    Child.prototype.constructor = Child;
+}
+```
+
+We would not get such a behavior. In other words, `Scientist.explode` would be undefined, obviously.
+We only get this behavior that static methods of the parent class are also available as static methods
+on the child class if we use ES2015 classes. For this reason, you may be thinking that it is simply some
+ES2015 classes magic. But it is actually NOT!
+
+You see what ES2015 classes do is they not only set the `__proto__` property of the child's `prototype`
+to equal the parent's `prototype` but they also set the `__proto__` property of the child class itself
+to equal to the parent class. Here is proof:
+
+```javascript
+Scientist.__proto__ === Laboratory; // true
+Scientist.prototype.__proto__ === Laboratory.prototype; // true
+```
+
+Thus we can see that the `explode` property really doesn't exist on the `Scientist` object **but** then JS
+engine goes to whatever the `__proto__` property points to ( on the `Scientist` object it
+points to the `Laboratory` object ) and then it finds the `explode` property on  the `Laboratory` object
+and calls it!
+
+The situation with regular JavaScript functions is that they don't set `Scientist.__proto__` to `Laboratory`.
+
+Thus the role of the `__proto__` property ( or in other words, the internal `[[Prototype]]` property )
+can be described as follows: when we try to get some property `a` of an object, if there is no property `a`
+that exists on it, then JavaScript engine will also search for that property on whatever `__proto__` points to,
+or in other words, on the `__proto__` object ( if there is any ).
+
+We can also achieve the same behavior for the usual JavaScript functions by properly rewriting
+the `extend()` function used for inheritance of non-ES2015 functions:
+
+```javascript
+function extend(Child, Parent) {
+    Object.setPrototypeOf(Child.prototype, Parent.prototype);
+    Object.setPrototypeOf(Child, Parent);
+    Child.prototype.constructor = Child;
+}
+```
+
+**Note:** for static methods, `this` is going to be the class / function itself, just like for a usual
+JavaScript object, if we create a method on it, then `this` for this method is going to be the object itself:
+
+```javascript
+function extend(Child, Parent) {
+    Object.setPrototypeOf(Child.prototype, Parent.prototype);
+    Object.setPrototypeOf(Child, Parent);
+    Child.prototype.constructor = Child;
+    Child.prototype.super = Parent;
+}
+
+function Laboratory(name) {
+    this.name = name;
+}
+
+Laboratory.statYall = function () {
+    return this;
+};
+
+function Scientist(name) {
+    this.super(name);
+}
+
+extend(Scientist, Laboratory);
+
+Scientist.statYall() === Scientist; // true
+```
+
+**Note:** `Scientist.statYall()` is going to be equal to `Scientist` **not** `Laboratory`!
+That happens because `statYall()` was called on `Scientist` and `statYall` is a regular, non-arrow function.

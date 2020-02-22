@@ -1020,3 +1020,5 @@ typeof /d/g; // "object"
 ```
 
 So regex is always an object, there is no primitive value for it.
+
+[Part 2](./ConfSnip2.md)
