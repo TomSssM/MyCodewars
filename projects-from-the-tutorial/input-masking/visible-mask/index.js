@@ -48,12 +48,52 @@ class VisibleInputMasking extends InputMasking {
     }
 
     isAddition() {
-        const inputValue = this.inputElement.value;
-        const cursorPosition = this.inputElement.selectionStart;
-        return false; // TODO: here
+        const inputLength = this.inputElement.value.length - 1;
+        const prevInputLength = this.prevInput.length - 1;
+
+        return inputLength > prevInputLength;
     }
 
     insertOver() {
-        // TODO: here
+        const inputLength = this.inputElement.value.length - 1;
+        const prevInputLength = this.prevInput.length - 1;
+        const insertEnd = this.inputElement.selectionStart;
+        const insertStart = insertEnd - (inputLength - prevInputLength);
+
+        const outputData = this.prevInput.split('');
+        const dataToInsert = this.inputElement.value
+            .slice(insertStart, insertEnd)
+            .split('');
+        const extraDataToInsert = [];
+        let i = insertStart;
+
+        const write = (insertData, extraData) => {
+            /*
+             * make sure NOT to use !this.maskCharsRegEx.test here because
+             * it behaves funny if called multiple times on the same RegEx
+             * instance with global flag turned on
+             */
+            if (outputData[i].search(this.maskCharsRegEx) === -1) {
+                if (outputData[i] !== this.MASK_PLACEHODLER_CHAR) {
+                    extraData.push(outputData[i]);
+                }
+                outputData[i] = insertData.shift();
+            }
+        };
+
+        while (i < this.mask.length && dataToInsert.length) {
+            write(dataToInsert, extraDataToInsert);
+            i += 1;
+        }
+
+        const nextCursorPosition = i;
+
+        while (i < this.mask.length && extraDataToInsert.length) {
+            write(extraDataToInsert, extraDataToInsert);
+            i += 1;
+        }
+
+        this.setInputValueTo(outputData.join(''));
+        this.moveCursorTo(nextCursorPosition);
     }
 }

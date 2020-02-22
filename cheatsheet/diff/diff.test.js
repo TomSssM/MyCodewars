@@ -234,13 +234,28 @@ try {
 
     assert.throws(
         () => {
-            console.log(diff('wow\nnew\nlines\n', 'wow too'));
+            diff('wow\nnew\nlines\n', 'wow too');
         },
         {
             message: 'Cannot parse string with new lines',
         },
     );
     console.log('14 OK');
+
+    assert.deepEqual(
+        diff('34', '344'),
+        [
+            {
+                val: '34',
+                type: 0,
+            },
+            {
+                type: 2,
+                val: '4',
+            },
+        ]
+    );
+    console.log('15 OK');
 } catch (e) {
     console.log('tests fail, but no sweat!\n');
     throw e;

@@ -134,7 +134,7 @@ class InputMasking {
             return true;
         }
 
-        return this.maskValuesRegEx.test(key);
+        return key[0].search(this.maskValuesRegEx) !== -1;
     }
 
     moveCursorTo(newCursorPosition) {
@@ -149,8 +149,16 @@ class InputMasking {
 
     applyMask(inputValue, cursorPosition) {
         const data = inputValue.replace(this.maskCharsRegEx, '');
-        let maskCharsBeforeCursor =
-            inputValue.slice(0, cursorPosition).replace(this.maskValuesRegEx, '').length;
+        let maskCharsBeforeCursor = inputValue.slice(0, cursorPosition).replace(this.maskValuesRegEx, '');
+
+        // if mask is visible:
+        if (inputValue.includes(this.MASK_PLACEHODLER_CHAR)) {
+            const placeHolderChar = InputMasking.charToCharCode(this.MASK_PLACEHODLER_CHAR);
+            const placeHolderRegEx = new RegExp(placeHolderChar, 'gu');
+            maskCharsBeforeCursor = maskCharsBeforeCursor.replace(placeHolderRegEx, '');
+        }
+
+        let maskCharsCountBeforeCursor = maskCharsBeforeCursor.length;
         let newCursorPosition = cursorPosition;
         let newInputValue = '';
 
@@ -172,8 +180,8 @@ class InputMasking {
                   the cursor to the right
                  */
                 if (maskIndex < newCursorPosition) {
-                    if (maskCharsBeforeCursor > 0) {
-                        maskCharsBeforeCursor -= 1;
+                    if (maskCharsCountBeforeCursor > 0) {
+                        maskCharsCountBeforeCursor -= 1;
                     } else {
                         newCursorPosition += 1;
                     }
