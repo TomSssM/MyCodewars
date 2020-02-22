@@ -56,7 +56,7 @@ function extend(Child, Parent) {
 }
 ```
 
-We would not get such a behavior. In other words, `Scientist.explode` would be undefined, obviously.
+We would not get such a behavior. In other words, `Scientist.explode` would be `undefined`, obviously.
 We only get this behavior that static methods of the parent class are also available as static methods
 on the child class if we use ES2015 classes. For this reason, you may be thinking that it is simply some
 ES2015 classes magic. But it is actually NOT!
@@ -123,3 +123,26 @@ Scientist.statYall() === Scientist; // true
 
 **Note:** `Scientist.statYall()` is going to be equal to `Scientist` **not** `Laboratory`!
 That happens because `statYall()` was called on `Scientist` and `statYall` is a regular, non-arrow function.
+
+The concept explained above can help us understand many confusing things about JavaScript. For example,
+contemplate the following code:
+
+```javascript
+TypeError.__proto__ === Function.prototype; // false
+TypeError.__proto__.constructor === Function; // true
+TypeError.__proto__ === Error; // true
+```
+
+If `TypeError.__proto__` is not equal to `Function.prototype` then how come `TypeError.__proto__.constructor`
+is equal to `Function`? The answer is the _third_ line.
+
+You see, `Error` is a usual constructor function. It's `__proto__` is `Function.prototype` and its `prototype`
+has all the properties of the future error instance ( like `name` set to default value , `message` and so on ).
+
+As you can see, creators of the `TypeError` constructor function used the same technique
+of reassigning `TypeError.__proto__` to achieve the effect with static methods. When we did
+`TypeError.__proto__.constructor === Function;`, the answer was `true` not because `TypeError.__proto__`
+was equal to `Function.prototype` but because it was equal to `Error`. You see, `constructor` property
+doesn't exist on `Error`, thus JS engine goes to its `__proto__` property, the `__proto__` property
+of the `Error` function points to `Function.prototype` and that is where JS engine found the `constructor`
+property and it was equal to `Function`.
