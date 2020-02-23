@@ -1,29 +1,75 @@
-# TODO
+## Plan
 
-- one way functions: hash functions ( sha256, md5 etc. ) are one-way functions and are keyless cryptography
-- symmetric is when one key is used to encrypt / decrypt ( secret key cryptography )
+- one way functions ( `plaintext` to `digest` )
+    - hard to get the original data from the output
+    - the only way to do so is by trying all the possible combinations
+        - called _brute force_
+        - example of how it may be difficult on big numbers with prime factors
+    - hash functions are an example of one-way functions
+        - examples are `sha256`, `md5` etc.
+        - what is _hashing_
+- what is cryptography
+    - reversible process of transforming `plaintext` to `ciphertext` and back again
+    - what is _key_
+    - hash functions are _Keyless Cryptography_
+    - cryptography has 2 fucntions:
+        - it makes sure that only the recipient with the right key can _decrypt_ the message
+        - it is also used to verify authenticy ( in other words, that whatever we received came from the _right_ source )
+- symmetric cryptography ( Secret Key Cryptography )
+    - the same key to encrypt and to decrypt
+    - Authentication thru _Keyed Hash Fucntions_
     - Authentication with MAC ( using the HMAC algorithm )
-    - Algorithms: AES, RC4, DES etc.
-    - DES uses a 64-bit block size and a 56-bit key. DES is a block cipher, segmenting the input data into blocks of a specific size
-    - Encryption with `AES` algorithm ( modes: ECB ( unsafe, used as a building block ), CBC ( safe, uses IV ), CTR ( safe, uses Nonce ) )
+    - algorithms
+        - AES, RC4, DES etc.
+        - DES uses a 64-bit block size and a 56-bit key. DES is a block cipher, segmenting the input data
+          into blocks of a specific size
+        - AES algorithm ( modes: ECB ( unsafe, used as a building block ), CBC ( safe, uses IV ), CTR ( safe, uses Nonce ) )
+        - `aes-128-ctr` where `aes` is the algorithm ( symmetric, successor of `DES`, `3DES` etc. ), `128` - key length
+          ( also accepts `192`, `256` )
+    - why authenticate at all and why we need to authenticate `ciphertext` ( the IV tempering example )
+    - in symmetric, or secret key cryptography, we use the _Modular Arithmetic Algorithm_ to get a shared secret key
+        - _Modular Arithmetic Algorithm_ is when we do the colors example from the Crash Course
     - symmetric is faster than asymmetric
-    - we use the Modular Arithmetic algorithm to get a shared secret key
-    - Modular Arithmetic algorithm is when we do the colors example from the Crash Course
-    - `aes-128-ctr` where `aes` is the algorithm ( symmetric, successor of `DES`, `3DES` etc. ), `128` - key length
-      ( also accepts `192`, `256` ),
-    - TODO: IV vs Nonce
-- asymmetric is when 2 keys are used to encrypt / decrypt ( both _encryption_ and _authentication_ ) ( Public Key Cryptography )
-    - algorithms are RSA, ECC etc. ( RSA is that trapdoor exponent thing based on prime factors )
-    - private key decrypts, public encrypts - _encryption_ ( algorithms - `RSA` etc. )
+    - you have to _encrypt_ first, then _authenticate_, then _send_
+    - implementing the thing above in NodeJS
+- asymmetric cryptography
+    - asymmetric is when 2 keys are used to encrypt / decrypt ( both _encryption_ and _authentication_ ) ( Public Key Cryptography )
+    - private key decrypts, public encrypts - _encryption_
     - private key encrypts, public key decrypts - _authentication_
-    - argue a case for asymmetric encryption using a bank example
-- you have to _encrypt_ first, then _authenticate_, then _send_
-- password hashing
-    - password hashing algorithms vs hashing functions
-    - why hash passwords instead of encryption - if your private key is leaked, all passwords are out, hash functions
-      cannot be reversed to get the original password even if we know the secret key
-    - TODO: more on rainbow tables
-- Encoding ( base64, hex - etc. )
-- Compression ( gzip etc. )
-- SSL handshake using both symmetric and asymmetric encryption
-- TODO: actual examples of hash functions and cryptographic functions in NodeJS
+    - encryption algorithms are RSA, ECC etc.
+    - RSA is that trapdoor exponent thing based on prime factors
+    - first reason why it exists: the bamk server, for instance, doesn't have to have a million shared secret keys
+      to securely communicate with clients
+    - digital signatures are better because 3rd party that wants to verify the authenticy of the data doesn't have to
+      have the signer's private key. With keyed hash functions such a situation is impossible: only the interneded recipient
+      with the secret private key can veirfy the authenticy, which doesn't pan out well if you are just a user and not the
+      intended server which has the other secret key
+- real life usage
+    - password hashing
+        - password hashing algorithms vs hashing functions
+        - why hash passwords instead of encryption - if your private key is leaked, all passwords are out,
+          but since hash functions cannot be reversed to get the original password even if we know the secret key
+          the hashes stored thus don't reveal the original passwords while allowing us to verify them upon user login
+    - SSL handshake using both symmetric and asymmetric encryption
+    - SSH
+        - generate shared secret key and use it to secure all the communication
+        - use the client's public key to encrypt a text
+        - send it to client
+        - the client decrypts it with his private key and sends back the result
+        - the server verifies the result decrypted by client with the original text
+        - if everyhting is OK the server trusts that the client is indeed who he claims to be because the cleint has the
+          expected private key
+        - after that all the communication is held via a secure tunnel
+        - a secure tunnel means all the data is encrypted and decrypted between the srver and the cleint using that same
+          shared secret key generated in the very beginning ( this key, unlike the public and private key pair used to
+          authenticate the client, is actually session-based )
+- not cryptography
+    - Encoding ( base64, hex - etc. )
+    - Compression ( gzip etc. )
+
+## TODO
+
+- Verify an algorithm to reverse a hash function or a cryptography algorithm like AES provided we have enough
+  computing power
+- IV vs Nonce
+- More on rainbow tables
