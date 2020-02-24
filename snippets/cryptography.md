@@ -8,16 +8,17 @@
     - hash functions are an example of one-way functions
         - examples are `sha256`, `md5` etc.
         - what is _hashing_
+        - what is checksum
 - what is cryptography
     - reversible process of transforming `plaintext` to `ciphertext` and back again
     - what is _key_
     - hash functions are _Keyless Cryptography_
-    - cryptography has 2 fucntions:
+    - cryptography has 2 functions:
         - it makes sure that only the recipient with the right key can _decrypt_ the message
         - it is also used to verify authenticy ( in other words, that whatever we received came from the _right_ source )
 - symmetric cryptography ( Secret Key Cryptography )
     - the same key to encrypt and to decrypt
-    - Authentication thru _Keyed Hash Fucntions_
+    - Authentication thru _Keyed Hash Functions_
     - Authentication with MAC ( using the HMAC algorithm )
     - algorithms
         - AES, RC4, DES etc.
@@ -38,15 +39,21 @@
     - private key encrypts, public key decrypts - _authentication_
     - encryption algorithms are RSA, ECC etc.
     - RSA is that trapdoor exponent thing based on prime factors
-    - first reason why it exists: the bamk server, for instance, doesn't have to have a million shared secret keys
+    - first reason why it exists: the bank server, for instance, doesn't have to have a million shared secret keys
       to securely communicate with clients
     - digital signatures are better because 3rd party that wants to verify the authenticy of the data doesn't have to
       have the signer's private key. With keyed hash functions such a situation is impossible: only the interneded recipient
-      with the secret private key can veirfy the authenticy, which doesn't pan out well if you are just a user and not the
+      with the secret private key can verify the authenticy, which doesn't pan out well if you are just a user and not the
       intended server which has the other secret key
+    - checksums are not secure
+        - md5 is not secure at all because of collisions but it is fast so use it for data corruption check
+        - why using even safe hash fucntions like sha256 is not secure
+            - because you want to verify authenticy, an attacker could have replaced both the file content
+              and the hash too 
 - real life usage
     - password hashing
         - password hashing algorithms vs hashing functions
+        - the table in the paragon article
         - why hash passwords instead of encryption - if your private key is leaked, all passwords are out,
           but since hash functions cannot be reversed to get the original password even if we know the secret key
           the hashes stored thus don't reveal the original passwords while allowing us to verify them upon user login
@@ -57,19 +64,20 @@
         - send it to client
         - the client decrypts it with his private key and sends back the result
         - the server verifies the result decrypted by client with the original text
-        - if everyhting is OK the server trusts that the client is indeed who he claims to be because the cleint has the
+        - if everything is OK the server trusts that the client is indeed who he claims to be because the client has the
           expected private key
         - after that all the communication is held via a secure tunnel
-        - a secure tunnel means all the data is encrypted and decrypted between the srver and the cleint using that same
+        - a secure tunnel means all the data is encrypted and decrypted between the server and the client using that same
           shared secret key generated in the very beginning ( this key, unlike the public and private key pair used to
           authenticate the client, is actually session-based )
 - not cryptography
-    - Encoding ( base64, hex - etc. )
-    - Compression ( gzip etc. )
+    - Encoding ( base64, hex, percent encoding - etc. ) - used for transport
+    - Compression ( gzip etc. ) - used for speed
 
 ## TODO
 
 - Verify an algorithm to reverse a hash function or a cryptography algorithm like AES provided we have enough
+- Reread the paragon article to make sure we didn't leave anything out
   computing power
 - IV vs Nonce
 - More on rainbow tables
