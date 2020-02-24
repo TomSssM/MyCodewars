@@ -6,6 +6,7 @@
         - called _brute force_
         - example of how it may be difficult on big numbers with prime factors
     - hash functions are an example of one-way functions
+        - varied size input, fixed size output, the least variation produces a drastically different output
         - examples are `sha256`, `md5` etc.
         - what is _hashing_
         - what is checksum
@@ -19,7 +20,7 @@
 - symmetric cryptography ( Secret Key Cryptography )
     - the same key to encrypt and to decrypt
     - Authentication thru _Keyed Hash Functions_
-    - Authentication with MAC ( using the HMAC algorithm )
+        - Authentication with MAC ( using the HMAC algorithm )
     - algorithms
         - AES, RC4, DES etc.
         - DES uses a 64-bit block size and a 56-bit key. DES is a block cipher, segmenting the input data
@@ -31,34 +32,34 @@
     - in symmetric, or secret key cryptography, we use the _Modular Arithmetic Algorithm_ to get a shared secret key
         - _Modular Arithmetic Algorithm_ is when we do the colors example from the Crash Course
     - symmetric is faster than asymmetric
-    - you have to _encrypt_ first, then _authenticate_, then _send_
-    - implementing the thing above in NodeJS
+    - you have to _encrypt_ first, then _authenticate_ the `ciphertext`, then _send_
+    - implementing the thing above in NodeJS ( if possible )
 - asymmetric cryptography
-    - asymmetric is when 2 keys are used to encrypt / decrypt ( both _encryption_ and _authentication_ ) ( Public Key Cryptography )
+    - asymmetric is when 2 keys are used to encrypt / decrypt ( Public Key Cryptography )
     - private key decrypts, public encrypts - _encryption_
     - private key encrypts, public key decrypts - _authentication_
     - encryption algorithms are RSA, ECC etc.
     - RSA is that trapdoor exponent thing based on prime factors
     - first reason why it exists: the bank server, for instance, doesn't have to have a million shared secret keys
       to securely communicate with clients
-    - digital signatures are better because 3rd party that wants to verify the authenticy of the data doesn't have to
-      have the signer's private key. With keyed hash functions such a situation is impossible: only the interneded recipient
-      with the secret private key can verify the authenticy, which doesn't pan out well if you are just a user and not the
-      intended server which has the other secret key
     - checksums are not secure
         - md5 is not secure at all because of collisions but it is fast so use it for data corruption check
         - why using even safe hash fucntions like sha256 is not secure
             - because you want to verify authenticy, an attacker could have replaced both the file content
-              and the hash too 
+              and the hash too
+    - second reason: digital signatures are better because 3rd party that wants to verify the authenticy of the data doesn't have to
+      have the signer's private key. With keyed hash functions such a situation is impossible: only the interneded recipient
+      with the secret private key can verify the authenticy, which doesn't pan out well if you are just a user and not the
+      intended server which has the other secret key
 - real life usage
     - password hashing
-        - password hashing algorithms vs hashing functions
-        - the table in the paragon article
+        - password hashing algorithms vs hashing functions ( the table in the paragon article )
         - why hash passwords instead of encryption - if your private key is leaked, all passwords are out,
           but since hash functions cannot be reversed to get the original password even if we know the secret key
           the hashes stored thus don't reveal the original passwords while allowing us to verify them upon user login
+        - talk about salt and rainbow tables
     - SSL handshake using both symmetric and asymmetric encryption
-    - SSH
+    - SSH using both symmetric and asymmetric encryption
         - generate shared secret key and use it to secure all the communication
         - use the client's public key to encrypt a text
         - send it to client
@@ -81,3 +82,4 @@
   computing power
 - IV vs Nonce
 - More on rainbow tables
+- Read the rest of the cryptography articles
