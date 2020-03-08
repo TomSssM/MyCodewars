@@ -104,3 +104,4 @@
   - [Invisible Mask](./input-masking/invisible-mask/index.js)
   - [Visible Mask](./input-masking/visible-mask/index.js)
 - [Clipboard Revealer](./clipboard-revealer/index.js)
+- [Hash Element Stuff](./hash-elem-stuff)
