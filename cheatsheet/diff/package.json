@@ -5,7 +5,8 @@
   "main": "diff.js",
   "scripts": {
     "test": "node ./diff.test.js",
-    "presentation": "node ./presentation.js"
+    "presentation": "node ./presentation.js",
+    "presentation:colors": "node colors-lib/presentation-colors.js"
   },
   "keywords": [],
   "author": "",
