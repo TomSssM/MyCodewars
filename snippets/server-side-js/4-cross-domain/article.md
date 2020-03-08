@@ -220,7 +220,8 @@ Host:google.com
 Origin:http://javascript.com
 Referer:http://javascript.com/some/url
 ```
-We use `Origin` _in addition_ to `Referrer` because it is more reliable :) Sometimes `Referer` is absent.
+We use `Origin` _in addition_ to `Referer` because it is more reliable :) Sometimes `Referer` is absent.
+Learn more about `Referer` [here](./referer.md).
 
 ---
 
