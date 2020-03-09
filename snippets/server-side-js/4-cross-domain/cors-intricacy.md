@@ -48,7 +48,9 @@ fetch('https://example.com', {
 the browser will in fact send that request to our server at `https://example.com`, our server will execute that
 request adding the user to the Data Base and setting the `Access-Control-Allow-Origin` HTTP Header, after that
 the browser will see the `Access-Control-Allow-Origin` HTTP Header and block `https://evil.dude.com` from seeing
-our server's response. But the user that an attacker sent in the body of the POST request will be added!
+our server's response. But the user that an attacker sent in the body of the POST request will already be added
+to the Data Base!
+
 In other words, CORS only forbids third party AJAX request from seeing the server's _response_
 ( in the example above the `{ "isSuccess": true }` JSON ), but it doesn't prevent the browser from sending that
 request and our server from consequently processing that request. It cannot be otherwise because the browser
@@ -57,4 +59,4 @@ For state mutating methods like POST this drawback can be very dangerous: what i
 and has just now added his own account to the list of admins?
 
 That is why you should always send user id in cookies ( very advisable with the `strict` flag ) and verify
-every user's permissions.
+every user's permissions for any operation.
