@@ -251,6 +251,10 @@ line `(**)` and not as a string literal ( but as HTML token instead ) thus it is
 
 Now we are OK
 
+The reason that happens is because the HTML parser works before the JS parser. Thus the browser first
+builds HTML, so it looks at all the text and searches for HTML tokens, and only after that the browser
+executes whatever it can find between any 2 `<script />` tags.
+
 ## Object.keys for a string
 
 Calling this method with string as an argument will first convert the string into its corresponding
