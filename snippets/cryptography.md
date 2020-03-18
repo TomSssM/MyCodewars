@@ -321,9 +321,6 @@ Thus using salt thwarts rainbow tables.
 
 ## TODO
 
-- Verify an algorithm to reverse a hash function or a cryptography algorithm like AES provided we have enough
-- Reread the paragon article to make sure we didn't leave anything out
-  computing power
+- Reread the paragon article to make sure we didn't leave anything out anything
 - IV vs Nonce
 - More on rainbow tables
-- Read the rest of the cryptography articles
