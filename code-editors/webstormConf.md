@@ -20,6 +20,7 @@
 
 - Move Line Down `FN + DOWN`
 - Move Line Up `FN + UP`
+- Comment with Line Comment - `COMMAND + /`
 - Indent Line or Selection `COMMAND + }`
 - Unindent Line or Selection `COMMAND + {`
 - Move Caret Backward a Paragraph - `OPTION + UP`
@@ -38,12 +39,9 @@
 - Clone Caret Below - `SHIFT + FN + DOWN`
 - Duplicate Line or Selection - `COMMAND + D`
 - Delete Line - `COMMAND + R`
-- Version Control - `F1`
 - Terminal - ``CONTROL + ` ``
 - Undo - `COMMAND + Z`
 - Redo - `COMMAND + SHIFT + Z`
-- Increase Font Size - `COMMAND + =`
-- Decrease Font Size - `COMMAND + Minus`
 - Paste From History... - `COMMAND + Shift + V`
 - Git Commit - `COMMAND + K`
 - Git Push - `COMMAND + Shift + K`
@@ -54,15 +52,24 @@
 - Toggle bold mode ( Plugins -> Markdown Support ) - `COMMAND + B`
 - Select Next Tab - `OPTION + COMMAND + RIGHT`
 - Select Tab - `OPTION + COMMAND + LEFT`
+- Scroll Up - `OPTION + COMMAND + UP`
+- Scroll Down - `OPTION + COMMAND + DOWN`
+- Scroll to Center `OPTION + COMMAND + /`
 - Select All - `COMMAND + A`
 - File - `COMMAND + N`
 - Create new directory or package - `COMMAND + SHIFT + N`
 - Active Next Window - ``COMMAND + ` ``
 - Line/Column - `COMMAND + L`
-- Show Context Menu - `SHIFT + OPTION + ENTER`
+- Show Context Action - `OPTION + ENTER`
+- Show Context Menu - `SHIFT + COMMAND + ENTER`
+- Split Line - `COMMAND + ENNTER`
 - Main Menu -> Window -> Editor Tabs -> Close - `COMMAND + T`
-- Main Menu -> Navigate -> Jump to Navigation Bar -> Close - `COMMAND + 0`
-- Jump to Source - `COMMAND + W`
+- Main Menu -> Navigate -> Jump to Navigation Bar - `COMMAND + 0`
+- Show Usages - `COMMAND + SHIFT + W`
+- Main Menu -> Navigate -> Back - `OPTION + Z`
+- Main Menu -> Navigate -> Forward - `OPTION + SHIFT + Z`
+- Main Menu -> Code -> Folding -> Expand - `COMMAND + =`
+- Main Menu -> Code -> Folding -> Collapse - `COMMAND + -`
 
 ## Snippets ( Live Templates )
 
@@ -74,7 +81,6 @@ Syntax:
 ```
 console.log($val$);$END$
 ```
-- [x] Applicable in `JavaScript Statements Only`
 
 #### c
 
@@ -82,7 +88,6 @@ Syntax:
 ```
 console.log($val$)$END$
 ```
-- [x] Applicable in `JavaScript Expressions Only`
 
 #### $
 
@@ -90,7 +95,6 @@ Syntax:
 ```
 document.querySelector('$query$')$END$
 ```
-- [x] Applicable in `JavaScript Everywhere`
 
 #### $$
 
@@ -98,4 +102,3 @@ Syntax:
 ```
 document.querySelectorAll('$query$')$END$
 ```
-- [x] Applicable in `JavaScript Everywhere`
