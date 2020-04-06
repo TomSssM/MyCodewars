@@ -154,3 +154,48 @@ The reason that it happens is because there is a unary operator `+` which conver
 as in `+"2" === 2`. In the example above the unary `+` operator has higher precedence than addition.
 Thus it first converts `"1"` to a number literal `1` and after that addition happens evaluating the
 expression to `2`.
+
+## `Object.prototype.toString.call`
+
+Don't get confused when you see code like this:
+
+```js
+const someValue = ...;
+
+...
+
+Object.prototype.toString.call(someValue);
+```
+
+So why do we need to call `Object.prototype.toString` on `someValue`? The reason for that is we need to be
+100% sure that the `toString` method we are calling is the _native_ one.
+
+If we were to check that `someValue` is an instance of `Date` like so:
+
+```js
+const isDate = someValue.toString() === '[object Date]';
+```
+
+For example, `someValue` may be something like this:
+
+```js
+const someValue = {
+    toString() {
+        return '[object Date]';
+    }
+};
+```
+
+A writing like above gives `someValue` an opportunity to masquerade like the native date object while it is not.
+The reason it would be successful is because when we do `someValue.toString()` the _own_ `toString` method will
+be called, which has been specifically hacked to allow `someValue` mask itself as a date object.
+
+`Object.prototype.toString.call(someValue)` calls the _native_ `toString` method of the `Object` class with
+`someValue` as its _context_. When we do `someValue.toString()` the `toString` method is called with
+`someValue` as its context as well, however in this case we cannot tell _which_ `toString` method is called.
+Is it a native one or the one that has been hacked? When writing `Object.prototype.toString.call` we don't have
+to think about those things as we are explicitly calling the native `Object.prototype.toString` with `someValue`
+as its context.
+
+The only thing left to be worried about when doing check like above is that `Object.prototype.toString`
+itself should not be hacked.
