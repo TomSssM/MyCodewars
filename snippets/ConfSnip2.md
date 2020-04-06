@@ -146,3 +146,11 @@ was equal to `Function.prototype` but because it was equal to `Error`. You see, 
 doesn't exist on `Error`, thus JS engine goes to its `__proto__` property, the `__proto__` property
 of the `Error` function points to `Function.prototype` and that is where JS engine found the `constructor`
 property and it was equal to `Function`.
+
+## `1 + + "1"`
+
+The result of evaluating `1 + + "1"` is going to be `2`.
+The reason that it happens is because there is a unary operator `+` which converts strings to numbers
+as in `+"2" === 2`. In the example above the unary `+` operator has higher precedence than addition.
+Thus it first converts `"1"` to a number literal `1` and after that addition happens evaluating the
+expression to `2`.
