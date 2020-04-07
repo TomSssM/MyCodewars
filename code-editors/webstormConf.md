@@ -61,7 +61,7 @@
 - Active Next Window - ``COMMAND + ` ``
 - Line/Column - `COMMAND + L`
 - Show Context Action - `OPTION + ENTER`
-- Show Context Menu - `SHIFT + COMMAND + ENTER`
+- Show Context Menu - `SHIFT + OPTION + ENTER`
 - Split Line - `COMMAND + ENNTER`
 - Main Menu -> Window -> Editor Tabs -> Close - `COMMAND + T`
 - Main Menu -> Navigate -> Jump to Navigation Bar - `COMMAND + 0`
