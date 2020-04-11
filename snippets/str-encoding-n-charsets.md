@@ -536,6 +536,40 @@ from binary, we get:
 
 That is exactly the same values as returned by our Uint**8**Array View. Awesome!
 
+NodeJS has an even better API to work with encodings as NodeJS supports a variety of encodings besides `UTF-16`.
+Let's get a string from `UTF-8` binary data:
+
+```js
+const { StringDecoder } = require('string_decoder');
+const utf8Decoder = new StringDecoder('utf8');
+const euro1 = utf8Decoder.write(Buffer.from([0xE2, 0x82, 0xAC]));
+euro1; // €
+```
+
+NodeJS's handling of `UTF-16` is a bit more tricky as it supports only _the little-endian variant of `UTF-16`_:
+
+```js
+const utf16Decoder = new StringDecoder('utf16le');
+const euro2 = utf16Decoder.write(Buffer.from([0x20, 0xac].reverse()));
+euro2; // €
+```
+
+The code point of "€" is 0x20AC ( in hexadecimal ). Thus it is 2 bytes: 0x20 and 0xAC.
+As a result, the representation of "€" in `UTF-16` is:
+
+```
+0x20 0xAC
+```
+
+But in order to represent the same code point in the _little-endian_ variant of `UTF-16` we need to reverse
+the order of all the bytes like this:
+
+```
+0xAC 0x20
+```
+
+Why do that for little endian is explained [here](./little-endian.md).
+
 There is also a `UCS-2` encoding which also uses 2 bytes to store each code point but unlike `UTF-16`,
 `UCS-2` is a fixed-width encoding. What it means is that it doesn't use surrogate pairs to depict code
 points outside of BMP. For example `UCS-2` would interpret the 2 code points `\uD834\uDF06` ( both of which
