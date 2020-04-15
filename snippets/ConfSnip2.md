@@ -199,3 +199,80 @@ as its context.
 
 The only thing left to be worried about when doing check like above is that `Object.prototype.toString`
 itself should not be hacked.
+
+## Object Property Descriptors are inherited
+
+If you set a property on the `<ClassName>.prototype` using a property descriptor like this one:
+
+```js
+function MyClass() {
+    this.name = 'wow';
+}
+
+Object.defineProperty(MyClass.prototype, 'what', {
+    value: '12',
+    writable: false,
+});
+```
+
+and then try to do something with that property on the _instance_ of the class, then the rules specified by the
+property descriptor do apply:
+
+```js
+'use strict';
+const m = new MyClass();
+m.what = 'wow'; // TypeError: Cannot assign to read only property 'what' of object '#<MyClass>'
+```
+
+In the example above an error is thrown because, even though there have been no property descriptors applied to
+`m` to forbid setting the `what` property, there _have_ been a property descriptor applied to an object that lives
+in the prototype chain of `m` ( and `MyClass.prototype` happens to be part of `m`'s prototype chain ):
+
+```js
+Object.defineProperty(MyClass.prototype, 'what', { // (*)
+    value: '12',
+    writable: false,
+});
+```
+
+and thus all the rules specified by the property descriptor in line `(*)` also affect properties named `what`
+that we try to modify on the `m` object.
+
+Here is another example, the code below will execute without errors:
+
+```js
+'use strict';
+const f = {};
+f.name = 'lol';
+```
+
+Now let's do this:
+
+```js
+'use strict';
+const o = {};
+const f = {};
+
+Object.defineProperty(o, 'name', { // (*)
+    writable: false,
+    value: 'Tom',
+});
+
+Object.setPrototypeOf(f, o); // f.__proto__ === o // (**)
+
+f.name = 'lol'; // TypeError: Cannot assign to read only property 'name' of object '#<Object>'
+```
+
+So we create 2 objects `o` and `f`. Then in line `(*)` we forbid writing a property called `name` on the object `o`,
+we also initialize this property to the value `'Tom'`. Then we add the object `o` to the prototype chain of the object
+`f` in line `(**)`. Do note that now it is forbidden ( because of the property descriptor in line `(*)` )
+to write to the property `name` _not only_ on the object `o` but also on the object `f` because the object `o` with
+its property descriptor is in the object's `f` prototype chain.
+
+**Note:** if you are confused about the _prototype chain_, here is an explanation: every object has the `__proto__`
+property which stores a reference to some other object or `null`, now the prototype chain of that object is going to
+be all the objects we get by following the `__proto__` property. So if there is an object `a`, then we are going to look
+at and remember whatever is stored at `a.__proto__`, if it is another object called `b`, then we are going to look
+at and remember whatever is stored at `b.__proto__`, if it is an object again, then look at _that_ object's `__proto__`
+and so on until we hit `__proto__` with a value of `null`. Now all the objects that we are going to encounter like that
+are going to comprise the prototype chain for object `a`.
