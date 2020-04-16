@@ -276,3 +276,30 @@ at and remember whatever is stored at `a.__proto__`, if it is another object cal
 at and remember whatever is stored at `b.__proto__`, if it is an object again, then look at _that_ object's `__proto__`
 and so on until we hit `__proto__` with a value of `null`. Now all the objects that we are going to encounter like that
 are going to comprise the prototype chain for object `a`.
+
+## Catching Errors
+
+We have discussed that `window.onerror(...)` catches all uncaught errors. However if an error happens inside a Promise
+then the promise gets rejected and `window.onerror(...)` doesn't catch promise rejections. For that you need the
+`unhandledrejection` event. Here is code that will catch all the errors:
+
+```js
+window.addEventListener('error', (e) => {
+    console.log('error caught', e.message);
+    e.preventDefault(); // prevents an error being thrown
+});
+
+window.addEventListener('unhandledrejection', (e) => {
+    console.log('promise rejection caught', e.reason);
+    e.preventDefault();
+});
+
+
+setTimeout(() => {
+    throw new Error('ok');
+});
+
+Promise.reject(12);
+```
+
+For the NodeJS API see the `process` section in the `LibDocs`
