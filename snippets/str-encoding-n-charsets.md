@@ -42,13 +42,13 @@ decimal number: `65 116` and then map those to letters: `At`. Simple as that. Si
 
 So what is different between `ASCII` ( as a Character Set ) and `Unicode` besides the form in which you write
 `Code Point`s ( `U+` vs plain number )? The whole Point of `Unicode` is that it includes all the number-to-letter
-mappings as `ASCII` does, _and more_ ( for which reason `Unicode` is also sometimes called a superset of `ASCII` ).
-You see with `ASCII` you can encode any English letter plus a whole bunch of symbols as numbers between 0-127
-( in the default `ASCII` there are no number-to-letter mappings for the numbers 128-255 ). But what is the `Code Point`
-in `ASCII` for, say, a Japanese letter? That is the problem with `ASCII`, there isn't. And there couldn't be actually.
-Japanese alphabet consists of thousands of characters while with `ASCII` you can encode the maximum of 255 characters
-( 127 of which are already occupied by mappings for English letters ). That is why `Unicode` was invented.
-`Unicode` has mappings for all the imaginable characters in the world!
+mappings as `ASCII` does, but Unicode has more characters ( for which reason `Unicode` is also sometimes called
+a superset of `ASCII` ). You see with `ASCII` you can encode any English letter plus a whole bunch of symbols
+as numbers between 0-127 ( in the default `ASCII` there are no number-to-letter mappings for the numbers 128-255 ).
+But what is the `Code Point` in `ASCII` for, say, a Japanese letter? That is the problem with `ASCII`, there isn't.
+And there couldn't be actually. Japanese alphabet consists of thousands of characters while with `ASCII` you can
+encode the maximum of 255 characters ( 127 of which are already occupied by mappings for English letters ).
+That is why `Unicode` was invented. `Unicode` has mappings for all the imaginable characters in the world!
 
 In `Unicode` you are not limited to 127 `Code Point`s that map to letters. In fact `Unicode` has thousands of
 `Code Point`s with which you can even encode an emoji. For instance the `Code Point` for :coffee: is `U+9749`.
@@ -76,7 +76,7 @@ encode them, as 2 bytes, that need 3 bytes as 3 bytes and so on ( that need `n` 
 
 In `UTF-16` we store `Code Point`s starting at 2 bytes, so `U+255` would be stored as `0000000011111111`.
 
-## In Real Life
+## HTML Entities
 
 The Knowledge of Character Sets ( `Unicode` particularly ) can help us when we need to insert the character that is
 missing from the keyboard to HTML.
@@ -313,13 +313,63 @@ If you check, you will see that the `U+F0F4` Unicode Code Point used above is ac
 it never collides with the real Unicode characters. And the font awesome creators decided to replace this private
 use code point with a coffee mug svg image.
 
-**Note:** Some code points are _control characters_, they make computer do special things when it sees them.
+## Control Characters
+
+Some code points are _control characters_ ( Code Points 0 - 32 as well as Code Point 127 ) ), they make computer
+do special things when it sees them.
+
 For instance, the `\n` newline character is a control character with code point of `0x000a`, which makes the
-cursor go to the next line. The _very first Unicode character_ with code point of `0` is called a null character
+cursor go to the next line.
+
+There are mainly 3 ways to display Control Characters.
+
+- First, when programming in C or NodeJS as well as other languages you can write those characters to the console
+  directly from Code Point:
+  ```js
+  // line break control character ( \n ) has a code point of 10
+  process.stdout.write('first line');
+  process.stdout.write(String.fromCodePoint(10)); // or we could have written: '\u000a' ( a is 10 in hexadecimal )
+  process.stdout.write('second line');
+  ```
+  Outputs:
+  ```
+  first line
+  second line
+  ```
+- Secondly, some control characters can be attained by prefixing some other letter with a `\`. For example,
+  we can get the same line break control character as above by prefixing an `n` with a `\`:
+  ```js
+  process.stdout.write('\n');
+  ```
+  That is definitely a more popular way to do things. Thus the 3 notations below are all equivalent:
+  ```js
+  process.stdout.write('\u000a');
+  process.stdout.write(String.fromCodePoint(0xa));
+  process.stdout.write('\n');
+  ```
+  These 3 notations will all produce the same character: control character with code point of 10 ( Line Break ).
+  This way, `\n` is control character with code point 0, `\e`, `\b` and so on are also control characters. But if take
+  a look at the ASCII table in Wikipedia, you will see that not all of them can be written as `\...` ( of course,
+  they can still be attained from their code points - `String.fromCodePoint(...)` ).&#x2020;
+- Another way to produce control characters is from the keyboard but it will only work in a terminal. By holding
+  the `Ctrl` ( MAC: `Control` ) key and pressing other keys you can get control characters to be fed to the standard
+  input of your terminal. For example, to get a new line press `Ctrl-J` ( beware thou, when new line `\n` is printed
+  to the terminal, the terminal makes `bash` execute a command, it is roughly equivalent to pressing `Enter` key ).
+
+The _very first Unicode character_ with code point of `0` is called a null character
 ( also called sometimes _null terminator_ or _null byte_ ), it is a control character too.
 In lower-level languages like C, null terminator is used to mark the end of a string. Thus when a sequence
 of characters is stored sequentially in computer memory, the C language will know where one string ends and
-the next one starts when it sees the null charcter as it always comes in the end.
+the next one starts when it sees the null character as it always comes in the end. Thus if, in computer memory,
+there is stuff like this:
+
+```
+abcd\ndf\0dddo\0
+```
+
+The C language will start reading characters byte by byte and as soon as it sees `\0` it will know that
+one string value ended and the next one started. Thus it will know that we have, stored in computer memory,
+two strings: `abcd\ndf` and `dddo`.
 
 ## How `UTF-16` Works
 
@@ -713,3 +763,9 @@ definition of a variable width encoding.
 &#x2020; You might have noticed the example above is done via HTML entities. Unfortunately there is no very
 illustrative way of verifying the same point in the JS console as the console for some reason depicts all emoji
 created this way as their corresponding non-emoji base code points.
+
+&#x2020; What makes it all extra confusing is how the syntax for Regular Expressions also uses the `\...` to
+mean special things. For instance, `\d` means _any digit_ in RegEx while `\w` means any word. Not only that
+but even in many programming languages the `\u...` allows us to get characters directly from code points
+( like String.fromCodePoint(...) ). But all these things do not produce control characters, they are
+simply also used to give letters special meaning.
