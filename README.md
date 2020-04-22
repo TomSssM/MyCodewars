@@ -4,7 +4,7 @@
 
 - [Projects from the Tutorial](./projects-from-the-tutorial/README.md) :page_facing_up:
 - [Cool Projects](./cool-projects/README.md) :whale:
-- [Snippets](./snippets/README.md) [:seedling:](./data/easter-egg.md)
+- [Snippets](./snippets/README.md) :seedling:
 - [Legacy](./legacy/README.md) :file_cabinet:
 
 ---

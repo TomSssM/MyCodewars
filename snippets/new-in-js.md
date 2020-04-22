@@ -2,7 +2,7 @@
 
 ## Data Type of Keys
 
-We used to say that keys of objects can be only of type `string` and we also argued that they cannot be of 
+We used to say that keys of objects can be only of type `string` and we also argued that they cannot be of
 type `number`. Well, now we also have a new primitive type - symbol. And guess what it is the second of the
 2 data types that object keys can be.
 
@@ -44,7 +44,7 @@ const fun = async () => {
 fun();
 ```
 
-So we have an array `arr` of Promises but if we try to itterate it with a `for in` loop we get 
+So we have an array `arr` of Promises but if we try to itterate it with a `for in` loop we get
 the following output:
 
 ```
@@ -78,3 +78,39 @@ The output is:
 2
 3
 ```
+
+## Spread operators and params
+
+If you have an array and you want to pass its 1st element as 1st argument, its 2nd element as 2nd argument and so on,
+then you can literally spread it into a function call:
+
+```js
+const params = [1, 'a', true, 'wow', 2, NaN, null];
+
+logParams(params);
+logParams(...params);
+
+function logParams(a, b, c) {
+    console.log('a:', a);
+    console.log('b:', b);
+    console.log('c:', c);
+}
+```
+
+The log would be:
+
+```
+first call:
+a: [1, 'a', true, 'wow', 2, NaN, null]
+b: undefined
+c: undefined
+
+second call:
+a: 1, 'wow', 2, NaN, null]
+b: 'a'
+c: true
+..and so on
+```
+
+If `logParams` had 4th param, then in the 2nd call, it would be `'wow'`, 5th parameter would be `2`, 6th and 7th
+would be `NaN` and `null` correspondingly.
