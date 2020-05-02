@@ -6,3 +6,4 @@
     - [Version 3](./palette-v3/src/js/index.js)
 - [WebSockets CodeJam](./wsCodeJam/index.js)
 - [YouTube Client](./youtube-client/src/controllers/App.js)
+- [Piskel Draft Algorithms](./piskel-draft-algorithms/README.md)
