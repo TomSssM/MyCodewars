@@ -303,3 +303,41 @@ Promise.reject(12);
 ```
 
 For the NodeJS API see the `process` section in the `LibDocs`
+
+## `dispatchEvent` is synchronous
+
+When an event is dispatched, the registered event listeners are triggered _synchronously_. If you run
+the following code:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS</title>
+</head>
+<body>
+<div id="special"></div>
+<script>
+  const event = new Event('cool');
+  const elem = document.querySelector('#special');
+
+  elem.addEventListener('cool', (e) => {
+    console.log(`event ${e.type} dispatched`);
+  }, false);
+
+  // Dispatch the event
+  console.log('Before dispatch');
+  elem.dispatchEvent(event); // called synchronously
+  console.log('After dispatch');
+</script>
+</body>
+```
+
+The log is going to be:
+
+```
+Before dispatch
+event cool dispatched
+After dispatch
+```
