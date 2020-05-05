@@ -348,7 +348,7 @@ There are mainly 3 ways to display Control Characters.
   process.stdout.write('\n');
   ```
   These 3 notations will all produce the same character: control character with code point of 10 ( Line Break ).
-  This way, `\n` is control character with code point 0, `\e`, `\b` and so on are also control characters. But if take
+  This way, `\n` is control character with code point 10. `\e`, `\b` and so on are also control characters. But if take
   a look at the ASCII table in Wikipedia, you will see that not all of them can be written as `\...` ( of course,
   they can still be attained from their code points - `String.fromCodePoint(...)` ).&#x2020;
 - Another way to produce control characters is from the keyboard but it will only work in a terminal. By holding
@@ -604,7 +604,7 @@ const euro2 = utf16Decoder.write(Buffer.from([0x20, 0xac].reverse()));
 euro2; // €
 ```
 
-The code point of "€" is 0x20AC ( in hexadecimal ). Thus it is 2 bytes: 0x20 and 0xAC.
+The code point of "€" is `0x20AC` ( in hexadecimal ). Thus it needs at least 2 bytes to be depicted: `0x20` and `0xAC`.
 As a result, the representation of "€" in `UTF-16` is:
 
 ```
@@ -623,8 +623,9 @@ Why do that for little endian is explained [here](./little-endian.md).
 There is also a `UCS-2` encoding which also uses 2 bytes to store each code point but unlike `UTF-16`,
 `UCS-2` is a fixed-width encoding. What it means is that it doesn't use surrogate pairs to depict code
 points outside of BMP. For example `UCS-2` would interpret the 2 code points `\uD834\uDF06` ( both of which
-are surrogate code points ) _not_ as a surrogate pair ( thus converting them to the code point `` ) but as
-2 separate characters. Since neither `\uD834` nor `\uDF06` produce a visible output, nothing would be shown.
+are surrogate code points ) _not_ as a surrogate pair ( thus converting them to the code point `1d306` )
+but as 2 separate characters: `\uD834` and `\uDF06`. Since neither `\uD834` nor `\uDF06` produce a visible output,
+nothing would be shown.
 
 Thus `UCS-2` is limited to being able to depict only BMP characters.
 
