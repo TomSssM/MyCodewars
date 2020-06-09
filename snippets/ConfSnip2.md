@@ -341,3 +341,129 @@ Before dispatch
 event cool dispatched
 After dispatch
 ```
+
+## `const` / `let` vs global scope vs `var`
+
+It is no secret that every variable created with `var` gets saved into `window`:
+
+```js
+var dude = 'ok';
+window.dude; // 'ok'
+```
+
+`const` / `let` on the other hand don't get saved into `window` but into their own scope:
+
+```js
+const dd = 'ok';
+window.dd; // undefined
+dd; // 'ok'
+```
+
+What I mean to point out here is that just because `const` / `let` seem to reside in a different scope, they will
+still conflict with variables created by `var` ( and vice versa ). Here is an example:
+
+```js
+const foo = 'ok';
+var foo = 'okay'; // SyntaxError: redeclaration of const foo
+
+let bar = 11;
+var bar = 12; // SyntaxError: redeclaration of let bar
+
+var zz = 'sleeping';
+let zz = 'coffee after bed'; // SyntaxError: redeclaration of var zz
+```
+
+## Throw `new Error(...)` vs `Promise.reject(...)`
+
+If an error is thrown inside `then`, then it is going to be caught by the
+closest `catch` function:
+
+```js
+Promise.resolve()
+	.then(() => {
+		throw new Error('ok');
+	})
+	.catch(() => {
+  	    console.log('caught');
+	});
+// caught
+```
+
+On the other hand, if a _promise_ rejects inside a `then` function, then it __won't__ be caught
+by the closest `catch` function:
+
+```js
+Promise.resolve()
+	.then(() => {
+		Promise.reject('ok');
+	})
+	.catch(() => {
+  	    console.log('caught');
+	});
+// uncaught exception: ok
+```
+
+Only _returned_ promise rejections will be caught:
+
+```js
+Promise.resolve()
+	.then(() => {
+		return Promise.reject('ok');
+	})
+	.catch(() => {
+  	    console.log('caught');
+	});
+// caught
+```
+
+That is why it is so important to always return a promise inside `then`, or if you cannot afford to do that,
+you should add more `catch` blocks like this:
+
+```js
+Promise.resolve()
+	.then(() => {
+		Promise.reject('ok').catch(() => {
+          console.log('inner caught');
+        });
+	})
+	.catch(() => {
+  	    console.log('caught');
+	});
+// inner caught
+```
+
+**Note:** the same rules apply to the callback passed to a Promise constructor:
+
+```js
+new Promise(() => {
+    throw new Error('ok');
+}).catch(() => {
+    console.log('caught');
+});
+// caught
+
+new Promise(() => {
+    Promise.reject('ok');
+}).catch(() => {
+    console.log('caught');
+});
+// uncaught exception: ok
+```
+
+The same is true for `async` functions:
+
+```js
+(async () => {
+    throw new Error('ok');
+})().catch(() => {
+    console.log('caught');
+});
+// caught
+
+(async () => {
+    Promise.reject('ok');
+})().catch(() => {
+    console.log('caught');
+});
+// uncaught exception: ok
+```
