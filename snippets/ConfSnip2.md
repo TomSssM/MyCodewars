@@ -380,12 +380,12 @@ closest `catch` function:
 
 ```js
 Promise.resolve()
-	.then(() => {
-		throw new Error('ok');
-	})
-	.catch(() => {
-  	    console.log('caught');
-	});
+    .then(() => {
+        throw new Error('ok');
+    })
+    .catch(() => {
+        console.log('caught');
+    });
 // caught
 ```
 
@@ -394,12 +394,12 @@ by the closest `catch` function:
 
 ```js
 Promise.resolve()
-	.then(() => {
-		Promise.reject('ok');
-	})
-	.catch(() => {
-  	    console.log('caught');
-	});
+    .then(() => {
+        Promise.reject('ok');
+    })
+    .catch(() => {
+        console.log('caught');
+    });
 // uncaught exception: ok
 ```
 
@@ -407,12 +407,12 @@ Only _returned_ promise rejections will be caught:
 
 ```js
 Promise.resolve()
-	.then(() => {
-		return Promise.reject('ok');
-	})
-	.catch(() => {
-  	    console.log('caught');
-	});
+    .then(() => {
+        return Promise.reject('ok');
+    })
+    .catch(() => {
+        console.log('caught');
+    });
 // caught
 ```
 
@@ -421,14 +421,14 @@ you should add more `catch` blocks like this:
 
 ```js
 Promise.resolve()
-	.then(() => {
-		Promise.reject('ok').catch(() => {
-          console.log('inner caught');
+    .then(() => {
+        Promise.reject('ok').catch(() => {
+            console.log('inner caught');
         });
-	})
-	.catch(() => {
-  	    console.log('caught');
-	});
+    })
+    .catch(() => {
+        console.log('caught');
+    });
 // inner caught
 ```
 
