@@ -58,5 +58,9 @@ cannot know the _response_ headers until the server has fully processed the requ
 For state mutating methods like POST this drawback can be very dangerous: what if the attacker knows how our app works
 and has just now added his own account to the list of admins?
 
-That is why you should always send user id in cookies ( very advisable with the `strict` flag ) and verify
-every user's permissions for any operation.
+But such an emergency can be easily prevented if you supply the appropriate security headers
+( `Access-Control-Allow-Origin`, `Access-Control-Expose-Headers` etc. ) in response to the preflight `OPTIONS` request
+instead of to the `POST` request. This way, the browser will see the headers and forbid the website to
+make the `POST` request.
+
+So long as `GET` requests don't mutate state of your application everything is going to be OK.
