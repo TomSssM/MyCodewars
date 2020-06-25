@@ -10,4 +10,4 @@
 - [Diff](diff/README.md)
 - [Longest Consequtive Sequence](./longest-cons-sequence.js)
 - [Smart Calculator](./smart-calculator.js)
-- Sorter
+- [Sorter](./sorter.js)
