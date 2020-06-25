@@ -8,6 +8,6 @@
 - [Sudoku](./sudoku.js)
 - [Longest Common Subsequence](./longest-common-subsequence.js)
 - [Diff](diff/README.md)
-- Longest Consequtive Sequence
+- [Longest Consequtive Sequence](./longest-cons-sequence.js)
 - [Smart Calculator](./smart-calculator.js)
 - Sorter
