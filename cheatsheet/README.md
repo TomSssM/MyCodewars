@@ -9,5 +9,5 @@
 - [Longest Common Subsequence](./longest-common-subsequence.js)
 - [Diff](diff/README.md)
 - Longest Consequtive Sequence
-- Smart Calculator
+- [Smart Calculator](./smart-calculator.js)
 - Sorter
