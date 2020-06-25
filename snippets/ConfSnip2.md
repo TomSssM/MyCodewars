@@ -467,3 +467,98 @@ The same is true for `async` functions:
 });
 // uncaught exception: ok
 ```
+
+## Class Fields
+
+Normally, you would create instance properties inside the `constructor` like this:
+
+```js
+class Laboratory {
+    constructor() {
+        this.name = 'Tom';
+        this.surname = 'Surnames';
+    }
+}
+
+const l = new Laboratory();
+
+l.name; // 'Tom'
+l.surname; // 'Surnames'
+```
+
+But _class fields_ syntax allows you to do the same outside the `constructor`:
+
+```js
+class Laboratory {
+    name = 'Tom'
+    surname = 'Surnames'
+
+    constructor() {
+    }
+}
+
+const l = new Laboratory();
+
+l.name; // 'Tom'
+l.surname; // 'Surnames'
+```
+
+The same is true for static fields:
+
+```js
+class Laboratory {
+    static name = 'Tom'
+    static surname = 'Surnames'
+
+    constructor() {
+        this.name = 'Wat';
+        this.surname = 'Dude';
+    }
+}
+
+const l = new Laboratory();
+
+Laboratory.name; // 'Tom'
+Laboratory.surname; // 'Surnames'
+l.name; // 'Wat'
+l.surname; // 'Dude'
+```
+
+**Note:** this syntax always creates an _own_ property on the instance ( lines `(*)` and `(**)` ), NOT on the prototype,
+while the syntax for definining methods ( line `(***)` ) always creates a method on the prototype:
+
+```js
+class Laboratory {
+    name = 'Tom' // (*)
+    surname = 'Surnames' // (**)
+    methodName() { // (***)
+        return `${this.name} is ok`;
+    }
+}
+
+const l = new Laboratory();
+
+l.hasOwnProperty('name'); // true
+l.hasOwnProperty('methodName'); // false
+```
+
+**Also note:** the `this` keyword is going to refer to the class itself for _static_ class fields:
+
+```js
+class Laboratory {
+    static StaticName = 'Tom'
+    static StaticFullName = this.StaticName + ' is OK' // this === Laboratory
+}
+
+Laboratory.StaticName; // 'Tom'
+Laboratory.StaticFullName; // 'Tom is OK'
+```
+
+and the `this` keyword is going to refer to the instance itself for non-static class fields:
+
+```js
+class Laboratory {
+    name = 'Tom'
+    surname = this.name + ' ' + 'Surnames' // this === new Laboratory()
+}
+```
