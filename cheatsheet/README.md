@@ -1,7 +1,7 @@
 # Hardcore
 - [Love Triangle](./love-triangles.js)
 - [Quadratic Equation](./quadratic-equation.js)
-- [Brackets](./brackets.js)
+- [Brackets](./brackets/README.md)
 - [Cash Exchange](./cash-exchange.js)
 - [Advanced Zeros](./advanced-zeros.js)
 - [Priority Queue](./priority-queue)
