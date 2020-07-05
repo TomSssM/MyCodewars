@@ -562,3 +562,33 @@ class Laboratory {
     surname = this.name + ' ' + 'Surnames' // this === new Laboratory()
 }
 ```
+
+## 3rd argument to `Reflect`
+
+You might get an erroneous feeling that the 3rd argument to `Reflect` is a context, which should be used to look up
+any property but in reality it is not:
+
+```js
+const o1 = { name: 'Tom' };
+const o2 = { name: 'Dude' };
+const out = Reflect.get(o1, 'name', o2); // Tom
+```
+
+In the example above `Reflect` still looked up the property `name` on `o1`, not on `o2`.
+So when does `Reflect` use the 3rd argument as a context then? The answer is: when the property is a __getter__.
+Here is an example:
+
+```js
+const o1 = {
+    name: 'Tom',
+    get surname() {
+        return this.name; // (*)
+    },
+};
+const o2 = { name: 'Dude' };
+
+const out = Reflect.get(o1, 'surname', o2); // Dude
+```
+
+Now `Reflect` used `o2` as `this` but only in line `(*)`. And that is what the 3rd argument is for. `Reflect` passes it
+as `this` whenever to a __getter__ property, not to a usual property.
