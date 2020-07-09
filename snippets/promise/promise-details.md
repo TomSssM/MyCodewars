@@ -972,7 +972,7 @@ first one 1
 
 ...2 seconds passed
 
-after2 seconds 2 
+after2 seconds 2
 last one 4
 ```
 
@@ -1036,7 +1036,7 @@ after2 seconds 2
 last one 1
 ```
 
-Look, in line `(*)` the value of `data` is going to be `undefined`, so as we can see the value that the Promise in 
+Look, in line `(*)` the value of `data` is going to be `undefined`, so as we can see the value that the Promise in
 line `(**)` resolved to didn't get passed to `finally`, but instead this value was passed to the _next `then`
 in the chain,_ thus in line `(***)` the value of `data` is `1`.
 
@@ -1103,3 +1103,5 @@ as they are in a way part of the initialization.
 Part of the reason for such a behavior is perhaps that `Promise` might be possible to [polyfill](../../Polyfill.js).
 Just think about it, if the intentional behavior were to execute `then` that logs `"three"` before the `then`
 that logs `"two"`, in this case polyfill-ing `Promise` would be impossible.
+
+[Part 2](./promise-details-2.md)

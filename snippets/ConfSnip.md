@@ -544,7 +544,7 @@ drawES2015Chart(); // doesn't fail though arguments[0] === undefined
 
 ## Import Confusion
 
-The second ( `<two>` ) thing in `import <one>, <two> from ...` is actually the _whole_ module 
+The second ( `<two>` ) thing in `import <one>, <two> from ...` is actually the _whole_ module
 ( don't forget about it ):
 
 ```js
@@ -577,7 +577,7 @@ console.log('Hi! From Laboratory');
 // Hi! From Laboratory
 ```
 
-There is also a Promise-based _dynamic_ import. _Dynamic_ simply means that we import a module based on some user 
+There is also a Promise-based _dynamic_ import. _Dynamic_ simply means that we import a module based on some user
 action rather than as soon as the page has been loaded. An example:
 
 ```js
@@ -676,57 +676,6 @@ const o2 = {
 };
 ```
 
-## First confusion with new fields syntax
-
-We have to use an arrow function as a field instead of a usual method only if it is an event 
-listener( I apologize for JSX in this repo ):
-
-```jsx harmony
-class App extends Component {
-  validateField = 'validation succeeded';
-
-  eventListener = () => {
-    this.helperFunction('Hello World'); // (*)
-  };
-
-  helperFunction(message) {
-    console.log(message, this.validateField);
-    console.log(this);
-  }
-
-  render() {
-    return (
-        <h1
-            style={{backgroundColor: 'yellow'}}
-            onClick={this.eventListener}
-        >
-          Hello Redux
-        </h1>
-    );
-  }
-}
-```
-
-You see since the context was already bound when we called `helperFunction` in line `(*)` we don't need to
-write `helperFunction` as arrow function like that:
-
-```jsx harmony
-class App extends Component {
-  // ...
-
-  helperFunction = (message) => {
-    console.log(message, this.validateField);
-    console.log(this);
-  };
-  
-  // ...
-}
-```
-
-Thus if we write as arrow-functions-fields only those methods that serve as event listeners 
-( like `this.eventListener` in `App` ) we should be alright not redefining context for the rest 
-of the methods ( like `this.helperFunction` in `App` ).
-
 ## Arrow Functions really shouldn't be used as methods
 
 ```js
@@ -746,7 +695,7 @@ o.notBound(); // "Tom"
 
 Since `bound` is an arrow function it uses the `this` defined by the nearest regular function or the one
 that lies in the global scope ( out in the open if you do: `console.log(this)` it returns the window object ).
-In our case since we didn't _define_ ( define cause Lexical this remember ) `bound` inside another function
+In our case since we didn't _define_ ( define cause Lexical `this` remember ) `bound` inside another function
 its `this` is going to be the same `this` as the one in the global scope. Thus it is going to be the window object.
 
 ## Default Parameters Functions have separate Scope
@@ -838,12 +787,12 @@ Here is the explanation in the extract of one out of the few fathomable entries 
 ---
 
 Else, both px and py are Strings
-    a. If *py* is a prefix of *px*, return **false**. ( A String value *p* is a prefix of String value *q* if *q* 
-       can be the result of concatenating *p* and some other String *r*. Note that any String is a prefix of itself, 
+    a. If *py* is a prefix of *px*, return **false**. ( A String value *p* is a prefix of String value *q* if *q*
+       can be the result of concatenating *p* and some other String *r*. Note that any String is a prefix of itself,
        because *r* may be the empty String. )
     b. If *px* is a prefix of *py*, return **true**.
-    c. Let *k* be the smallest non-negative integer such that the character at position *k* within *px* is different 
-       from the character at position *k* within *py*. ( There must be such a *k*, for neither String is a prefix 
+    c. Let *k* be the smallest non-negative integer such that the character at position *k* within *px* is different
+       from the character at position *k* within *py*. ( There must be such a *k*, for neither String is a prefix
        of the other. )
     d. Let *m* be the integer that is the code unit value for the character at position *k* within *px*.
     e. Let *n* be the integer that is the code unit value for the character at position *k* within *py*.

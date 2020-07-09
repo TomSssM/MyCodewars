@@ -114,3 +114,179 @@ c: true
 
 If `logParams` had 4th param, then in the 2nd call, it would be `'wow'`, 5th parameter would be `2`, 6th and 7th
 would be `NaN` and `null` correspondingly.
+
+## First confusion with new fields syntax
+
+We have to use an arrow function as a field instead of a usual method only if it is an event
+listener( I apologize for JSX in this repo ):
+
+```jsx harmony
+class App extends Component {
+  validateField = 'validation succeeded';
+
+  eventListener = () => {
+    this.helperFunction('Hello World'); // (*)
+  };
+
+  helperFunction(message) {
+    console.log(message, this.validateField);
+    console.log(this);
+  }
+
+  render() {
+    return (
+        <h1
+            style={{backgroundColor: 'yellow'}}
+            onClick={this.eventListener}
+        >
+          Hello Redux
+        </h1>
+    );
+  }
+}
+```
+
+You see since the context was already bound when we called `helperFunction` in line `(*)` we don't need to
+write `helperFunction` as arrow function like that:
+
+```jsx harmony
+class App extends Component {
+  // ...
+
+  helperFunction = (message) => {
+    console.log(message, this.validateField);
+    console.log(this);
+  };
+
+  // ...
+}
+```
+
+Thus if we write as arrow-functions-fields only those methods that serve as event listeners
+( like `this.eventListener` in `App` ) we should be alright not redefining context for the rest
+of the methods ( like `this.helperFunction` in `App` ).
+
+## Class Fields
+
+Normally, you would create instance properties inside the `constructor` like this:
+
+```js
+class Laboratory {
+    constructor() {
+        this.name = 'Tom';
+        this.surname = 'Surnames';
+    }
+}
+
+const l = new Laboratory();
+
+l.name; // 'Tom'
+l.surname; // 'Surnames'
+```
+
+But _class fields_ syntax allows you to do the same outside the `constructor`:
+
+```js
+class Laboratory {
+    name = 'Tom'
+    surname = 'Surnames'
+
+    constructor() {
+    }
+}
+
+const l = new Laboratory();
+
+l.name; // 'Tom'
+l.surname; // 'Surnames'
+```
+
+The same is true for static fields:
+
+```js
+class Laboratory {
+    static name = 'Tom'
+    static surname = 'Surnames'
+
+    constructor() {
+        this.name = 'Wat';
+        this.surname = 'Dude';
+    }
+}
+
+const l = new Laboratory();
+
+Laboratory.name; // 'Tom'
+Laboratory.surname; // 'Surnames'
+l.name; // 'Wat'
+l.surname; // 'Dude'
+```
+
+**Note:** this syntax always creates an _own_ property on the instance ( lines `(*)` and `(**)` ), NOT on the prototype,
+while the syntax for definining methods ( line `(***)` ) always creates a method on the prototype:
+
+```js
+class Laboratory {
+    name = 'Tom' // (*)
+    surname = 'Surnames' // (**)
+    methodName() { // (***)
+        return `${this.name} is ok`;
+    }
+}
+
+const l = new Laboratory();
+
+l.hasOwnProperty('name'); // true
+l.hasOwnProperty('methodName'); // false
+```
+
+**Also note:** the `this` keyword is going to refer to the class itself for _static_ class fields:
+
+```js
+class Laboratory {
+    static StaticName = 'Tom'
+    static StaticFullName = this.StaticName + ' is OK' // this === Laboratory
+}
+
+Laboratory.StaticName; // 'Tom'
+Laboratory.StaticFullName; // 'Tom is OK'
+```
+
+and the `this` keyword is going to refer to the instance itself for non-static class fields:
+
+```js
+class Laboratory {
+    name = 'Tom'
+    surname = this.name + ' ' + 'Surnames' // this === new Laboratory()
+}
+```
+
+## 3rd argument to `Reflect`
+
+You might get an erroneous feeling that the 3rd argument to `Reflect` is a context, which should be used to look up
+any property but in reality it is not:
+
+```js
+const o1 = { name: 'Tom' };
+const o2 = { name: 'Dude' };
+const out = Reflect.get(o1, 'name', o2); // Tom
+```
+
+In the example above `Reflect` still looked up the property `name` on `o1`, not on `o2`.
+So when does `Reflect` use the 3rd argument as a context then? The answer is: when the property is a __getter__.
+Here is an example:
+
+```js
+const o1 = {
+    name: 'Tom',
+    get surname() {
+        return this.name; // (*)
+    },
+};
+const o2 = { name: 'Dude' };
+
+const out = Reflect.get(o1, 'surname', o2); // Dude
+```
+
+Now `Reflect` used `o2` as `this` but only in line `(*)`. And that is what the 3rd argument is for. `Reflect` passes it
+as `this` whenever a __getter__ is invoked, not to a usual property.
