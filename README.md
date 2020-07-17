@@ -22,6 +22,7 @@
 - __Interview Prep Kit__ :rocket:
   - [Task challenges ( Task 1 - 20 )](./1\)%20Task%20Challanges.md)
   - [Task challenges ( Task 21 - 40 )](./2\)%20Task%20Challanges.md)
+  - [Task challenges ( Task 41 - 70 )](./3\)%20Task%20Challanges.md)
 
 - __CodeWars__ :paperclip:
   - [CodeWars ( Task 1 - 10 )](./1\)%20CodeWars.js)
