@@ -87,6 +87,14 @@ if (!Array.prototype.mapUsingReduce) {
   (currentValue, index, array) => currentValue + index + array.length
 ); // [5, 7, <1 empty item>, 10]
 
+// Object.create polyfill:
+
+Object.prototype.myCreate = function (innerProto) {
+    const F = function () {};
+    F.prototype = innerProto;
+    return new F();
+};
+
 // Promise polyfill:
 
 class MegaPromise {
