@@ -372,3 +372,89 @@ var bar = 12; // SyntaxError: redeclaration of let bar
 var zz = 'sleeping';
 let zz = 'coffee after bed'; // SyntaxError: redeclaration of var zz
 ```
+
+## `stopPropagation` for Capture Phase
+
+We can `stopPropagation` for the Capture Phase just like for the Bubbling Phase. Here is an example:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stop Propagation Intricacy</title>
+</head>
+<body>
+<div id="special">
+  <span id="inner-special">
+    Special Element
+  </span>
+</div>
+<script>
+  const special = document.querySelector('#special');
+  const innerSpecial = document.querySelector('#inner-special');
+
+  special.addEventListener('click', (e) => { // (*)
+    console.log('special clicked');
+    e.stopPropagation();
+  }, true);
+
+  innerSpecial.addEventListener('click', () => { // (**)
+    console.log('inner special clicked');
+  }, true);
+</script>
+</body>
+</html>
+```
+
+When we click on the text `Special Element`, we are actually going to be clicking on the `#inner-special` HTMl element.
+As a result, the event listener in line `(*)` will be queued for execution _before_ the event listener in line `(**)`
+( because we are in the Capture Phase, thus the topmost-first order ). But because the event listener in line `(*)`
+makes a call to `e.stopPropagation`, it will cancel the execution of all the following event listeners to be executed
+As a result, the event listener in line `(**)` will not be called.
+
+**Note:** what is even more interesting is that a call to `e.stopPropagation` in the Capture Phase also cancels
+execution of any event listeners registered for the Bubbling Phase. Here is an example:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stop Propagation Intricacy</title>
+</head>
+<body>
+<div id="special">
+  <span id="inner-special">
+    Special Element
+  </span>
+</div>
+<script>
+  const special = document.querySelector('#special');
+  const innerSpecial = document.querySelector('#inner-special');
+
+  special.addEventListener('click', (e) => { // (*)
+    console.log('special capture clicked');
+    e.stopPropagation();
+  }, true);
+
+  innerSpecial.addEventListener('click', () => { // (**)
+    console.log('inner special capture clicked');
+  }, true);
+
+  special.addEventListener('click', () => { // (***)
+    console.log('special bubbling clicked');
+  });
+
+  innerSpecial.addEventListener('click', () => { // (****)
+    console.log('inner special bubbling clicked');
+  });
+</script>
+</body>
+</html>
+```
+
+Upon clicking the `#inner-special` HTML element, only the event listener in line `(*)` will be called
+and the event listeners in lines `(**)`, `(***)` and `(****)` will be ignored. The last 2 are set for the
+Bubbling phase and they will also be ignored because of a call to `e.stopPropagation` in the event listener
+in line `(*)`.

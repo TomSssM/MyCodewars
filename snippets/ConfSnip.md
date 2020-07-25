@@ -656,6 +656,24 @@ export default class SomeClass {};
 
 will give no error.
 
+It is also no secret that we can export variable declarations:
+
+```js
+export const name = 'Tom';
+```
+
+It also means that we can export _destructuring_:
+
+```js
+const person = {
+    name: 'tom',
+    smth: 'smth',
+};
+export const { name, smth } = person;
+```
+
+Now our module will have 2 exported members: `name` and `smth`.
+
 ## getters/setters and syntax
 
 Remember that we can never use an accessor as though it were a method. Here is what I mean:
