@@ -458,3 +458,33 @@ Upon clicking the `#inner-special` HTML element, only the event listener in line
 and the event listeners in lines `(**)`, `(***)` and `(****)` will be ignored. The last 2 are set for the
 Bubbling phase and they will also be ignored because of a call to `e.stopPropagation` in the event listener
 in line `(*)`.
+
+## `bind`-ing functions several times in a row
+
+If you bind function several times, you can keep on binding arguments but it will the first _bound_ context that
+was provided to the 1st call:
+
+```js
+function fun (a, b, c) {
+    console.log('this:', this);
+    console.log('a:', a);
+    console.log('b:', b);
+    console.log('c:', c);
+}
+
+const bound1 = fun.bind({ name: 'John' }, 1);
+const bound2 = bound1.bind({ age: 123 }, 2);
+bound2(3);
+```
+
+Output is going to be:
+
+```
+this: { name: 'John' }
+a: 1
+b: 2
+c: 3
+```
+
+**Note:** the behavior will be the same for an arrow function except you cannot bind the context even during
+the 1st call.
