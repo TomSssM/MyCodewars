@@ -60,8 +60,8 @@ Array.prototype.myForEach = function(fn, thisCont) {
 
 [1,2,3].myForEach(function(v, i, arr) {
   console.log(`value: ${v}; index: ${i}; array value: ${arr}`);
-  console.log(`this cont: ${this}`); // => Wrapper Object
-}, 'stringo');
+  console.log(`this cont: ${this}`); // => Wrapper Object for 'smth'
+}, 'smth');
 
 
 // 4) Array.prototype.filter

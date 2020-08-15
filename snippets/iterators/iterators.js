@@ -198,12 +198,12 @@ Number.prototype[Symbol.iterator] = function* () {
 console.log(...3);
 
 String.prototype[Symbol.iterator] = function* () {
-  yield 'I';
-  yield 'be';
-  yield 'stringo star';
+  yield 'sleep';
+  yield 'all';
+  yield 'day';
 };
 
-console.log(...'drummer');
+console.log(...'cat');
 
 // iterator for a Linked List:
 class LinkedList {
@@ -235,7 +235,7 @@ class LinkedList {
         current = current.next;
       }
     }
-  
+
     return gen();
   }
 }
