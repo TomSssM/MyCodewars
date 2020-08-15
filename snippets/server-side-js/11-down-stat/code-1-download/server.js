@@ -9,8 +9,8 @@ function accept(req, res) {
         // simulating a very long file:
         let curr ='';
         let times = 0;
-        function readTheGoldBug() {
-            readFile(path.join(__dirname, 'theGoldBug.json'), 'utf-8', (err, file) => {
+        function readTheBook() {
+            readFile(path.join(__dirname, 'book.json'), 'utf-8', (err, file) => {
                 if(err) {
                     console.log(err);
                     return;
@@ -19,10 +19,10 @@ function accept(req, res) {
                 curr += file;
                 if(times === 70) {
                     res.end(curr);
-                } else readTheGoldBug();
+                } else readTheBook();
             });
         }
-        readTheGoldBug();
+        readTheBook();
     } else file.serve(req, res);
 }
 

@@ -92,10 +92,10 @@ As there as no PR's or issues right now the #2 reference is futile. We will have
 
 ___
 
-![the real ghostbusters img](https://upload.wikimedia.org/wikipedia/en/thumb/5/5d/Realghostbusters_title.jpg/250px-Realghostbusters_title.jpg "Title Here")
+![Inside JS](../data/inside-JS.png "Title Here")
 
 <p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/5d/Realghostbusters_title.jpg/250px-Realghostbusters_title.jpg" width="100" height="100" title="title here as well" />
+  <img src="../data/inside-JS.png" width="100" height="100" title="title here as well" />
 </p>
 
 # Part 9
