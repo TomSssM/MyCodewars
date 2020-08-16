@@ -488,3 +488,67 @@ c: 3
 
 **Note:** the behavior will be the same for an arrow function except you cannot bind the context even during
 the 1st call.
+
+## Function declaration quirks
+
+### Function declarations are function scoped
+
+Just like variables declared with `var`:
+
+```js
+function foo() {
+    bar(); // ok: logs 'bar'
+
+    function bar() {
+        console.log('bar');
+    }
+}
+
+foo();
+bar(); // error: bar is not defined
+```
+
+
+### Function declarations don't hoist sometimes
+
+Function declarations don't hoist if the compiler doesn't parse the code with their declaration:
+
+```js
+function test() {
+    innerFunc(); // error: innerFunc is not a function
+    if (false) {
+        function innerFunc() {
+            console.log('inner');
+        }
+    }
+}
+test();
+```
+
+in the example above the compiler never enters the `if` block because of a constant condition. As a result it
+never even creates a function `innerFunc`.
+
+What is curious is that the variable `innerFunc` gets _initialized_ to `undefined` just because there exists
+that function declaration ( even if the compiler never enters the `if` block ):
+
+```js
+function test() {
+    console.log(innerFunc); // undefined
+    if (false) {
+        function innerFunc() {
+            console.log('inner');
+        }
+    }
+}
+test();
+```
+
+Compare it to the situation where there is no function declaration, we don't get `undefined`, instead JavaScript
+throws an error that the variable doesn't exist:
+
+```js
+function test() {
+    console.log(innerFunc); // error: innerFunc is not defined
+}
+test();
+```
