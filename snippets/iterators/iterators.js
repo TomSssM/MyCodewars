@@ -91,6 +91,19 @@ for(let val of generatorIterable) {
   console.log(val);
 }
 
+// there is also syntactic sugar for generator methods:
+const generatorIterable2 = {
+  currentIndex: 0,
+  *[Symbol.iterator]() {
+    while(this.currentIndex <= 3) {
+      yield this.currentIndex++;
+    }
+  },
+};
+for(let val of generatorIterable2) {
+  console.log('generatorIterable2:', val);
+}
+
 // with ES2015 Class
 class Iterable {
   constructor() {
@@ -111,6 +124,22 @@ class Iterable {
 const iterableClass = new Iterable();
 console.log([...iterableClass]);
 console.log(Array.from(iterableClass));
+
+// or with a generator:
+class Iterable2 {
+    constructor() {
+        this.index = 0;
+    }
+
+    *[Symbol.iterator]() {
+        while (this.index < 3) {
+            yield `class: ${this.index++}`;
+        }
+    }
+}
+
+console.log('Iterable2:');
+console.log(Array.from(new Iterable2()));
 
 // 4) Use cases of Iterables
 
