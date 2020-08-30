@@ -8,29 +8,17 @@ and run the output on Machine Z
 
 Here is the extensions list:
 ```bash
-code --install-extension CoenraadS.bracket-pair-colorizer
-code --install-extension HookyQR.beautify
-code --install-extension kisstkondoros.vscode-gutter-preview
-code --install-extension mrmlnc.vscode-autoprefixer
-code --install-extension pranaygp.vscode-css-peek
-code --install-extension msjsdiag.debugger-for-chrome
-code --install-extension ritwickdey.LiveServer
-code --install-extension techer.open-in-browser
-code --install-extension gencer.html-slim-scss-css-class-completion
-code --install-extension formulahendry.auto-rename-tag
-code --install-extension aaron-bond.better-comments
-code --install-extension streetsidesoftware.code-spell-checker
-code --install-extension EditorConfig.EditorConfig
-code --install-extension mrmlnc.vscode-scss
 code --install-extension bierner.markdown-emoji
+code --install-extension CoenraadS.bracket-pair-colorizer-2
 code --install-extension dbaeumer.vscode-eslint
-
-code --install-extension robertohuertasm.vscode-icons
-code --install-extension PKief.material-icon-theme
-
+code --install-extension EditorConfig.EditorConfig
+code --install-extension esbenp.prettier-vscode
+code --install-extension Gruntfuggly.todo-tree
 code --install-extension obrejla.netbeans-light-theme
-code --install-extension dracula-theme.theme-dracula
-code --install-extension karsany.vscode-ideal-theme
+code --install-extension streetsidesoftware.code-spell-checker
+code --install-extension streetsidesoftware.code-spell-checker-russian
+code --install-extension sysoev.vscode-open-in-github
+code --install-extension vscode-icons-team.vscode-icons
 ```
 # Default Editor for Git
 Change the config:
@@ -40,56 +28,83 @@ git config --global core.editor "code --wait"
 # Update settings.json
 
 Here are my preferences:
-```javascript
+```json
 {
-    "workbench.iconTheme": "vscode-icons",
-    "editor.tabSize": 4,
-    "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
-    "terminal.external.windowsExec": "C:\\\\Program Files\\\\Git\\\\bin\\\\bash.exe",
-    "editor.fontSize": 14,
-    "git.confirmSync": false,
-    "git.autofetch": true,
-    "git.enableSmartCommit": true,
-    "editor.minimap.enabled": false,
-    "editor.renderLineHighlight": "line",
-    "editor.highlightActiveIndentGuide": true,
-    "workbench.colorTheme": "NetBeans Light Theme"
+  "window.zoomLevel": 0,
+  "terminal.integrated.rendererType": "dom",
+  "terminal.integrated.shell.osx": "/bin/bash",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "files.autoSave": "onFocusChange",
+  "workbench.startupEditor": "welcomePage",
+  "workbench.colorTheme": "Default Light+",
+  "editor.minimap.enabled": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.workingDirectories": [
+    { "pattern": "./packages/*" },
+    { "pattern": "./projects/*" },
+    { "pattern": "./services/*" }
+  ],
+  "editor.accessibilityPageSize": 12,
+  "emmet.excludeLanguages": [
+    "markdown"
+  ],
+  "workbench.iconTheme": "vscode-icons",
+  "cSpell.enabled": false,
+  "cSpell.userWords": [
+    "arity",
+    "uncheck"
+  ],
+  "todo-tree.regex.regex": "(//|#|<!--|/\\*|/\\*[\\n\\s\\*\\w]*)\\s*($TAGS)(:|\\W)",
+  "todo-tree.general.tags": [
+    "fixme",
+    "todo",
+    "warn"
+  ],
+  "todo-tree.regex.regexCaseSensitive": false,
+  "todo-tree.tree.scanMode": "current file",
+  "todo-tree.highlights.customHighlight": {
+    "fixme": {
+      "background": "green",
+      "foreground": "black",
+      "iconColour": "orange"
+    },
+    "todo": {
+      "background": "yellow",
+      "foreground": "black",
+      "iconColour": "yellow"
+    },
+    "warn": {
+      "background": "yellow",
+      "foreground": "black",
+      "iconColour": "yellow"
+    }
+  }
 }
 ```
 
 # Snippets
-Go to -> `Preferences: Configure User Snippets`, select the .json file for JavaScript and paste:
+
+`CommandPalette` > `Preferences: Configure User Snippets`
+
+__javascript__, __javascriptreact__, __typescript__, __typescriptreact__
+
 ```json
 {
-	"Console Log": {
-		"prefix": "cc",
-		"body": [
-			"console.log($1);$0"
-		],
-		"description": "Console Log"
-	},
-	"Function Decl": {
-		"prefix": "ff",
-		"body": [
-			"function ${1:name}(${2:parm}) {",
-			"  $0",
-			"}"
-		],
-		"description": "Function Decl"
-	},
-	"Arrow Function": {
-		"prefix": "ffa",
-		"body": [
-			"const ${1:name} = (${2:parm}) => $0;"
-		],
-		"description": "Arrow Function"
-	},
-	"Array Methods": {
-		"prefix": "arm",
-		"body": [
-			"${1|forEach,map,reduce,every|}((${2:item}) => $0);"
-		],
-		"description": "Array Methods"
-	}
+  "Print to console": {
+    "prefix": "cc",
+    "body": [
+      "console.log($0);"
+    ],
+    "description": "Log output to console"
+  }
 }
 ```
