@@ -181,24 +181,29 @@ just like AJAX. HTML forms support `GET` and `POST` HTTP methods and can set the
 `application/x-www-form-urlencoded`, `multipart/form-data`, `text/plain`. See the connection? Simple CORS requests are also
 the same HTTP requests that HTML forms can make. OK but what is the problem? You see HTML forms have existed since ancient times,
 even before CORS existed, and the problem is: HTML forms can make aforementioned HTTP requests __from any domain and to
-any domain.__ As a result, a hacker can trick the user into submitting an HTML form on his own origin, the form will make
-the request without the browser blocking it, and your server will happily process this request ( unless you take certain measures,
-which we will discuss in a moment ). That is a potential security threat because the hacker can make the unsuspecting user submit
-an HTML form whose method will be `POST` for example and whose body will be carrying the harmful information ( for adding the attacker
-to the list of admins for example, you get the drift, if an attacker can send a `POST` request with any request body he wants he will
-be able to do harm ).
+any domain.__ CORS doesn't apply to HTML forms ( the browser doesn't block HTML forms from making HTTP request to origins different
+from their own ). This happens because when HTML forms were invented, browser vendors didn't consider it a threat that HTML forms can
+make requests to third party origins, it was only later on that they realized this threat and, as a result, CORS was invented,
+but no, CORS still doesn't affect HTML forms even to this day. As a result, a hacker can trick the user into submitting an HTML form on
+his own origin, the form will make a request to your origin without the browser blocking it, and your server will happily process
+this request ( unless you take certain measures, which we will discuss in a moment ). That is a potential security threat because the
+hacker can make the unsuspecting user submit an HTML form whose method will be `POST` for example and whose body will be carrying the
+harmful information ( for adding the attacker to the list of admins for example, you get the drift, if an attacker can send a `POST`
+request with any request body he wants he will be able to do harm ).
 
-If browser vendors chose to force a preflight request even for simple requests, then web developers would forget about the fact
-that the same simple requests can be made from HTML forms and be under bigger threat.
+So back to the question of why no preflight request is made for simple CORS requests, the answer is: if browser vendors chose to
+force a preflight request even for simple requests, then web developers would forget about the fact that the same simple requests
+can be made from HTML forms and be under bigger threat.
 
 This is why you need to always remember: __`POST` requests with `Content-Type` set to `application/x-www-form-urlencoded`,
-`multipart/form-data` or `text/plain` will not trigger a preflight request but will be processed by your server even if you
-set the CORS headers in response to the preflight request.__ Only the _response_ to the `POST` request will be blocked. The same
-story for `GET` requests.
+`multipart/form-data` or `text/plain` will not trigger a preflight request but will be processed by your server.__
+Doesn't matter that you set the CORS headers in response to the preflight request, the preflight request is not going to
+be made and only the _response_ to the `POST` request will be blocked. The same story for `GET` requests.
 
 Here are 3 rules to remember in order to prevent this threat:
 
 - on your server, don't process `POST` requests with `Content-Type` other than `application/json`
+  ( because `Content-Type: application/json` requires a preflight request )
 - always answer with CORS headers to all requests
 - don't allow `GET` requests to mutate the state of your app ( e.g. add / delete data from the data base or persist data
 in other ways, `GET` requests should _take_ some data from the server and return it to the client, not _modify_ or _delete_
@@ -222,6 +227,9 @@ app.post('/addUser', (req, res) => { // method POST
     }
 });
 ```
+
+The only drawback to this is that now all `POST` requests to your server need to be in JSON format. But since JSON is the most
+common data exchange format anyways, this drawback is not significant.
 
 ## More Details
 
