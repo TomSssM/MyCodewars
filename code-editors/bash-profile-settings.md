@@ -118,10 +118,10 @@ function ps1_git_local_icon {
 
 PS1=""
 PS1+="╭─ " # start the transition
-PS1+="\[${YELLOW}\]\w" # working direcory
-PS1+="\[\$(ps1_git_fg_color)\]\$(ps1_git_branch)\$(ps1_git_local_icon)" # GIT data
-PS1+="\[${GREEN}\] ⬢ \$(node -v)" # NodeJS version
-PS1+="\[${RESET}\]\n" # wrap to a new line and reset everything
+PS1+="\\[${YELLOW}\\]\w" # working direcory
+PS1+="\\[\$(ps1_git_fg_color)\\]\$(ps1_git_branch)\$(ps1_git_local_icon)" # GIT data
+PS1+="\\[${GREEN}\\] ⬢ \$(node -v)" # NodeJS version
+PS1+="\\[${RESET}\\]\n" # wrap to a new line and reset everything
 PS1+="╰─" # finish the transition
 PS1+="\$ "
 
@@ -133,7 +133,7 @@ export PS1
 _futuristic_
 
 ```shell script
-export PS1="[\[${BRIGHT}${GREEN}\]\u@\s\[$RESET\]:\[${BLUE}\]\W\[${RESET}\]]\$ "
+export PS1="[\\[${BRIGHT}${GREEN}\\]\u@\s\\[$RESET\\]:\\[${BLUE}\\]\W\\[${RESET}\\]]\$ "
 ```
 
 ---
@@ -141,7 +141,7 @@ export PS1="[\[${BRIGHT}${GREEN}\]\u@\s\[$RESET\]:\[${BLUE}\]\W\[${RESET}\]]\$ "
 _dessert linux mood_
 
 ```shell script
-export PS1="\[${BRIGHT}${GREEN}\]\u@\s\[$RESET\]:\[${YELLOW}\]\W\[${RESET}\] \$ "
+export PS1="\\[${BRIGHT}${GREEN}\\]\u@\s\\[$RESET\\]:\\[${YELLOW}\\]\W\\[${RESET}\\] \$ "
 ```
 
 ---
@@ -175,10 +175,10 @@ function ps1_get_git_branch_prefix {
 }
 
 PS1=""
-PS1+="\[${BG_GREEN}\][\$(node -v)]\[${RESET}\]"
-PS1+=" \[\$(ps1_get_mid_char_color)\][\$(ps1_get_mid_char)]\[${RESET}\]"
-PS1+=" \[${YELLOW}\]\W\[${RESET}\]"
-PS1+="\$(ps1_get_git_branch_prefix)\[${GREEN}\]\$(ps1_git_branch)\[${RESET}\]"
+PS1+="\\[${BG_GREEN}\\][\$(node -v)]\\[${RESET}\\]"
+PS1+=" \\[\$(ps1_get_mid_char_color)\\][\$(ps1_get_mid_char)]\\[${RESET}\\]"
+PS1+=" \\[${YELLOW}\\]\W\\[${RESET}\\]"
+PS1+="\$(ps1_get_git_branch_prefix)\\[${GREEN}\\]\$(ps1_git_branch)\\[${RESET}\\]"
 PS1+=" \$ "
 export PS1
 ```
