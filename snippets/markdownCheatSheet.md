@@ -98,6 +98,12 @@ ___
   <img src="../data/inside-JS.png" width="100" height="100" title="title here as well" />
 </p>
 
+<img
+    width="200"
+    src="https://upload.wikimedia.org/wikipedia/en/5/5d/Realghostbusters_title.jpg"
+    title="src as URL"
+/>
+
 # Part 9
 | Hey You, I Love Your Soul | Invincible | Collide |
 | :--- | :---: | ---: |
