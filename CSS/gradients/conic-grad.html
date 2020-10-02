@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./configs.css">
+  <title>Conic Gradients</title>
+  <style>
+    div {
+      height: 200px;
+      width: 200px;
+      padding: 0;
+      margin: 1rem;
+      border-radius: 50%;
+      float: left;
+    }
+
+    .def {
+      background-image: conic-gradient(#fff, #000);
+    }
+
+    .def-offs {
+      background-image: conic-gradient(at 30% 40%, #fff, #000);
+    }
+
+    /* make the first color start at a different angle */
+    .diff-ang {
+      background-image: conic-gradient(from 90deg at center, #fff, #000);
+    }
+
+    .perc {
+      background-image: conic-gradient(from 20deg at center, #fff 0%, #000 100%);
+    }
+
+    .unit {
+      background-image: conic-gradient(from .1turn, #fff 0deg, #000 1turn);
+    }
+
+    .smoo {
+      /* you gotta put the color you begin with in the beginning as well as in the end */
+      background-image: conic-gradient(from 90deg, #fff, #000 130deg, #fff);
+    }
+
+    .col {
+      /* here as well */
+      background-image: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
+    }
+
+    .pie {
+      background-image: conic-gradient(red 20deg, yellow 20deg, yellow 70deg,
+      lime 70deg, lime 100deg, aqua 100deg, aqua 130deg, blue 130deg, blue 140deg,
+      magenta 140deg, magenta 170deg, chocolate 170deg, chocolate 200deg, orange 200deg,
+      orange 270deg, olive 270deg);
+    }
+  </style>
+</head>
+<body>
+  <a href="./index.html" class="main">Main</a>
+
+  <h1>Conic Gradients</h1>
+  
+  <div class="def">Default</div>
+  <div class="def-offs">Offset Center</div>
+  <div class="diff-ang">Different Angle of Start</div>
+  <div class="perc">Color Stops in Percent</div>
+  <div class="unit">Color Stops in other Units</div>
+  <div class="smoo">Smooth Transition</div>
+  <div class="col">Colorful</div>
+  <div class="pie">Pie</div>
+</body>
+</html>

@@ -1,0 +1,8 @@
+.clipping-txt-container {
+    background-color: aqua;
+    height: 100px;
+    width: 400px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

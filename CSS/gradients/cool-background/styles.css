@@ -1,0 +1,34 @@
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+#special, body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#special {
+  width: 400px;
+  height: 400px;
+  background-image:
+    linear-gradient(100deg, transparent 80%, #ffffff77 80%, #ffffff77),
+    linear-gradient(120deg, transparent 80%, #ffffff77 80%, #ffffff77),
+    linear-gradient(170deg, transparent 80%, #ffffff77 80%, #ffffff77);
+  background-color: aquamarine;
+  border-radius: 7px;
+  box-shadow: 0 0 0 4px yellowgreen;
+}
+
+#special::before {
+  content: 'Cool Background';
+  display: inline;
+  color: #fff;
+  font-size: 2rem;
+  text-shadow: 0 1px 0 lime;
+}

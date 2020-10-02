@@ -5,7 +5,7 @@
 - [Server Side JS](./server-side-js/README.md)
 - [Promise](./promise/README.md)
 - [Binary Data](./binary/README.md)
-- [GIT](./git-cheatsheet.md)
+- [CSS](../CSS/README.md)
 
 ## CS Stuff
 
@@ -25,6 +25,7 @@
 
 ## Small Snippets
 
+- [GIT](./git-cheatsheet.md)
 - [JSON](./myJSON.js)
 - [Iterators and Generators](./iterators/README.md)
 - [Event Loop](./event-loop.md)

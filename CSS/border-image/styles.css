@@ -1,0 +1,53 @@
+#bitmap {
+  width: 200px;
+  background-color: #ffa;
+  border: 36px solid yellow;
+  margin: 30px;
+  padding: 10px;
+  border-image:
+      url("./border.png")  /* source ( the image is 81x81 ) */
+      27 /                 /* slice (81 / 3 === 27 pixels) */
+      36px 28px 18px 8px / /* width ( basically the same as border width except
+                              instead of being a color it stretches the image ( do
+                              check it out in DevTools ) ) */
+      18px 14px 9px 4px     /* outset ( === width / 2 so that the image is centered ) */
+      round;                /* repeat */
+}
+
+#grad {
+  width: 200px;
+  background-color: #ccc;
+  /* border width should be the same as the width of the repeating gradient */
+  border: 40px solid;
+  border-image-source: repeating-linear-gradient(45deg, blue, blue 10px, yellow 10px, yellow 30px, aqua 30px, aqua 40px);
+  /* same with slice */
+  border-image-slice: 40;
+}
+
+#line {
+  width: 200px;
+  background-color: #ccc;
+  border: 40px solid;
+  border-image-source: linear-gradient(blue, yellow);
+  border-image-slice: 40;
+}
+
+#fill {
+  width: 200px;
+  border: 40px solid;
+  margin: 2rem;
+  padding: 2rem;
+  border-image: url("./border-fill.png") 27 fill round; /* 27 === 81 / 3 where 81 is the width of the img */
+}
+
+#width {
+  width: 200px;
+  /* border is three times as big as our slices will be */
+  border: 90px solid;
+  border-image-source: url("./ball.png");
+  border-image-slice: 30;
+  border-image-repeat: round;
+  /* without the outset our balls are made too big because of too big border and
+    don't look so good as when we scale them back down with the proper border-image-width */
+  border-image-width: 30px;
+}

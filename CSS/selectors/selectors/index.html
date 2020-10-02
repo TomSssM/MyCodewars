@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CSS Selectors Cheatsheet</title>
+  <style>
+    body {
+      background: floralwhite;
+    }
+    h1 {
+      color: lime;
+      text-decoration: underline;
+      /* text-shadow: 2px 0 0 chocolate, -2px 0 0 chocolate, 0 2px 0 chocolate, 0 -2px 0 chocolate, 1px 1px chocolate, -1px -1px 0 chocolate, 1px -1px 0 chocolate, -1px 1px 0 chocolate; */
+      -webkit-text-stroke: 1px chocolate;
+    }
+    article {
+      border: 1px dashed #444;
+      margin: .3rem 0;
+      background: #fff;
+    }
+    div {
+      display: inline-block;
+      margin: .3rem;
+      border: 1px solid #000;
+    }
+  </style>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main>
+    <h1>CSS Selectors Cheatsheet</h1>
+    <section>
+      <article>
+        <h2>Attribute Selectors</h2>
+        <div attr-one="value">attr-one="value"</div>
+        <div attr-two="man">attr-two="man"</div>
+        <div attr-two="man2">attr-two="man2"</div>
+        <div attr-three="some time this week">attr-three="some time this week"</div>
+        <div attr-four="teapot is full">attr-four="teapot is full"</div>
+        <div attr-five="who is it?">attr-five="who is it?"</div>
+        <div attr-six="carpet-in the room">attr-six="carpet in the room"</div>
+        <div attr-seven="carpet">attr-seven="carpet"</div>
+        <div attr-seven="carpet in the room">attr-seven="carpet in the room"</div>
+        <div attr-seven="ch-CH hg man-MOON en-US scot-ENG">attr-seven="ch-CH hg man-MOON en-US scot-ENG"</div>
+        <div attr-eight="man">attr-eight="man"</div>
+
+        <div attr-nine="expand">attr-nine="expand"</div>
+        <div attr-nine="now expand here please">attr-nine="now expand here please"</div>
+        <div attr-nine="in here lies the expander element man">attr-nine="in here lies the expander element man"</div>
+
+        <div attr-ten="tom">attr-ten="tom"</div>
+        <div attr-ten="tom smith">attr-ten="tom smith"</div>
+      </article>
+      <article>
+        <h2>Adjacent Sibling Combinator</h2>
+        <img src="../../../data/fran.jpg" width="100px" alt="sponge-bob">
+        <div>I come immediately after img</div>
+        <div>so do I and my brother</div>
+        <div>I am his brother</div>
+      </article>
+      <article class="general">
+        <h2>General Sibling Combinator</h2>
+        <img src="../../../data/fran.jpg" width="100px" alt="sponge-bob">
+        <div>Div element</div>
+        <ul>
+          <li>sdfdsffsd</li>
+          <li>fsdfdsf</li>
+          <li>fsdfdsfdsf</li>
+        </ul>
+        <div>I don't come immediately after img but I am after it and child of the same parent</div>
+        <div>So do we</div>
+        <div>So do we</div>
+        <div>So do we</div>
+        <div>So do we</div>
+        <section>
+          <div>we two aren't</div>
+          <div>we two aren't</div>
+        </section>
+        <div>So do we</div>
+        <div>So do we</div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

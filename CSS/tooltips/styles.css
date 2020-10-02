@@ -1,0 +1,130 @@
+.icon-pseudo-search,
+.icon-pseudo-seek-first,
+.icon-pseudo-remove {
+    background-image: linear-gradient(top,#2e2e2e 0,#000);
+    background-color: #000;
+    border: solid 1px #000;
+    color: #bfbfbf;
+    box-shadow: inset 0 1px 0 0 rgba(255,255,255,.1),inset 0 0 2px 0 rgba(255,255,255,.2);
+    border-radius: 3px;
+    cursor: pointer;
+    display: inline-block;
+    height: 18px;
+    width: 20px;
+    vertical-align: middle;
+    position: relative;
+}
+.icon-pseudo-search:hover,
+.icon-pseudo-seek-first:hover,
+.icon-pseudo-remove:hover {
+    color: #fff;
+}
+
+.icon-pseudo-search::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 6px;
+    height: 6px;
+    border: 2px solid #ccc;
+    border-radius: 14px;
+}
+.icon-pseudo-search:hover::before {
+    border-color: #fff;
+}
+.icon-pseudo-search::after {
+    content: "";
+    position: absolute;
+    top: 9px;
+    left: 11px;
+    width: 3px;
+    height: 7px;
+    margin-top: 0;
+    background: #ccc;
+    transform: rotate(-45deg);
+    border-radius: 2px;
+}
+.icon-pseudo-search:hover::after {
+    background: #fff;
+}
+
+.icon-pseudo-seek-first::before {
+    content: "";
+    display: block;
+    height: 10px;
+    width: 0;
+    border-left: solid 2px #ccc;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+}
+.icon-pseudo-seek-first:hover::before {
+    border-left-color: #fff;
+}
+.icon-pseudo-seek-first::after {
+    content: "";
+    height: 0;
+    width: 0;
+    border-style: solid;
+    border-width: 5px 8.7px 5px 0;
+    border-color: transparent #ccc transparent transparent;
+    position: absolute;
+    top: 4px;
+    left: 8px;
+}
+.icon-pseudo-seek-first:hover::after {
+    border-right-color: #fff;
+}
+
+.icon-pseudo-remove::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 9px;
+    width: 3px;
+    height: 14px;
+    background: #ccc;
+    transform: rotate(45deg);
+    border-radius: 3px;
+}
+.icon-pseudo-remove:hover::before,
+.icon-pseudo-remove:hover::after {
+    background: #fff;
+}
+.icon-pseudo-remove::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 9px;
+    width: 3px;
+    height: 14px;
+    background: #ccc;
+    transform: rotate(-45deg);
+    border-radius: 3px;
+}
+
+.alert-tooltip {
+    padding: 3px 8px;
+    background-color: #872021;
+    border: solid 1px #c22021;
+    box-shadow: 0 0 6px 0 rgba(0,0,0,.7);
+    border-radius: 3px;
+    position: relative;
+    z-index: 100;
+    display:inline-block;
+}
+.alert-tooltip::before {
+    content: "";
+    display: inline-block;
+    height: 0;
+    width: 0;
+    border: solid 6px transparent;
+    border-color: #c22021 transparent transparent;
+    position: absolute;
+    bottom: -12px;
+    left: 4px;
+}
+.alert-tooltip .alert-tooltip-text {
+    color: #fff;
+}
