@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .parent {
+            position: relative;
+        }
+        .child1, .child2 {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+        }
+        .child1 {
+            z-index: 100;
+            background-color: blue;
+        }
+        .child2 {
+            z-index: 200;
+            background-color: yellow;
+        }
+        .inner-parent {
+            position: relative;
+            z-index: 20;
+        }
+    </style>
+    <link rel="stylesheet" href="./meta.css">
+    <title>z-index yall</title>
+</head>
+<body>
+<div class="parent">
+    <div class="child1"></div>
+    <div class="inner-parent">
+        <div class="child2"></div>
+    </div>
+    <div class="meta-container">
+        <div class="meta-container__row">
+            <div class="color-box color-box_color_blue"></div> - <code>child1</code>
+        </div>
+        <div class="meta-container__row">
+            <div class="color-box color-box_color_yellow"></div> - <code>child2</code>
+        </div>
+    </div>
+    <p>
+        Both <code>child1</code> and <code>child2</code> have <code>position: absolute</code> and are positioned over each other.
+        Also <code>child2</code> has higher <code>z-index</code> than <code>child1</code>.
+        Despite that, we see <code>child1</code>, not <code>child2</code>. Why does it happen this way?
+        The answer is: <code>child2</code> has <code>offsetParent</code> whose <code>z-index</code>
+        is actually 20, which is way less than <code>child1</code>. As a result, <code>child1</code> ends up being painted
+        over <code>child2</code> ( because the <code>offsetParent</code> of <code>child2</code> has smaller <code>z-index</code>
+        than <code>child1</code>; the <code>z-index</code> of <code>offsetParent</code>, if it is set that is, is more important
+        than <code>z-index</code> of the element itself ).
+    </p>
+    <ul>
+        <li>
+            If we were to make both <code>child1</code> and <code>child2</code> have the same <code>offsetParent</code>
+            by removing <code>position: relative</code> from <code>inner-parent</code>, then <code>child2</code> would be
+            visible, not <code>child1</code>.
+        </li>
+        <li>
+            We could also force <code>child2</code> to be painted over <code>child1</code> by increasing <code>z-index</code>
+            of the <code>offsetParent</code> of <code>child1</code> ( of the element with CSS class <code>inner-parent</code> )
+            to be more than the <code>z-index</code> of <code>child1</code> ( more than 100 ).
+        </li>
+        <li>
+            Alternatively, we could simply remove <code>z-index</code> from <code>inner-parent</code> and that would make
+            the browser instead consider the <code>z-index</code> of <code>child2</code>, not <code>inner-parent</code>,
+            which is more than the <code>z-index</code> of <code>child1</code>.
+        </li>
+    </ul>
+</div>
+</body>
+</html>

@@ -22,3 +22,4 @@
 - [Cool Edges](./cool-edges/index.html)
 - [Accelerate](./excalerate/index.html)
 - [Border Image Polyfill](./border-image-polyfill.html)
+- [Z Index Revelation](./z-index/index.html)
