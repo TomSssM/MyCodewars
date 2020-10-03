@@ -19,3 +19,6 @@
     - [With `calc`](./footer/calc.html)
     - [With `absolute`](./footer/abs.html)
     - [Always Visible](./footer/visible.html)
+- [Cool Edges](./cool-edges/index.html)
+- [Accelerate](./excalerate/index.html)
+- [Border Image Polyfill](./border-image-polyfill.html)
