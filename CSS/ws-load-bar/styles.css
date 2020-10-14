@@ -8,10 +8,10 @@
   width: 0;
   border-radius: 3px;
   height: 100%;
-  background-size: 140px;
+  background-size: 400px;
   background-image: linear-gradient(to left, transparent, #ffffff80, transparent);
   background-color: gray;
-  animation: load 1.7s linear infinite;
+  animation: load 1s linear infinite;
 }
 
 .button {
@@ -34,9 +34,9 @@
 
 @keyframes load {
   from {
-    background-position: -140px;
+    background-position: 0;
   }
   to {
-    background-position: calc(300px + 140px);
+    background-position: 400px;
   }
 }
