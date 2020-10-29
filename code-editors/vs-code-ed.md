@@ -19,6 +19,7 @@ code --install-extension streetsidesoftware.code-spell-checker
 code --install-extension streetsidesoftware.code-spell-checker-russian
 code --install-extension sysoev.vscode-open-in-github
 code --install-extension vscode-icons-team.vscode-icons
+code --install-extension PKief.material-icon-theme
 ```
 # Default Editor for Git
 Change the config:
