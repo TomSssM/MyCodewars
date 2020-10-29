@@ -22,11 +22,11 @@
 
 ## Keymap
 
-- Move Line Down `FN + DOWN`
-- Move Line Up `FN + UP`
+- Move Line Down - `FN + DOWN`
+- Move Line Up - `FN + UP`
 - Comment with Line Comment - `COMMAND + /`
-- Indent Line or Selection `COMMAND + }`
-- Unindent Line or Selection `COMMAND + {`
+- Indent Line or Selection - `COMMAND + }`
+- Unindent Line or Selection - `COMMAND + {`
 - Move Caret Backward a Paragraph - `OPTION + UP`
 - Move Caret Backward a Paragraph with Selection - `OPTION + SHIFT + UP`
 - Move Caret Forward a Paragraph - `OPTION + DOWN`
@@ -44,7 +44,7 @@
 - Duplicate Line or Selection - `COMMAND + D`
 - Delete Line - `COMMAND + R`
 - Terminal - ``CONTROL + ` ``
-- Plug-ins -> Terminal -> Switch Focus To Editor `ESC`
+- Plug-ins -> Terminal -> Switch Focus To Editor - `ESC`
 - Undo - `COMMAND + Z`
 - Redo - `COMMAND + SHIFT + Z`
 - Paste From History... - `COMMAND + Shift + V`
@@ -59,7 +59,7 @@
 - Select Previous Tab - `OPTION + COMMAND + LEFT`
 - Scroll Up - `OPTION + COMMAND + UP`
 - Scroll Down - `OPTION + COMMAND + DOWN`
-- Scroll to Center `OPTION + COMMAND + /`
+- Scroll to Center - `OPTION + COMMAND + /`
 - Select All - `COMMAND + A`
 - File - `COMMAND + N`
 - Create new directory or package - `COMMAND + SHIFT + N`
@@ -72,7 +72,9 @@
 - Main Menu -> Code -> Folding -> Expand - `COMMAND + =`
 - Main Menu -> Code -> Folding -> Collapse - `COMMAND + -`
 - Main Menu -> Navigate -> Go to File... - `COMMAND + P`
-- Show Context Actions -> `OPTION + ENTER`
+- Show Context Actions - `OPTION + ENTER`
+- Main menu -> File -> Open Recent - `COMMAND + SHIFT + O`
+- Main menu -> File -> Open... - `COMMAND + O`
 
 ## Snippets ( Live Templates )
 
