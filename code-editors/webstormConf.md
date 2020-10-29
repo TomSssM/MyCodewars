@@ -5,14 +5,18 @@
 - Editor > Code Style
     - JavaScript, TypeScript
         - Punctuation
-            - [x] ... Use `single`
+            - [x] ... Use `single` quotes `always`
         - Spaces
             - [x] ES6 import/export braces
-- [x] Editor > Color Scheme > Default
-- [x] Tools > Terminal > Shell Path: `<which bash>`
+- [x] Editor > Color Scheme > `IntelliJ Light`
+- [x] Tools > Terminal > Shell Path: `/bin/bash`
 - [ ] Appearance & Behavior > System Settings > Use "safe write"
 - [x] Languages & Frameworks > JavaScript > Code Quality Tools > ESLint > Automatic ESLint configuration
 - [x] Editor > Code Style > EditorConfig > Scheme > Project
+- [x] Editor > Font
+    - Font > `JetBrains Mono`
+    - Size > `12`
+    - Line spacing > `1.2`
 
 **Note:** Empty checkbox means you need to uncheck the setting in the Preferences
 
@@ -40,7 +44,7 @@
 - Duplicate Line or Selection - `COMMAND + D`
 - Delete Line - `COMMAND + R`
 - Terminal - ``CONTROL + ` ``
-- Plug-ins -> Terminal -> Switch Focus To Editor `COMMAND + .`
+- Plug-ins -> Terminal -> Switch Focus To Editor `ESC`
 - Undo - `COMMAND + Z`
 - Redo - `COMMAND + SHIFT + Z`
 - Paste From History... - `COMMAND + Shift + V`
@@ -61,12 +65,14 @@
 - Create new directory or package - `COMMAND + SHIFT + N`
 - Active Next Window - ``COMMAND + ` ``
 - Line/Column - `COMMAND + L`
-- Split Line - `COMMAND + ENNTER`
+- Split Line - `COMMAND + ENTER`
 - Show Usages - `COMMAND + SHIFT + W`
-- Main Menu -> Navigate -> Back - `OPTION + Z`
-- Main Menu -> Navigate -> Forward - `OPTION + SHIFT + Z`
+- Main Menu -> Navigate -> Back - `OPTION + COMMAND + ,`
+- Main Menu -> Navigate -> Forward - `OPTION + COMMAND + .`
 - Main Menu -> Code -> Folding -> Expand - `COMMAND + =`
 - Main Menu -> Code -> Folding -> Collapse - `COMMAND + -`
+- Main Menu -> Navigate -> Go to File... - `COMMAND + P`
+- Show Context Actions -> `OPTION + ENTER`
 
 ## Snippets ( Live Templates )
 
@@ -99,3 +105,5 @@ Syntax:
 ```
 document.querySelectorAll('$query$')$END$
 ```
+
+**Note:** all live templates are applicable in `JavaScript and TypeScript`.
