@@ -29,8 +29,8 @@
 - Move Caret Forward a Paragraph with Selection - `OPTION + SHIFT + DOWN`
 - Move Caret to Text Start - `COMMAND + UP`
 - Move Caret to Text Start with Selection - `SHIFT + COMMAND + UP`
-- Move Caret to Text Bottom - `COMMAND + DOWN`
-- Move Caret to Text Bottom with Selection - `SHIFT + COMMAND + DOWN`
+- Move Caret to Text End - `COMMAND + DOWN`
+- Move Caret to Text End with Selection - `SHIFT + COMMAND + DOWN`
 - Move Caret to Line Start with Selection - `SHIFT + COMMAND LEFT`
 - Move Caret to Line End with Selection - `SHIFT + COMMAND RIGHT`
 - Move Caret to Line Start - `COMMAND LEFT` or `SHIFT + COMMAND + ;`
@@ -40,18 +40,19 @@
 - Duplicate Line or Selection - `COMMAND + D`
 - Delete Line - `COMMAND + R`
 - Terminal - ``CONTROL + ` ``
+- Plug-ins -> Terminal -> Switch Focus To Editor `COMMAND + .`
 - Undo - `COMMAND + Z`
 - Redo - `COMMAND + SHIFT + Z`
 - Paste From History... - `COMMAND + Shift + V`
-- Git Commit - `COMMAND + K`
-- Git Push - `COMMAND + Shift + K`
+- Version Control Systems -> Commit... - `COMMAND + K`
+- Version Control Systems -> Push... - `COMMAND + Shift + K`
 - Preferences - `COMMAND + ,`
 - Add Selection for Next Occurrence - `COMMAND + G`
 - Find in Path - `SHIFT + COMMAND + F`
-- Toggle italic mode ( Plugins -> Markdown Support ) - `COMMAND + I`
-- Toggle bold mode ( Plugins -> Markdown Support ) - `COMMAND + B`
+- Plugins -> Markdown Support -> Toggle italic mode - `COMMAND + I`
+- Plugins -> Markdown Support -> Toggle bold mode - `COMMAND + B`
 - Select Next Tab - `OPTION + COMMAND + RIGHT`
-- Select Tab - `OPTION + COMMAND + LEFT`
+- Select Previous Tab - `OPTION + COMMAND + LEFT`
 - Scroll Up - `OPTION + COMMAND + UP`
 - Scroll Down - `OPTION + COMMAND + DOWN`
 - Scroll to Center `OPTION + COMMAND + /`
@@ -60,11 +61,7 @@
 - Create new directory or package - `COMMAND + SHIFT + N`
 - Active Next Window - ``COMMAND + ` ``
 - Line/Column - `COMMAND + L`
-- Show Context Action - `OPTION + ENTER`
-- Show Context Menu - `SHIFT + OPTION + ENTER`
 - Split Line - `COMMAND + ENNTER`
-- Main Menu -> Window -> Editor Tabs -> Close - `COMMAND + T`
-- Main Menu -> Navigate -> Jump to Navigation Bar - `COMMAND + 0`
 - Show Usages - `COMMAND + SHIFT + W`
 - Main Menu -> Navigate -> Back - `OPTION + Z`
 - Main Menu -> Navigate -> Forward - `OPTION + SHIFT + Z`
