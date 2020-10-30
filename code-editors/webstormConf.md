@@ -16,7 +16,7 @@
 - [x] Editor > Font
     - Font > `JetBrains Mono`
     - Size > `12`
-    - Line spacing > `1.2`
+    - Line spacing > `1.1`
 
 **Note:** Empty checkbox means you need to uncheck the setting in the Preferences
 
