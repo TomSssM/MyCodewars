@@ -155,6 +155,106 @@ function* breadthTraversalTree(root) {
     }
 }
 
+/**
+ * Warning! Now we are going to explore some Binary Search Tree algorithms.
+ *
+ * Here is a small cheatsheet that helps remember in which order to visit Binary Tree
+ * nodes in order to implement different traversal algorithms:
+ * 1. in-order: left -> current -> right ( reverse is right -> current -> left )
+ * 2. depth-first: current -> left -> right
+ * 3. post-order: left -> right -> current
+ * 4. breadth-first: N/A
+ *
+ * Implementing depth-first search iteratively is very simple because all we have to do
+ * is push the children of the node we are currently visiting to a stack and then pop them,
+ * and because of the nature of how stack works, we will get back all the children in exactly
+ * the right order. But the real reason that implementing depth-first search iteratively is
+ * easy is because we need to output the value of the node we are currently visiting _before_
+ * the values of its children ( see above, current -> left -> right ). As a result, the algorithm
+ * can be reduced to simply:
+ * 1. yield the value of the current node
+ * 2. add children to the stack
+ * 3. pop the children
+ * 4. repeat
+ *
+ * But it gets harder when the first value you need to 'yield' is not the value of the current node,
+ * but one of its children, like in post-order search for example. In this case, we cannot yield the
+ * value of the node we are currently visiting before we add the children to the stack, we have to do
+ * it later on and the algorithm becomes:
+ * 1. add the value of the current node to the stack without yielding it
+ * 2. add children to the stack in a specific order
+ * 3. pop everything from the stack, yielding nodes in a specific order
+ *
+ * As you can see, in order to implement in-order or post-order search, we need to add values to the stack
+ * and pop them afterwards in a special way.
+ *
+ * Note: if you are confused what I mean when I mention all these combinations like 'left -> right -> current',
+ * what I mean by that is an order on which we visit the tree nodes. To understand them better, see the recursive
+ * traversal methods of the 'BST' class in ./snippets/Data Structures/binary-search-tree.js. Example: 'traversePreOrder'
+ * function inside 'preOrder' method.
+ */
+
+/**
+ * Traverses a binary tree using the in-order strategy
+ *
+ * Each node has child nodes in 'left' and 'right' properties.
+ * The leaf nodes do not have 'left' and 'right' properties.
+ *
+ * @params {object} root the tree root
+ * @return {Iterable.<object>} the sequence of all tree nodes in breadth-first order
+ * @example
+ *     source tree (root = 1):
+ *
+ *            8
+ *          /   \
+ *         5     11
+ *        / \    / \            =>    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 }
+ *       2   7  10  14
+ *      / \  /  /  /  \
+ *     1   3 6  9 12  15
+ *          \       \
+ *           4       13
+ */
+function* inOrderSearch(root, reverse = false) {
+    let current = root;
+    const stack = [];
+    do {
+        while (current) {
+            stack.push(current);
+            current = current[reverse ? 'right' : 'left'];
+        }
+        current = stack.pop();
+        yield current.value;
+        current = current[reverse ? 'left' : 'right'];
+    } while(stack.length || current);
+}
+
+class Node {
+    constructor(val) {
+        this.value = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+const root = new Node(8);
+root.left = new Node(5);
+root.left.left = new Node(2);
+root.left.right = new Node(7);
+root.left.left.left = new Node(1);
+root.left.left.right = new Node(3);
+root.left.right.left = new Node(6);
+root.left.left.right.right = new Node(4);
+root.right = new Node(11);
+root.right.left = new Node(10);
+root.right.right = new Node(14);
+root.right.left.left = new Node(9);
+root.right.right.left = new Node(12);
+root.right.right.right = new Node(15);
+root.right.right.left.right = new Node(13);
+
+inOrderSearch(root, true);
+
 module.exports = {
     get99BottlesOfBeer: get99BottlesOfBeer,
     getFibonacciSequence: getFibonacciSequence,
