@@ -203,7 +203,7 @@ function* breadthTraversalTree(root) {
  * @params {object} root the tree root
  * @return {Iterable.<object>} the sequence of all tree nodes in breadth-first order
  * @example
- *     source tree (root = 1):
+ *     source tree (root = 8):
  *
  *            8
  *          /   \

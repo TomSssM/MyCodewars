@@ -738,8 +738,8 @@ function composeSort(...sortCbs) {
 }
 ```
 
-So the resulting callback from `composeSort` looks at the value ( either -1 or 1 ) returned by the *first* callback, 
-then if it is 0 it checks that the next callback returns either 1 or -1 and not 0, yet if it also retruns 0 it looks at 
+So the resulting callback from `composeSort` looks at the value ( either -1 or 1 ) returned by the *first* callback,
+then if it is 0 it checks that the next callback returns either 1 or -1 and not 0, yet if it also retruns 0 it looks at
 the value returned by the 3rd callback and so on all that by *reducing* the array of callbacks.
 
 # 36) Transactions
@@ -835,14 +835,14 @@ Transaction.prototype.commit = function () {
 Imagine we have the following tickets:
 ```js
 [
-    { from: 'London', to: 'Washington' },
+    { from: 'London', to: 'Moscow' },
     { from: 'NY', to: 'London' },
-    { from: 'Washington', to: 'Texas' },
+    { from: 'Moscow', to: 'SPb' },
     ...
 ]
 ```
 
-Out of these tickets we can build a straight route from a to b. Thus we are going to fly from New York to Texas 
+Out of these tickets we can build a straight route from a to b. Thus we are going to fly from New York to Texas
 according to the following route:
 
 ```
@@ -860,7 +860,7 @@ We can tell so by looking at the _sorted_ tickets below:
 ]
 ```
 
-We need to implement a function which would order the tickets like above so that we can trace them and get the route 
+We need to implement a function which would order the tickets like above so that we can trace them and get the route
 from a to b.
 
 Here is the awesome implementation:
