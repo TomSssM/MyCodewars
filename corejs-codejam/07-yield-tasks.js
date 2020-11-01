@@ -237,27 +237,122 @@ class Node {
     }
 }
 
-const root = new Node(8);
-root.left = new Node(5);
-root.left.left = new Node(2);
-root.left.right = new Node(7);
-root.left.left.left = new Node(1);
-root.left.left.right = new Node(3);
-root.left.right.left = new Node(6);
-root.left.left.right.right = new Node(4);
-root.right = new Node(11);
-root.right.left = new Node(10);
-root.right.right = new Node(14);
-root.right.left.left = new Node(9);
-root.right.right.left = new Node(12);
-root.right.right.right = new Node(15);
-root.right.right.left.right = new Node(13);
+const root1 = new Node(8);
+root1.left = new Node(5);
+root1.left.left = new Node(2);
+root1.left.right = new Node(7);
+root1.left.left.left = new Node(1);
+root1.left.left.right = new Node(3);
+root1.left.right.left = new Node(6);
+root1.left.left.right.right = new Node(4);
+root1.right = new Node(11);
+root1.right.left = new Node(10);
+root1.right.right = new Node(14);
+root1.right.left.left = new Node(9);
+root1.right.right.left = new Node(12);
+root1.right.right.right = new Node(15);
+root1.right.right.left.right = new Node(13);
 
-inOrderSearch(root, true);
+inOrderSearch(root1, true);
+inOrderSearch(root1, false);
+
+/**
+ * Traverses a binary tree using the post-order strategy
+ *
+ * Each node has child nodes in 'left' and 'right' properties.
+ * The leaf nodes do not have 'left' and 'right' properties.
+ *
+ * @params {object} root the tree root
+ * @return {Iterable.<object>} the sequence of all tree nodes in breadth-first order
+ * @example
+ *     source tree (root = 1):
+ *
+ *            15
+ *          /   \
+ *         7     14
+ *        / \    / \            =>    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 }
+ *       4   6  9   13
+ *      / \  /  /  /  \
+ *     1   3 5  8 11  12
+ *          \       \
+ *           2       10
+ *
+ * postOrderSearch1 - returns an array
+ * postOrderSearch2 - does the same using a generator
+ */
+function postOrderSearch1(root) {
+    const stack = [root];
+    const result = [];
+    while (stack.length) {
+        const node = stack.pop();
+        result.unshift(node.value);
+        node.left && stack.push(node.left);
+        node.right && stack.push(node.right);
+    }
+    return result;
+}
+
+const root2 = new Node(15);
+root2.left = new Node(7);
+root2.right = new Node(14);
+root2.left.left = new Node(4);
+root2.left.right = new Node(6);
+root2.left.left.left = new Node(1);
+root2.left.left.right = new Node(3);
+root2.left.left.right.right = new Node(2);
+root2.left.right.left = new Node(5);
+root2.right.left = new Node(9);
+root2.right.right = new Node(13);
+root2.right.left.left = new Node(8);
+root2.right.right.left = new Node(11);
+root2.right.right.right = new Node(12);
+root2.right.right.left.right = new Node(10);
+
+postOrderSearch1(root2);
+
+function* postOrderSearch2(root) {
+    const stack = [];
+    let current = root;
+    do {
+        while (current) {
+            stack.push(current);
+            current = current.left;
+        }
+        const topmostNode = stack[stack.length - 1];
+        if (topmostNode.right) {
+            current = topmostNode.right;
+        } else {
+            // go up while current node is right child
+            let isRightChild = false;
+            do {
+                if (stack.length === 1) {
+                    // we have reached the root
+                    yield stack.pop().value;
+                    break;
+                }
+                const topmostNode = stack[stack.length - 1];
+                const nextTopmostNode = stack[stack.length - 2];
+                isRightChild = nextTopmostNode.right === topmostNode;
+                yield stack.pop().value;
+            } while(isRightChild);
+        }
+    } while(stack.length || current);
+}
+/**
+ * Time complexity: O(n)
+ * Space complexity: O(m)
+ * n - size of the tree
+ * m - max height of the tree
+ */
+
+postOrderSearch2(root2);
 
 module.exports = {
     get99BottlesOfBeer: get99BottlesOfBeer,
     getFibonacciSequence: getFibonacciSequence,
     depthTraversalTree: depthTraversalTree,
     breadthTraversalTree: breadthTraversalTree,
+    inOrderSearch,
+    postOrderSearch1,
+    postOrderSearch2,
 };
