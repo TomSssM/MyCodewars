@@ -106,6 +106,13 @@ __javascript__, __javascriptreact__, __typescript__, __typescriptreact__
       "console.log($0);"
     ],
     "description": "Log output to console"
+  },
+  "Import statement": {
+    "prefix": "pp",
+    "body": [
+      "import { $0 } from '$1';"
+    ],
+    "description": "Import awesome module"
   }
 }
 ```
