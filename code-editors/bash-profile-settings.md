@@ -16,6 +16,7 @@ alias f='git push -f origin HEAD'
 # the general ones
 alias la='ls -la'
 alias ls='ls -a'
+alias static_server='python -m SimpleHTTPServer'
 ```
 
 GIT:
