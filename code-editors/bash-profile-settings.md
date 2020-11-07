@@ -3,15 +3,16 @@ __.bash_profile__
 aliases:
 
 ```shell script
-# the git ones:
+# the git ones
 alias st='git status'
-alias com='git add -A && git commit -m'
 alias p='git push'
 alias c='git checkout'
 alias l='git log'
 alias lst='git branch --list'
-alias amend='git add -A && git commit --amend --no-edit'
-
+alias cm='git add -A && git commit'
+alias a='git add -A'
+alias am='a && git commit --amend --no-edit'
+alias f='git push -f origin HEAD'
 # the general ones
 alias la='ls -la'
 alias ls='ls -a'
@@ -19,7 +20,7 @@ alias ls='ls -a'
 
 GIT:
 
-```shell script
+```bash
 ESCAPE="\033"
 RESET="${ESCAPE}[0m"
 BRIGHT="${ESCAPE}[1m"
@@ -66,7 +67,7 @@ function ps1_git_icon {
   fi
 }
 
-function ps1_git_fg_color {
+function ps1_git_color {
   local state=$(ps1_git_state)
   case "${state}" in
     0)
@@ -81,31 +82,34 @@ function ps1_git_fg_color {
   esac
 }
 
-function ps1_git_bg_color {
-  local state=$(ps1_git_state)
-  case "${state}" in
-    0)
-      echo -e $BG_CYAN
-    ;;
-    1)
-      echo -e $BG_GREEN
-    ;;
-    *)
-      echo -e $BG_YELLOW
-    ;;
-  esac
-}
-
 function ps1_git_branch {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
 }
+
+function ps1_git_branch_prefix {
+  if [[ $(ps1_git_branch) != "" ]]
+  then
+    echo " on"
+  fi
+}
 ```
 
-PS1 themes
+PS1 themes:
+
+_default_
+
+```bash
+PS1="\[${YELLOW}\]\W\[${RESET}\]"
+PS1+="\$(ps1_get_git_branch_prefix)\[${GREEN}\]\$(ps1_git_branch)\[${RESET}\]"
+PS1+=" \$ "
+export PS1
+```
+
+---
 
 _dessert classic_
 
-```shell script
+```bash
 function ps1_git_local_icon {
   local icon=$(ps1_git_icon)
   if [[ $icon != "" ]]
@@ -115,16 +119,14 @@ function ps1_git_local_icon {
     echo $icon
   fi
 }
-
 PS1=""
 PS1+="╭─ " # start the transition
-PS1+="\\[${YELLOW}\\]\w" # working direcory
-PS1+="\\[\$(ps1_git_fg_color)\\]\$(ps1_git_branch)\$(ps1_git_local_icon)" # GIT data
-PS1+="\\[${GREEN}\\] ⬢ \$(node -v)" # NodeJS version
-PS1+="\\[${RESET}\\]\n" # wrap to a new line and reset everything
+PS1+="\[${YELLOW}\]\w" # working direcory
+PS1+="\[\$(ps1_git_color)\]\$(ps1_git_branch)\$(ps1_git_local_icon)" # GIT data
+PS1+="\[${GREEN}\] ⬢ \$(node -v)" # Node.js version
+PS1+="\[${RESET}\]\n" # wrap to a new line and reset everything
 PS1+="╰─" # finish the transition
 PS1+="\$ "
-
 export PS1
 ```
 
@@ -132,53 +134,14 @@ export PS1
 
 _futuristic_
 
-```shell script
-export PS1="[\\[${BRIGHT}${GREEN}\\]\u@\s\\[$RESET\\]:\\[${BLUE}\\]\W\\[${RESET}\\]]\$ "
+```bash
+export PS1="[\[${BRIGHT}${GREEN}\]\u@\s\[$RESET\]:\[${BLUE}\]\W\[${RESET}\]]\$ "
 ```
 
 ---
 
-_dessert linux mood_
+_vm_
 
-```shell script
-export PS1="\\[${BRIGHT}${GREEN}\\]\u@\s\\[$RESET\\]:\\[${YELLOW}\\]\W\\[${RESET}\\] \$ "
-```
-
----
-
-_aqua_
-
-```shell script
-function ps1_get_mid_char_color {
-  if [[ $(ps1_git_branch) == "" ]]
-  then
-    echo -e $BG_YELLOW
-  else
-    echo -e $(ps1_git_bg_color)
-  fi
-}
-
-function ps1_get_mid_char {
-  local mid_char_icon=$(ps1_git_icon)
-  if [[ $mid_char_icon == "" ]]
-  then
-    mid_char_icon="T"
-  fi
-  echo -e $mid_char_icon
-}
-
-function ps1_get_git_branch_prefix {
-  if [[ $(ps1_git_branch) != "" ]]
-  then
-    echo " on"
-  fi
-}
-
-PS1=""
-PS1+="\\[${BG_GREEN}\\][\$(node -v)]\\[${RESET}\\]"
-PS1+=" \\[\$(ps1_get_mid_char_color)\\][\$(ps1_get_mid_char)]\\[${RESET}\\]"
-PS1+=" \\[${YELLOW}\\]\W\\[${RESET}\\]"
-PS1+="\$(ps1_get_git_branch_prefix)\\[${GREEN}\\]\$(ps1_git_branch)\\[${RESET}\\]"
-PS1+=" \$ "
-export PS1
+```bash
+export PS1="\[${BRIGHT}${GREEN}\]\u@\s\[$RESET\]:\[${YELLOW}\]\W\[${RESET}\] \$ "
 ```
