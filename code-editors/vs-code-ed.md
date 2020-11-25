@@ -88,7 +88,8 @@ Here are my preferences:
       "foreground": "black",
       "iconColour": "yellow"
     }
-  }
+  },
+  "workbench.editor.labelFormat": "short"
 }
 ```
 
