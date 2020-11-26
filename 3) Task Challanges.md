@@ -125,7 +125,7 @@ because once the `Array.prototype.sort` is invoked with our callback, our callba
 elements from the array in an unsorted order and the necessary value can be `b` just as likely as `a`.
 Thus we check both.
 
-# 43) Find a repeating number in an unsorted array
+# 43) Find a duplicate number in an unsorted array
 
 **Task:**
 
@@ -135,17 +135,18 @@ Thus we check both.
   because the duplicate number is 2, not 3 )
 3. The algorithm should have the following complexity ( `n` is the amount of integers in an array ):
     - **Time:** O(n)
-    - **Space:** O(1) ( meaning can't use `Hash Map` or `Set` )
+    - **Space:** O(1)
 4. Also, the constraint of the task is that the source array cannot be modified ( e.g. sorted )
 
 **Solution:**
 
 Because of the constraints of the task we cannot use a hash map ( or a set ) to find a duplicate number like we
-normally would because the algorithm is supposed to have time complexity of O(1). Neither can we sort the array
-and check that two adjacent numbers not be the same because the task requires that the array should not be modified.
+normally would because the algorithm is supposed to have space complexity of O(1). Neither can we sort the array
+and check that two adjacent numbers not be the same because the task requires that the array should not be modified
+( and the time complexity should be O(n) ).
 
 In order to find the duplicate number we are going to use Floyd's cycle detection algorithm ( with 2 pointers where
-one traversed a linked list at twice the speed of the other, also called tortoise and hare ).
+one traverses a linked list at twice the speed of the other, also called tortoise and hare ).
 
 Now Floyd's algorithm works with linked lists where each node in a linked list has a reference to its neighbor. But how
 do we apply it here? If we think of values within an array as nodes in a linked list, then we can use the value of each
@@ -160,7 +161,7 @@ Imagine this array:
 
 The 1st integer is 6, how do we find out which next value in the array we are to look at? Simple, since the value
 of the node we are currently visiting is 6, then the next node we are going to visit is going to be the one at index 6.
-As a result, the next node we will visit is going to be 7 ( 7 is located at index 6 of the array ). The value we will
+As a result, the next node we will visit is going to be 7 ( as 7 is located at index 6 of the array ). The value we will
 look at after 7 is going to be 2 because 2 is located at index 7 of the array. And so on.
 
 Since there are always one or more duplicate integers inside an array, the length of the array will always be either more
@@ -186,7 +187,7 @@ We can now redraw it like a linked list:
 
 ```
 6 -> 7 -> 2 -> 4 -> 1 -> 3 ┐
-          ^                │
+          ↑                │
           │                │
           └────────────────┘
 ```
@@ -207,8 +208,8 @@ Let's apply this algorithm to our linked list representation of the array from a
 
 As you can see, tortoise meets hare at node with the value of 1. Unfortunately for our task this information is
 not enough. Floyd's algorithm is good at detecting a cycle, but it doesn't tell us which node in the linked list
-causes that cycle. Look at our example, tortoise met hare 1, but node with the value of 1 didn't cause that cycle,
-2 did. But how do we find the 2?
+causes that cycle. Look at our example, tortoise met hare at 1, but the node with the value of 1 didn't cause that
+cycle, 2 did. But how do we find that 2?
 
 That is where the last step of the algorithm comes in, here it is. Once tortoise meets hare at some node we need to
 do the following:
