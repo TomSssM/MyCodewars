@@ -4,16 +4,19 @@ aliases:
 
 ```shell script
 # the git ones
+
 alias st='git status'
 alias p='git push'
 alias c='git checkout'
 alias l='git log'
 alias lst='git branch --list'
-alias cm='git add -A && git commit'
 alias a='git add -A'
-alias am='a && git commit --amend --no-edit'
+alias cm='git commit'
+alias am='git commit --amend'
 alias f='git push -f origin HEAD'
+
 # the general ones
+
 alias la='ls -la'
 alias ls='ls -a'
 alias static_server='python -m SimpleHTTPServer'
