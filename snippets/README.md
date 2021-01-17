@@ -20,7 +20,7 @@
 ## Snippets
 
 - [Confusing Snippets](./ConfSnip.md)
-- [Confusing Snippets ( Promise Edition )](./promise/promise-details.md)
+- [Confusing Promise Snippets](./promise/promise-details.md)
 - [New in JS](./new-in-js.md)
 
 ## Small Snippets
