@@ -11,32 +11,48 @@ body {
   justify-content: center;
 }
 
-.big-container {
-  width: 200px;
-  height: 200px;
-}
-
 .container {
+  display: block;
   position: relative;
   background-color: yellow; /* todo: replace */
   cursor: pointer;
 }
-.container__bubble {
+.container__bubble-container {
   display: block;
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.container__bubble {
+  position: absolute;
+  top: 0;
+  left: 0;
   opacity: 0;
+  transform-origin: top left;
   border-radius: 50%;
   background-color: blue; /* todo: replace */
 }
+.container__text {
+  display: block;
+  position: relative;
+}
 .container__bubble_fading-in {
-  width: 100%;
-  height: 100%;
   opacity: 0.7;
-  transition: all 1s linear;
+  transition-property: all;
+  transition-timing-function: linear;
 }
 .container__bubble_fading-out {
   opacity: 0;
-  transition: all 1s linear;
+}
+
+.big-container { /* todo: replace to button */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 300px;
+  user-select: none;
 }
