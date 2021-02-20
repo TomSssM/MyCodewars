@@ -1,168 +1,25 @@
-const px = (size) => `${Math.round(size)}px`;
-
-const ms = (duration) => `${Math.round(duration)}ms`;
-
-const translate = (x, y) => `translate(${px(x)}, ${px(y)})`;
-
-const scale = (value) => `scale(${value})`;
-
-const transform = (...values) => values.join(' ');
-
-const arrayRemoveAt = (arr, index) => {
-    arr.splice(index, 1);
-};
-
-const classNameToSelector = (className) => `.${className}`;
-
-const className = (...classNames) => classNames.filter(Boolean).join('\s');
-
-const onceTransitioned = (property, element, listener, delegateTo) => {
-    let properties = Array.isArray(property) ? property : [property];
-    const listen = ({ propertyName: transitionedProperty }) => {
-        properties = properties.filter((propertyName) => {
-            return propertyName !== transitionedProperty;
-        });
-
-        if (properties.length === 0) {
-            element.removeEventListener('transitionend', listen);
-            listener();
-        }
-    };
-
-    if (delegateTo) {
-        delegateTo.addEventListener('transitionend', (e) => {
-            if (e.target === element) {
-                listen(e);
-            }
-        });
-    } else {
-        element.addEventListener('transitionend', listen);
-    }
-};
-
-const POSITIONS = {
-    LEFT: 'left',
-    CENTER: 'center',
-    RIGHT: 'right',
-    TOP: 'top',
-    BOTTOM: 'bottom',
-};
-
-const getPosition = (position = 'center') => {
-    let positionX;
-    let positionY;
-
-    if (Array.isArray(position)) {
-        if (position.length !== 2) {
-            throw new Error('Incorrect position format', position);
-        }
-        [positionX, positionY] = position;
-    } else if (position === POSITIONS.CENTER) {
-        positionX = positionY = POSITIONS.CENTER;
-    }
-
-    if (![
-        POSITIONS.LEFT,
-        POSITIONS.CENTER,
-        POSITIONS.RIGHT,
-    ].includes(positionX)) {
-        throw new Error('Unknown position for x coordinate');
-    }
-
-    if (![
-        POSITIONS.TOP,
-        POSITIONS.CENTER,
-        POSITIONS.BOTTOM,
-    ].includes(positionY)) {
-        throw new Error('Unknown position for y coordinate');
-    }
-
-    return {
-        positionX,
-        positionY,
-    };
-};
-
-const positionElement = ({
-    element,
-    containerElement,
-    position,
-    x: initialX,
-    y: initialY,
-    limitByContainer = true,
-}) => {
-    const {
-        offsetWidth: elementWidth,
-        offsetHeight: elementHeight,
-    } = element;
-    const {
-        positionX,
-        positionY,
-    } = getPosition(position);
-    let x = initialX;
-    let y = initialY;
-
-    if (positionX === POSITIONS.CENTER) {
-        x -= elementWidth / 2;
-    } else if (positionX === POSITIONS.RIGHT) {
-        x -= elementWidth;
-    }
-
-    if (positionY === POSITIONS.CENTER) {
-        y -= elementHeight / 2;
-    } else if (positionY === POSITIONS.BOTTOM) {
-        y -= elementHeight;
-    }
-
-    if (containerElement) {
-        const {
-            clientWidth: containerWidth,
-            clientHeight: containerHeight,
-        } = containerElement;
-        const {
-            x: containerX,
-            y: containerY,
-        } = containerElement.getBoundingClientRect();
-        const maxLeftOffset = containerWidth - elementWidth;
-        const maxTopOffset = containerHeight - elementHeight;
-
-        x -= containerX;
-        y -= containerY;
-
-        if (limitByContainer) {
-            x = Math.min(x, maxLeftOffset);
-            y = Math.min(y, maxTopOffset);
-            x = Math.max(x, 0);
-            y = Math.max(y, 0);
-        }
-    }
-
-    return {
-        x: Math.round(x),
-        y: Math.round(y),
-    };
-};
-
 class Bubble {
-    static MAX_BUBBLES = 20;
-
-    static BUBBLE_CLASS_NAME = 'container__bubble';
-
-    static SCALE = 4;
-
-    static DEFAULT_TRANSITION = 400;
-
     constructor({
         tag,
         text,
-        className,
         color,
+        className,
         transition,
+        bubbleSize = 'overflow',
+        transparentFade = false,
     }) {
         this.handleMouseDown = this.handleMouseDown.bind(this);
         this.handleMouseLeave = this.handleMouseLeave.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
         this.handleTransitionEnd = this.handleTransitionEnd.bind(this);
+
+        this.transparentFade = transparentFade;
+        this.bubbleSizeType = bubbleSize;
+
+        this.DEFAULT_TRANSITION = 700;
+        this.SCALE = 0.3;
+        this.MAX_BUBBLES = 20;
+        this.BUBBLE_CLASS_NAME = 'container__bubble';
 
         const {
             container,
@@ -172,6 +29,7 @@ class Bubble {
             text,
             className,
         });
+
         this.container = container;
         this.bubbleContainer = bubbleContainer;
         this.bubbles = [];
@@ -179,7 +37,7 @@ class Bubble {
         if (typeof transition === 'number') {
             this.transitionDuration = transition;
         } else {
-            this.transitionDuration = Bubble.DEFAULT_TRANSITION;
+            this.transitionDuration = this.DEFAULT_TRANSITION;
         }
 
         this.bubbleDefer = Math.round(this.transitionDuration / 2);
@@ -189,12 +47,23 @@ class Bubble {
         this.container.addEventListener('mouseup', this.handleMouseUp);
         this.container.addEventListener('mouseleave', this.handleMouseLeave);
         this.container.addEventListener('transitionend', this.handleTransitionEnd);
-        document.body.append(this.container); // todo: remove
+        document.body.append(this.domElem()); // todo: remove
+    }
+
+    get fullBubbleSize() {
+        const { containerWidth, containerHeight } = this.containerRectangle;
+        return Math.ceil(SquareTriangle.hypotenusa(containerWidth, containerHeight));
+    }
+
+    get containedBubbleSize() {
+        const { containerWidth, containerHeight } = this.containerRectangle;
+        return Math.round(Math.max(containerWidth, containerHeight));
     }
 
     get bubbleSize() {
-        const { clientWidth, clientHeight } = this.container;
-        return Math.ceil(Math.sqrt(Math.pow(clientWidth, 2) + Math.pow(clientHeight, 2)));
+        return this.bubbleSizeType === 'overflow'
+            ? this.fullBubbleSize
+            : this.containedBubbleSize;
     }
 
     /*
@@ -204,10 +73,114 @@ class Bubble {
         where X is the size of the scaled element
     */
     get scaledBubbleSize() {
-        return this.bubbleSize * Bubble.SCALE * 10 / 100;
+        return this.bubbleSize * this.SCALE * 10 / 100;
     }
 
-    get domElem() {
+    get containerRectangle() {
+        return {
+            containerWidth: this.container.clientWidth,
+            containerHeight: this.container.clientHeight,
+        };
+    }
+
+    positionBubbleInsideContainer(rawX, rawY, bubbleSize) {
+        if (this.bubbleSizeType !== 'contain') {
+            return {
+                x: rawX,
+                y: rawY,
+            };
+        }
+
+        const {
+            containerWidth,
+            containerHeight,
+        } = this.containerRectangle;
+
+        const halfContainerWidth = containerWidth / 2;
+        const halfContainerHeight = containerHeight / 2;
+        const halfBubbleSize = bubbleSize / 2;
+
+        let x = rawX % halfContainerWidth;
+        let y = rawY % halfContainerHeight;
+
+        const topLeftHalf = (
+            rawX <= halfContainerWidth &&
+            rawY <= halfContainerHeight
+        );
+        const rightTopHalf = (
+            rawX >= halfContainerWidth &&
+            rawY <= halfContainerHeight
+        );
+        const bottomRightHalf = (
+            rawX >= halfContainerWidth &&
+            rawY >= halfContainerHeight
+        );
+        const bottomLeftHalf = (
+            rawX <= halfContainerWidth &&
+            rawY >= halfContainerHeight
+        );
+
+        let catetA;
+        let catetB;
+
+        if (topLeftHalf) {
+            catetB = halfContainerWidth - x;
+            catetA = halfContainerHeight - y;
+        } else if (rightTopHalf) {
+            catetB = x;
+            catetA = halfContainerHeight - y;
+        } else if (bottomRightHalf) {
+            catetB = x;
+            catetA = y;
+        } else if (bottomLeftHalf) {
+            catetB = halfContainerWidth - x;
+            catetA = y;
+        } else {
+            throw new InternalError();
+        }
+
+        const hypotenusa = SquareTriangle.hypotenusa(catetA, catetB);
+        const maxHypotenusa = this.containedBubbleSize / 2 - halfBubbleSize;
+
+        if (hypotenusa <= maxHypotenusa) {
+            return {
+                x: rawX,
+                y: rawY,
+            };
+        }
+
+        const cosAlpha = SquareTriangle.cosAlpha(catetB, hypotenusa);
+        const cosBeta = SquareTriangle.cosBeta(catetA, hypotenusa);
+
+        const maxCatetA = SquareTriangle.catetA(maxHypotenusa, cosBeta);
+        const maxCatetB = SquareTriangle.catetB(maxHypotenusa, cosAlpha);
+
+        let maxLeft;
+        let maxTop;
+
+        if (topLeftHalf) {
+            maxLeft = halfContainerWidth - maxCatetB;
+            maxTop = halfContainerHeight - maxCatetA;
+        } else if (rightTopHalf) {
+            maxLeft = halfContainerWidth + maxCatetB;
+            maxTop = halfContainerHeight - maxCatetA;
+        } else if (bottomRightHalf) {
+            maxLeft = halfContainerWidth + maxCatetB;
+            maxTop = halfContainerHeight + maxCatetA;
+        } else if (bottomLeftHalf) {
+            maxLeft = halfContainerWidth - maxCatetB;
+            maxTop = halfContainerHeight + maxCatetA;
+        } else {
+            throw new InternalError();
+        }
+
+        return {
+            x: maxLeft - halfBubbleSize,
+            y: maxTop - halfBubbleSize,
+        };
+    }
+
+    domElem() {
         return this.container;
     }
 
@@ -242,10 +215,14 @@ class Bubble {
         const bubble = document.createElement('div');
         const { bubbleSize } = this;
 
-        bubble.classList.add(Bubble.BUBBLE_CLASS_NAME);
+        bubble.classList.add(this.BUBBLE_CLASS_NAME);
 
         if (typeof this.bubbleColor === 'string') {
             bubble.style.backgroundColor = this.bubbleColor;
+        }
+
+        if (this.transparentFade) {
+            bubble.classList.add('container__bubble_fade-type_transparent');
         }
 
         bubble.style.width = px(bubbleSize);
@@ -255,9 +232,10 @@ class Bubble {
     }
 
     transitionBubble(clientX, clientY, bubble) {
+        const limitByContainer = this.bubbleSizeType === 'contain';
         const { element: bubbleElement } = bubble;
         const { scaledBubbleSize } = this;
-        const { x, y } = positionElement({
+        const { x: rawX, y: rawY } = positionElement({
             x: clientX,
             y: clientY,
             element: {
@@ -265,8 +243,10 @@ class Bubble {
                 offsetHeight: scaledBubbleSize,
             },
             containerElement: this.bubbleContainer,
+            limitByContainer,
         });
-        bubbleElement.style.transform = transform(translate(x, y), scale(Bubble.SCALE / 10));
+        const { x, y } = this.positionBubbleInsideContainer(rawX, rawY, scaledBubbleSize);
+        bubbleElement.style.transform = transform(translate(x, y), scale(this.SCALE / 10));
         requestAnimationFrame(() => {
             const { bubbleSize } = this;
             const {
@@ -275,6 +255,7 @@ class Bubble {
                 width: containerWidth,
                 height: containerHeight,
             } = this.bubbleContainer.getBoundingClientRect();
+
             const { x, y } = positionElement({
                 x: Math.round(containerX + containerWidth / 2),
                 y: Math.round(containerY + containerHeight / 2),
@@ -283,8 +264,9 @@ class Bubble {
                     offsetHeight: bubbleSize,
                 },
                 containerElement: this.bubbleContainer,
-                limitByContainer: false,
+                limitByContainer,
             });
+
             bubbleElement.classList.add('container__bubble_fading-in');
             bubbleElement.style.transitionDuration = ms(this.transitionDuration);
             bubbleElement.style.transform = transform(translate(x, y), scale(1));
@@ -331,7 +313,7 @@ class Bubble {
     }
 
     handleMouseDown(event) {
-        if (this.bubbles.length > Bubble.MAX_BUBBLES) {
+        if (this.bubbles.length > this.MAX_BUBBLES) {
             return;
         }
 
@@ -353,7 +335,7 @@ class Bubble {
     }
 
     handleTransitionEnd({ propertyName, target }) {
-        const bubbleElement = target.closest(classNameToSelector(Bubble.BUBBLE_CLASS_NAME));
+        const bubbleElement = target.closest(classname(this.BUBBLE_CLASS_NAME));
         const bubble = bubbleElement && this.bubbles.find(({ element }) => {
             return element === bubbleElement;
         });
@@ -376,4 +358,3 @@ class Bubble {
 // TODO: add colors
 // TODO: create Button class that would already append stuff to document
 // TODO: add a fixed option to Bubble
-// TODO: test positionElement with other options

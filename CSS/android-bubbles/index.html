@@ -2,16 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bubbles</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-<script src="./index.js"></script>
+<script src="./Bubble.js"></script>
+<script src="./utils.js"></script>
 <script>
   new Bubble({
     tag: 'span',
     text: 'Hi!',
     className: 'big-container',
+    bubbleSize: 'contain',
   });
 </script>
 </body>
