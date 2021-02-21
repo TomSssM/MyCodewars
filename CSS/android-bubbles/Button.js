@@ -38,7 +38,7 @@ class Button {
         if (!this.colorsMap) {
             this.colorsMap = new Map();
             this.colorsMap.set('blue', '#acacec');
-            this.colorsMap.set('green', '#96e496');
+            this.colorsMap.set('green', '#7ecf7e');
         }
         return this.colorsMap;
     }

@@ -32,7 +32,7 @@ class Bubble {
         this.overflow = overflow !== 'hidden';
         this.transparentFade = transparentFade;
 
-        this.SCALE = 0.3;
+        this.SCALE = 2;
         this.MAX_BUBBLES = 20;
         this.DEFAULT_TRANSITION = 300;
         this.BUBBLE_CLASS_NAME = 'container__bubble';
@@ -122,19 +122,19 @@ class Bubble {
         let y = rawY % halfContainerHeight;
 
         const topLeftHalf = (
-            rawX <= halfContainerWidth &&
-            rawY <= halfContainerHeight
+            rawX < halfContainerWidth &&
+            rawY < halfContainerHeight
         );
         const rightTopHalf = (
             rawX >= halfContainerWidth &&
-            rawY <= halfContainerHeight
+            rawY < halfContainerHeight
         );
         const bottomRightHalf = (
             rawX >= halfContainerWidth &&
             rawY >= halfContainerHeight
         );
         const bottomLeftHalf = (
-            rawX <= halfContainerWidth &&
+            rawX < halfContainerWidth &&
             rawY >= halfContainerHeight
         );
 
@@ -160,7 +160,7 @@ class Bubble {
         const hypotenusa = SquareTriangle.hypotenusa(catetA, catetB);
         const maxHypotenusa = this.containedBubbleSize / 2 - halfBubbleSize;
 
-        if (hypotenusa <= maxHypotenusa) {
+        if (hypotenusa <= maxHypotenusa - halfBubbleSize) {
             return {
                 x: rawX,
                 y: rawY,

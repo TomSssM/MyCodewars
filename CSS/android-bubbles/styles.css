@@ -30,7 +30,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  opacity: 0.7;
+  opacity: 1;
   transform-origin: top left;
   border-radius: 50%;
   background-color: gray;
