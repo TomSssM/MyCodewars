@@ -14,8 +14,6 @@ body {
 .container {
   display: block;
   position: relative;
-  background-color: yellow; /* todo: replace */
-  cursor: pointer;
 }
 .container__bubble-container {
   display: block;
@@ -24,6 +22,8 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
+}
+.container__bubble-container_overflow_no {
   overflow: hidden;
 }
 .container__bubble {
@@ -33,10 +33,10 @@ body {
   opacity: 0.7;
   transform-origin: top left;
   border-radius: 50%;
-  background-color: blue; /* todo: replace */
+  background-color: gray;
 }
 .container__bubble_fade-type_transparent {
-  opacity: 0;
+  opacity: 0.3;
 }
 .container__bubble_fading-in {
   opacity: 0.7;
@@ -51,13 +51,65 @@ body {
   position: relative;
 }
 
-.big-container { /* todo: replace to button */
+.page-element {
+  margin: 0 10px;
+}
+
+.bubble-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 300px;
-  height: 300px;
   user-select: none;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-color: #fff;
+  padding: 20px 40px;
+  font-size: 14px;
+  border-radius: 4px;
   overflow: hidden;
+  transition: background-color .2s ease-out;
+}
+
+.bubble-button_color_default {
+  border: 1px solid #ccc;
+}
+.bubble-button_color_default:active {
+  background-color: #ddd;
+}
+
+.bubble-button_color_green {
+  color: green;
+  border: 1px solid green;
+}
+.bubble-button_color_green:active {
+  background-color: #d9f3d9;
+}
+
+.bubble-button_color_blue {
+  color: blue;
+  border: 1px solid blue;
+}
+.bubble-button_color_blue:active {
+  background-color: #dadaff;
+}
+
+.bubble-button_square_yes {
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
+  padding: 0;
+  border: none;
+}
+.bubble-button_square_yes:active {
+  background-color: #fff;
+}
+.bubble-button__dots {
+  display: block;
+  background-image: url(./ellipsis-v-solid.svg);
+  background-size: 7px auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 10px;
+  height: 40px;
 }

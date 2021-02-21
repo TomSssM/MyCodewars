@@ -1,34 +1,46 @@
 class Bubble {
     constructor({
         tag,
-        text,
         color,
         className,
         transition,
+        text = '...',
+        fixed = false,
+        display = 'block',
+        overflow = 'hidden',
+        throttleTimeout = 300,
         bubbleSize = 'overflow',
         transparentFade = false,
-    }) {
-        this.handleMouseDown = this.handleMouseDown.bind(this);
+    } = {}) {
+        this.handleMouseDown = throttle(this.handleMouseDown.bind(this), throttleTimeout);
         this.handleMouseLeave = this.handleMouseLeave.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
         this.handleTransitionEnd = this.handleTransitionEnd.bind(this);
 
-        this.transparentFade = transparentFade;
-        this.bubbleSizeType = bubbleSize;
+        if (typeof text === 'string') {
+            this.text = document.createTextNode(text);
+        } else if (text instanceof Element || text === null) {
+            this.text = text;
+        } else {
+            throw new Error('Value of \'text\' param is invalid');
+        }
 
-        this.DEFAULT_TRANSITION = 700;
+        this.fixed = fixed;
+        this.display = display;
+        this.bubbleSizeType = bubbleSize;
+        this.tag = tag || this.defaultTag;
+        this.overflow = overflow !== 'hidden';
+        this.transparentFade = transparentFade;
+
         this.SCALE = 0.3;
         this.MAX_BUBBLES = 20;
+        this.DEFAULT_TRANSITION = 300;
         this.BUBBLE_CLASS_NAME = 'container__bubble';
 
         const {
             container,
             bubbleContainer,
-        } = this.createContainers({
-            tag,
-            text,
-            className,
-        });
+        } = this.createContainers(className);
 
         this.container = container;
         this.bubbleContainer = bubbleContainer;
@@ -47,7 +59,10 @@ class Bubble {
         this.container.addEventListener('mouseup', this.handleMouseUp);
         this.container.addEventListener('mouseleave', this.handleMouseLeave);
         this.container.addEventListener('transitionend', this.handleTransitionEnd);
-        document.body.append(this.domElem()); // todo: remove
+    }
+
+    get defaultTag() {
+        return this.display === 'block' ? 'div' : 'span';
     }
 
     get fullBubbleSize() {
@@ -84,7 +99,10 @@ class Bubble {
     }
 
     positionBubbleInsideContainer(rawX, rawY, bubbleSize) {
-        if (this.bubbleSizeType !== 'contain') {
+        if (
+            this.bubbleSizeType !== 'contain' ||
+            this.fixed
+        ) {
             return {
                 x: rawX,
                 y: rawY,
@@ -184,26 +202,22 @@ class Bubble {
         return this.container;
     }
 
-    createContainers({
-        tag,
-        text,
-        className,
-    }) {
-        const container = document.createElement(tag);
-        const bubbleContainer = document.createElement(tag);
-        const span = document.createElement('span');
+    createContainers(containerClassName) {
+        const container = document.createElement(this.tag);
+        const bubbleContainer = document.createElement(this.defaultTag);
+        const text = document.createElement('span');
 
-        container.classList.add('container');
-        span.classList.add('container__text');
+        container.className = classname('container', containerClassName);
+        text.classList.add('container__text');
         bubbleContainer.classList.add('container__bubble-container');
 
-        if (typeof className === 'string') {
-            container.classList.add(className);
+        if (!this.overflow) {
+            bubbleContainer.classList.add('container__bubble-container_overflow_no');
         }
 
-        span.append(document.createTextNode(text));
+        text.append(this.text || '');
         container.append(bubbleContainer);
-        container.append(span);
+        container.append(text);
 
         return {
             container,
@@ -231,10 +245,25 @@ class Bubble {
         return bubble;
     }
 
-    transitionBubble(clientX, clientY, bubble) {
+    transitionBubble(rawClientX, rawClientY, { element: bubbleElement }) {
         const limitByContainer = this.bubbleSizeType === 'contain';
-        const { element: bubbleElement } = bubble;
-        const { scaledBubbleSize } = this;
+        const {
+            scaledBubbleSize,
+            bubbleSize,
+        } = this;
+        const {
+            x: containerX,
+            y: containerY,
+            width: containerWidth,
+            height: containerHeight,
+        } = this.bubbleContainer.getBoundingClientRect();
+
+        const halfContainerWidthCoordinate = Math.round(containerX + containerWidth / 2);
+        const halfContainerHeightCoordinate = Math.round(containerY + containerHeight / 2);
+
+        const clientX = this.fixed ? halfContainerWidthCoordinate : rawClientX;
+        const clientY = this.fixed ? halfContainerHeightCoordinate : rawClientY;
+
         const { x: rawX, y: rawY } = positionElement({
             x: clientX,
             y: clientY,
@@ -245,20 +274,15 @@ class Bubble {
             containerElement: this.bubbleContainer,
             limitByContainer,
         });
-        const { x, y } = this.positionBubbleInsideContainer(rawX, rawY, scaledBubbleSize);
-        bubbleElement.style.transform = transform(translate(x, y), scale(this.SCALE / 10));
-        requestAnimationFrame(() => {
-            const { bubbleSize } = this;
-            const {
-                x: containerX,
-                y: containerY,
-                width: containerWidth,
-                height: containerHeight,
-            } = this.bubbleContainer.getBoundingClientRect();
 
+        const { x, y } = this.positionBubbleInsideContainer(rawX, rawY, scaledBubbleSize);
+
+        bubbleElement.style.transform = transform(translate(x, y), scale(this.SCALE / 10));
+
+        requestAnimationFrame(() => {
             const { x, y } = positionElement({
-                x: Math.round(containerX + containerWidth / 2),
-                y: Math.round(containerY + containerHeight / 2),
+                x: halfContainerWidthCoordinate,
+                y: halfContainerHeightCoordinate,
                 element: {
                     offsetWidth: bubbleSize,
                     offsetHeight: bubbleSize,
@@ -335,7 +359,7 @@ class Bubble {
     }
 
     handleTransitionEnd({ propertyName, target }) {
-        const bubbleElement = target.closest(classname(this.BUBBLE_CLASS_NAME));
+        const bubbleElement = target.closest(classname(true, this.BUBBLE_CLASS_NAME));
         const bubble = bubbleElement && this.bubbles.find(({ element }) => {
             return element === bubbleElement;
         });
@@ -354,7 +378,3 @@ class Bubble {
         this.userAllowBubbleToTransition();
     }
 }
-
-// TODO: add colors
-// TODO: create Button class that would already append stuff to document
-// TODO: add a fixed option to Bubble

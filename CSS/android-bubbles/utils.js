@@ -18,10 +18,31 @@ const arrayRemoveAt = (arr, index) => {
     arr.splice(index, 1);
 };
 
-const classname = (...classnames) => classnames
-    .map(value => value.startsWith('.') ? value : `.${value}`)
-    .filter(Boolean)
-    .join('\s');
+const classname = (rawSelect, ...rawClassnames) => {
+    const classnames = typeof rawSelect === 'boolean'
+        ? [...rawClassnames]
+        : [rawSelect, ...rawClassnames];
+    const select = typeof rawSelect === 'boolean' ? rawSelect : false;
+    const selector = (value) => value.startsWith('.') ? value : `.${value}`;
+
+    return classnames
+        .map(value => select ? selector(value) : value)
+        .filter(Boolean)
+        .join(' ');
+};
+
+const throttle = (fn, rawTime) => {
+    const time = Number.isNaN(rawTime) ? 0 : Math.max(rawTime, 0);
+    if (time <= 0) return fn;
+    let prev;
+    return (...args) => {
+        const current = Date.now();
+        if (!prev || current - prev > time) {
+            prev = current;
+            fn(...args);
+        }
+    };
+};
 
 const onceTransitioned = (property, element, listener, delegateTo) => {
     let properties = Array.isArray(property) ? property : [property];

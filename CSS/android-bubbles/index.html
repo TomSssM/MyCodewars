@@ -8,13 +8,20 @@
 </head>
 <body>
 <script src="./Bubble.js"></script>
+<script src="./Button.js"></script>
 <script src="./utils.js"></script>
 <script>
-  new Bubble({
-    tag: 'span',
-    text: 'Hi!',
-    className: 'big-container',
-    bubbleSize: 'contain',
+  new Button();
+  new Button({
+    text: 'blue',
+    color: 'blue',
+  });
+  new Button({
+    text: 'green',
+    color: 'green',
+  });
+  new Button({
+    square: true,
   });
 </script>
 </body>
