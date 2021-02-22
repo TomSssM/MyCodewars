@@ -98,7 +98,7 @@ class Bubble {
         };
     }
 
-    positionBubbleInsideContainer(rawX, rawY, bubbleSize) {
+    positionBubbleInsideContainer(rawX, rawY) {
         if (
             this.bubbleSizeType !== 'contain' ||
             this.fixed
@@ -113,54 +113,32 @@ class Bubble {
             containerWidth,
             containerHeight,
         } = this.containerRectangle;
-
+        const { scaledBubbleSize: bubbleSize } = this;
         const halfContainerWidth = containerWidth / 2;
         const halfContainerHeight = containerHeight / 2;
         const halfBubbleSize = bubbleSize / 2;
 
-        let x = rawX % halfContainerWidth;
-        let y = rawY % halfContainerHeight;
+        let x = rawX + halfBubbleSize;
+        let y = rawY + halfBubbleSize;
 
-        const topLeftHalf = (
-            rawX < halfContainerWidth &&
-            rawY < halfContainerHeight
-        );
-        const rightTopHalf = (
-            rawX >= halfContainerWidth &&
-            rawY < halfContainerHeight
-        );
-        const bottomRightHalf = (
-            rawX >= halfContainerWidth &&
-            rawY >= halfContainerHeight
-        );
-        const bottomLeftHalf = (
-            rawX < halfContainerWidth &&
-            rawY >= halfContainerHeight
-        );
+        const circumferenceManager = new CircumferenceManager({
+            circumference: {
+                width: containerWidth,
+                height: containerHeight,
+            },
+            x, y,
+        });
 
-        let catetA;
-        let catetB;
+        x %= halfContainerWidth;
+        y %= halfContainerHeight;
 
-        if (topLeftHalf) {
-            catetB = halfContainerWidth - x;
-            catetA = halfContainerHeight - y;
-        } else if (rightTopHalf) {
-            catetB = x;
-            catetA = halfContainerHeight - y;
-        } else if (bottomRightHalf) {
-            catetB = x;
-            catetA = y;
-        } else if (bottomLeftHalf) {
-            catetB = halfContainerWidth - x;
-            catetA = y;
-        } else {
-            throw new InternalError();
-        }
+        const catetA = circumferenceManager.y((plus) => plus ? y : halfContainerHeight - y);
+        const catetB = circumferenceManager.x((plus) => plus ? x : halfContainerWidth - x);
 
         const hypotenusa = SquareTriangle.hypotenusa(catetA, catetB);
         const maxHypotenusa = this.containedBubbleSize / 2 - halfBubbleSize;
 
-        if (hypotenusa <= maxHypotenusa - halfBubbleSize) {
+        if (hypotenusa <= maxHypotenusa) {
             return {
                 x: rawX,
                 y: rawY,
@@ -173,28 +151,35 @@ class Bubble {
         const maxCatetA = SquareTriangle.catetA(maxHypotenusa, cosBeta);
         const maxCatetB = SquareTriangle.catetB(maxHypotenusa, cosAlpha);
 
-        let maxLeft;
-        let maxTop;
+        const maxLeft = circumferenceManager.x(halfContainerWidth, maxCatetB);
+        const maxTop = circumferenceManager.y(halfContainerHeight, maxCatetA);
 
-        if (topLeftHalf) {
-            maxLeft = halfContainerWidth - maxCatetB;
-            maxTop = halfContainerHeight - maxCatetA;
-        } else if (rightTopHalf) {
-            maxLeft = halfContainerWidth + maxCatetB;
-            maxTop = halfContainerHeight - maxCatetA;
-        } else if (bottomRightHalf) {
-            maxLeft = halfContainerWidth + maxCatetB;
-            maxTop = halfContainerHeight + maxCatetA;
-        } else if (bottomLeftHalf) {
-            maxLeft = halfContainerWidth - maxCatetB;
-            maxTop = halfContainerHeight + maxCatetA;
-        } else {
-            throw new InternalError();
-        }
+        let finalX = maxLeft - halfBubbleSize;
+        let finalY = maxTop - halfBubbleSize;
+
+        /**
+         * sometimes the difference between old and new x and / or y is so
+         * small that it is accttually less than 1px and browser thus draws
+         * the bubble at the wrong coordinate, thus we need to either ceil or
+         * floor the resulting value to get the right position
+         */
+        finalX = circumferenceManager.x(
+            true,
+            (plus) => plus
+                ? Math.ceil(finalX)
+                : Math.floor(finalX),
+        );
+
+        finalY = circumferenceManager.y(
+            true,
+            (plus) => plus
+                ? Math.ceil(finalY)
+                : Math.floor(finalY),
+        );
 
         return {
-            x: maxLeft - halfBubbleSize,
-            y: maxTop - halfBubbleSize,
+            x: finalX,
+            y: finalY,
         };
     }
 

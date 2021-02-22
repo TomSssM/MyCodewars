@@ -1,5 +1,6 @@
 class InternalError extends Error {
     constructor() {
+        super();
         this.message = 'Internal error';
     }
 }
@@ -198,3 +199,128 @@ const SquareTriangle = {
         return catetA / hypotenusa;
     },
 };
+
+/**
+ * Calculates operation to carry out in order
+ * to push or pull a coordinate from the middle
+ * of circumference
+ */
+class CircumferenceManager {
+    constructor({
+        circumference,
+        x, y,
+    }) {
+        const {
+            width,
+            height,
+        } = circumference;
+
+        const halfWidth = width / 2;
+        const halfHeight = height / 2;
+
+        this.topLeftHalf = (
+            x < halfWidth &&
+            y < halfHeight
+        );
+        this.topRightHalf = (
+            x >= halfWidth &&
+            y < halfHeight
+        );
+        this.bottomLeftHalf = (
+            x < halfWidth &&
+            y >= halfHeight
+        );
+        this.bottomRightHalf = (
+            x >= halfWidth &&
+            y >= halfHeight
+        );
+
+        this.x = this.decordator(this.x);
+        this.y = this.decordator(this.y);
+    }
+
+    x() {
+        let operation;
+
+        if (this.topLeftHalf) {
+            operation = false;
+        } else if (this.topRightHalf) {
+            operation = true;
+        } else if (this.bottomRightHalf) {
+            operation = true;
+        } else if (this.bottomLeftHalf) {
+            operation = false;
+        } else {
+            throw new InternalError();
+        }
+
+        return operation;
+    }
+
+    y() {
+        let operation;
+
+        if (this.topLeftHalf) {
+            operation = false;
+        } else if (this.topRightHalf) {
+            operation = false;
+        } else if (this.bottomRightHalf) {
+            operation = true;
+        } else if (this.bottomLeftHalf) {
+            operation = true;
+        } else {
+            throw new InternalError();
+        }
+
+        return operation;
+    }
+
+    decordator(fn) {
+        return (...args) => {
+            let reverse;
+            let operator;
+
+            if (args.length === 1) {
+                reverse = false;
+                [operator] = args;
+            }
+
+            if (args.length === 2) {
+                const [val1, val2] = args;
+
+                if (typeof val2 === 'function') {
+                    reverse = val1;
+                    operator = val2;
+                } else {
+                    reverse = false;
+                    operator = this.defaultOperator(val1, val2);
+                }
+            }
+
+            if (args.length === 3) {
+                const [, val1, val2] = args;
+
+                [reverse] = args;
+                operator = this.defaultOperator(val1, val2);
+            }
+
+            if (typeof reverse !== 'boolean') {
+                throw new TypeError('`reverse` should be Boolean');
+            }
+
+            if (typeof operator !== 'function') {
+                throw new TypeError('`operator` should be a function');
+            }
+
+            const operation = fn.call(this);
+
+            return operator(reverse ? !operation : operation);
+        }
+    }
+
+    defaultOperator(val1, val2) {
+        return (plus) => plus
+            ? val1 + val2
+            : val1 - val2;
+    }
+}
