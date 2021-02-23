@@ -1,0 +1,80 @@
+/* *CSS Selectors Cheatsheet */
+
+/* *attribute selectors */
+
+/* selects elements with an attribute */
+[attr-one] {
+  background: yellow;
+}
+
+/* selects elements with attribute and if the attribute
+has the exact value */
+[attr-two="man"] {
+  background: orange;
+}
+
+/* we can omit quotes if the attribute value is only one word */
+[attr-two=man2] {
+  background: chocolate;
+}
+
+/* elements with an attribute attr-three containing "time" */
+[attr-three*="time"] {
+  background: olive;
+}
+
+/* elements with an attribute attr-four ending with "full" */
+[attr-four$="full"] {
+  background: lime;
+}
+
+/* elements with attr-five that begins with "who" */
+[attr-five^=who] {
+  background: aqua;
+}
+
+/* elements with attr-six whose value begins with "carpet" the difference from ^= is
+that if this value "carpet" isn't followed by a hyphen (or comprises the entire attribute) 
+the selector isn't going to work */
+[attr-six|=carpet] {
+  background: blue;
+}
+[attr-seven|=carpet] {
+  background: blue;
+}
+/* also it work for a dash separated list if the value after |= isn't in the beginning */
+[attr-seven|=en] {
+  background: gray;
+}
+
+/* of course we can combine */
+div[attr-eight=man]::first-letter {
+  color: darkcyan;
+  font-size: 2rem;
+}
+
+/* elements with attr-nine that include "expand" and "expand" is a word rather than a substring */
+[attr-nine~=expand] {
+  background: chartreuse;
+}
+
+/* select elements with attr-nine if attr-nine contains both the word "tom" and the word "smith" */
+[attr-ten~=tom][attr-ten~=smith] {
+  background: coral;
+}
+
+/* *Some combinators */
+
+/* Adjacent sibling combinator */
+
+/* only that one div element that comes immediately after img and is child of the same parent as img */
+img + div {
+  background: saddlebrown;
+}
+
+/* General sibling combinator */
+
+/* all div elements that come after img and are children of the same parent as img */
+.general img ~ div {
+  background: limegreen;
+}

@@ -1,0 +1,42 @@
+.load-bar {
+  width: 300px;
+  height: 7px;
+  padding: 4px;
+  border: 1px solid #000;
+}
+.load-bar__bar {
+  width: 0;
+  border-radius: 3px;
+  height: 100%;
+  background-size: 400px;
+  background-image: linear-gradient(to left, transparent, #ffffff80, transparent);
+  background-color: gray;
+  animation: load 1s linear infinite;
+}
+
+.button {
+  margin: 10px;
+  background-color: #fff;
+  border: 1px solid #000;
+  outline: none;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform .1s ease-out, background-color .2s ease-out;
+}
+.button:first-of-type {
+  margin-left: 0;
+}
+.button_pressed_yes {
+  transform: scale(.9);
+  background-color: lightgray;
+}
+
+@keyframes load {
+  from {
+    background-position: 0;
+  }
+  to {
+    background-position: 400px;
+  }
+}

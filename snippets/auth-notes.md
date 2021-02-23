@@ -28,6 +28,21 @@ Here is the flow:
 - server validates it against the session store & grants access
 - when user logs out, server destroys the session & clears the cookie
 
+Above, we said that the server creates a temporary user _session_ but what is a session? Normally it is actually
+going to be just a simple JavaScript object ( in a NodeJS app ). It might have some data in it like
+_session ID_ ( all such session objects are going to be stored in some sort of DB or Cache, thus we can use the
+session ID attribute as a key for that storage ). Also a Session Object might have the user id attribute in it
+so that we know whose session it is. So as you can see, this session object with user data in it stored server side
+and the term _session_ are completely interchangeable.
+
+So as you can see, while there are, for instance, 20 users logged in to our application, there are going to be
+20 Session Objects like these: `{ sessionID: ..., userID: ... }` stored in some Session Storage DB or Cache
+on the server. That is _exactly_ what people talk about when saying, pretty fancy in my opinion,
+_using sessions for auth_.
+
+Since HTTP is a stateless protocol, how to store the user's `sessionID` between requests ( so that the server may know
+it is the same user as entered the password and email )? That is right, we can store the `sessionID` in cookies!
+
 Now in this case such a cookie as the session ID one mentioned above is called an **opaque** reference. It means that
 the cookie doesn't carry any meaningful information about the user, like his credentials, and it is only the server
 who will be able to refer from that cookie who the user really is.
@@ -41,13 +56,17 @@ For this reason, there are ways that such a cookie is going to be protected.
 First of all it can be protected with different cookie flags ( `HttpOnly`, `SameSite`, `Secure` etc. ).
 
 The value that the cookie contains ( the session ID ) is also sometimes signed with a SECRET. This way, if the
-client side modifies a cookie ( for instance change the expiration date ), the server will know that and not allow
-such a request to pass.
+client side modifies a cookie ( for instance change the expiration date, or insert a different user's session ID ),
+the server will know that and not allow such a request to pass.
 
 Such a type of Authentication is used mostly in Server Side Rendered apps because each request is first passed through
 the server before the client's page refreshes ( not so much the case with Single Page Apps ).
 
 This kind of Authentication is very much afraid of a CSRF Attack, but not so much of the XXS attack.
+
+
+Note: There is a NodeJS SSR project ( in _LibDocs_ ) called _Simple Auth With Sessions_ that is a very good example
+of Authentication done using Sessions.
 
 ## Token Based Authentication ( JWT )
 

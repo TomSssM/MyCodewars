@@ -1,0 +1,64 @@
+* {
+  transition: all .2s ease-in-out;
+}
+
+#target {
+  background: yellow;
+}
+#target:target {
+  background: blue;
+}
+
+#get {
+  background: yellow;
+}
+/* note: if we do ":checked #get" we then mean to trigger an element
+with id #get that is inside a :checked element */
+#me:checked + #get {
+  background: blue;
+}
+
+[type="checkbox"] + label {
+  background: yellow;
+}
+[type="checkbox"]:indeterminate + label {
+  background: blue;
+}
+[type="radio"] + label {
+  background: yellow;
+}
+[type="radio"]:indeterminate + label {
+  background: blue;
+}
+
+#art :dir(ltr) {
+  background: yellow;
+}
+#art p:dir(rtl) {
+  background: blue;
+}
+
+#full {
+  background: yellow;
+  cursor: pointer;
+}
+#full:fullscreen {
+  background: blue;
+}
+
+/* the ::backdrop pseudo element works only with double colon */
+#full2 {
+  background: yellow;
+  cursor: pointer;
+}
+#full2:fullscreen {
+  background: #2f00ff48;
+}
+#full2:fullscreen::backdrop {
+  background: lime;
+}
+
+#sel::selection {
+  background: lime;
+  color: #fff;
+}

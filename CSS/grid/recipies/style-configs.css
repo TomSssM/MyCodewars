@@ -1,0 +1,34 @@
+[class^="item"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 2rem;
+}
+[class^="container"] {
+  margin: 1rem auto;
+}
+.item1 {
+  background: aquamarine;
+}
+.item2 {
+  background: yellowgreen;
+}
+.item3 {
+  background: olivedrab;
+}
+.item4 {
+  background: lime;
+}
+.item5 {
+  background: chocolate;
+}
+.item6 {
+  background: springgreen;
+}
+.item7 {
+  background: lightseagreen;
+}
+.item8 {
+  background: blue;
+}

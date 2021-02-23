@@ -39,8 +39,13 @@ Set upstream for a branch (for every branch that you did -u for there is then in
 $ git push <remote> <branch> -u
 ```
 
+In other words, if branch `a` that is on the remote has been set as an upstream branch for the _local_ branch
+`b` that is on your computer, then every time when you are on branch `b` and you do `git push`, GIT will push
+the commits of the local branch `b` to the remote branch `a`.
+
 List local + remote branches
 ``` bash
+$ git branch --all
 $ git branch -a
 ```
 List only local branches
@@ -191,7 +196,7 @@ The `drop` command deletes the selected stash fromt the list
 The `clear` command drops all the stashes
 The `show` command will show the changes in the topmost stash ( or in the stash whose `<stash-hash>` you provide to it,
  see below )
-The `$ git stash` command without any arguments would save all the changes ( everything except Untracked Files ( red ): 
+The `$ git stash` command without any arguments would save all the changes ( everything except Untracked Files ( red ):
 New File ( green ), Modified ( green ), Modified ( red ) )
 
 ``` bash
@@ -204,7 +209,7 @@ $ git stash show <stash-hash>
 $ git stash clear
 ```
 
-Also, instead of using the stash hash or the stash name, you may use the stash index ( for instance the topmost 
+Also, instead of using the stash hash or the stash name, you may use the stash index ( for instance the topmost
 stash is 0, the 1st stash is the one just below the topmost and so on ).
 
 ## Aliases
@@ -300,25 +305,25 @@ Destroys even the files that are in `.gitignore` ( like `node_modules` ).
 
 ## Managing Multiple Accounts and GitHubs with SSH
 
-Imagine you have 2 GitHub accounts and on the same machine you have 2 repos. You want to contribute to the 1st one 
-with the 1st account and to the other with the 2nd account. One solution would be to keep changing username and 
-password before contributing to the repo. A better solution would be to generate two SSH keys: one for the 1st account, 
-the other for the 2nd account. Then clone the first repo thru the 1st SSH key and the second repo thru the 2nd SSH key. 
-Now if you push to, say, the first repo, which is associated with the 1st SSH key, you are going to be making and 
-pushing commits on behalf of the 1st account because it _is_ the account associated with the 1st SSH key; likewise 
+Imagine you have 2 GitHub accounts and on the same machine you have 2 repos. You want to contribute to the 1st one
+with the 1st account and to the other with the 2nd account. One solution would be to keep changing username and
+password before contributing to the repo. A better solution would be to generate two SSH keys: one for the 1st account,
+the other for the 2nd account. Then clone the first repo thru the 1st SSH key and the second repo thru the 2nd SSH key.
+Now if you push to, say, the first repo, which is associated with the 1st SSH key, you are going to be making and
+pushing commits on behalf of the 1st account because it _is_ the account associated with the 1st SSH key; likewise
 for the 2nd repo thus eliminating the need for repetitively entering login and password all the time.
 
-It solves the problem that since you cannot be logged to 2 accounts at the same time, when you try to pull / push, 
+It solves the problem that since you cannot be logged to 2 accounts at the same time, when you try to pull / push,
 GitHub will constantly ask you to authenticate.
 
-The solution to this is quite simple. Create two SSH keys: `a` and `b`. Associate `key a` with the 1st account and 
-`key b` with the 2nd account. Then clone any repo that is created with the 1st account using `key a`, and then 
-clone any repo that is created with the 2nd account using `key b`. Now if you go to any one of the two cloned 
-repositories and pull / push, GitHub will no longer ask you to sign in as we didn't use login and password to clone 
+The solution to this is quite simple. Create two SSH keys: `a` and `b`. Associate `key a` with the 1st account and
+`key b` with the 2nd account. Then clone any repo that is created with the 1st account using `key a`, and then
+clone any repo that is created with the 2nd account using `key b`. Now if you go to any one of the two cloned
+repositories and pull / push, GitHub will no longer ask you to sign in as we didn't use login and password to clone
 the repos, but instead SSH.
 
-On the other hand were we to clone via http we may end up constantly having to enter credentials ( login and password ) 
-if we switch to the 1st repo after committing to the 2nd repo and vice versa as the 2 repos are created on 
+On the other hand were we to clone via http we may end up constantly having to enter credentials ( login and password )
+if we switch to the 1st repo after committing to the 2nd repo and vice versa as the 2 repos are created on
 different accounts. With SSH such a problem ceases to exist any more.
 
 In order to do that we need to create the first key ( we called it `key a` in the previous example ) like this:
@@ -329,8 +334,8 @@ $ ssh-keygen -t rsa -C "ilyashome3@gmail.com"
 
 This way we are telling to associate the key we are creating with the email named `ilyashome3@gmail.com`.
 
-Then go to GitHub and add this key we just created ( which is associated with `ilyashome3@gmail.com` ), add it to the 
-account that uses the email `ilyashome3@gmail.com`. 
+Then go to GitHub and add this key we just created ( which is associated with `ilyashome3@gmail.com` ), add it to the
+account that uses the email `ilyashome3@gmail.com`.
 
 Likewise create another SSH key and associate it with a different email:
 
@@ -347,19 +352,19 @@ $ ssh-add ~/.ssh/home
 $ ssh-add ~/.ssh/work
 ```
 
-`ssh-add` adds private key identities ( from your `~/.ssh` directory ) to the authentication agent ( `ssh-agent` ), 
-so that the SSH Agent can take care of the authentication for you, and you don’t have type in passwords 
+`ssh-add` adds private key identities ( from your `~/.ssh` directory ) to the authentication agent ( `ssh-agent` ),
+so that the SSH Agent can take care of the authentication for you, and you don’t have type in passwords
 at the terminal.
 
-But that isn't all yet. We need to tell SSH Agent what key to look at to make sure that we are the owner of the repo. 
-In other words when we clone via SSH from `account1`, we need to tell SSH agent to use the key 
-associated with `account1`, and likewise if we clone repos created with `account 2`, SSH agent should use the key 
-associated with `account2`. This way SSH will use the correct keys when it does the handshake and repos will be 
+But that isn't all yet. We need to tell SSH Agent what key to look at to make sure that we are the owner of the repo.
+In other words when we clone via SSH from `account1`, we need to tell SSH agent to use the key
+associated with `account1`, and likewise if we clone repos created with `account 2`, SSH agent should use the key
+associated with `account2`. This way SSH will use the correct keys when it does the handshake and repos will be
 cloned successfully. I mean we wouldn't want SSH Agent to use one and same key to do the handshake _every_ time.
 There are 2 different keys associated with 2 different accounts and in order to skip having to enter the credentials
-we need to establish the connection with the first account via one key and with the other account via the other key. 
+we need to establish the connection with the first account via one key and with the other account via the other key.
 
-We can do that pretty easily by properly tweaking the SSH config file. For that go to the good old `~/.ssh` and create 
+We can do that pretty easily by properly tweaking the SSH config file. For that go to the good old `~/.ssh` and create
 a file called `config` ( no extension ). There we need to write something like this:
 
 ```
@@ -369,8 +374,8 @@ Host github.com
   IdentityFile ~/.ssh/id_rsa
 ```
 
-In order to understand what everything is for in here let's take a look at the url via which SSH clones 
-repositories ( in fact it is a url just like `https://github.com/...` it simply uses a different _protocol_ not 
+In order to understand what everything is for in here let's take a look at the url via which SSH clones
+repositories ( in fact it is a url just like `https://github.com/...` it simply uses a different _protocol_ not
 HTTP but SSH ):
 
 ```
@@ -413,7 +418,7 @@ In `~/.ssh/config` the last line:
   IdentityFile ~/.ssh/id_rsa
 ```
 
-says the following: if `Host` matches the one that is used in the url ( that one between `@` and `:` remember? ) 
+says the following: if `Host` matches the one that is used in the url ( that one between `@` and `:` remember? )
 then use the key that is located at this path: `~/.ssh/id_rsa`
 
 So in order to manage multiple accounts we could for instance create a config like this:
@@ -443,18 +448,18 @@ $ git clone git@github-home:TomSssM/lib-docs.git
 ```
 
 Now for every url that starts `git@github-home:...` SSH agent will use the `~/.ssh/home` key and for every url that
-starts with `git@github-work:...` SSH agent will use the `~/.ssh/work` key. As you remember the `~/.ssh/home` key 
-will hold the credentials for the home account that has the email `ilyashome3@gmail.com` ( because when we generated 
+starts with `git@github-work:...` SSH agent will use the `~/.ssh/work` key. As you remember the `~/.ssh/home` key
+will hold the credentials for the home account that has the email `ilyashome3@gmail.com` ( because when we generated
 it we added `... -t rsa -C "ilyashome3@gmail.com"` ) and likewise the `~/.ssh/work` key will be associated with the
 `ilyasflat3@gmail.com` email for the same reason. This will eliminate the need to enter the credentials for every
-commit we make. 
+commit we make.
 
-Now upon cloning a repo from github SSH will ask you to confirm that you want to add github.com to the `known_hosts` 
-file in the `.ssh` directory so that our SSH agent knows that it can safely allow github.com to use the ssh protocol 
+Now upon cloning a repo from github SSH will ask you to confirm that you want to add github.com to the `known_hosts`
+file in the `.ssh` directory so that our SSH agent knows that it can safely allow github.com to use the ssh protocol
 to communicate with our machine.
 
-__Note__: if your company uses an enterprise version of GitHub ( it is located not on _github.com_ but on 
-_github.yandex-team.com_ for instance ) then you also need to consider the `HostName` field: 
+__Note__: if your company uses an enterprise version of GitHub ( it is located not on _github.com_ but on
+_github.yandex-team.com_ for instance ) then you also need to consider the `HostName` field:
 
 ```
 Host github-work
@@ -463,7 +468,7 @@ Host github-work
   ...
 ```
 
-`HostName` should match exactly the _origin_ that you clone repos from. For instance if you are going to clone via 
+`HostName` should match exactly the _origin_ that you clone repos from. For instance if you are going to clone via
 SSH from _github.yandex-team.com_ then you need to change `HostName` to:
 
 ```
@@ -518,7 +523,7 @@ Host github.com
   IdentityFile ~/.ssh/work
 ```
 And you `git clone` something like this: `git@github.com:IlyaKkk/Git-Training.git` then you might get a feeling that
-when you clone a repo or push to a repo ( these are the 2 situations when SSH Agent would go thru the `config` file 
+when you clone a repo or push to a repo ( these are the 2 situations when SSH Agent would go thru the `config` file
 to check whether you have the right private keys ), you might get a feeling that SSH Agent would check both the
 `~/.ssh/home` key _and_ the `~/.ssh/work` key. But it isn't so unfortunately: SSH Agent doesn't check each
 `IdentityFile` under _every_ matching `Host`, instead SSH Agent would go to the _first_ matching `Host` and, in our case,
@@ -529,7 +534,7 @@ always check only the `~/.ssh/home` key and then if `~/.ssh/home` doesn't work, 
 When you make a commit some metadata is automatically attached to it. This metadata also holds the
 _email_ from which you made the commit. Where does this info about email come from? Perforce
 git looks into the `<path-to-project>/.git/config` file *in the root of your project.* If it doesn't find the
-email information there, then git is going to look at the _global_ `.gitconfig` file which lives inside 
+email information there, then git is going to look at the _global_ `.gitconfig` file which lives inside
 the `HOME` directory.
 
 But what if you have 2 repositories ( like in the previous section ) and you need to make commits in the 1st repo
@@ -549,7 +554,7 @@ the `~/.gitconfig` file as the same action but with the `--global` flag would ).
 have discussed, git first checks this ( `.../.git/config` ) file _before_ the global one ( `~/.gitconfig` )
 to retrieve information, since it is so, now the commits will have the email value in their metadata set to
 whatever value the `email` field inside the `.../.git/config` file has. Thus it has solved our problem. This way
-we can configure every project to have its own email and user as the contributor by specifying it in the 
+we can configure every project to have its own email and user as the contributor by specifying it in the
 `.../.git/config` file with `git config` commands without the `--global` flag.
 
 Another solution is to write this magic stuff:
@@ -744,4 +749,225 @@ And thus is the difference between `git fetch` and `git pull`.
 **Note:** when you do `git pull`, as was said, git downloads new commits from the specified branch and then tries to
 merge them. I haven't, however, been super clear about where it would try to merge those newly downloaded commits.
 So, yeah, be careful because if you do `git pull origin <branch-name>` git will try to merge the new commits of
-the branch `<branch-name>` **into the branch you are currently on.** 
+the branch `<branch-name>` **into the branch you are currently on.**
+
+## GIT Refs - GIT Internals
+
+### HEAD
+
+You can think of the HEAD as the _current branch_. When you switch branches with `git checkout`, the HEAD revision
+changes to point to the tip of the new branch.
+
+You can see what HEAD points to by doing:
+
+```shell script
+$ cat .git/HEAD
+```
+
+In my case, the output is:
+
+```
+ref: refs/heads/master
+```
+
+For instance if you have 2 branches:
+
+```
+master: a -> b -> c -> d
+feature1: a -> b -> 1 -> 2 -> 3
+```
+
+Let's imagine that `a` - `b` and `1` - `3` are commits. Thus `feature1` is a branch whose tip is commit `3`
+( the last commit ), while the tip of `master` branch is commit `d`. If we take a look at the file
+`refs/heads/master` which represents the `master` branch we will see that it simply contains the hash of the commit
+`d`, which is the tip of the `master` branch.
+
+As you know when you do `git checkout` you don't necessarily have to specify a branch name, you can also checkout to the
+hash of some commit. In this case you go to the _detached HEAD_ state. Thus it also is possible for HEAD to refer
+to a specific revision that is not associated with a branch name. This situation is called a _detached HEAD_.
+
+If you go to the detached HEAD state by doing `$ git cehckout <hash-of-any-prev-commit>` and then do `$ cat /git/HEAD`
+you will see that `.git/HEAD` is now _not_ this: `ref: refs/heads/<branch-name>` but instead now the `.git/HEAD` file contains
+the hash of the commit you are currently on. That is how GIT knows that we are in the detached HEAD state ( that is, by
+checking that the `.git/HEAD` file is simply a commit hash and not a path to the branch in `.git/refs/heads` directory ).
+
+In fact writing the name of a branch as in `$ git branch -D master` is just a shorter way
+of writing `$ git branch -D refs/heads/master`.
+
+Thus all local branches are just files in the `.git/refs/heads` directory, like the local branch `master` is in fact
+this file: `.git/refs/heads/master`, which contains the commit hash of `master`'s top-most commit, the commit hash of
+`master`'s tip. But what about _remote_ branches? Well, they are also just files except they don't live in the
+`.git/refs/heads` directory. There can be many remotes. All remotes live in `.git/refs/remotes` and all the branches
+of a certain remote live in their remote's corresponding directory. For instance, all the  branches of the remote called
+`origin` are going to live in the `.git/refs/remotes/origin` directory. If you take a look at the directory of any remote,
+`.git/refs/remotes/origin` for instance, you will see that every remote also has its HEAD and all the branches in there
+( provided that you fetched them beforehand ):
+
+```shell script
+$ ls .git/refs/remotes/origin/
+ HEAD  gh-pages  master
+```
+
+As you can see on the remote there live 2 branches: `master` and `gh-pages`
+
+In the output above `HEAD` is going to be:
+
+```
+ref: refs/remotes/origin/master
+```
+
+while `.git/refs/remotes/origin/master` and `.git/refs/remotes/origin/gh-pages` and whatever else branches there may be
+are simply going to be commit hashes ( the hashes of the commits that are the tips of those branches ).
+
+So now you know what happens under the hood when you do `$ git fetch origin`: GIT is simply going to download all the
+refs of the `origin` into `.git/refs/remotes/origin` so that you can use the branches and commits of
+the `origin` remote.
+
+Thus when you switch to a remote branch like so `$ git checkout origin/master` you simply switch to
+`.git/refs/remotes/origin/master` but do note though that if you switch to a remote branch, you will be
+in a detached HEAD state:
+
+```shell script
+$ git checkout origin/HEAD # or git checkout origin/master
+$ git status
+ HEAD detached at origin/master
+ nothing to commit, working tree clean
+```
+
+Thus now you also understand all this verbose syntax. For instance let's try doing this:
+
+```shell script
+$ git branch --all
+* master
+  piskel-clone
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/animation-player
+  remotes/origin/cv
+  remotes/origin/gh-pages
+  remotes/origin/hexal
+  remotes/origin/master
+  remotes/origin/neutronMail
+  remotes/origin/palette
+  remotes/origin/piskel-clone
+  remotes/origin/youtube-client
+```
+
+As you can see, we are currently on the `master` branch. Also, we have fetched some of the remote branches
+from the remote called `origin` ( `remotes/origin` ), these are the branches like:
+
+- `remotes/origin/animation-player`
+- `remotes/origin/cv`
+- `remotes/origin/gh-pages`
+- `remotes/origin/hexal`
+- `remotes/origin/master`
+- `remotes/origin/neutronMail`
+- `remotes/origin/palette`
+- `remotes/origin/piskel-clone`
+- `remotes/origin/youtube-client`
+
+We also see that on the remote the `HEAD` is at the `master` branch ( `remotes/origin/HEAD -> origin/master` ).
+The `HEAD` on the remote is not the same as our local `HEAD` of course. If the `HEAD` on the remote points to
+the `master` branch for instance then it means that for the remote, `master` is like the default branch. There is not
+probably much else information we can gain from it :)  Also, we see that locally we have only 2 branches:
+`master` and `piskel-clone`.
+
+Here is another example, let's log the last 2 commits of the `master` branch:
+
+```shell script
+$ git log -2 master
+commit 0a606a52f404f891a2ca464c928ff581a2b9af8b (HEAD -> master, origin/master, origin/HEAD)
+Author: TomSssM <ilyashome3@gmail.com>
+Date:   Sun Jul 21 19:34:21 2019 +0300
+
+    feat: add a link to Piskel Clone
+
+commit 47e9d4e84ec78838461c5b7630095206fe68c591
+Author: TomSssM <43145822+TomSssM@users.noreply.github.com>
+Date:   Sun Jun 9 21:48:11 2019 +0300
+
+    feat: add palette-v3 to README.md
+```
+
+We are interested in these 2 lines:
+
+```
+commit 0a606a52f404f891a2ca464c928ff581a2b9af8b (HEAD -> master, origin/master, origin/HEAD)
+...
+commit 47e9d4e84ec78838461c5b7630095206fe68c591
+```
+
+because as you can see the 1st commit is the tip of 3 branches:
+
+- `master` - local `master` branch
+- `origin/master` - the `master` branch on the remote
+- it is also the tip of the remote's `HEAD`: `origin/HEAD` ( thou we did know that since the remote's `HEAD`
+ actually points to `origin/master` )
+
+It also says that currently our _local_ `HEAD` points to the `master` branch ( which we can verify by doing
+`cat .git/HEAD` ).
+
+### Packed Refs
+
+For large repositories, GIT will periodically perform a garbage collection to remove unnecessary objects and
+compress refs into a single file for more efficient performance. You can force this compression with the garbage
+collection command:
+
+```shell script
+$ git gc
+```
+
+This moves all of the individual branch and tag files in the `refs` folder into a single file called `packed-refs`
+located in the top of the `.git` directory. If you open up this file, you’ll find a mapping of commit hashes to refs:
+
+```
+00f54250cf4e549fdfcafe2cf9a2c90bc3800285 refs/heads/feature
+0e25143693cfe9d5c2e83944bbaf6d3c4505eb17 refs/heads/master
+bb883e4c91c870b5fed88fd36696e752fb6cf8e6 refs/tags/v0.9
+```
+
+On the outside, normal GIT functionality won’t be affected in any way. But, if you’re wondering why your `.git/refs`
+folder is empty, this is where the refs went.
+
+**Note:** besides branches, `git fetch` also downloads commits data from the remote. Every commit has data associated
+with it like what changes were made to what files, what hash the commit has and so on. With every commit is associated
+a commit hash which we have seen in the `.git/refs/...` directory. Thus, when you do `git fetch`, apart from branches
+you also download all the data about commits ( which commit hash corresponds to which commit, what changes were made
+in what commit and so on ). This way git works sort of like a mini database.
+
+And here is the important thing: if you have some commit `a` with hash `b` on the remote but not locally,  then if you
+ask git to do something with that commit ( `git checkout <hash b>` for example ), git will not be able to  find that
+commit `a`, because git is running locally and simply doesn't know anything about the existence of commit `a` and that
+hash `b` which you typed is associated with it. You need to first run `git fetch` for git to first download all the new
+commit data from the remote, and only after that will git be able to, say, `checkout` to that commit `a`.
+
+Why is this important to know? The reason is: sometimes you want to `cherry-pick` some commit. What you do is, you go
+to GitHub ( to the remote ), copy the hash of the commit you want, and then simply run `git cherry-pick <commit-hash>`.
+But sometimes git might throw an error that such a commit hash as you entered "did not match any file(s) known to git".
+The reason for that is because git doesn't have data about that commit _locally_, only on the remote. To fix this,
+you need to run `git fetch`, this will make git download all the new data from the remote ( all the refs, commits etc.
+that exist on remote but are missing on your computer ), and this in turn is going to download the commit with that hash
+you copied, and only after that will git be able to `cherry-pick` the commit you want because now git knows what commit
+with what changes the hash you copied corresponds to.
+
+The same story is true for git branches, but we have already discussed that above.
+
+## The `git push branch:branch` Syntax
+
+Let's take a look at what this does:
+
+```shell script
+$ git push origin master:cool-master
+```
+
+It tells GIT: push the local `master` branch to remote BUT don't try to merge it with the remote's `master` branch,
+instead merge it into the remote's `cool-master` branch ( or, if `cool-master` doesn't exist on remote, create it ).
+
+Now the remote's `cool-master` branch is the same as our local `master` branch.
+
+As a side note, you can also delete the remote branch by doing this:
+
+```shell script
+$ git push --delete origin cool-master
+```
+
+This tells GIT: go to the remote called `origin` and delete the `cool-master` branch there.

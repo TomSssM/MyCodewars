@@ -4,7 +4,7 @@
 
 - [Projects from the Tutorial](./projects-from-the-tutorial/README.md) :page_facing_up:
 - [Cool Projects](./cool-projects/README.md) :whale:
-- [Snippets](./snippets/README.md) [:seedling:](./data/easter-egg.md)
+- [Snippets](./snippets/README.md) :seedling:
 - [Legacy](./legacy/README.md) :file_cabinet:
 
 ---
@@ -22,6 +22,7 @@
 - __Interview Prep Kit__ :rocket:
   - [Task challenges ( Task 1 - 20 )](./1\)%20Task%20Challanges.md)
   - [Task challenges ( Task 21 - 40 )](./2\)%20Task%20Challanges.md)
+  - [Task challenges ( Task 41 - 70 )](./3\)%20Task%20Challanges.md)
 
 - __CodeWars__ :paperclip:
   - [CodeWars ( Task 1 - 10 )](./1\)%20CodeWars.js)

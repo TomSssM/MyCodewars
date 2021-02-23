@@ -1,8 +1,8 @@
 // Task 31
-// There's no such thing as private properties on a coffeescript object! 
+// There's no such thing as private properties on a coffeescript object!
 // But, maybe there is?
 
-// Implement a function createSecretHolder(secret) which accepts any value as 
+// Implement a function createSecretHolder(secret) which accepts any value as
 // secret and returns an object with ONLY two methods:
 //   getSecret() which returns the secret
 //   setSecret() which sets the secret
@@ -28,7 +28,7 @@ console.log(obj.setSecret(2));
 console.log(obj.getSecret()); // 2
 
 // Task 32
-// In testing, a spy function is one that keeps track of various metadata regarding its invocations. 
+// In testing, a spy function is one that keeps track of various metadata regarding its invocations.
 // Some examples of properties that a spy might track include:
 // Whether it was invoked
 // How many times it was invoked
@@ -37,8 +37,8 @@ console.log(obj.getSecret()); // 2
 // What values it returned
 // Whether it threw an error
 
-// For this kata, implement a spyOn function which takes any function func 
-// as a parameter and returns a spy for func. The returned spy must be callable in the 
+// For this kata, implement a spyOn function which takes any function func
+// as a parameter and returns a spy for func. The returned spy must be callable in the
 // same manner as the original func, and include the following additional properties/methods:
 
 // .callCount() — returns the number of times spy has been called
@@ -75,7 +75,7 @@ console.log(adderSpy.returned(8)); // true
 console.log(adderSpy.returned(0)); // false
 
 // Task 33
-// This time we want to write calculations using functions and get the results. 
+// This time we want to write calculations using functions and get the results.
 // Let's have a look at some examples:
 // JavaScript:
 
@@ -85,13 +85,13 @@ console.log(adderSpy.returned(0)); // false
 // six(dividedBy(two())); // must return 3
 
 // There must be a function for each number from 0 ("zero") to 9 ("nine")
-// There must be a function for each of the following mathematical operations: 
+// There must be a function for each of the following mathematical operations:
 // plus, minus, times, dividedBy
 
 // Each calculation consist of exactly one operation and two numbers
-// The most outer function represents the left operand, the most inner function represents 
+// The most outer function represents the left operand, the most inner function represents
 // the right operand
-// Division should be integer division, e.g eight(dividedBy(three()))/eight(divided_by(three)) 
+// Division should be integer division, e.g eight(dividedBy(three()))/eight(divided_by(three))
 // should return 2, not 2.12349812409023490293402324210394023949023940920394191203942...
 
 function zero() {
@@ -217,15 +217,15 @@ console.log(eight(minus(three()))); // must return 5
 console.log(six(dividedBy(two()))); // must return 3
 
 // Task 34
-// This kata is designed to test your ability to extend the functionality of built-in classes. 
-// In this case, we want you to extend the built-in Array class with the following methods: 
+// This kata is designed to test your ability to extend the functionality of built-in classes.
+// In this case, we want you to extend the built-in Array class with the following methods:
 // square(), cube(), average(), sum(), even() and odd().
 
 // Explanation:
 
 // - square() must return a copy of the array, containing all values squared
 // - cube() must return a copy of the array, containing all values cubed
-// - average() must return the average of all array values; on an empty array must 
+// - average() must return the average of all array values; on an empty array must
 //             return NaN
 // - sum() must return the sum of all array values
 // - even() must return an array of all even numbers
@@ -271,31 +271,31 @@ console.log(numbers.odd());     // must return [1, 3, 5]
 // TL;DR: write a nouveau function that replicates all the behavior of the new operator.
 
 // Aside: Operators?
-// In JavaScript, perhaps no operator is as complicated as new. "Wait; new is an operator?" 
-// Yep; an operator is something that operates on one or more operands and evaluates 
+// In JavaScript, perhaps no operator is as complicated as new. "Wait; new is an operator?"
+// Yep; an operator is something that operates on one or more operands and evaluates
 // to a result. Binary operators like + and !== operate on two operands:
 
 // 5 + 5 evaluates to 10
 // {} !== [] evaluates to true
-// Whereas unary operators like + and typeof take one operand 
+// Whereas unary operators like + and typeof take one operand
 // (hmm, + is both a unary and binary operator, how 'bout that!):
 
 // +'5' evaluates to 5
 // typeof '5' evaluates to 'string'
-// Ultimately operators are functions with different syntax. 
-// They take inputs/operands and return/evaluate to something. 
+// Ultimately operators are functions with different syntax.
+// They take inputs/operands and return/evaluate to something.
 // In fact, some JS operators can be re-written as functions.
 
 // New
-// So what about new? Well, the unary operator new is intended to create 
-// "instances" of a constructor function. To be more precise, the 
+// So what about new? Well, the unary operator new is intended to create
+// "instances" of a constructor function. To be more precise, the
 // operation new Constructor(arg1, arg2, ...argX) does the following:
 
-// Creates an empty object (which we'll call instance) which prototypally inherits 
+// Creates an empty object (which we'll call instance) which prototypally inherits
 // from Constructor.prototype
-// Binds Constructor to instance (meaning this is instance) and invokes 
+// Binds Constructor to instance (meaning this is instance) and invokes
 // Constructor with any arguments passed in
-// If the return value of Constructor is an object 
+// If the return value of Constructor is an object
 // (including arrays, functions, dates, regexes, etc.) the operation evaluates to that object
 // Otherwise, the operation evaluates to instance
 // Let's see some examples:
@@ -318,12 +318,12 @@ console.log(numbers.odd());     // must return [1, 3, 5]
 // const arr = new ReturnsArray('arr?');
 // console.log( arr.name ); // undefined
 // console.log( arr ); // [1, 2, 3]
-// Oof! No wonder people get confused about new. The good news is… everything new 
+// Oof! No wonder people get confused about new. The good news is… everything new
 // can do, you can do too.
 // Exercise
-// Your mission: write a function nouveau (that's French for "new") which takes one function 
-// parameter (the constructor), plus an unknown number of additional parameters of any 
-// type (arguments for the constructor). When invoked, nouveau should do everything 
+// Your mission: write a function nouveau (that's French for "new") which takes one function
+// parameter (the constructor), plus an unknown number of additional parameters of any
+// type (arguments for the constructor). When invoked, nouveau should do everything
 // new does and return the same object new would evaluate to, as specified above.
 // const john = nouveau(Person, 'John', 30); // same result as above
 // Good luck!
@@ -374,9 +374,9 @@ console.log(weirdDude === Object.prototype); // true
 
 // Task 36
 // In this kata, you must create a digital root function.
-// A digital root is the recursive sum of all the digits in a number. 
-// Given n, take the sum of the digits of n. 
-// If that value has more than one digit, continue reducing in this way until 
+// A digital root is the recursive sum of all the digits in a number.
+// Given n, take the sum of the digits of n.
+// If that value has more than one digit, continue reducing in this way until
 // a single-digit number is produced. This is only applicable to the natural numbers.
 
 // Here's how it works:
@@ -423,15 +423,15 @@ console.log(digital_root(493193)); // 2
 // Define the following classes.
 
 // I. Cuboid
-// The object constructor for the class Cuboid should receive exactly three arguments 
-// in the following order: length, width, height and store these three values in this.length, 
+// The object constructor for the class Cuboid should receive exactly three arguments
+// in the following order: length, width, height and store these three values in this.length,
 // this.width and this.height respectively.
-// The class Cuboid should then have a getter surfaceArea which returns the surface area of 
+// The class Cuboid should then have a getter surfaceArea which returns the surface area of
 // the cuboid and a getter volume which returns the volume of the cuboid.
 
 // II. Cube
-// class Cube is a subclass of class Cuboid. The constructor function of Cube should receive 
-// one argument only, its length, and use that value passed in to set this.length, 
+// class Cube is a subclass of class Cuboid. The constructor function of Cube should receive
+// one argument only, its length, and use that value passed in to set this.length,
 // this.width and this.height.
 
 // Hint: Make a call to: super, passing in the correct arguments, to make life easier ;)
@@ -458,9 +458,9 @@ class Cube extends Cuboid {
 }
 
 // Task 38
-// Make a function called crossProduct that takes two 3 dimensional vectors 
-// (in the form of two arrays) and returns their cross product. You need to check 
-// if the passed arguments are of the expected format, otherwise throw the message: 
+// Make a function called crossProduct that takes two 3 dimensional vectors
+// (in the form of two arrays) and returns their cross product. You need to check
+// if the passed arguments are of the expected format, otherwise throw the message:
 // "Arguments are not 3D vectors!".
 // crossProduct([1,0,0],[0,1,0]) //should return [0,0,1]
 // crossProduct('gobbledigook', [1,1,1]) //should throw the string "Arguments are not 3D vectors!"
@@ -484,7 +484,7 @@ function isVectorOk(vector) {
 }
 
 // Task 39
-// In this kata you have to implement a base converter, which converts positive integers between 
+// In this kata you have to implement a base converter, which converts positive integers between
 // arbitrary bases / alphabets. Here are some pre-defined alphabets:
 
 const Alphabet = {
@@ -498,8 +498,8 @@ const Alphabet = {
     ALPHA_NUMERIC: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 };
 
-// The function convert() should take an input (string), the source alphabet (string) and the target 
-// alphabet (string). You can assume that the input value always consists of characters from the 
+// The function convert() should take an input (string), the source alphabet (string) and the target
+// alphabet (string). You can assume that the input value always consists of characters from the
 // source alphabet. You don't need to validate it.
 
 // convert between numeral systems
@@ -523,7 +523,7 @@ console.log(convert("SAME", Alphabet.ALPHA_UPPER, Alphabet.ALPHA_UPPER)); // sho
 // however this particular kata has a problem: there may be alphabet characters like:
 // ab is something similar to base 2 except instead of 0 and 1 we have a and b
 // well no problem:
-// what if in line marked (*) we were to coerce together not quite numbers but 
+// what if in line marked (*) we were to coerce together not quite numbers but
 // use those numbers as indexes to get values stored at them
 // let's imagine we have a binary like base: 'ab'
 //                                            01
@@ -535,60 +535,61 @@ function convert(input, source, target) {
     let inputNum = [];
     const baseSource = source.length;
     const baseTarget = target.length;
-  
+
     if (source == target) {return input}
-  
+
     stringToNum();
-  
+
     if (baseSource !== 10) {
         inputNum = toDecimal();
     } else {
         inputNum = +inputNum.join('');
     }
-  
+
     if (baseTarget === 10) {
       return inputNum.toString();
     } else {
       return toTarget();
     }
-  
-  
+
+
     function stringToNum() { // * ready
       for (let i = 0; i < input.length; i++) {
         inputNum[i] = source.indexOf( input[i] );
       }
     }
-  
+
     function toDecimal() { // * ready
       let n = inputNum.length;
       let sum = 0;
       let j = 0;
-  
+
       for (let i = n - 1; i >= 0; i--) {
         sum = inputNum[j] * Math.pow(baseSource, i) + sum;
         j++;
       }
-  
+
       return sum;
     }
-  
+
     function toTarget() { // * ready
       let targetNum = [];
       let prime = inputNum;
       let float;
-  
+
       do {
         float = prime % baseTarget;
         prime = Math.floor(prime / baseTarget);
         targetNum.unshift( target[float]);
       } while (prime > 0);
-  
+
       return targetNum.join('');
-    } 
+    }
 }
 
 // Task 40
-// You are given a node that is the beginning of a linked list. This list always contains a tail 
+// Can you get the loop ?
+// You are given a node that is the beginning of a linked list. This list always contains a tail
 // and a loop.
 
 // Your objective is to determine the length of the loop.

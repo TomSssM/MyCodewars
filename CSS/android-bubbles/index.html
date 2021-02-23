@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bubbles</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+<script src="./Bubble.js"></script>
+<script src="./Button.js"></script>
+<script src="./utils.js"></script>
+<script>
+  new Button();
+  new Button({
+    text: 'blue',
+    color: 'blue',
+    fixed: true,
+  });
+  new Button({
+    text: 'green',
+    color: 'green',
+    bounce: true,
+  });
+  new Button({
+    square: true,
+  });
+</script>
+</body>
+</html>

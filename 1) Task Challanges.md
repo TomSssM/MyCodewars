@@ -13,7 +13,7 @@ const decToBin = function(num = 0) {
     res = (num % 2) + res;
     num = Math.floor(num / 2);
   }
-  
+
   return res * sign;
 };
 
@@ -234,7 +234,6 @@ function Person(firstName, lastName) {
     function(title) {
       return title + ' ' + this.firstName + ' ' + this.lastName;
     },
-
     function() {
       return [this.firstName, this.lastName];
     }.bind(this));
@@ -243,6 +242,9 @@ function Person(firstName, lastName) {
 const person = new Person('Jonathan', 'Lehman');
 ```
 # 9) Prime Number
+Prime numbers are the numbers that can only be divided by themselves ( and by 1 obviously, because everything
+can be divided by 1 ). Thus 2 is a prime number because it can only be divided by 2, itself, and by 1.
+9 on the other hand is not because we can divide 9 not only by 9 and 1 but also by 3.
 ## Default
 ```javascript
 function isPrime(num) {
@@ -261,7 +263,7 @@ function isPrime(num) {
 
   while (num > divisor) {
     if(num % divisor === 0) {
-     return false; 
+     return false;
     }
     else divisor++;
   }
@@ -332,6 +334,15 @@ console.log(result1); // Function
 ```
 
 # 11) Prime Factors
+
+There are prime numbers like 2, 3, 5, 7 and so on ( we talked about them more above ). From the definition of prime
+numbers we can conclude that there are prime numbers, and all the non-prime numbers consist of prime number.
+
+For example, 12 is _not_ a prime number. But 12 consists of the following prime numbers: 3, 2 and 1.
+
+_Prime Factorization_ is a way to find the min amount of prime numbers that need to be multiplied
+to get a non-prime number. For example, in case of 12 it is going to be: 3 * 2 * 2.
+
 ```javascript
 function primeFactors(num) {
   const fact = {};
@@ -347,7 +358,9 @@ function primeFactors(num) {
   return fact;
 }
 
+primeFactors(72); // { '2': 3, '3': 2 }, "72" is the same as "2 * 2 * 2 * 3 * 3", thus 72 consists of 4 twos and 3 threes
 primeFactors(69); // { '3': 1, '23': 1 }
+primeFactors(12); // { '2': 2, '3': 1 }
 ```
 You could optimize it by increasing the divisor by 2 after checking that 2 isn't a prime factor
 as any number that can't be divided by 2, can't be divided by any even number either
@@ -427,19 +440,17 @@ __Time Complexity:__ O(2^n)
 function greatestCommonDivisor(a, b) {
   let divisor = 2;
   let greatestDivisor = 1;
-
   if (a < 2 || b < 2) return 1;
-  
   while(a >= divisor && b >= divisor) {
    if(a % divisor == 0 && b % divisor ==0) {
-      greatestDivisor = divisor;      
+      greatestDivisor = divisor;
     }
     divisor++;
   }
   return greatestDivisor;
 }
 
-greatestCommonDivisor(14, 21); // 7 
+greatestCommonDivisor(14, 21); // 7
 greatestCommonDivisor(69, 169); // 1
 ```
 
@@ -470,7 +481,7 @@ function mergeSortedArray(a, b) {
   let bElm = b[0];
   let i = 1;
   let j = 1;
-  
+
   if(a.length === 0) return b;
   if(b.length === 0) return a;
 
@@ -507,7 +518,7 @@ swapNumb(2, 3);
 // before swap:  a: 2; b:  3
 // after swap:  a: 3; b:  2
 ```
-# 17) Stringo Reverso
+# 17) Reverse a string
 ## Concatenation
 ```javascript
 function reverse(str) {

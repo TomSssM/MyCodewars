@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        code {
+            background-color: lightgray;
+        }
+    </style>
+    <title>Visible Input Masking</title>
+</head>
+<body>
+<h1>Input Masking ( Visible Mask )</h1>
+
+<br />
+<br />
+
+<input type="text" id="mask-input-1" data-mask="(___) ___-____">
+
+<br />
+
+<input type="text" id="mask-input-2" data-mask="--- --- ---" />
+
+<br />
+
+<input type="text" id="mask-input-3" data-mask="____/__*___" />
+
+<script src="../invisible-mask/index.js"></script>
+<script src="./index.js"></script>
+<script>
+    new VisibleInputMasking({
+        element: document.querySelector('#mask-input-1'),
+        maskPlaceholderChar: '_',
+        maskValuesRegEx: /\d/,
+        limitInput: true,
+    });
+    new VisibleInputMasking({
+        element: document.querySelector('#mask-input-2'),
+        maskPlaceholderChar: '-',
+        maskValuesRegEx: /\d/g,
+    });
+    new VisibleInputMasking({
+        element: document.querySelector('#mask-input-3'),
+        maskPlaceholderChar: '_',
+    });
+</script>
+</body>
+</html>

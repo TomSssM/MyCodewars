@@ -38,15 +38,17 @@ document.addEventListener('focus', function(e) {
   // it is so simple, if we indeed are showing a placeholder for an input and
   // the input is going to have a class placeholder and if someone simply typed
   // the same value as the placeholder well we won't show a tooltip again cause
-  // the input isn't going to have a class placehodlder on it 
-  if(target.dataset.placeholder && target.classList.contains('placeholder')) {
+  // the input isn't going to have a class placehodlder on it
+  if(target.dataset && target.dataset.placeholder && target.classList.contains('placeholder')) {
     createTooltip(target);
   }
 }, true);
 
 document.addEventListener('blur', function(e) {
   const target = e.target;
-  if(target.dataset.placeholder) {
+  // have to check for dataset as well because in FF 'blur'
+  // often happens on document element if developer tools are open
+  if(target.dataset && target.dataset.placeholder) {
     if(!target.value) createPlcHolder(target);
     removeTooltip();
   }

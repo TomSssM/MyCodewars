@@ -35,3 +35,21 @@ function getLoveTrianglesCount(preferences = []) {
 
   return count / 3;
 };
+
+//I tried solving 2 and smth years afterward:
+/**
+ * @param preferences - an array of integers. Indices of people, whom they love
+ * @returns number of love triangles
+ */
+function getLoveTrianglesCount(preferences = []) {
+    let count = 0;
+    preferences.forEach((whomLoves, index) => {
+        if (index !== whomLoves - 1) {
+            const whomLastOneLoves = preferences[preferences[whomLoves - 1] - 1];
+            if (index === whomLastOneLoves - 1) {
+                count += 1;
+            }
+        }
+    });
+    return count / 3;
+}

@@ -33,7 +33,7 @@ Math.floor(0.9999999999 * a); // 99
 ```javascript
 const a = 100;
 Math.floor(Math.random() * (a + 1));
-Math.floor(0.9999999999 * (a + 1)); // 99
+Math.floor(0.9999999999 * (a + 1)); // 100
 ```
 ## Integers from a
 ```javascript
@@ -177,7 +177,8 @@ topSum([1,2,3,4,2,3,1,2]); // 7
 # 26) Counting Zeros
 __Question:__ Count Total number of zeros from 1 upto n?
 
-__Answer:__ If n = 50. number of 0 would be 11 (0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100). Please note that 100 has two 0. This one looks simple but little tricky
+__Answer:__ If n = 50. number of 0 would be 11 (0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100).
+Please note that 100 has two 0. This one looks simple but little tricky
 
 __Explanation:__ So the tick here is. If you have a number 1 to 50 the value is 5.
 just 50 divided by 10. However, if the value is 100. the value is 11.
@@ -256,13 +257,14 @@ This task is for __*Recursive Backtracking*__
 
 __Explanation:__
 
-__Idea:__ Idea is very simple. We will convert the string to an array. from the array we will pick one character and then permute rest of it.
-After getting the permutation of the rest of the characters, we will concatenate each of them with the character we have picked.
+__Idea:__ Idea is very simple. We will convert the string to an array. from the array we will pick one character and
+then permute rest of it. After getting the permutation of the rest of the characters, we will concatenate each of them
+with the character we have picked.
 
 __step-1__ First copy original array to avoid changing it while picking elements
 
-__step-2__ Use splice to removed element from the copied array. We copied the array because splice will remove the item from the array.
-We will need the picked item in the next iteration.
+__step-2__ Use splice to removed element from the copied array. We copied the array because splice will remove the item
+from the array. We will need the picked item in the next iteration.
 
 __step-3__ `[1,2,3,4].splice(2,1)` will return `[3]` and remaining array = `[1,2,4]`
 
@@ -736,8 +738,8 @@ function composeSort(...sortCbs) {
 }
 ```
 
-So the resulting callback from `composeSort` looks at the value ( either -1 or 1 ) returned by the *first* callback, 
-then if it is 0 it checks that the next callback returns either 1 or -1 and not 0, yet if it also retruns 0 it looks at 
+So the resulting callback from `composeSort` looks at the value ( either -1 or 1 ) returned by the *first* callback,
+then if it is 0 it checks that the next callback returns either 1 or -1 and not 0, yet if it also retruns 0 it looks at
 the value returned by the 3rd callback and so on all that by *reducing* the array of callbacks.
 
 # 36) Transactions
@@ -833,14 +835,14 @@ Transaction.prototype.commit = function () {
 Imagine we have the following tickets:
 ```js
 [
-    { from: 'London', to: 'Washington' },
+    { from: 'London', to: 'Moscow' },
     { from: 'NY', to: 'London' },
-    { from: 'Washington', to: 'Texas' },
+    { from: 'Moscow', to: 'SPb' },
     ...
 ]
 ```
 
-Out of these tickets we can build a straight route from a to b. Thus we are going to fly from New York to Texas 
+Out of these tickets we can build a straight route from a to b. Thus we are going to fly from New York to Texas
 according to the following route:
 
 ```
@@ -858,7 +860,7 @@ We can tell so by looking at the _sorted_ tickets below:
 ]
 ```
 
-We need to implement a function which would order the tickets like above so that we can trace them and get the route 
+We need to implement a function which would order the tickets like above so that we can trace them and get the route
 from a to b.
 
 Here is the awesome implementation:

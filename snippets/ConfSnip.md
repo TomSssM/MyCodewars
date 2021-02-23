@@ -251,6 +251,10 @@ line `(**)` and not as a string literal ( but as HTML token instead ) thus it is
 
 Now we are OK
 
+The reason that happens is because the HTML parser works before the JS parser. Thus the browser first
+builds HTML, so it looks at all the text and searches for HTML tokens, and only after that the browser
+executes whatever it can find between any 2 `<script />` tags.
+
 ## Object.keys for a string
 
 Calling this method with string as an argument will first convert the string into its corresponding
@@ -540,7 +544,7 @@ drawES2015Chart(); // doesn't fail though arguments[0] === undefined
 
 ## Import Confusion
 
-The second ( `<two>` ) thing in `import <one>, <two> from ...` is actually the _whole_ module 
+The second ( `<two>` ) thing in `import <one>, <two> from ...` is actually the _whole_ module
 ( don't forget about it ):
 
 ```js
@@ -573,7 +577,7 @@ console.log('Hi! From Laboratory');
 // Hi! From Laboratory
 ```
 
-There is also a Promise-based _dynamic_ import. _Dynamic_ simply means that we import a module based on some user 
+There is also a Promise-based _dynamic_ import. _Dynamic_ simply means that we import a module based on some user
 action rather than as soon as the page has been loaded. An example:
 
 ```js
@@ -652,6 +656,24 @@ export default class SomeClass {};
 
 will give no error.
 
+It is also no secret that we can export variable declarations:
+
+```js
+export const name = 'Tom';
+```
+
+It also means that we can export _destructuring_:
+
+```js
+const person = {
+    name: 'tom',
+    smth: 'smth',
+};
+export const { name, smth } = person;
+```
+
+Now our module will have 2 exported members: `name` and `smth`.
+
 ## getters/setters and syntax
 
 Remember that we can never use an accessor as though it were a method. Here is what I mean:
@@ -672,57 +694,6 @@ const o2 = {
 };
 ```
 
-## First confusion with new fields syntax
-
-We have to use an arrow function as a field instead of a usual method only if it is an event 
-listener( I apologize for JSX in this repo ):
-
-```jsx harmony
-class App extends Component {
-  validateField = 'validation succeeded';
-
-  eventListener = () => {
-    this.helperFunction('Hello World'); // (*)
-  };
-
-  helperFunction(message) {
-    console.log(message, this.validateField);
-    console.log(this);
-  }
-
-  render() {
-    return (
-        <h1
-            style={{backgroundColor: 'yellow'}}
-            onClick={this.eventListener}
-        >
-          Hello Redux
-        </h1>
-    );
-  }
-}
-```
-
-You see since the context was already bound when we called `helperFunction` in line `(*)` we don't need to
-write `helperFunction` as arrow function like that:
-
-```jsx harmony
-class App extends Component {
-  // ...
-
-  helperFunction = (message) => {
-    console.log(message, this.validateField);
-    console.log(this);
-  };
-  
-  // ...
-}
-```
-
-Thus if we write as arrow-functions-fields only those methods that serve as event listeners 
-( like `this.eventListener` in `App` ) we should be alright not redefining context for the rest 
-of the methods ( like `this.helperFunction` in `App` ).
-
 ## Arrow Functions really shouldn't be used as methods
 
 ```js
@@ -742,7 +713,7 @@ o.notBound(); // "Tom"
 
 Since `bound` is an arrow function it uses the `this` defined by the nearest regular function or the one
 that lies in the global scope ( out in the open if you do: `console.log(this)` it returns the window object ).
-In our case since we didn't _define_ ( define cause Lexical this remember ) `bound` inside another function
+In our case since we didn't _define_ ( define cause Lexical `this` remember ) `bound` inside another function
 its `this` is going to be the same `this` as the one in the global scope. Thus it is going to be the window object.
 
 ## Default Parameters Functions have separate Scope
@@ -834,12 +805,12 @@ Here is the explanation in the extract of one out of the few fathomable entries 
 ---
 
 Else, both px and py are Strings
-    a. If *py* is a prefix of *px*, return **false**. ( A String value *p* is a prefix of String value *q* if *q* 
-       can be the result of concatenating *p* and some other String *r*. Note that any String is a prefix of itself, 
+    a. If *py* is a prefix of *px*, return **false**. ( A String value *p* is a prefix of String value *q* if *q*
+       can be the result of concatenating *p* and some other String *r*. Note that any String is a prefix of itself,
        because *r* may be the empty String. )
     b. If *px* is a prefix of *py*, return **true**.
-    c. Let *k* be the smallest non-negative integer such that the character at position *k* within *px* is different 
-       from the character at position *k* within *py*. ( There must be such a *k*, for neither String is a prefix 
+    c. Let *k* be the smallest non-negative integer such that the character at position *k* within *px* is different
+       from the character at position *k* within *py*. ( There must be such a *k*, for neither String is a prefix
        of the other. )
     d. Let *m* be the integer that is the code unit value for the character at position *k* within *px*.
     e. Let *n* be the integer that is the code unit value for the character at position *k* within *py*.
@@ -901,3 +872,124 @@ The global `window.onerror` event listener will be called in case there is ever 
 
 **Also Note** The `.onerror` event listener on other HTML elements ( external resources like `<img/>` ) is called if
 we fetch this resource from the server and the request for it fails ( 403 or something ).
+
+## Where KeyboardEvents are triggered
+
+When you press a key, a keyboard event is going to be triggered only on the `document.activeElement` ( thus
+only on the currently focused element ) **if** it has an event handler set on it.
+
+Also a KeyBoardEvent, when you press a key, is _always_ going to be triggered on:
+
+- `document` element
+- `window` element
+
+Probably the logic behind this is that they are always focused.
+
+**But it doesn't end here**
+
+Apart from `document.activeElement`, `document` and `window` elements a keyboard event is also going to be triggered
+on the parent elements of `document.activeElement`. Here is an example of that, imagine we have HTML:
+
+```html
+<div id="special">
+  <div id="almost-inner">
+    <div id="elem" tabindex="2">ok</div>
+  </div>
+</div>
+```
+
+And the JS code like this:
+
+```js
+const special = document.querySelector('#special');
+const almostInner = document.querySelector('#almost-inner');
+const elem = document.querySelector('#elem');
+
+elem.addEventListener('keydown', () => {
+    console.log('keydown on elem');
+});
+
+almostInner.addEventListener('keydown', () => {
+    console.log('keydown on almost-inner');
+});
+
+special.addEventListener('keydown', () => {
+    console.log('keydown on special');
+});
+```
+
+Now, because the `#elem` div can be focused on ( the `tabindex` attribute ), keyboard event _are_ going to be triggered
+on it ( if it has an event listener for keyboard events of course ). If you run the code above, then focus on the
+`#elem` div and press a key, you will see that a `keydown` event also triggers on all the parent elements of this
+`#elem` div ( the behavior would be the same if instead of `#elem` div we had an input element, so long as it is
+the element can be focused on ).
+
+If the `#elem` div were not focused on then a keyboard event wouldn't trigger on it nor any of its parents
+( do note though, that if `#elem` div is focused, keyboard events will still trigger on its parents no matter
+whether or not the `#elem` div itself has a keyboard event listener ).
+
+Thus we can conclude that keyboard events trigger on:
+
+- focusable element that currently has focus ( `document.activeElement` )
+- parents of `document.activeElement`
+- `document` and `window` elements no matter if any of the elements on the page has focus
+ ( no matter if `document.activeElement` exists )
+
+Do note that keyboard event are _not_ going to be triggered on the children of `document.activeElement`.
+
+## RegEx is always an object
+
+When we create a primitive like so:
+
+```js
+12; // number primitive
+'ok'; // string primitive
+```
+
+then those primitives are not going to be an object ( plus the `typeof` proves that ):
+
+```js
+typeof 12; // "number" 12 is a primitive
+typeof new Number(12); // "object" object wrapper for the primitive 12
+```
+
+As is known, `new Number(...)` is an object wrapper, not a primitive. In fact in devtools we can see
+the primitive value of the `new Number(...)` object via the `[[PrimitiveValue]]` property.
+
+Also primitives like `12` or `"ok"` are not considered to be an instance of their classes like `Number` or `String`,
+because they are not objects, but primitive values. Only object wrappers of the primitives are instances of
+their corresponding classes, here is proof:
+
+```js
+12 instanceof Number; // false
+new Number(12) instanceof Number; // true
+```
+
+But what about RegEx? Clearly we get an object in this case:
+
+```js
+new RegExp('\d', 'g');
+```
+
+But what about this case?
+
+```js
+/\d/g;
+```
+
+Do we get back an object wrapper for a regex or the primitive value of a regex.
+
+In reality, we also get back an object, and there is no primitive value that exists for regex.
+The two slashes `/.../` are just a syntactic sugar for doing `new RegEx(...)`. Thus `/\d/g` is not a primitive.
+In other words, if regex were a number, then doing this: `/.../g` would be the same as doing this: `new Number(...)`.
+We can verify that, when we do this `/.../g` we get back an object wrapper and not a primitive value via
+the following checks:
+
+```js
+typeof /d/g; // "object"
+/d/g instanceof RegExp; // true
+```
+
+So regex is always an object, there is no primitive value for it.
+
+[Part 2](./ConfSnip2.md)

@@ -220,7 +220,8 @@ Host:google.com
 Origin:http://javascript.com
 Referer:http://javascript.com/some/url
 ```
-We use `Origin` _in addition_ to `Referrer` because it is more reliable :) Sometimes `Referer` is absent.
+We use `Origin` _in addition_ to `Referer` because it is more reliable :) Sometimes `Referer` is absent.
+Learn more about `Referer` [here](./referer.md).
 
 ---
 
@@ -263,3 +264,5 @@ non-standard methods and/ro headers). But we also check that the client be autho
 requests in addition to the server's ability to handle them when we do the main request after the preflight request
 and the way we check that the client is authorized is if the server includes the client's domain in the
 `Access-Control-Allow-Origin` header.
+
+**Note:** recently I found a HUGE drawback with CORS, you can read about it [here](./cors-intricacy.md).

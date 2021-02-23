@@ -87,28 +87,28 @@ class BST {
     }
     return false;
   }
-  
+
   remove(data) {
     const removeNode = function(node, data) {
       // if the root was empty
       if (node === null) {
         return null;
       }
-      
+
       if (data === node.data) {
-        // node has no children 
+        // node has no children
         if (node.left === null && node.right === null) {
           return null;
         }
-        // node has no left child 
+        // node has no left child
         if (node.left === null) {
           return node.right;
         }
-        // node has no right child 
+        // node has no right child
         if (node.right === null) {
           return node.left;
         }
-        // node has two children 
+        // node has two children
         var tempNode = node.right;
         while (tempNode.left !== null) {
           tempNode = tempNode.left;
@@ -175,7 +175,7 @@ class BST {
       return null;
     } else {
       const result = [];
-      function traverseInOrder(node) {       
+      function traverseInOrder(node) {
         node.left && traverseInOrder(node.left);
         result.push(node.data);
         node.right && traverseInOrder(node.right);
@@ -218,10 +218,10 @@ class BST {
   // there could also probably be a traversal
   // method to output the values in a reverse order
   // the pseudocode would be: push right, push value, push left
-  
+
   levelOrder() {
       let result = [];
-      let Q = []; 
+      let Q = [];
       if (this.root != null) {
           Q.push(this.root);
           while(Q.length > 0) {
@@ -340,3 +340,12 @@ console.log('levelOrder from bottom: ' + bst.reverseLevelOrder()); // 5,7,20,3,6
 
 bst.invert(); // invert
 console.log('inOrder for Inverted: ' + bst.inOrder()); // 22,20,17,10,9,7,6,5,4,3
+
+/**
+ * Note: there are also:
+ * 1. pre-order ( depth-first )
+ * 2. post-order
+ * 3. level-order ( breadth-first )
+ * 4. in-order ( default & reversed )
+ * traversal methods implemented iteratively as generators in ./corejs-codejam/07-yield-tasks.js
+ * */

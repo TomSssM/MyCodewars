@@ -5,6 +5,7 @@
 - [Brackets](./brackets.md)
 - [VS Code](./vs-code-ed.md)
 - [JetBrains WS](./webstormConf.md)
+- [Hyper](./hyper.md)
 
 ## Other
 

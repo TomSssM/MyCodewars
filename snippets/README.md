@@ -5,7 +5,7 @@
 - [Server Side JS](./server-side-js/README.md)
 - [Promise](./promise/README.md)
 - [Binary Data](./binary/README.md)
-- [GIT](./git-cheatsheet.md)
+- [CSS](../CSS/README.md)
 
 ## CS Stuff
 
@@ -15,14 +15,17 @@
 - [String Encoding and Character Sets](./str-encoding-n-charsets.md)
 - [How do Compilers Work](./how-compilers-work.md)
 - [Authentication Points](./auth-notes.md)
+- [Cryptography](./cryptography.md)
 
 ## Snippets
 
 - [Confusing Snippets](./ConfSnip.md)
+- [Confusing Promise Snippets](./promise/promise-details.md)
 - [New in JS](./new-in-js.md)
 
 ## Small Snippets
 
+- [GIT](./git-cheatsheet.md)
 - [JSON](./myJSON.js)
 - [Iterators and Generators](./iterators/README.md)
 - [Event Loop](./event-loop.md)

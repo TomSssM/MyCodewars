@@ -2,7 +2,7 @@
 
 ## Syntax
 
-The built-in `URL` class provides an easy way to parse and manipulate urls and can be passed anywhere where a url 
+The built-in `URL` class provides an easy way to parse and manipulate urls and can be passed anywhere where a url
 string is expected as it is automatically coerced to a string representing a full url. Here is the syntax:
 ```javascript
 const url = new URL('https://baconipsum.com/api/?type=meat-and-filler');
@@ -82,3 +82,6 @@ url.searchParams.sort(); // https://google.com/search?aaa=zzz&zzz=aaa
 ```
 
 It also has 2 static methods described [here](../../binary/blob-article.md)
+
+This article is the last in the collection but just to be clear [here](./ssj-addons.md) is a list of all the addons
+that we introduce to this section!

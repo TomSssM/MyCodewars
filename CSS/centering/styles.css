@@ -1,0 +1,41 @@
+.container {
+    display: block;
+    background: yellow;
+    border: 1px solid #000;
+    margin: .3rem;
+    width: 400px;
+    height: 400px;
+}
+
+.child {
+    width: 70px;
+    height: 70px;
+    background: aqua;
+    border: 1px solid #000;
+}
+
+.first-container {
+    position: relative;
+}
+.first-container__child {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.second-container {
+    text-align: center;
+}
+.second-container::before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+.second-container__child {
+    display: inline-block;
+    vertical-align: middle;
+}

@@ -1,0 +1,18 @@
+.meta-container {
+    display: flex;
+    flex-flow: column nowrap;
+    padding-top: 300px;
+}
+.color-box {
+    display: inline-block;
+    border: 2px solid #000;
+    width: 10px;
+    height: 10px;
+    vertical-align: middle;
+}
+.color-box_color_blue {
+    background-color: blue;
+}
+.color-box_color_yellow {
+    background-color: yellow;
+}

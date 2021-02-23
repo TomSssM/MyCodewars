@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Pseudo Stuff</title>
+</head>
+<body>
+
+  <h1>Pseudo Stuff</h1>
+
+  <h2>:target</h2>
+  Elements with :target are affected when the URL ends in the value of their id
+  <br>
+  <a href="#target" id="target">Link to #target</a>
+  <a href="#">Untarget</a>
+
+  <h2>:checked</h2>
+  <input type="checkbox" name="ok" id="me"> <label for="me" id="get">This text</label>
+
+  <h2>:indeterminate</h2>
+  Targets checkboxes with the indeterminate attribute or unselected radio buttons.
+  This checkbox has been given the indeterminate state via JavaScript:
+  <br>
+  <input type="checkbox" name="wow" id="undt"> <label for="undt">I'm in HTML!!!</label>
+  <br>
+  A group of radio buttons where all but one are without a default/pre-selected radio button set
+  <br>
+  <input type="radio" name="man" id="wow1"> <label for="wow1">Option 1</label> <br>
+  <input type="radio" name="man2" id="wow2" checked> <label for="wow2">Option 2</label> <br>
+  <input type="radio" name="man3" id="wow3"> <label for="wow3">Option 3</label> <br>
+  <input type="radio" name="man4" id="wow4"> <label for="wow4">Option 4</label> <br>
+
+  <h2>:dir</h2>
+  <article id="art">
+    <p dir="ltr">I'm left to right and yellow</p>
+    <p dir="rtl">I'm right to left and blue</p>
+  </article>
+
+  <h2>:fullscreen</h2>
+  Note: doesn't work via F11 only JavaScript fullscreen API
+  <p id="full">I'm gonna be blue in a fullscreen mode (click me)</p>
+  <p id="full2">I'm gonna be half blue in a fullscreen mode and my backdrop is going to be lime (click me)
+    <br> Note: this pseudo element also works with the dialog tag and stuff
+  </p>
+
+  <h2>:selection</h2>
+  <p id="sel">Everything selected inside me is cool</p>
+
+  <script src="./index.js"></script>
+</body>
+</html>

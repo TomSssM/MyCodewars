@@ -1,11 +1,13 @@
 # Hardcore
 - [Love Triangle](./love-triangles.js)
 - [Quadratic Equation](./quadratic-equation.js)
-- [Brackets](./brackets.js)
+- [Brackets](./brackets/README.md)
 - [Cash Exchange](./cash-exchange.js)
 - [Advanced Zeros](./advanced-zeros.js)
 - [Priority Queue](./priority-queue)
 - [Sudoku](./sudoku.js)
-- Longest Consequtive Sequence
-- Smart Calculator
-- Sorter
+- [Longest Common Subsequence](./longest-common-subsequence.js)
+- [Diff](diff/README.md)
+- [Longest Consequtive Sequence](./longest-cons-sequence.js)
+- [Smart Calculator](./smart-calculator.js)
+- [Sorter](./sorter.js)
