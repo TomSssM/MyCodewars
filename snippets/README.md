@@ -12,10 +12,6 @@
 - [Data Structures](./Data%20Structures/README.md)
 - [Algorithms](./algorithms/README.md)
 - [Design Patterns](./design-patterns/README.md)
-- [String Encoding and Character Sets](./str-encoding-n-charsets.md)
-- [How do Compilers Work](./how-compilers-work.md)
-- [Authentication Points](./auth-notes.md)
-- [Cryptography](./cryptography.md)
 
 ## Snippets
 
