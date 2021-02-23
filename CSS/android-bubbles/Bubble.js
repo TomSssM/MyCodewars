@@ -98,6 +98,32 @@ class Bubble {
         };
     }
 
+    /**
+     * OK, here is a little tricky thing here, so let me explain.
+     * Our task is: knowing the coordinates of bubble and container,
+     * do not let bubble go outside the circumference described *inside*
+     * the container, let's call this circumference _Circumference A_.
+     *
+     * In order to do that, let's introduce another circumference: _Circumference B_.
+     * Circumference B is going to have a radius equal to the radius of Circumference A
+     * minus half bubble size.
+     *
+     * In the beginning, we need to find out the distances from the middle of the bubble
+     * to the inner edges of one of the four halves that make up the Circumference A.
+     * Once we know those distances, we can use them as catets of the square triangle in order
+     * to find out the radius from the middle of the bubble to the center of Circumference A.
+     * If this radius exceeds the radius of Circumference B, then we need to position the bubble
+     * such that the coordinates of its middle match the tip of the radius of Circumference B,
+     * otherwise leave the bubble where it is.
+     *
+     * The reason that it works is the following: if bubble goes around Circumference B such that
+     * its middle lies on the edge of Circumference B, then upon making a full revolution around
+     * Circumference B one may observe that the bubble also goes such that its edge is always touching
+     * the inner edge of Circumference A, and not leaving Circumference A.
+     *
+     * @param {Number} rawX
+     * @param {Number} rawY
+     */
     positionBubbleInsideContainer(rawX, rawY) {
         if (
             this.bubbleSizeType !== 'contain' ||
@@ -260,7 +286,7 @@ class Bubble {
             limitByContainer,
         });
 
-        const { x, y } = this.positionBubbleInsideContainer(rawX, rawY, scaledBubbleSize);
+        const { x, y } = this.positionBubbleInsideContainer(rawX, rawY);
 
         bubbleElement.style.transform = transform(translate(x, y), scale(this.SCALE / 10));
 
