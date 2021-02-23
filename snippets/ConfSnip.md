@@ -19,71 +19,6 @@ var name = { goodbye: [1,2,3] }
 // log: 3 - undefined
 ```
 
-## Full Width
-
-Apart from `offsetWidth` you can also get the full width ( content width + padding + border ) of the element like so:
-```javascript
-parseInt(getComputedStyle(elem).width, 10)
-```
-
-## Appening Parent to Child
-
-We can't really do `appendChild` if the child we are appending is in fact parent of the target element. The following
-code throws an error:
-```html
-<div id="parent">
-  <div id="child"></div>
-</div>
-<script>
-  const child = document.querySelector('#child');
-  const parent = document.querySelector('#parent');
-  child.appendChild(parent); // Error
-</script>
-```
-
-## textContent in plain HTML
-
-Don't forget that writing HTML via `textContnet` property replaces `<`, `>`, etc. with encoded values:
-```html
-<p id="text">Hi!</p>
-<script>
-  const p = document.querySelector('#text');
-  p.textContent = p.outerHTML;
-  alert(p.innerHTML); // &lt;p id="text"&gt;Hi!&lt;/p&gt;
-</script>
-```
-
-## preventDefault() bubbles
-A click event will happen on `<a>` yet the default-prevented will bubble and cancel default for `<a>` as well as all
-the ancestors of `#elem`
-```html
-<a href="https://developer.mozilla.org/en-US/docs/Web">
-  <span>
-    <span id="elem" onclick="event.preventDefault()">Click</span>
-  </span>
-</a>
-```
-
-## outerHTML plus no variable
-
-When we rewrite `outerHTML` we erase the target element completely. Thus the only way to keep a reference to erased
-element is via a variable:
-```html
-<p id="elem">Hi!</p>
-<script>
-  // variable:
-  const element = document.querySelector('#elem');
-  element.outerHTML = 'man';
-  alert(element.outerHTML); // <p id="elem">Hi!</p>
-
-  // no variable:
-  elem.outerHTML = 'bye';
-  // after the code above finished working elem doesn't exist
-  // anymore both on the DOM Tree and in the window
-  alert(elem.outerHTML); // Error elem is not defined
-</script>
-```
-
 ## Class Expression
 
 Here is an unorthodox way of defining a class:
@@ -226,34 +161,6 @@ Number.prototype.checkIt = function() {
 12..checkIt(); // true
 12 instanceof Number; // false
 ```
-
-## Inserting <script> as innerHTML with caution
-
-Yeap, in __inline scripts__ we gotta be really careful when we do the following:
-```html
-<body>
-<div id="elem"></div>
-<script> // (**)
-  const elem = document.querySelector('#elem'); // (*)
-  elem.innerHTML = 'Some text <script>alert(1)</script>';
-</script>
-</body>
-```
-
-You see it the browser may think the text inside `''` ( below line `(*)` ) as the closing tag of the `<script>` in
-line `(**)` and not as a string literal ( but as HTML token instead ) thus it is better to escape it:
-```html
-<script>
-  // ...
-  elem.innerHTML = 'Some text <script>alert(1)<\/script>';
-</script>
-```
-
-Now we are OK
-
-The reason that happens is because the HTML parser works before the JS parser. Thus the browser first
-builds HTML, so it looks at all the text and searches for HTML tokens, and only after that the browser
-executes whatever it can find between any 2 `<script />` tags.
 
 ## Object.keys for a string
 
@@ -669,6 +576,7 @@ const person = {
     name: 'tom',
     smth: 'smth',
 };
+
 export const { name, smth } = person;
 ```
 
@@ -838,104 +746,6 @@ Even if no error is thrown in the `try` block, since `finally` is always execute
 right before the return statement inside `try` or `catch` block,_ for this very reason if we return something inside
 `finally` then this return statement will become the final return statement of the function ( just like in the
 example above ).
-
-## window.onerror
-
-The global `window.onerror` event listener will be called in case there is ever thrown an error in your code:
-
-```html
-<script>
-    window.onerror = function (smth) {
-        console.log(`Got it: ${smth}`);
-    };
-
-    throw 'what';
-
-    // expected output: Got it: what + error log from the browser DevTools
-</script>
-```
-
-**Note:** errors thrown _by the browser_ also go into the `window.onerror` Event Listener:
-
-```html
-<script>
-    window.onerror = function (smth) {
-        console.log(`Got it: ${smth}`);
-    };
-
-    dmfdksjfkldsfjsdklf();
-
-    // expected output: Got it: Uncaught ReferenceError: dmfdksjfkldsfjsdklf is not defined
-    //                  error log from the browser DevTools
-</script>
-```
-
-**Also Note** The `.onerror` event listener on other HTML elements ( external resources like `<img/>` ) is called if
-we fetch this resource from the server and the request for it fails ( 403 or something ).
-
-## Where KeyboardEvents are triggered
-
-When you press a key, a keyboard event is going to be triggered only on the `document.activeElement` ( thus
-only on the currently focused element ) **if** it has an event handler set on it.
-
-Also a KeyBoardEvent, when you press a key, is _always_ going to be triggered on:
-
-- `document` element
-- `window` element
-
-Probably the logic behind this is that they are always focused.
-
-**But it doesn't end here**
-
-Apart from `document.activeElement`, `document` and `window` elements a keyboard event is also going to be triggered
-on the parent elements of `document.activeElement`. Here is an example of that, imagine we have HTML:
-
-```html
-<div id="special">
-  <div id="almost-inner">
-    <div id="elem" tabindex="2">ok</div>
-  </div>
-</div>
-```
-
-And the JS code like this:
-
-```js
-const special = document.querySelector('#special');
-const almostInner = document.querySelector('#almost-inner');
-const elem = document.querySelector('#elem');
-
-elem.addEventListener('keydown', () => {
-    console.log('keydown on elem');
-});
-
-almostInner.addEventListener('keydown', () => {
-    console.log('keydown on almost-inner');
-});
-
-special.addEventListener('keydown', () => {
-    console.log('keydown on special');
-});
-```
-
-Now, because the `#elem` div can be focused on ( the `tabindex` attribute ), keyboard event _are_ going to be triggered
-on it ( if it has an event listener for keyboard events of course ). If you run the code above, then focus on the
-`#elem` div and press a key, you will see that a `keydown` event also triggers on all the parent elements of this
-`#elem` div ( the behavior would be the same if instead of `#elem` div we had an input element, so long as it is
-the element can be focused on ).
-
-If the `#elem` div were not focused on then a keyboard event wouldn't trigger on it nor any of its parents
-( do note though, that if `#elem` div is focused, keyboard events will still trigger on its parents no matter
-whether or not the `#elem` div itself has a keyboard event listener ).
-
-Thus we can conclude that keyboard events trigger on:
-
-- focusable element that currently has focus ( `document.activeElement` )
-- parents of `document.activeElement`
-- `document` and `window` elements no matter if any of the elements on the page has focus
- ( no matter if `document.activeElement` exists )
-
-Do note that keyboard event are _not_ going to be triggered on the children of `document.activeElement`.
 
 ## RegEx is always an object
 

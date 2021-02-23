@@ -1,10 +1,10 @@
 class Button {
     constructor({
-        fixed,
         text,
         color,
         square = false,
         bounce = false,
+        ...rest
     } = {}) {
         this.bounce = bounce;
         this.square = square;
@@ -19,7 +19,6 @@ class Button {
 
         this.bubble = new Bubble({
             display: 'inline',
-            fixed,
             bubbleSize: square ? 'contain' : 'overflow',
             transparentFade: !square,
             text: square ? this.squareContent : text,
@@ -31,6 +30,7 @@ class Button {
                 `bubble-button_color_${this.buttonColor(color)}`,
                 square && 'bubble-button_square_yes',
             ),
+            ...rest
         });
 
         this.button = this.bubble.domElem();
