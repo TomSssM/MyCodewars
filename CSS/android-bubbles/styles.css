@@ -61,36 +61,34 @@ body {
   justify-content: center;
   user-select: none;
   outline: none;
-  border: none;
   cursor: pointer;
+  color: #000;
   background-color: #fff;
   padding: 20px 40px;
   font-size: 14px;
   border-radius: 4px;
   overflow: hidden;
-  transition: background-color .2s ease-out;
+  border: 1px solid #ccc;
+  transition: all .2s ease-out;
 }
 
-.bubble-button_color_default {
-  border: 1px solid #ccc;
+.bubble-button_pressed_yes {
+  transform: scale(0.9);
 }
+
 .bubble-button_color_default:active {
   background-color: #ddd;
 }
 
-.bubble-button_color_green {
-  color: green;
-  border: 1px solid green;
-}
 .bubble-button_color_green:active {
+  color: green;
+  border-color: green;
   background-color: #d9f3d9;
 }
 
-.bubble-button_color_blue {
-  color: blue;
-  border: 1px solid blue;
-}
 .bubble-button_color_blue:active {
+  color: blue;
+  border-color: blue;
   background-color: #dadaff;
 }
 

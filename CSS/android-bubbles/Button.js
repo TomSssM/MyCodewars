@@ -4,8 +4,19 @@ class Button {
         text,
         color,
         square = false,
+        bounce = false,
     } = {}) {
+        this.bounce = bounce;
         this.square = square;
+        this.deferId = null;
+
+        this.DEFER_TIMEOUT = 200;
+        this.PRESSED_CLASSNAME = 'bubble-button_pressed_yes';
+
+        this.handleMouseDown = this.handleMouseDown.bind(this);
+        this.handleMouseUp = this.handleMouseUp.bind(this);
+        this.handleMouseLeave = this.handleMouseLeave.bind(this);
+
         this.bubble = new Bubble({
             display: 'inline',
             fixed,
@@ -21,17 +32,15 @@ class Button {
                 square && 'bubble-button_square_yes',
             ),
         });
+
         this.button = this.bubble.domElem();
         document.body.append(this.button);
-    }
 
-    buttonColor(color) {
-        return this.colorMapCache.has(color) ? color : 'default';
-    }
-
-    bubbleColor(color) {
-        if (this.square) return '#b1b1b1';
-        return this.colorMapCache.get(color);
+        if (this.bounce) {
+            this.button.addEventListener('mousedown', this.handleMouseDown);
+            this.button.addEventListener('mouseleave', this.handleMouseLeave);
+            document.body.addEventListener('mouseup', this.handleMouseUp);
+        }
     }
 
     get colorMapCache() {
@@ -47,5 +56,42 @@ class Button {
         const dots = document.createElement('span');
         dots.classList.add('bubble-button__dots');
         return dots;
+    }
+
+    buttonColor(color) {
+        return this.colorMapCache.has(color) ? color : 'default';
+    }
+
+    bubbleColor(color) {
+        if (this.square) return '#b1b1b1';
+        return this.colorMapCache.get(color);
+    }
+
+    handleMouseDown() {
+        this.pressButton();
+    }
+
+    handleMouseUp() {
+        this.unpressButton();
+    }
+
+    handleMouseLeave () {
+        this.unpressButton();
+    }
+
+    pressButton () {
+        if (this.deferId === null) {
+            this.deferId = setTimeout(() => {
+                this.button.classList.add(this.PRESSED_CLASSNAME);
+            }, this.DEFER_TIMEOUT);
+        }
+    }
+
+    unpressButton () {
+        if (this.deferId !== null) {
+            clearTimeout(this.deferId);
+            this.deferId = null;
+            this.button.classList.remove(this.PRESSED_CLASSNAME);
+        }
     }
 }

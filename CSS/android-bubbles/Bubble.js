@@ -309,26 +309,22 @@ class Bubble {
     }
 
     userAllowBubbleToTransition() {
-        const bubble = this.bubbles.find(({ isUserAllowedToTransition }) => {
-            return isUserAllowedToTransition === false;
+        this.bubbles.forEach((bubble) => {
+            if (!bubble.isUserAllowedToTransition) {
+                bubble.isUserAllowedToTransition = true;
+
+                const elapsedTime = Date.now() - bubble.createdAt;
+
+                if (elapsedTime < this.bubbleDefer) {
+                    setTimeout(
+                        this.markBubbleForRemoval.bind(this, bubble),
+                        Math.round(this.bubbleDefer - elapsedTime),
+                    );
+                } else {
+                    this.markBubbleForRemoval(bubble);
+                }
+            }
         });
-
-        if (!bubble) {
-            return;
-        }
-
-        bubble.isUserAllowedToTransition = true;
-
-        const elapsedTime = Date.now() - bubble.createdAt;
-
-        if (elapsedTime < this.bubbleDefer) {
-            setTimeout(
-                this.markBubbleForRemoval.bind(this, bubble),
-                Math.round(this.bubbleDefer - elapsedTime),
-            );
-        } else {
-            this.markBubbleForRemoval(bubble);
-        }
     }
 
     markBubbleForRemoval(bubble) {
