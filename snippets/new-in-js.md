@@ -290,3 +290,252 @@ const out = Reflect.get(o1, 'surname', o2); // Dude
 
 Now `Reflect` used `o2` as `this` but only in line `(*)`. And that is what the 3rd argument is for. `Reflect` passes it
 as `this` whenever a __getter__ is invoked, not to a usual property.
+
+## `Rest` should be last argument
+
+Guess what, this code throws an error:
+
+```js
+function test (
+  arg1,
+  arg2,
+  ...rest,
+) {
+  console.log('arg1:', arg1);
+  console.log('arg2:', arg2);
+  console.log('rest:', ...rest);
+}
+
+test(
+  'a',
+  'b',
+  'c',
+  'd',
+);
+```
+
+The error is going to be: `Uncaught SyntaxError: Rest parameter must be last formal parameter`. The reason it happens is
+because the rest parameter `...rest` cannot be followed by a comma. Now everything works correctly:
+
+```js
+function test (
+  arg1,
+  arg2,
+  ...rest
+) {
+  console.log('arg1:', arg1);
+  console.log('arg2:', arg2);
+  console.log('rest:', ...rest);
+}
+
+test(
+  'a',
+  'b',
+  'c',
+  'd',
+);
+```
+
+## Generators confusion
+
+### `yield*` with iterables
+
+Beware writing `yield*` if the value you are yielding is iterable. For example, here we yield an array:
+
+```js
+function* test1() {
+    yield [1, 2, 3];
+}
+
+const gen1 = test1();
+
+console.log(gen1.next());
+console.log(gen1.next());
+
+/*
+  output:
+  { value: [ 1, 2, 3 ], done: false }
+  { value: undefined, done: true }
+*/
+```
+
+But here, since we spread an iterable with a `*` we already yield each element of an array:
+
+```js
+function* test2() {
+    yield* [1, 2, 3];
+}
+
+const gen2 = test2();
+
+console.log(gen2.next());
+console.log(gen2.next());
+console.log(gen2.next());
+console.log(gen2.next());
+
+/*
+  output:
+  { value: 1, done: false }
+  { value: 2, done: false }
+  { value: 3, done: false }
+  { value: undefined, done: true }
+*/
+```
+
+The same story goes for Generators. For example if we forget to put a `*`:
+
+```js
+function* inner() {
+    yield 'Good morning';
+    yield 'Good evening';
+    yield 'Good night';
+}
+
+function* test1() {
+    yield inner();
+}
+
+const gen1 = test1();
+
+console.log(gen1.next());
+console.log(gen1.next());
+/*
+  output:
+  { value: Object [Generator] {}, done: false }
+  { value: undefined, done: true }
+*/
+```
+
+But here we already yield all values of a generator one by one:
+
+```js
+function* inner() {
+    yield 'Good morning';
+    yield 'Good evening';
+    yield 'Good night';
+}
+
+function* test1() {
+    yield* inner();
+}
+
+const gen1 = test1();
+
+console.log(gen1.next());
+console.log(gen1.next());
+console.log(gen1.next());
+console.log(gen1.next());
+
+/*
+  output:
+  { value: 'Good morning', done: false }
+  { value: 'Good evening', done: false }
+  { value: 'Good night', done: false }
+  { value: undefined, done: true }
+*/
+```
+
+Because `*` spreads another Generator, or you could also think of it as delegating work to that another Generator.
+
+### `const val = yield` vs `const val = yield*`
+
+We know that if inside a Generator, we write the result of calling `yield` into a variable:
+
+```js
+const value = yield 3;
+```
+
+Then the calling code that uses that Generator can pass a value that should be saved into that variable:
+
+```js
+gen.next(...);
+```
+
+We know that. But here is an interesting thing: the calling code will not be able to pass a value to save into
+a variable like that if the generator writes `yield*` ( with a `*` ) after the variable name:
+
+```js
+const value = yield* 'abc';
+```
+
+Here is an example:
+
+```js
+function* test1 () {
+    const value = yield 'abc';
+    console.log('value from 1st generator', value);
+}
+
+function* test2 () {
+    const value = yield* 'abc';
+    console.log('value from 2nd generator', value);
+}
+
+const gen1 = test1();
+const gen2 = test2();
+
+console.log();
+console.log('/// 1st generator:');
+console.log(gen1.next());
+console.log(gen1.next('outer 1'));
+console.log();
+console.log('/// 2nd generator:');
+console.log();
+console.log(gen2.next());
+console.log(gen2.next());
+console.log(gen2.next('outer 2'));
+console.log(gen2.next());
+console.log();
+```
+
+Output is going to be:
+
+```
+/// 1st generator:
+{ value: 'abc', done: false }
+value from 1st generator outer 1
+{ value: undefined, done: true }
+
+/// 2nd generator:
+
+{ value: 'a', done: false }
+{ value: 'b', done: false }
+{ value: 'c', done: false }
+value from 2nd generator undefined
+{ value: undefined, done: true }
+```
+
+The reason that `yield*` doesn't allow you to pass a value into the generator is because `yield*` supposes
+that you are going to be `yield*`-ing not just any iterable, but another generator (which is also an iterable).
+In such a scenario `yield*` is going to produce the return value of the generator that follows it. Here is an example:
+
+```js
+function* inner () {
+    yield 'Hi! I am a Generator too!'
+    return 'inner return';
+}
+
+function* test () {
+    yield 'Outer Generator start';
+    const value = yield* inner();
+    console.log('value from 2nd generator', value);
+    yield 'Outer Generator end';
+}
+
+const gen = test();
+
+console.log(gen.next());
+console.log(gen.next());
+console.log(gen.next('lol'));
+console.log(gen.next());
+```
+
+The output is going to be:
+
+```
+{ value: 'Outer Generator start', done: false }
+{ value: 'Hi! I am a Generator too!', done: false }
+value from 2nd generator inner return
+{ value: 'Outer Generator end', done: false }
+{ value: undefined, done: true }
+```
