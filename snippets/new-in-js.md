@@ -539,3 +539,215 @@ value from 2nd generator inner return
 { value: 'Outer Generator end', done: false }
 { value: undefined, done: true }
 ```
+
+### `return yield`
+
+Sometimes you may see such an expression as in line `(*)` in the code below:
+
+```js
+function* inner () {
+    yield 'a';
+    yield 'b';
+    yield 'c';
+    return yield 'd'; // (*)
+}
+
+function* test () {
+    yield 1;
+    const value = yield* inner();
+    console.log('value from generator:');
+    console.log(value);
+    yield 2;
+    yield 3;
+}
+
+// log
+((gen) => {
+    let value;
+    do {
+        value = gen.next();
+        console.log(value);
+    } while (!value.done);
+})(test());
+```
+
+But aparent from the log, `return yield ...` makes the generator return `undefined` so why even bother
+writing return then, might as well have written:
+
+```js
+yield 'd';
+return
+```
+
+or even:
+
+```js
+yield 'd'
+```
+
+Is there any difference then between writing `yield ...; return;` and `return yield ...`?
+
+The answer is: yes, there is difference. You see in our example the expression with `yield` evaluates
+to `undefined` and thus the Generator `inner` returns `undefined`. But in reality `yield` evaluates to
+whatever you pass to `.next(...)` method of the Generator, remember? This way, if we pass some value
+to the right `next(...)` call, then the `yield` in line `(*)` will evaluate to that value and the Generator
+`inner` will therefore return it. Here is a modified example:
+
+```js
+function* inner () {
+    yield 'a';
+    yield 'b';
+    yield 'c';
+    return yield 'd';
+}
+
+function* test () {
+    yield 1;
+    const value = yield* inner();
+    console.log('value from generator:');
+    console.log(value);
+    yield 2;
+    yield 3;
+}
+
+const gen = test();
+
+console.log(gen.next()); // 1
+console.log(gen.next()); // 'a'
+console.log(gen.next()); // 'b'
+console.log(gen.next()); // 'c'
+console.log(gen.next()); // 'd'
+console.log(gen.next('outer')); // 2
+console.log(gen.next()); // 3
+```
+
+The output is going to be:
+
+```
+{ value: 1, done: false }
+{ value: 'a', done: false }
+{ value: 'b', done: false }
+{ value: 'c', done: false }
+{ value: 'd', done: false }
+value from generator:
+outer
+{ value: 2, done: false }
+{ value: 3, done: false }
+```
+
+Thus writing `return yield` allows the calling code to influence the return value of a Generator.
+
+### When to pass a value into `next()`
+
+Take a look at the following code and tell into which `next()` call to pass a value so that the Generator
+called `test` will log it in line `(*)`?
+
+```js
+function* test () {
+    yield 1;
+    yield 2;
+    const value = yield 3; // (**)
+    console.log('value from generator:');
+    console.log(value); // (*)
+    yield 4;
+}
+
+const gen = test();
+
+console.log(gen.next()); // 1
+console.log(gen.next()); // 2
+console.log(gen.next()); // 3
+console.log(gen.next()); // 4
+console.log(gen.next()); // done: true
+```
+
+If you are having difficulty figuring it out, then simply remember one golden rule: pass the value that you want
+`yield` to evaluate into after you received the value which that `yield` gave you.
+
+In our case it means passing whatever we want `yield 3` to evaluae into in line `(**)` _after_ a call to `next()`
+returned `3`. Thus the right answer is:
+
+```js
+/* ...same as above */
+
+console.log(gen.next()); // 1
+console.log(gen.next()); // 2
+console.log(gen.next()); // 3
+console.log(gen.next('here')); // 4
+console.log(gen.next()); // done: true
+```
+
+Output:
+
+```
+{ value: 1, done: false }
+{ value: 2, done: false }
+{ value: 3, done: false }
+value from generator:
+ok
+{ value: 4, done: false }
+{ value: undefined, done: true }
+```
+
+This is why Generators are so convenient for writing chat bots: a bot can `yield` a guestion, then we can show
+that question to the user and write the user's answer into `.next()` and vice versa. Usually infinite generators
+are used for that:
+
+```js
+function* bot () {
+    while (true) {
+        let answer;
+        let question = yield 'Good day! Ask me something!';
+        switch (question) {
+            case '/add':
+                answer = yield* handleAddition();
+                break;
+            case '/concat':
+                answer = yield* handleConcat();
+                break;
+            default:
+                answer = 'I don\'t know';
+        }
+        yield answer;
+    }
+}
+
+function* handleAddition () {
+    const a = yield 'give me 1st number';
+    const b = yield 'give me 2nd number';
+    return a + b;
+}
+
+function* handleConcat () {
+    const a = yield '1st value please';
+    const b = yield '2nd value please';
+    return String(a) + String(b);
+}
+
+const gen = bot();
+let message;
+
+({ value: message } = gen.next());
+console.log(message); // // Good day! Ask me something!
+
+({ value: message } = gen.next('/add'));
+console.log(message); // give me 1st number
+
+({ value: message } = gen.next(1));
+console.log(message); // give me 2nd number
+
+({ value: message } = gen.next(2));
+console.log(message); // 3
+
+({ value: message } = gen.next());
+console.log(message); // Good day! Ask me something
+
+({ value: message } = gen.next('/concat'));
+console.log(message); // 1st value please
+
+({ value: message } = gen.next('I love '));
+console.log(message); // 2nd value please
+
+({ value: message } = gen.next('JS'));
+console.log(message); // I love JS
+```
