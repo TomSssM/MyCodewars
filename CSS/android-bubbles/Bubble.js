@@ -5,6 +5,7 @@ class Bubble {
         className,
         transition,
         text = '...',
+        defer = true,
         fixed = false,
         display = 'block',
         overflow = 'hidden',
@@ -25,6 +26,7 @@ class Bubble {
             throw new Error('Value of \'text\' param is invalid');
         }
 
+        this.defer = defer;
         this.fixed = fixed;
         this.display = display;
         this.bubbleSizeType = bubbleSize;
@@ -236,7 +238,7 @@ class Bubble {
         };
     }
 
-    createBubble() {
+    createBubbleElement() {
         const bubble = document.createElement('div');
         const { bubbleSize } = this;
 
@@ -256,12 +258,30 @@ class Bubble {
         return bubble;
     }
 
+    createBubble() {
+        return {
+            element: this.createBubbleElement(),
+            isUserAllowedToTransition: false,
+            fadeOutStarted: false,
+            fadeInFinished: false,
+            createdAt: Date.now(),
+        };
+    }
+
+    findBubbleFromElement(rawElement) {
+        const bubbleElement = rawElement.closest(classname(true, this.BUBBLE_CLASS_NAME));
+        const bubble = bubbleElement && this.bubbles.find(({ element }) => {
+            return element === bubbleElement;
+        });
+        return bubble || null;
+    }
+
     transitionBubble(rawClientX, rawClientY, { element: bubbleElement }) {
-        const limitByContainer = this.bubbleSizeType === 'contain';
         const {
             scaledBubbleSize,
             bubbleSize,
         } = this;
+
         const {
             x: containerX,
             y: containerY,
@@ -274,6 +294,8 @@ class Bubble {
 
         const clientX = this.fixed ? halfContainerWidthCoordinate : rawClientX;
         const clientY = this.fixed ? halfContainerHeightCoordinate : rawClientY;
+
+        const limitByContainer = this.bubbleSizeType === 'contain';
 
         const { x: rawX, y: rawY } = positionElement({
             x: clientX,
@@ -313,34 +335,48 @@ class Bubble {
             if (!bubble.isUserAllowedToTransition) {
                 bubble.isUserAllowedToTransition = true;
 
-                const elapsedTime = Date.now() - bubble.createdAt;
+                if (this.defer) {
+                    const elapsedTime = Date.now() - bubble.createdAt;
 
-                if (elapsedTime < this.bubbleDefer) {
-                    setTimeout(
-                        this.markBubbleForRemoval.bind(this, bubble),
-                        Math.round(this.bubbleDefer - elapsedTime),
-                    );
+                    if (elapsedTime < this.bubbleDefer) {
+                        setTimeout(
+                            this.fadeOutBubble.bind(this, bubble),
+                            Math.round(this.bubbleDefer - elapsedTime),
+                        );
+                    } else {
+                        this.fadeOutBubble(bubble);
+                    }
                 } else {
-                    this.markBubbleForRemoval(bubble);
+                    if (bubble.fadeInFinished) {
+                        this.fadeOutBubble(bubble);
+                    }
                 }
             }
         });
     }
 
-    markBubbleForRemoval(bubble) {
+    // or markBubbleForRemoval
+    fadeOutBubble(bubble) {
+        bubble.fadeOutStarted = true;
         bubble.element.classList.add('container__bubble_fading-out');
     }
 
     removeBubble(bubble) {
-        if (
-            !bubble.isUserAllowedToTransition ||
-            !bubble.isTransitioned
-        ) {
-            return;
-        }
         const bubbleIndex = this.bubbles.indexOf(bubble);
         arrayRemoveAt(this.bubbles, bubbleIndex);
         bubble.element.remove();
+    }
+
+    onOpacityChange(bubble) {
+        bubble.fadeInFinished = true;
+        if (bubble.fadeOutStarted) {
+            this.removeBubble(bubble);
+        } else if (
+            !bubble.fadeOutStarted &&
+            bubble.isUserAllowedToTransition
+        ) {
+            this.fadeOutBubble(bubble);
+        }
     }
 
     handleMouseDown(event) {
@@ -353,12 +389,7 @@ class Bubble {
             clientY,
         } = event;
 
-        const bubble = {
-            element: this.createBubble(),
-            isUserAllowedToTransition: false,
-            isTransitioned: false,
-            createdAt: Date.now(),
-        };
+        const bubble = this.createBubble();
 
         this.bubbles.push(bubble);
         this.bubbleContainer.append(bubble.element);
@@ -366,14 +397,9 @@ class Bubble {
     }
 
     handleTransitionEnd({ propertyName, target }) {
-        const bubbleElement = target.closest(classname(true, this.BUBBLE_CLASS_NAME));
-        const bubble = bubbleElement && this.bubbles.find(({ element }) => {
-            return element === bubbleElement;
-        });
-
+        const bubble = this.findBubbleFromElement(target);
         if (bubble && propertyName === 'opacity') {
-            bubble.isTransitioned = true;
-            this.removeBubble(bubble);
+            this.onOpacityChange(bubble);
         }
     }
 
