@@ -19,6 +19,14 @@ const arrayRemoveAt = (arr, index) => {
     arr.splice(index, 1);
 };
 
+const getOpacity = (element) => {
+    if (!(element instanceof Element)) {
+        throw new Error('Passed a wrong value to getOpacity');
+    }
+    const { opacity: rawOpacity } = getComputedStyle(element);
+    return Number(rawOpacity);
+};
+
 const classname = (rawSelect, ...rawClassnames) => {
     const classnames = typeof rawSelect === 'boolean'
         ? [...rawClassnames]

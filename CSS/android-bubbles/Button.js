@@ -2,9 +2,9 @@ class Button {
     constructor({
         text,
         color,
+        fixed,
         square = false,
         bounce = false,
-        ...rest
     } = {}) {
         this.bounce = bounce;
         this.square = square;
@@ -24,13 +24,15 @@ class Button {
             text: square ? this.squareContent : text,
             color: this.bubbleColor(color),
             tag: 'button',
+            defer: !square,
+            transition: square ? 170 : undefined,
+            fixed,
             className: classname(
                 'page-element',
                 'bubble-button',
                 `bubble-button_color_${this.buttonColor(color)}`,
                 square && 'bubble-button_square_yes',
             ),
-            ...rest
         });
 
         this.button = this.bubble.domElem();
@@ -63,7 +65,7 @@ class Button {
     }
 
     bubbleColor(color) {
-        if (this.square) return '#b1b1b1';
+        if (this.square) return '#cccccc';
         return this.colorMapCache.get(color);
     }
 
