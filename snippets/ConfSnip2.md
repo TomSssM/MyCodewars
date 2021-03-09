@@ -401,3 +401,174 @@ function test() {
 }
 test();
 ```
+
+### `f` and `ff`
+
+The reason this code:
+
+```js
+const arr = [];
+for (var i = 0; i < 10; i++) {
+    var f = function ff () { // (*)
+        return ff.i;
+    };
+    f.i = i; // (**)
+    arr.push(f);
+}
+console.log(arr[3]()); // 3 ( not 10 )
+```
+
+works is not so obvious. You see, because `var f` hoists, then everyhing would fail if we were to write:
+
+```js
+var f = function ff () {
+  return f.i;
+};
+```
+
+because at the end of the execution of the `for` block, the variable `f` would hold the value of the last
+function that it has been assigned, this last function would have an `i` property equal to `9`, as a result
+all functions in the array `arr` would be returning the value `9`.
+
+But our 1st example works, and here is why: in line `(*)` the variable named `ff` refers to a named function
+expression whose body looks like: `return ff.i;`. But the variable `ff` is only going to be available inside
+the scope of its own self, in other words the name of the function expression `ff` is only going to be available
+in the context of its own self. You could think as though something like this happens under the hood:
+
+```js
+function () { // (*)
+  var ff = __self; // let's imagine __self is a reference to the function we are creaing in line (*)
+  // ...more code
+}
+```
+
+Therefore, the only 2 ways we can refer to `ff` are: 1) from inside the scope of `ff` 2) from the variable `f`
+__until__ we write some other value into `f`.
+
+The trick works because in line `(**)` ( see the 1st example ) `f` and `ff` are still referring to the same function
+created in line `(*)`. Therefore we first create a property named `i` on this function via the `f` variable and then
+from inside this function we return the value of this property `i` via the `ff` variable.
+
+Pretty clever trick.
+
+__Note:__ everything would still work even if we write something like this:
+
+```js
+const arr = [];
+for (var i = 0; i < 10; i++) {
+    var ff = function ff () {
+        return ff.i;
+    };
+    ff.i = i;
+    arr.push(ff);
+}
+```
+
+The reason for that is: now funcion `ff` has 2 variables called `ff` available to it: the first one in its own
+scope and it refers to its own self and the 2nd one in the global scope and it is constantly changing its value
+as we go through the `for` loop, function `ff` sees the variable `ff` in its own scope first and uses it thus
+producing the right result.
+
+## `export default { ... }` vs `export { ... }`
+
+Is there a difference between this code:
+
+```js
+const val1 = 'one';
+
+const val2 = 'two';
+
+export {
+  val1,
+  val2,
+}
+```
+
+and this code:
+
+```js
+const val1 = 'one';
+
+const val2 = 'two';
+
+export default {
+  val1,
+  val2,
+}
+```
+
+The confusing thing is that there would be no difference if we were using CommonJS as both of
+the annotations from above would compile to:
+
+```js
+module.exports = {
+  val1: 'one',
+  val2: 'two',
+};
+```
+
+Though the latter one would probably be something like `module.exports.default = ...` but doesn't matter, semantically they
+are equivalent.
+
+But there is a big difference for ES2015 modules. When we write `export { key: 'value' }` or `export const key = 'value'`
+we tell that the module has an exported member called `key` with a value equal `'value'`. Later we can import these exported
+members like so:
+
+```js
+import { key } from './module';
+
+console.log(key); // 'value'
+```
+
+And the module in this case looks like this:
+
+```
+[Module] { key: 'value' }
+```
+
+But what about the `export default { key: 'value' }` syntax? Here we export an _object literal_ with a property
+named `key` that has a value equal to `'value'`. In this case we __cannot__ import a module exported this way
+like this:
+
+```js
+import { key } from './module'; // error
+```
+
+The compiler will throw an error ( `SyntaxError: The requested module does not provide an export named 'key'` ).
+All because `import { ... } from ...` is not really _destucturing_ like it would be in CommonJS
+( `const { ... } = require(...)` ). `import { ... }` is a special syntax that pulls exported members out of modules
+( we can even use special key words inside `import { ... }`, think: `import { key as anotherKey } from './module'` ).
+
+Also, if we write `export default`, then our module looks like this:
+
+```
+[Module] { default: { key: 'value' } }
+```
+
+We can make sure of that by running the following code (`import *` gets you the entire _module object_ and not just
+the members thereof remember?):
+
+```js
+import * as module from './module';
+
+console.log('module:');
+console.log(module);
+```
+
+Therefore, if we do `export default { .. }`, then the only way we can use such a module is like this ( with
+a default import ):
+
+```js
+import module from './module';
+
+/**
+ * now it is destructuring because thanks to default export,
+ * we get an object literal saved into the 'module' variable
+ */
+const { key: anotherKey } = module; // cannot use 'as' keyword in destructuring
+
+console.log(anotherKey);
+```
+
+Except it is really inconvenient to do that, thus for multiple values it is better to use `export { ... }`
+or `export const`.
