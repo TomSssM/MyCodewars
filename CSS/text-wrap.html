@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Wrap</title>
+  <style>
+    p {
+      width: 200px;
+      border: 1px solid #000;
+    }
+    div {
+      float: left;
+      margin: 10px;
+    }
+    div:nth-of-type(1) p {
+      word-break: break-all;
+    }
+    div:nth-of-type(2) p {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+<pre>
+  white-space (tells either to not use new lines `nowrap`, use them automatically `normal`, use them as in the markup `pre`)
+
+  overflow-wrap === word-wrap (break the word on letters to fit inside a line, wrapping the part of the word that doesn't fit in onto
+  a new line, set this property to `break-word` for such behavior)
+
+  word-break (breaks and wraps words either on hyphens `keep-all`, or on any character `break-all` almost like overflow-wrap or word-wrap,
+  see the difference below)
+
+  text-overflow (tells to insert three dots `ellipsis`, or to not do it `clip`, if text overflows container)
+
+  hyphens (algorithm decides where to insert a hyphen based on language, for this set this property to `auto`, we can also make
+  CSS insert hyphens only upon encountering special unicode characters - U+2010 and U+00AD - for this set this property to `manual`)
+
+  NOTE: in order to make text overflow the container, you need to make container fixed width (or have the width be limited in some
+  other way) and specify `overflow: hidden`.
+
+  NOTE: overflow-wrap is the standard name for its predecessor, the word-wrap property. word-wrap was originally a proprietary
+  Internet Explorer-only feature that was eventually supported in all browsers despite not being a standard.
+  word-wrap accepts the same values as overflow-wrap and behaves the same way. According to the spec, browsers "must treat word-wrap
+  as an alternate name for the overflow-wrap property, as if it were a shorthand of overflow-wrap". Also, all user agents are required
+  to support word-wrap indefinitely, for legacy reasons.
+
+  NOTE: overflow-wrap (or word-wrap) is different from word-break in that it breaks only the word that exceeds the width of
+  the container (a word that cannot fit into the container is split on some letter and the part that remains after the word
+  is split wraps onto a new line), however, if the length of the word doesn't exceed the length of the container, then it wraps
+  the entire word onto a new line without breaking it. word-break on the other hand wraps the word on a new line as soon as any
+  letter of the word touches the edge of the container (the letters following the letter that is touching the edge of the container
+  are wrapped onto a new line). Therefore word-break is different from overflow-wrap (or word-wrap) in that it splits and wraps a word
+  as soon as the word reaches the edge of the container.
+
+  NOTE: hyphens property does not insert hyphens at the same places where words are wrapped onto a new line by overflow-wrap, word-wrap
+  or word-break properties.
+</pre>
+<div>
+  <b>word-break</b>
+  <p>
+    This paragraph contains a very long word: thisisaveryveryveryveryveryverylongword. The long word will break and wrap to the next line.
+  </p>
+</div>
+<div>
+  <b>word-wrap / overflow-wrap</b>
+  <p>
+    This paragraph contains a very long word: thisisaveryveryveryveryveryverylongword. The long word will break and wrap to the next line.
+  </p>
+</div>
+</body>
+</html>

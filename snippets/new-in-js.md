@@ -751,3 +751,36 @@ console.log(message); // 2nd value please
 ({ value: message } = gen.next('JS'));
 console.log(message); // I love JS
 ```
+
+## `constructor` vs class fields
+
+What if we have both class fields and `constructor` syntax, which one is executed first: `constructor` or class fields?
+
+The answer is: 1st class fields are assigned, then the `constructor` is called. Here is proof:
+
+```js
+class Laboratory {
+    name = 'field';
+    constructor() {
+        console.log('name from constructor:');
+        console.log(this.name);
+        this.name = 'constuctor';
+    }
+}
+
+const lab = new Laboratory();
+
+console.log('name:');
+console.log(lab.name);
+```
+
+Output:
+
+```
+name from constructor:
+field
+name:
+constuctor
+```
+
+__Note:__ the order in which we write class fields and `constructor` keyword doesn't matter here.

@@ -26,3 +26,4 @@
 - [Awesome Buttons](./awesome-buttons/index.html)
 - [WebStorm Load Bar](./ws-load-bar/index.html)
 - [Android Bubbles](./android-bubbles/index.html)
+- [Wrapping Text](./text-wrap.html)
