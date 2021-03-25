@@ -111,9 +111,55 @@ __javascript__, __javascriptreact__, __typescript__, __typescriptreact__
   "Import statement": {
     "prefix": "pp",
     "body": [
-      "import { $0 } from '$1';"
+      "import { $0 } from $1;"
     ],
     "description": "Import awesome module"
+  },
+  "Import star": {
+    "prefix": "pps",
+    "body": [
+      "import * as $1 from $0;"
+    ]
+  },
+  "Import React": {
+    "prefix": "ppr",
+    "body": [
+      "import React from 'react';$0"
+    ]
+  }
+}
+```
+
+__javascript__, __javascriptreact__
+
+```json
+{
+  "Export Component": {
+    "prefix": "eec",
+    "body": [
+      "const ${1:App} = () => ();",
+      "",
+      "export default $0;"
+    ]
+  }
+}
+```
+
+__typescript__, __typescriptreact__
+
+```json
+{
+  "Import React with types": {
+    "prefix": "pprt",
+    "body": [
+      "import React, { ${1:FC} } from 'react';$0"
+    ]
+  },
+  "Component": {
+    "prefix": "ccp",
+    "body": [
+      "const ${1:App}: FC${0} = () => ();"
+    ]
   }
 }
 ```
