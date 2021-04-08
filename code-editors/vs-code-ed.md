@@ -8,18 +8,16 @@ and run the output on Machine Z
 
 Here is the extensions list:
 ```bash
+code --install-extension vscode-icons-team.vscode-icons
 code --install-extension bierner.markdown-emoji
 code --install-extension CoenraadS.bracket-pair-colorizer-2
 code --install-extension dbaeumer.vscode-eslint
 code --install-extension EditorConfig.EditorConfig
 code --install-extension esbenp.prettier-vscode
 code --install-extension Gruntfuggly.todo-tree
+code --install-extension dracula-theme.theme-dracula
 code --install-extension obrejla.netbeans-light-theme
-code --install-extension streetsidesoftware.code-spell-checker
-code --install-extension streetsidesoftware.code-spell-checker-russian
 code --install-extension sysoev.vscode-open-in-github
-code --install-extension vscode-icons-team.vscode-icons
-code --install-extension PKief.material-icon-theme
 ```
 # Default Editor for Git
 Change the config:
@@ -59,11 +57,6 @@ Here are my preferences:
   ],
   "emmet.excludeLanguages": [
     "markdown"
-  ],
-  "cSpell.enabled": false,
-  "cSpell.userWords": [
-    "arity",
-    "uncheck"
   ],
   "todo-tree.regex.regex": "(//|#|<!--|/\\*|/\\*[\\n\\s\\*\\w]*)\\s*($TAGS)(:|\\W)",
   "todo-tree.general.tags": [
