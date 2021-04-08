@@ -31,17 +31,17 @@ git config --global core.editor "code --wait"
 Here are my preferences:
 ```json
 {
-  "window.zoomLevel": 0,
-  "terminal.integrated.rendererType": "dom",
-  "terminal.integrated.shell.osx": "/bin/bash",
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.colorTheme": "Default Light+",
+  "editor.tabSize": 2,
+  "editor.fontSize": 14,
+  "editor.minimap.enabled": false,
   "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
   "terminal.external.windowsExec": "C:\\\\Program Files\\\\Git\\\\bin\\\\bash.exe",
-  "editor.tabSize": 2,
-  "diffEditor.ignoreTrimWhitespace": false,
-  "files.autoSave": "onFocusChange",
   "workbench.startupEditor": "welcomePage",
-  "workbench.colorTheme": "Default Light+",
-  "editor.minimap.enabled": false,
+  "terminal.integrated.shell.osx": "/bin/bash",
+  "terminal.integrated.rendererType": "dom",
+  "files.autoSave": "onFocusChange",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[javascript]": {
     "editor.formatOnSave": true
@@ -57,11 +57,9 @@ Here are my preferences:
     { "pattern": "./projects/*" },
     { "pattern": "./services/*" }
   ],
-  "editor.accessibilityPageSize": 12,
   "emmet.excludeLanguages": [
     "markdown"
   ],
-  "workbench.iconTheme": "vscode-icons",
   "cSpell.enabled": false,
   "cSpell.userWords": [
     "arity",
