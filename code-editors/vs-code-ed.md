@@ -15,9 +15,15 @@ code --install-extension dbaeumer.vscode-eslint
 code --install-extension EditorConfig.EditorConfig
 code --install-extension esbenp.prettier-vscode
 code --install-extension Gruntfuggly.todo-tree
+code --install-extension sysoev.vscode-open-in-github
+code --install-extension adpyke.codesnap
+code --install-extension jpoissonnier.vscode-styled-components
+code --install-extension mikestead.dotenv
+code --install-extension ms-vscode-remote.remote-ssh
+code --install-extension ms-vscode-remote.remote-ssh-edit
+code --install-extension webben.browserslist
 code --install-extension dracula-theme.theme-dracula
 code --install-extension obrejla.netbeans-light-theme
-code --install-extension sysoev.vscode-open-in-github
 ```
 # Default Editor for Git
 Change the config:
