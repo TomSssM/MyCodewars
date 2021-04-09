@@ -46,6 +46,7 @@ Here are my preferences:
   "terminal.integrated.shell.osx": "/bin/bash",
   "terminal.integrated.rendererType": "dom",
   "files.autoSave": "onFocusChange",
+  "diffEditor.ignoreTrimWhitespace": false,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[javascript]": {
     "editor.formatOnSave": true
