@@ -11,6 +11,7 @@ Here is the extensions list:
 code --install-extension vscode-icons-team.vscode-icons
 code --install-extension bierner.markdown-emoji
 code --install-extension CoenraadS.bracket-pair-colorizer-2
+code --install-extension aaron-bond.better-comments
 code --install-extension dbaeumer.vscode-eslint
 code --install-extension EditorConfig.EditorConfig
 code --install-extension esbenp.prettier-vscode
@@ -49,10 +50,10 @@ Here are my preferences:
   "diffEditor.ignoreTrimWhitespace": false,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[javascript]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": false
   },
   "[typescript]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": false
   },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
@@ -65,31 +66,6 @@ Here are my preferences:
   "emmet.excludeLanguages": [
     "markdown"
   ],
-  "todo-tree.regex.regex": "(//|#|<!--|/\\*|/\\*[\\n\\s\\*\\w]*)\\s*($TAGS)(:|\\W)",
-  "todo-tree.general.tags": [
-    "fixme",
-    "todo",
-    "warn"
-  ],
-  "todo-tree.regex.regexCaseSensitive": false,
-  "todo-tree.tree.scanMode": "current file",
-  "todo-tree.highlights.customHighlight": {
-    "fixme": {
-      "background": "green",
-      "foreground": "black",
-      "iconColour": "orange"
-    },
-    "todo": {
-      "background": "yellow",
-      "foreground": "black",
-      "iconColour": "yellow"
-    },
-    "warn": {
-      "background": "yellow",
-      "foreground": "black",
-      "iconColour": "yellow"
-    }
-  },
   "workbench.editor.labelFormat": "short"
 }
 ```
