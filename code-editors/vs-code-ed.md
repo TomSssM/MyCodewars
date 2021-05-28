@@ -12,10 +12,11 @@ code --install-extension vscode-icons-team.vscode-icons
 code --install-extension bierner.markdown-emoji
 code --install-extension CoenraadS.bracket-pair-colorizer-2
 code --install-extension aaron-bond.better-comments
-code --install-extension dbaeumer.vscode-eslint
+code --install-extension dracula-theme.theme-dracula
+code --install-extension obrejla.netbeans-light-theme
 code --install-extension EditorConfig.EditorConfig
+code --install-extension dbaeumer.vscode-eslint
 code --install-extension esbenp.prettier-vscode
-code --install-extension Gruntfuggly.todo-tree
 code --install-extension sysoev.vscode-open-in-github
 code --install-extension adpyke.codesnap
 code --install-extension jpoissonnier.vscode-styled-components
@@ -23,8 +24,8 @@ code --install-extension mikestead.dotenv
 code --install-extension ms-vscode-remote.remote-ssh
 code --install-extension ms-vscode-remote.remote-ssh-edit
 code --install-extension webben.browserslist
-code --install-extension dracula-theme.theme-dracula
-code --install-extension obrejla.netbeans-light-theme
+code --install-extension stylelint.vscode-stylelint
+code --install-extension mongodb.mongodb-vscode
 ```
 # Default Editor for Git
 Change the config:
