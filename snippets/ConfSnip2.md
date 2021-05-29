@@ -572,3 +572,97 @@ console.log(anotherKey);
 
 Except it is really inconvenient to do that, thus for multiple values it is better to use `export { ... }`
 or `export const`.
+
+## `Error.captureStackTrace`
+
+As you kow, apart from instances of the `Error` class the `throw` statement can also throw other types.
+Consider this for example:
+
+```js
+function throwSomeObj() {
+    throw {statusCode: 500};
+}
+
+try {
+  throwSomeObj();
+} catch(err) {
+  console.log(err);
+  console.log(err.stack);
+}
+```
+
+The output is:
+
+```
+{
+  "statusCode": 500
+}
+undefined
+```
+
+The exception that is thrown yields the object you passed to it, i.e. `{statusCode: 500}`. Now, as you can see this object
+does not have any stack-trace, since `undefined` is logged.
+
+However, you can use `Error.captureStackTrace` to capture the stack-trace where you throw the error. Consider this:
+
+```js
+function throwObjWithStacktrace() {
+  const someError = {statusCode: 500};
+  Error.captureStackTrace(someError);
+  throw someError;
+}
+
+try {
+  throwObjWithStacktrace();
+} catch (err) {
+  console.log(err);
+  console.log(err.stack);
+}
+```
+
+The output is:
+
+```
+{ statusCode: 500 }
+Error
+    at throwObjWithStacktrace (/Users/ilyakortasov/Documents/mine/MyCodewars/toolshed/Laboratory.js:18:11)
+    at Object.<anonymous> (/Users/ilyakortasov/Documents/mine/MyCodewars/toolshed/Laboratory.js:23:5)
+    at Module._compile (internal/modules/cjs/loader.js:1015:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)
+    at Module.load (internal/modules/cjs/loader.js:879:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:724:14)
+    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)
+    at internal/main/run_main_module.js:17:47
+```
+
+Now the caught `err` object contains the `stack` property which shows the stack to the function where the object called
+`someError` was thrown.
+
+Note that when instantiating a new `Error` object the stack will automatically be set on that object.
+
+__Note:__ the `stack` property assigned by `Error.captureStackTrace` doesn't show on the object unless we directly access it
+via `err.stack` because `Error.captureStackTrace` assigns this `stack` property as non-enumerable:
+
+```js
+const obj = {};
+Error.captureStackTrace(obj);
+obj.hasOwnProperty('stack'); // true
+Object.getOwnPropertyDescriptor(obj, 'stack'); // { value: ..., writable: true, enumerable: false, configurable: true }
+```
+
+__Also note:__ you do not even have to throw something to get a stack trace:
+
+```js
+function main () {
+  const obj = inner();
+  console.log(obj.stack); // proper stack trace
+}
+
+function inner () {
+  const obj = {};
+  Error.captureStackTrace(obj);
+  return obj;
+}
+
+main();
+```
