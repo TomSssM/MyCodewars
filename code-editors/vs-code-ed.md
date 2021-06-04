@@ -104,6 +104,14 @@ __javascript__, __javascriptreact__, __typescript__, __typescriptreact__
     "body": [
       "import React from 'react';$0"
     ]
+  },
+  "Todo Comment": {
+    "prefix": "todo",
+    "body": "// todo ilyakortasov: $0"
+  },
+  "Warn Comment": {
+    "prefix": "warn",
+    "body": "// * warn ilyakortasov: $0"
   }
 }
 ```
@@ -131,12 +139,6 @@ __typescript__, __typescriptreact__
     "prefix": "pprt",
     "body": [
       "import React, { ${1:FC} } from 'react';$0"
-    ]
-  },
-  "Component": {
-    "prefix": "ccp",
-    "body": [
-      "const ${1:App}: FC${0} = () => ();"
     ]
   }
 }
