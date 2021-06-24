@@ -25,7 +25,6 @@ code --install-extension ms-vscode-remote.remote-ssh
 code --install-extension ms-vscode-remote.remote-ssh-edit
 code --install-extension webben.browserslist
 code --install-extension stylelint.vscode-stylelint
-code --install-extension mongodb.mongodb-vscode
 ```
 # Default Editor for Git
 Change the config:
