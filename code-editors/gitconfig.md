@@ -13,4 +13,8 @@
   ba = branch -a
   n = branch -m
   ch = checkout ./
+[pull]
+  ff = only
+[core]
+  editor = code --wait
 ```
