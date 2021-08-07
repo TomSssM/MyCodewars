@@ -1,9 +1,9 @@
 // Task 41
-// Lazy evaluation is an evaluation strategy which delays the evaluation of an expression 
+// Lazy evaluation is an evaluation strategy which delays the evaluation of an expression
 // until its value is needed.
 
 // Implement the Lazy function. This function has two methods:
-//   add(fn[, arg1, arg2, ...]): adds the fn function to the lazy 
+//   add(fn[, arg1, arg2, ...]): adds the fn function to the lazy
 //   chain evaluation. This function could receive optional arguments.
 //   invoke(target): performs the evaluation chain over the target array.
 
@@ -120,11 +120,11 @@ Lazy.prototype.invoke = function(obj) {
 // Functional programming prefers recursion over iteration.
 // Recursive functions are often more readable than its iterative version.
 
-// Besides, functional programming avoids declaring variables, so functions do not have 
+// Besides, functional programming avoids declaring variables, so functions do not have
 // mutable state. Recursion can solve problems without mutable state.
 
 // Here's an example:
-// We want to create a function sum(number) that calculates the sum of numbers between 1 and 
+// We want to create a function sum(number) that calculates the sum of numbers between 1 and
 // the passed number.
 
 // sum(1); // 1
@@ -157,12 +157,12 @@ Lazy.prototype.invoke = function(obj) {
 // recursiveSum(99999); //RangeError: Maximum call stack size exceeded
 
 // Some languages can deal with this problem by using a technique known as tail recursion.
-// A recursive function is tail recursive if the final result of the recursive call is the 
-// final result of the function itself. If the result of the recursive call must be 
-// further processed (say, by adding 1 to it, or consing another element onto the beginning of it), 
+// A recursive function is tail recursive if the final result of the recursive call is the
+// final result of the function itself. If the result of the recursive call must be
+// further processed (say, by adding 1 to it, or consing another element onto the beginning of it),
 // it is not tail recursive.
 
-// The benefit of tail recursion is that tail calls can be implemented without adding a new 
+// The benefit of tail recursion is that tail calls can be implemented without adding a new
 // stack frame to the call stack.
 
 // This could be the tail recursive solution of our example:
@@ -182,8 +182,8 @@ Lazy.prototype.invoke = function(obj) {
 // tailRecursionSum(10); //55
 // tailRecursionSum(99999); //RangeError: Maximum call stack size exceeded
 
-// Trampolining is a technique that allows us to create functions with the elegance of 
-// the recursive solution but without its memory issue, because, although it does not seem, 
+// Trampolining is a technique that allows us to create functions with the elegance of
+// the recursive solution but without its memory issue, because, although it does not seem,
 // the solution is actually iterative.
 
 // This could be our solution:
@@ -199,16 +199,16 @@ Lazy.prototype.invoke = function(obj) {
 //   return trampoline(thunk(_sum, n, 0));
 // }
 
-// Note that the solution has the same structure as tailRecursionSum(n), 
-// but there is no recursive calls. Instead two auxiliary functions 
+// Note that the solution has the same structure as tailRecursionSum(n),
+// but there is no recursive calls. Instead two auxiliary functions
 // appear: thunk(fn /*, args */) and trampoline(thunk).
 
-// thunk(fn /*, args */) is a function that receives a function and possibly 
-// some arguments to be passed to the function and returns a function. When this returned function 
-// is called, it returns the result of executing the function. 
-// In functional programming, a thunk is a deferred expression (function). Its evaluation is 
+// thunk(fn /*, args */) is a function that receives a function and possibly
+// some arguments to be passed to the function and returns a function. When this returned function
+// is called, it returns the result of executing the function.
+// In functional programming, a thunk is a deferred expression (function). Its evaluation is
 // postponed until it's really needed.
-// trampoline(thunk) is a function that executes repeatedly the thunk argument until it returns a non 
+// trampoline(thunk) is a function that executes repeatedly the thunk argument until it returns a non
 // function value. Then this last value is returned.
 
 // Here is an example:
@@ -229,7 +229,7 @@ Lazy.prototype.invoke = function(obj) {
 // trampoline(thunk(add, 4, 5)); // 15 <- 4 + 5 + 6
 
 // Your job is to implement thunk(fn /*, args */) and trampoline(thrunk) functions.
-// Also you have to refactor the implementation of isEven(number) and isOdd(number) functions 
+// Also you have to refactor the implementation of isEven(number) and isOdd(number) functions
 // to use the trampoline(thunk) function.
 
 // function isEven(n) {
@@ -271,3 +271,44 @@ function isOdd(n) {
 }
 
 // Task 43
+
+// You need to write a function f that returns the string 'Hello, world!'.
+
+// Requirement: Every line must have at most 2 characters, and total number of lines must be less than 40.
+
+// Hint: It's possible to complete this in 28 lines only.
+
+f=
+''
+[
+'\
+t\
+r\
+i\
+m'
+]
+[
+'\
+b\
+i\
+n\
+d\
+'
+]
+(`
+H\
+e\
+l\
+l\
+o\
+,\
+ \
+w\
+o\
+r\
+l\
+d\
+!\
+`)
+
+// Task 44
