@@ -167,3 +167,13 @@ if [ -f ~/.bash_profile ]; then
   source ~/.bash_profile
 fi
 ```
+
+also here are some useful commands:
+
+```bash
+# clean local branches in GIT
+git branch | grep -v \* | xargs git branch -D
+
+# deploy a file to remove server (example: tomsssm@debian10.com:/www/frontend)
+scp -p <local-path> <user-name>@<host>:<server-path>
+```
