@@ -97,7 +97,7 @@ Also here are the same aliases for __.gitconfig:__
 
 ---
 
-PS1 themes [see the full list](./ps1-themes.md)
+PS1 themes [see the full list](./ps1-themes.md).
 
 ---
 
