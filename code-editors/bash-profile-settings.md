@@ -1,59 +1,48 @@
-__.bash_profile__
+__.bash_profile:__
 
-aliases:
-
-```shell script
-# the git ones
-
+```shell
+# aliases
+# the git ones:
+alias a='git add -A'
+alias cln='git clone'
 alias st='git status'
+alias com='git add -A && git commit -m'
+alias amm='git add -A && git commit --amend'
+alias pl='git pull'
 alias p='git push'
 alias c='git checkout'
 alias l='git log'
+alias cl='git clean -df'
+alias dfx='git clean -dfx ./'
 alias lst='git branch --list'
-alias a='git add -A'
-alias cm='git commit'
-alias am='git commit --amend'
-alias f='git push -f origin HEAD'
+alias amend='git add . && git commit --amend --no-edit'
 
 # the general ones
-
 alias la='ls -la'
 alias ls='ls -a'
-alias static_server='python -m SimpleHTTPServer'
-```
 
-GIT:
+# git intergration ( if on MAC )
 
-```bash
-ESCAPE="\033"
-RESET="${ESCAPE}[0m"
-BRIGHT="${ESCAPE}[1m"
+RED="\033[0;31m"
+PURPLE="\033[0;35m"
+CYAN="\033[0;36m"
+YELLOW="\033[0;33m"
+GREEN="\033[0;32m"
+GRAY="\e[0m"
 
-RED="${ESCAPE}[0;31m"
-BLUE="${ESCAPE}[34m"
-PURPLE="${ESCAPE}[0;35m"
-CYAN="${ESCAPE}[0;36m"
-YELLOW="${ESCAPE}[0;33m"
-GREEN="${ESCAPE}[0;32m"
-GRAY="${ESCAPE}[0m"
-
-BG_MAGNETTA="${ESCAPE}[45m"
-BG_GREEN="${ESCAPE}[42m"
-BG_YELLOW="${ESCAPE}[43m"
-BG_CYAN="${ESCAPE}[46m"
-
-function ps1_git_state {
+function git_color {
   local git_status="$(git status 2> /dev/null)"
+
   if [[ ! $git_status =~ "working tree clean" ]]; then
-    echo 0 # Dirty state
+    echo -e $PURPLE # Dirty state
   elif [[ $git_status =~ "nothing to commit" ]]; then
-    echo 1 # Clean state
+    echo -e $GREEN # Clean state
   else
-    echo 2 # Not a GIT repo
+    echo -e $GRAY
   fi
 }
 
-function ps1_git_icon {
+function git_state {
   local commit_local=$(git rev-parse @ 2> /dev/null)
   local commit_remote=$(git rev-parse @{u} 2> /dev/null)
   local commit_base=$(git merge-base @ @{u} 2> /dev/null)
@@ -61,106 +50,54 @@ function ps1_git_icon {
   if [[ ${#commit_local} -gt 0 && ${#commit_remote} -gt 0 && $commit_local = $commit_remote ]]; then
     echo ""
   elif [[ ${#commit_local} -gt 0 && ${#commit_base} -gt 0 && $commit_local = $commit_base ]]; then
-    echo "↻" # Need to rebase
+    echo " ↻" # Need to rebase
   elif [[ ${#commit_local} -gt 0 && -z $commit_remote ]]; then
-    echo "⛢" # Untracked branch
+    echo " ⛢" # Untracked branch
   elif [[ ${#commit_remote} -gt 0 && ${#commit_base} -gt 0 && $commit_remote = $commit_base ]]; then
-    echo "↑" # Need to push
+    echo " ↑" # Need to push
   elif [[ ${#commit_local} -gt 0 && ${#commit_remote} -gt 0 && ${#commit_base} -gt 0 ]]; then
-    echo "⇅" # Crash history (Need to force push or pull)
+    echo " ⇅" # Crash history (Need to force push or pull)
   fi
 }
 
-function ps1_git_color {
-  local state=$(ps1_git_state)
-  case "${state}" in
-    0)
-      echo -e $PURPLE
-    ;;
-    1)
-      echo -e $GREEN
-    ;;
-    *)
-      echo -e $GRAY
-    ;;
-  esac
-}
-
-function ps1_git_branch {
+function git_branch {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
 }
 
-function ps1_git_branch_prefix {
-  if [[ $(ps1_git_branch) != "" ]]
-  then
-    echo " on"
-  fi
+function node_version {
+  echo -e "$GREEN ⬢ $(node -v)"
 }
-```
 
-PS1 themes:
-
-_default_
-
-```bash
-PS1="\[${YELLOW}\]\W\[${RESET}\]"
-PS1+="\$(ps1_get_git_branch_prefix)\[${GREEN}\]\$(ps1_git_branch)\[${RESET}\]"
-PS1+=" \$ "
-export PS1
-```
-
----
-
-_dessert classic_
-
-```bash
-function ps1_git_local_icon {
-  local icon=$(ps1_git_icon)
-  if [[ $icon != "" ]]
-  then
-    echo " $icon"
-  else
-    echo $icon
-  fi
-}
 PS1=""
-PS1+="╭─ " # start the transition
-PS1+="\[${YELLOW}\]\w" # working direcory
-PS1+="\[\$(ps1_git_color)\]\$(ps1_git_branch)\$(ps1_git_local_icon)" # GIT data
-PS1+="\[${GREEN}\] ⬢ \$(node -v)" # Node.js version
-PS1+="\[${RESET}\]\n" # wrap to a new line and reset everything
-PS1+="╰─" # finish the transition
-PS1+="\$ "
-export PS1
+# If on the server
+if [[ $(git config core.editor) = vim ]]; then
+  PS1+="\[$CYAN\]\h "
+fi
+PS1+="\[$YELLOW\]\w"
+PS1+="\[\$(git_color)\]\$(git_branch)\$(git_state)" # \$(node_version)"
+PS1+="\[$GRAY\] › " # \n› "
 ```
 
----
+PS1 themes [see the full list](./ps1-themes.md)
 
-_futuristic_
+Also here are the same aliases for __.gitconfig:__
 
 ```bash
-export PS1="[\[${BRIGHT}${GREEN}\]\u@\s\[$RESET\]:\[${BLUE}\]\W\[${RESET}\]]\$ "
+[alias]
+  st = status
+  cm = commit
+  a = add -A
+  cma = commit --amend
+  p = push
+  l = log
+  c = checkout
+  b = branch
+  ba = branch -a
+  n = branch -m
+  ch = checkout ./
 ```
 
----
-
-_vm_
-
-```bash
-export PS1="\[${BRIGHT}${GREEN}\]\u@\s\[$RESET\]:\[${YELLOW}\]\W\[${RESET}\] \$ "
-```
-
----
-
-_ubuntu_
-
-```bash
-export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
-```
-
----
-
-if on Windows then create __.bashrc__ with the following content:
+If on Windows then create __.bashrc__ with the following content:
 
 ```bash
 if [ -f ~/.bash_profile ]; then
@@ -168,7 +105,7 @@ if [ -f ~/.bash_profile ]; then
 fi
 ```
 
-also here are some useful commands:
+Also here are some useful commands:
 
 ```bash
 # clean local branches in GIT
