@@ -51,8 +51,8 @@
 function substringSearchS(sub, str) {
   let subLength = sub.length;
   let strLen = str.length - subLength + 1;
-
-  // no need to search all the characters of the original string:
+  
+  // no need to search all the characters of the original stringo:
   // if the string is 7 chars long and our
   // substring is 3 chars long it makes sense
   // to look at only 5 chars of our string as the last

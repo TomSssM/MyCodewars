@@ -105,14 +105,14 @@ console.log(g.next(5));
 
 // Explanation:
 // When we call the first next(20), every line of code till the first yield is printed.
-// As we do not have any previous yield expression this value 20 is discarded.
-// In the output we get yield value as i*10, which is 100 here. Also the state of
+// As we do not have any previous yield expression this value 20 is discarded. 
+// In the output we get yield value as i*10, which is 100 here. Also the state of 
 // the execution stops with first yield and the const j is not yet set.
-// The second next(10) call, replaces the entire first yield expression with 10,
-// imagine yield (i * 10) = 10, which goes on to set the value of const j to 50 before returning
+// The second next(10) call, replaces the entire first yield expression with 10, 
+// imagine yield (i * 10) = 10, which goes on to set the value of const j to 50 before returning 
 // the second yield’s value. The yield value here is 2 * 50 / 4 = 25.
 // Third next(5), replaces the entire second yield with 5, bringing the value of k to 5.
-// And further continues to execute return statement and return (x + y + z) => (10 + 50 + 5) = 65
+// And further continues to execute return statement and return (x + y + z) => (10 + 50 + 5) = 65 
 // as the final yield value along with done true.
 
 // 4) Passing Yield as an Argument of a Function
@@ -208,14 +208,14 @@ console.log('7) Return Statement in Generators');
 
 function* gen8() {
   yield 7;
-  yield 'smth';
+  yield 'stringo star';
   return 'return value';
   yield 'ignored yield';
 }
 
 g = gen8();
 console.log(g.next()); // value: 7
-console.log(g.next()); // value: 'smth'
+console.log(g.next()); // value: 'stringo star'
 
 // the return value becomes the value in .value and done flag gets set to true
 console.log(g.next()); // done: true, value: 'return value'
