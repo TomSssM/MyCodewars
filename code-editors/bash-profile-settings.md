@@ -78,8 +78,6 @@ PS1+="\[\$(git_color)\]\$(git_branch)\$(git_state)" # \$(node_version)"
 PS1+="\[$GRAY\] › " # \n› "
 ```
 
-PS1 themes [see the full list](./ps1-themes.md)
-
 Also here are the same aliases for __.gitconfig:__
 
 ```bash
@@ -96,6 +94,12 @@ Also here are the same aliases for __.gitconfig:__
   n = branch -m
   ch = checkout ./
 ```
+
+---
+
+PS1 themes [see the full list](./ps1-themes.md)
+
+---
 
 If on Windows then create __.bashrc__ with the following content:
 

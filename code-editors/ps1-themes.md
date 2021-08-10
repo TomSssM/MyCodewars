@@ -53,8 +53,6 @@ function node_version {
 
 PS1 themes
 
-__MAC__
-
 _dessert classic_
 
 ```shell script
@@ -96,6 +94,8 @@ _dessert linux mood_
 export PS1="\[${BRIGHT}${GREEN}\]\u@\s\[$RESET\]:\[${YELLOW}\]\W\[${RESET}\] \$ "
 ```
 
+---
+
 __Linux__
 
 _debian10_
@@ -103,8 +103,6 @@ _debian10_
 ```shell script
 export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 ```
-
----
 
 _ubuntu_
 
