@@ -46,6 +46,14 @@ function git_branch {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
 }
 
+function git_branch_prefix {
+  local branch=$(git_branch)
+  if [[ $branch != "" ]]
+  then
+    echo " on"
+  fi
+}
+
 function node_version {
   echo -e "$GREEN ⬢ $(node -v)"
 }
@@ -92,6 +100,17 @@ _dessert linux mood_
 
 ```shell script
 export PS1="\[${BRIGHT}${GREEN}\]\u@\s\[$RESET\]:\[${YELLOW}\]\W\[${RESET}\] \$ "
+```
+
+---
+
+_mac shell_
+
+```shell script
+PS1="\[${YELLOW}\]\W\[${RESET}\]"
+PS1+="\$(git_branch_prefix)\[${GREEN}\]\$(git_branch)\[${RESET}\]"
+PS1+=" \$ "
+export PS1
 ```
 
 ---
