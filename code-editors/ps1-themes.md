@@ -1,6 +1,6 @@
 GIT:
 
-```shell script
+```bash
 ESCAPE="\033"
 RESET="${ESCAPE}[0m"
 BRIGHT="${ESCAPE}[1m"
@@ -42,6 +42,16 @@ function git_state {
   fi
 }
 
+function git_icon {
+  local icon=$(git_state)
+  if [[ $icon != "" ]]
+  then
+    echo " $icon"
+  else
+    echo $icon
+  fi
+}
+
 function git_branch {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
 }
@@ -64,16 +74,6 @@ PS1 themes
 _dessert classic_
 
 ```shell script
-function git_icon {
-  local icon=$(git_state)
-  if [[ $icon != "" ]]
-  then
-    echo " $icon"
-  else
-    echo $icon
-  fi
-}
-
 PS1=""
 PS1+="╭─ " # start the transition
 PS1+="\[${YELLOW}\]\w" # working direcory
@@ -119,7 +119,7 @@ __Linux__
 
 _debian10_
 
-```shell script
+```bash
 export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 ```
 
