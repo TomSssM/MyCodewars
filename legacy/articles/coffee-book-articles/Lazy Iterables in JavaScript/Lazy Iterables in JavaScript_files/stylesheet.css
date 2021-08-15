@@ -4,7 +4,7 @@
 */
 @font-face {
   font-family: 'TheoVanDoesburg';
-  src: url("/assets/fonts/TheoVanDoesburg.ttf") format("truetype");
+  src: url("../../Destructuring and Recursion in ES-6/Destructuring and Recursion in ES-6_files/TheoVanDoesburg.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -61,7 +61,7 @@ table {
 body {
   font-size: 1em;
   line-height: 1.5;
-  background: #e7e7e7 url(../images/body-bg.png) 0 0 repeat;
+  background: #e7e7e7 url('../../Destructuring and Recursion in ES-6/Destructuring and Recursion in ES-6_files/highlight-bg.jpg') 50% 0 no-repeat;
   font-family: 'Helvetica Neue', Helvetica, Arial, serif;
 /*  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);*/
   color: #3d3d3d;
@@ -107,7 +107,7 @@ header h2 {
 }
 
 #container {
-  background: transparent url(../images/highlight-bg.jpg) 50% 0 no-repeat;
+  background: transparent url('../../Destructuring and Recursion in ES-6/Destructuring and Recursion in ES-6_files/highlight-bg.jpg') 50% 0 no-repeat;
   min-height: 595px;
 }
 
@@ -227,7 +227,7 @@ hr {
   margin-top: 1em;
   padding-bottom: 1em;
   border: none;
-  background: transparent url('../images/hr.png') 50% 0 no-repeat;
+  background: transparent url('../../Destructuring and Recursion in ES-6/Destructuring and Recursion in ES-6_files/hr.png') 50% 0 no-repeat;
 }
 
 strong {
@@ -331,7 +331,7 @@ dl dt {
 }
 
 footer {
-  background: transparent url('../images/hr.png') 0 0 no-repeat;
+  background: transparent url('../../Destructuring and Recursion in ES-6/Destructuring and Recursion in ES-6_files/hr.png') 0 0 no-repeat;
   margin-top: 40px;
   padding-top: 20px;
   padding-bottom: 30px;
