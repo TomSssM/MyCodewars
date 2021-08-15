@@ -1,4 +1,4 @@
-# Articles
+# Writings
 
 ## CS Stuff
 
