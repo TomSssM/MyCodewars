@@ -256,6 +256,7 @@ is around 0x10ffff ( in hexadecimal ) and even that not without a trick, which l
 In Unicode the 1st plane has most of the characters that we normally use ( and more ), while most other planes still
 are not assigned any characters at all. In fact the 1st Unicode plane is so popular that it has a name BMP.
 Here is what the BMP plane looks like:
+<!-- ../data/Unifont_Full_Map.png -->
 
 ![BMP](https://upload.wikimedia.org/wikipedia/commons/0/01/Unifont_Full_Map.png)
 
