@@ -97,6 +97,10 @@ Also here are the same aliases for __.gitconfig:__
 
 ---
 
+PS1 themes [see the full list](./ps1-themes.md).
+
+---
+
 If on Windows then create __.bashrc__ with the following content:
 
 ```bash
@@ -114,7 +118,3 @@ git branch | grep -v \* | xargs git branch -D
 # deploy a file to remove server (example: tomsssm@debian10.com:/www/frontend)
 scp -p <local-path> <user-name>@<host>:<server-path>
 ```
-
----
-
-PS1 themes [see the full list](./ps1-themes.md).
