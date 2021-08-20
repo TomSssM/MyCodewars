@@ -153,6 +153,7 @@ class Emitter {
       } else {
         this.emit('end');
         this.started = false;
+        this.last = 0;
       }
     }, 100); // emulating i/o call
   }
