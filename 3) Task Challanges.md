@@ -124,3 +124,173 @@ An important point to make is that we need to check not only that `a` equals the
 because once the `Array.prototype.sort` is invoked with our callback, our callback is going to be passed all kinds of
 elements from the array in an unsorted order and the necessary value can be `b` just as likely as `a`.
 Thus we check both.
+
+# 43) Event Emitter to async generator
+
+For some unknown reason one day I decided to create a `Symbol.asyncIterator` method for a simple event emitter:
+
+```js
+class Emitter {
+  constructor({ amount }) {
+    this.listeners = {};
+    this.amount = amount; // how much data to produce
+    this.last = 0;
+    this.started = false;
+  }
+
+  start() {
+    if (this.started) return;
+    this.started = true;
+    this.read();
+  }
+
+  read() {
+    setTimeout(() => {
+      this.emit('data', this.last);
+      this.last++;
+      if (this.last <= this.amount) {
+        this.read();
+      } else {
+        this.emit('end');
+        this.started = false;
+      }
+    }, 100); // emulating i/o call
+  }
+
+  emit(event, ...args) {
+    const listeners = this.listeners[event];
+    if (listeners) {
+      for (const listener of listeners) {
+        listener(...args);
+      }
+    }
+  }
+
+  on(event, listener) {
+    if (!this.listeners[event]) {
+      this.listeners[event] = [];
+    }
+    this.listeners[event].push(listener);
+  }
+
+  async *[Symbol.asyncIterator]() {
+    let ended = false;
+    let resolver;
+    let value;
+
+    this.start();
+
+    this.on('data', (data) => {
+      value = data;
+      resolver();
+    });
+
+    this.on('end', () => {
+      ended = true;
+    });
+
+    while (true) {
+      if (ended) return;
+
+      await new Promise((resolve) => {
+        resolver = () => {
+          resolve();
+          resolver = null;
+        };
+      });
+
+      yield value;
+    }
+  }
+}
+```
+
+Non-generator usage:
+
+```js
+const emitter = new Emitter({ amount: 10 });
+
+emitter.start();
+
+emitter.on('data', (data) => {
+  console.log('got data:', data);
+});
+```
+
+Generator usage:
+
+```js
+const emitter = new Emitter({ amount: 10 });
+
+void (async () => {
+  for await (const data of emitter) {
+    console.log('got data too:', data);
+  }
+})();
+```
+
+__Note:__ the only limitation of such an iterator is that once it does `yield ...`, the value it yields needs to be processed _synchrously_
+or else the `data` event handler will attempt to call `resolver` which will be `undefined` because the line that creates the resolver (after the
+`yield` statement) has not been executed yet. Here is an example of such a scenario:
+
+```js
+const emitter = new Emitter({ amount: 10 });
+void (async () => {
+  for await (const data of emitter) {
+    console.log('got data:', data);
+
+    await new Promise((res) => {
+      setTimeout(() => {
+        console.log('I am logging data after 1 sec...', data);
+        res();
+      }, 1000);
+    });
+  }
+})();
+```
+
+I guess for this very reason Node.js Readable stream iterator doesn't use the `data` event but rather the `readable` event
+(snippet from the official git repository):
+
+```js
+/* ... */
+
+async function* createAsyncIterator(stream, options) {
+  let callback = nop;
+
+  function next(resolve) {
+    if (this === stream) {
+      callback();
+      callback = nop;
+    } else {
+      callback = resolve;
+    }
+  }
+
+  stream.on('readable', next);
+
+  let error;
+  eos(stream, { writable: false }, (err) => {
+    error = err ? aggregateTwoErrors(error, err) : null;
+    callback();
+    callback = nop;
+  });
+
+  try {
+    while (true) {
+      const chunk = stream.destroyed ? null : stream.read();
+      if (chunk !== null) {
+        yield chunk;
+      } else if (error) {
+        throw error;
+      } else if (error === null) {
+        return;
+      } else {
+        await new Promise(next);
+      }
+    }
+  } catch (err) { /* ... */ }
+}
+
+/* ... */
+```
