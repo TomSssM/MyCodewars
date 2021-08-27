@@ -60,7 +60,6 @@ Here are my preferences:
   },
   "eslint.workingDirectories": [
     { "pattern": "./packages/*" },
-    { "pattern": "./projects/*" },
     { "pattern": "./services/*" }
   ],
   "emmet.excludeLanguages": [
