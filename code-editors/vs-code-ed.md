@@ -66,7 +66,8 @@ Here are my preferences:
   "emmet.excludeLanguages": [
     "markdown"
   ],
-  "workbench.editor.labelFormat": "short"
+  "workbench.editor.labelFormat": "short",
+  "typescript.preferences.importModuleSpecifier": "non-relative"
 }
 ```
 
