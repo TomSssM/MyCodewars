@@ -1,4 +1,4 @@
-# CSS Patterns
+# CSS Cheatsheets
 - [Border Image](./border-image/index.html)
 - [CSS Selectors](./selectors/index.html)
     - [Pseudo Selectors](./selectors/pseudo-stuff/index.html)
