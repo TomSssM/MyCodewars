@@ -34,7 +34,7 @@
 
 - __Others__ :pineapple:
   - [Hardcore](./cheatsheet/README.md)
-  - [CoreJS CodeJam](./corejs-codejam/README.md)
+  - [CoreJS CodeJam](./corejs-codejam/task/README.md)
   - [Polyfill.js](./Polyfill.js)
   - [Freak Show](./freakshow.js)
 

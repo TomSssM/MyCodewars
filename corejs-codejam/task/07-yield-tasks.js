@@ -25,6 +25,10 @@
  * See the full text at
  * http://99-bottles-of-beer.net/lyrics.html
  *
+ * NOTE: Please try to complete this task faster then original song finished:
+ * https://www.youtube.com/watch?v=Z7bmyjxJuVY   :)
+ *
+ *
  * @return {Iterable.<string>}
  *
  */
