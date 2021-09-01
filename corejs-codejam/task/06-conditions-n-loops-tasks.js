@@ -519,6 +519,30 @@ function getCommonDirectoryPath(pathes) {
     return commonPath;
 }
 
+
+/**
+ * Returns the product of two specified matrixes.
+ * See details: https://en.wikipedia.org/wiki/Matrix_multiplication
+ *
+ * @param {array} m1
+ * @param {array} m2
+ * @return {array}
+ *
+ * @example:
+ *   [[ 1, 0, 0 ],       [[ 1, 2, 3 ],           [[ 1, 2, 3 ],
+ *    [ 0, 1, 0 ],   X    [ 4, 5, 6 ],     =>     [ 4, 5, 6 ],
+ *    [ 0, 0, 1 ]]        [ 7, 8, 9 ]]            [ 7, 8, 9 ]]
+ *
+ *                        [[ 4 ],
+ *   [[ 1, 2, 3]]    X     [ 5 ],          =>     [[ 32 ]]
+ *                         [ 6 ]]
+ *
+ */
+function getMatrixProduct(a, b){
+    throw new Error('Not implemented');
+  }
+
+
 /**
  * Returns the evaluation of the specified tic-tac-toe position.
  * See the details: https://en.wikipedia.org/wiki/Tic-tac-toe
@@ -599,5 +623,6 @@ module.exports = {
     timespanToHumanString : timespanToHumanString,
     toNaryString: toNaryString,
     getCommonDirectoryPath: getCommonDirectoryPath,
+    getMatrixProduct: getMatrixProduct,
     evaluateTicTacToePosition : evaluateTicTacToePosition
 };

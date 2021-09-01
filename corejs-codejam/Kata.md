@@ -6,8 +6,9 @@ We do all the tasks from the preset and then add a link to them to [`README.md`]
 In case it is a CodeWars kata, we need to write it into [`5) CodeWars.js`](../5\)%20CodeWars.js)
 
 - [ ] [Date](./task/03-date-tasks.js)
-- [ ] [Object](./task/08-objects-tasks.js)
+- [ ] [Conditions and loops](./task/06-conditions-n-loops-tasks.js)
 - [ ] [Yield](./task/07-yield-tasks.js)
+- [ ] [Object](./task/08-objects-tasks.js)
 - [ ] [Function and Closure](./task/09-functions-n-closures-tasks.js)
 - [ ] [Matrix Multiplication](https://www.codewars.com/kata/matrix-multiplier)
 - [ ] [Last CodeWars Kata](http://www.codewars.com/kata/functional-sql)

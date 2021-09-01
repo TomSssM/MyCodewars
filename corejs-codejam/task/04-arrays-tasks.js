@@ -424,21 +424,21 @@ function toStringList(arr) {
  * 
  * @example
  *    [
- *      { country: 'A',  city: 'b' },
- *      { country: 'C', city: 'z' },
- *      { country: 'Z',  city: 'b' },
- *      { country: 'A',  city: 'a' },
- *      { country: 'Z',  city: 'a' },
- *      { country: 'C', city: 'x' }
+ *      { country: 'Russia',  city: 'Moscow' },
+ *      { country: 'Belarus', city: 'Minsk' },
+ *      { country: 'Poland',  city: 'Warsaw' },
+ *      { country: 'Russia',  city: 'Saint Petersburg' },
+ *      { country: 'Poland',  city: 'Krakow' },
+ *      { country: 'Belarus', city: 'Brest' }
  *    ]  
  *                      =>
  *    [
- *      { country: 'A', city: 'a' },
- *      { country: 'A', city: 'b' },
- *      { country: 'C',  city: 'x' },
- *      { country: 'C',  city: 'z' },
- *      { country: 'Z',  city: 'a' },
- *      { country: 'Z',  city: 'b' }
+ *      { country: 'Belarus', city: 'Brest' },
+ *      { country: 'Belarus', city: 'Minsk' },
+ *      { country: 'Poland',  city: 'Krakow' },
+ *      { country: 'Poland',  city: 'Warsaw' },
+ *      { country: 'Russia',  city: 'Moscow' },
+ *      { country: 'Russia',  city: 'Saint Petersburg' }
  */
 function sortCitiesArray(arr) {
     return arr.sort((obj1, obj2) => {
@@ -524,21 +524,21 @@ function distinct(arr) {
  *
  * @example
  *   group([
- *      { country: 'one', city: '~' },
- *      { country: 'two', city: '<>' },
- *      { country: 'two', city: '[]' },
- *      { country: 'one', city: '-' },
- *      { country: 'one', city: '=' },
- *      { country: 'three', city: ':)' }
+ *      { country: 'Belarus', city: 'Brest' },
+ *      { country: 'Russia', city: 'Omsk' },
+ *      { country: 'Russia', city: 'Samara' },
+ *      { country: 'Belarus', city: 'Grodno' },
+ *      { country: 'Belarus', city: 'Minsk' },
+ *      { country: 'Poland', city: 'Lodz' }
  *     ], 
  *     item => item.country, 
  *     item => item.city
  *   )
  *            => 
  *   Map {
- *    "Belarus" => ["~", "-", "="],
- *    "Russia" => ["<>", "[]"], 
- *    "Poland" => [":)"]
+ *    "Belarus" => ["Brest", "Grodno", "Minsk"],
+ *    "Russia" => ["Omsk", "Samara"], 
+ *    "Poland" => ["Lodz"]
  *   }
  */
 function group(array, keySelector, valueSelector) {

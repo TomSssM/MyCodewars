@@ -159,6 +159,7 @@ function* breadthTraversalTree(root) {
     }
 }
 
+
 /**
  * Merges two yield-style sorted sequences into the one sorted sequence.
  * The result sequence consists of sorted items from source iterators.
@@ -176,10 +177,11 @@ function* mergeSortedSequences(source1, source2) {
     throw new Error('Not implemented');
 }
 
+
 module.exports = {
     get99BottlesOfBeer: get99BottlesOfBeer,
     getFibonacciSequence: getFibonacciSequence,
     depthTraversalTree: depthTraversalTree,
     breadthTraversalTree: breadthTraversalTree,
-    mergeSortedSequences: mergeSortedSequences,
+    mergeSortedSequences: mergeSortedSequences
 };
