@@ -10,6 +10,7 @@ Here is the extensions list:
 ```bash
 code --install-extension vscode-icons-team.vscode-icons
 code --install-extension bierner.markdown-emoji
+code --install-extension pranaygp.vscode-css-peek
 code --install-extension CoenraadS.bracket-pair-colorizer-2
 code --install-extension aaron-bond.better-comments
 code --install-extension dracula-theme.theme-dracula
