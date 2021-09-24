@@ -492,3 +492,6 @@ new Promise((resolve) => {
   console.log(value);
 });
 ```
+
+__Also note:__ by mere accident I put down and described this point and the one before though they have already been discussed in great detail
+in the [earlier article](./promise.md#macrotask-queue-vs-microtask-queue).
