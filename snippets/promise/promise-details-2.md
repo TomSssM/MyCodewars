@@ -373,3 +373,122 @@ const out = Promise.resolve()
 it might seem that since `val1` was rejected first, then its error should be thrown to the console while
 we are waiting for `val2` to resolve in line `(*)`. But in reality all errors will be caught. Most likely,
 all uncaught `Promise` rejections get thrown to the console once the Microtask queue is empty.
+
+## Callback inside `new Promise(...)` is _synchronous_
+
+The callback passed inside `Promise` constructor is _synchronous_, here is proof:
+
+```js
+new Promise(() => {
+  console.log('one');
+});
+console.log('two');
+```
+
+The output is going to run thus:
+
+```
+one
+two
+```
+
+The reason is the callback passed to the `Promise` contructor is executed immediately, at the same time the promise is created. The pseudocode
+for a Promise constructor may look like this:
+
+```
+class Promise {
+  constructor(cb) {
+    cb(resolve, reject);
+  }
+}
+```
+
+A function passed to `.then(..)`, however, is executed _asynchronously_, after the code on the main thread has finished executing, even if the `resolve` function is
+called synchronously, while the main thread code is executing. Here is example:
+
+```js
+console.log('one');
+
+new Promise((resolve) => {
+  resolve('three'); // calling resolve synchronously during main thread execution
+}).then((value) => {
+  console.log(value); // called only after main thread is finished executing
+});
+
+console.log('two');
+```
+
+The reason it happens this way is because a callback passed to `.then(..)` is first added to the Microtask Queue, and it will be dequeued only after the main thread
+code has finished executing.
+
+## Which runs first? (classic)
+
+Which will run first: timeout or promise?
+
+```js
+setTimeout(() => { // (*)
+  console.log('timeout');
+});
+
+new Promise((resolve) => {
+  resolve('promise');
+}).then((value) => { // (**)
+  console.log(value);
+});
+```
+
+The answer is: promise. Here is the log:
+
+```
+promise
+timeout
+```
+
+The reason it happens is because `setTimeout` puts a callback to the Macrotask Queue while `Promise` puts a callback to the Microtask Queue, doesn't matter that `setTimeout`
+put the callback to the Mactotask Queue before `Promise` put the callback to the Microtask Queue: the JS engine will start executing callbacks from the Mactotask Queue only
+once the Microtask Queue is empty. By the time the main thread is finished executing, the JS engine will find one task in the Microtask Queue (from line `(**)`) and another
+from the Macrotask Queue (from line `(*)`), and prefer the task from the Microtask Queue thus executing the callback that logs the word `'promise'` to the console.
+
+__Note:__ bear in mind that `.then(...)` puts a callback to the macrotask queue once `resolve()` is called.
+
+Here are some more examples for contemplation: comments `// microtask` mean that the callback will be put to the Microtask Queue (Promise), and comments `// macrotask` mean
+that the callback is put to the Macrotask Queue (Event Queue). They highlight the priority of Microtask Queue over Macrotask Queue in the order of code execution:
+
+1)
+
+```js
+setTimeout(() => { // microtask
+  console.log('three');
+});
+
+new Promise((resolve) => {
+  resolve('one');
+}).then((value) => { // macrotask
+  console.log(value);
+  return 'two';
+}).then((value) => { // macrotask
+  console.log(value);
+});
+```
+
+2)
+
+```js
+setTimeout(() => { // microtask /* put microtask synchronously */
+  console.log('two');
+});
+
+new Promise((resolve) => {
+  resolve('one'); /* call .then synchronously, thus put macrotask synchronously */
+}).then((value) => { // macrotask
+  console.log(value);
+  return new Promise((resolve) => {
+    setTimeout(() => { // microtask /* put microtask asynchronously (during execution of a macrotask) */
+      console.log('three');
+      resolve('four'); /* call .then asynchronously (during execution of a microtask) */
+    });
+  });
+}).then((value) => { // macrotask
+  console.log(value);
+});
+```
