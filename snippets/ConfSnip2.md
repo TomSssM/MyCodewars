@@ -670,7 +670,7 @@ main();
 ## Why writing to `.prototype` is bad
 
 First let's recall how inheritance works in JavaScript. As you know functions are just special objects. To understand inheritance in JS better you should think
-of functions as just objects that have a special quality of that they can be called. You can log a function to the console as an object, use `console.dir` for that:
+of functions as just objects that have a special quality that they can be called. You can log a function to the console as an object, use `console.dir` for that:
 
 ```js
 function MyFunction() {}
@@ -678,10 +678,11 @@ console.dir(MyFunction);
 ```
 
 __Note:__ the Firefox dev tools `console.log` would print a function as an object by default. A usual `console.log` in Chromium based browsers would print a function
-more beautifully hiding away the pecualarity that a function is an object. Node.js console always prints `[Function: <name>]`.
+more beautifully hiding away the pecualarity that a function is an object. Node.js console always prints for example `[Function: MyFunction]` for a function named "MyFunction"
+(note that it is not the same string representation as provided by `Object.prototype.toString.call(...)`).
 
-Therefore we can think of JavaScript functions as simply being key-value object. Every function a few own properties (length, name, prototype and so on) the most important of
-which is called "prototype" that holds another object that by default has also only one own property called "constructor" (it equals === the function itself).
+Therefore we can think of JavaScript functions as simply being key-value objects. Every function has a few own properties (`length`, `name`, `prototype` and so on) the most
+important of which is `prototype` that holds another object that by default has also only one own property called "constructor" (it equals === the function itself).
 
 ```js
 function MyFunction() {
@@ -691,37 +692,37 @@ function MyFunction() {
 
 `Object.getOwnPropertyDescriptors(MyFunction)` returns:
 
-```json
+```js
 {
-  "length": {
-    "value": 0,
-    "writable": false,
-    "enumerable": false,
-    "configurable": true
+  length: {
+    value: 0,
+    writable: false,
+    enumerable: false,
+    configurable: true
   },
-  "name": {
-    "value": "MyFunction",
-    "writable": false,
-    "enumerable": false,
-    "configurable": true
+  name: {
+    value: "MyFunction",
+    writable: false,
+    enumerable: false,
+    configurable: true
   },
-  "arguments": {
-    "value": null,
-    "writable": false,
-    "enumerable": false,
-    "configurable": false
+  arguments: {
+    value: null,
+    writable: false,
+    enumerable: false,
+    configurable: false
   },
-  "caller": {
-    "value": null,
-    "writable": false,
-    "enumerable": false,
-    "configurable": false
+  caller: {
+    value: null,
+    writable: false,
+    enumerable: false,
+    configurable: false
   },
-  "prototype": {
-    "value": {},
-    "writable": true,
-    "enumerable": false,
-    "configurable": false
+  prototype: {
+    value: {},
+    writable: true,
+    enumerable: false,
+    configurable: false
   }
 }
 ```
