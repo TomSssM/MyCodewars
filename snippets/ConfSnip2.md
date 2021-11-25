@@ -666,3 +666,148 @@ function inner () {
 
 main();
 ```
+
+## Why writing to `.prototype` is bad
+
+First let's recall how inheritance works in JavaScript. As you know functions are just special objects. To understand inheritance in JS better you should think
+of functions as just objects that have a special quality of that they can be called. You can log a function to the console as an object, use `console.dir` for that:
+
+```js
+function MyFunction() {}
+console.dir(MyFunction);
+```
+
+__Note:__ the Firefox dev tools `console.log` would print a function as an object by default. A usual `console.log` in Chromium based browsers would print a function
+more beautifully hiding away the pecualarity that a function is an object. Node.js console always prints `[Function: <name>]`.
+
+Therefore we can think of JavaScript functions as simply being key-value object. Every function a few own properties (length, name, prototype and so on) the most important of
+which is called "prototype" that holds another object that by default has also only one own property called "constructor" (it equals === the function itself).
+
+```js
+function MyFunction() {
+  this.name = 'Tom';
+}
+```
+
+`Object.getOwnPropertyDescriptors(MyFunction)` returns:
+
+```json
+{
+  "length": {
+    "value": 0,
+    "writable": false,
+    "enumerable": false,
+    "configurable": true
+  },
+  "name": {
+    "value": "MyFunction",
+    "writable": false,
+    "enumerable": false,
+    "configurable": true
+  },
+  "arguments": {
+    "value": null,
+    "writable": false,
+    "enumerable": false,
+    "configurable": false
+  },
+  "caller": {
+    "value": null,
+    "writable": false,
+    "enumerable": false,
+    "configurable": false
+  },
+  "prototype": {
+    "value": {},
+    "writable": true,
+    "enumerable": false,
+    "configurable": false
+  }
+}
+```
+
+`Object.getOwnPropertyDescriptors(MyFunction.prototype)` returns `{ constructor: { configurable: true, enumerable: false, value: ƒ MyFunction(), writable: true } }`.
+
+Methods defined on the "prototype" property become instance methods if an object is created with a `new` keyword:
+
+```js
+const o = new MyFunction();
+o.name; // 'Tom'
+```
+
+it is the same as:
+
+```js
+const o = const o2 = Object.create(
+  MyFunction.prototype,
+  {
+    name: {
+      value: 'Tom',
+      enumerable: true,
+      writable: true,
+      configurable: true
+    }
+  }
+);
+```
+
+Methods defined on the "prototype" property become instance methods thanks to the `__proto__` property that every object has (or also called internal `[[Prototype]]` slot, more on this
+you can read [here](#static-properties-in-inheritance)).
+
+So back to the point: why writing `MyFunction.prototype = {}` is bad? Some people do it to be able to define many methods at once without having to write
+`MyFunction.prototype.methodName = function() { ... }` for every method.
+
+Contemplate the following code:
+
+```js
+function MyFunction() {
+  this.name = 'Tom';
+}
+
+const o = new MyFunction();
+
+MyFunction.prototype = { // (*)
+  sayMyName() {
+    return this.name;
+  }
+};
+
+console.log(
+  o.sayMyName()
+);
+```
+
+At first sight it looks as if the value `"Tom"` should be printed to the console, but instead we get a ` TypeError: o.sayMyName is not a function`.
+
+The reason that it happens is because first the object `o` is created and its `__proto__` is set to point to an empty `prototype` of `MyFunction`,
+and then we replace the `prototype` of `MyFunction` with a different object in line `(*)` (but this doesn't replace the `o.__proto__` property, it still points
+to the old `prototype` of `MyFunction` which it had before re-assignment in line `(*)`). Here is proof:
+
+```js
+function MyFunction() {
+  this.name = 'Tom';
+}
+
+const o = new MyFunction();
+const p1 = MyFunction.prototype;
+
+MyFunction.prototype = {
+  sayMyName() {
+    return this.name;
+  }
+};
+
+const p2 = MyFunction.prototype;
+
+p1; // {}
+p2; // { sayMyName() { ... } }
+
+p1 === p2; // false
+o.__proto__ === p1; // true
+o.__proto__ === p2; // false
+```
+
+As a result `o` doesn't have the `sayMyName` method _and_ the old empty prototype of `MyFunction` (p1) hangs in memory as it cannot be garbage collected (because `o.__proto__`
+refers to it).
+
+__Note:__ however it is not bad to write to `prototype = ...` (re-assign `prototype`) if you are not creating instances before you do it.
