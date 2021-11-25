@@ -739,7 +739,7 @@ o.name; // 'Tom'
 it is the same as:
 
 ```js
-const o = const o2 = Object.create(
+const o = Object.create(
   MyFunction.prototype,
   {
     name: {
@@ -808,7 +808,7 @@ o.__proto__ === p1; // true
 o.__proto__ === p2; // false
 ```
 
-As a result `o` doesn't have the `sayMyName` method _and_ the old empty prototype of `MyFunction` (p1) hangs in memory as it cannot be garbage collected (because `o.__proto__`
+As a result `o` doesn't have the `sayMyName` method _and_ the old empty prototype of `MyFunction` (`p1`) hangs in memory as it cannot be garbage collected (because `o.__proto__`
 refers to it).
 
 __Note:__ however it is not bad to write to `prototype = ...` (re-assign `prototype`) if you are not creating instances before you do it.
