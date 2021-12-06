@@ -97,7 +97,7 @@ console.log($val$)$END$
 
 Syntax:
 ```
-// todo ilyakortasov:$END$
+// todo ilyakortasov: $END$
 ```
 
 **Note:** all live templates are applicable in `JavaScript and TypeScript`.
