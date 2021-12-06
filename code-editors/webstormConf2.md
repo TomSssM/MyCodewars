@@ -40,6 +40,7 @@
 - Clone Caret Below - `SHIFT + FN + DOWN`
 - Delete to Line Start - `COMMAND + DELETE`
 - Duplicate Line or Selection - `COMMAND + D`
+- Delete Line - `COMMAND + R`
 - Terminal - ``CONTROL + ` ``
 - Plugins -> Terminal -> Switch Focus To Editor - `ESC`
 - Editor Actions -> Escape - `ESC`
