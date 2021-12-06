@@ -75,6 +75,10 @@
 - Main Menu -> Code -> Generate -  `CONTROL + ENTER`
 - Main Menu -> File -> Open Recent - `COMMAND + SHIFT + O`
 - Main Menu -> File -> Open... - `COMMAND + O`
+- Move caret to code Block Start - `COMMAND + OPTION + [`
+- Move caret to code Block Start with Selection - `COMMAND + OPTION + SHIFT + [`
+- Move caret to code Block End - `COMMAND + OPTION + ]`
+- Move caret to code Block End with Selection - `COMMAND + OPTION + SHIFT + ]`
 
 ## Snippets ( Live Templates )
 
