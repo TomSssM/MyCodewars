@@ -42,6 +42,8 @@
 - Duplicate Line or Selection - `COMMAND + D`
 - Terminal - ``CONTROL + ` ``
 - Plugins -> Terminal -> Switch Focus To Editor - `ESC`
+- Editor Actions -> Escape - `ESC`
+- Editor Actions -> Focus Editor - `ESC`
 - Undo - `COMMAND + Z`
 - Redo - `COMMAND + SHIFT + Z`
 - Paste From History... - `COMMAND + Shift + V`
