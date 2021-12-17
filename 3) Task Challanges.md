@@ -295,3 +295,47 @@ async function* createAsyncIterator(stream, options) {
 
 /* ... */
 ```
+
+# 44) Create Nested Path
+
+Your task is to write a function that given a certain path in object keys creates nested objects, for example:
+
+```
+createNestedPath({
+  "key1.key2.key3": "123",
+  "keyA.keyB.keyC": "abc"
+})
+-> {
+  "key1": {
+    "key2":: {
+      "key3": "123"
+    }
+  },
+  "keyA": {
+    "keyB": {
+      "keyC": "abc"
+    }
+  }
+}
+```
+
+This function is rockin' it:
+
+```js
+function createNestedPath(input) {
+  return Object.entries(input).reduce((acc, [key, value]) => {
+    key.split('.').reduce((innerAcc, splitKey, index, array) => {
+      const isLast = index === array.length - 1;
+
+      if (isLast) {
+        innerAcc[splitKey] = value;
+        return innerAcc;
+      }
+
+      return innerAcc[splitKey] = {};
+    }, acc);
+
+    return acc;
+  }, {});
+}
+```
