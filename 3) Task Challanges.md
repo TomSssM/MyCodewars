@@ -352,7 +352,7 @@ __Notice__ that you may not slant the container.
 
 __Example 1:__
 
-![example 1](./data/assets/question_11.jpg)
+<img width=400 src="./data/assets/question_11.jpg" />
 
 __Input:__ `height = [1,8,6,2,5,4,8,3,7]`
 
@@ -383,8 +383,9 @@ Contemplate this example:
 [3, 9, 3, 4, 7, 2, 12, 6]
 ```
 
-![hint 1 picture 1](./data/assets/hint_water_trap_1.png)
-![hint 1 picture 2](./data/assets/hint_water_trap_2.png)
+<img width=400 src="./data/assets/hint_water_trap_1.png" />
+
+<img width=400 src="./data/assets/hint_water_trap_2.png" />
 
 </details>
 
