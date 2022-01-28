@@ -384,7 +384,7 @@ Contemplate this example:
 ```
 
 <img width=400 src="./data/assets/hint_water_trap_1.png" />
-
+<br />
 <img width=400 src="./data/assets/hint_water_trap_2.png" />
 
 </details>
