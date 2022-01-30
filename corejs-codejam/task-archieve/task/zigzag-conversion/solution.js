@@ -3,8 +3,12 @@
  * @param {number} numRows
  * @return {string}
  */
-var convert = function(s, numRows) {
-    const numOfVertical = numRows - 2;
+ var convert = function(s, numRows) {
+    if (s.length === 1) {
+        return s;
+    }
+
+    const numOfVertical = numRows > 2 ? numRows - 2 : 0;
     const incrementor = numRows + numOfVertical;
     let out = '';
 
@@ -41,4 +45,14 @@ var convert = function(s, numRows) {
     return out;
 };
 
-console.log(convert('PAYPALISHIRING', 3)); // 'PAHNAPLSIIGYIR'
+[
+    ['PAYPALISHIRING', 3, 'PAHNAPLSIIGYIR'],
+    ['PAYPALISHIRING', 4, 'PINALSIGYAHRPI'],
+    ['A', 1, 'A'],
+].forEach(([s, numRows, expected]) => {
+    const actual = convert(s, numRows);
+    console.log();
+    console.log(`Input: s="${s}", numRows=${numRows}`);
+    console.log(`Output: "${actual}"`);
+    console.log(`PASS: ${actual === expected}`);
+});
