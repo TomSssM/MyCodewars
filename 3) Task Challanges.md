@@ -339,5 +339,6 @@ function createNestedPath(input) {
   }, {});
 }
 ```
+---
 
-[:file_cabinet: task archieve :arrow_right:](./corejs-codejam/task-archieve/task)
+[task archieve :arrow_right:](./corejs-codejam/task-archieve/task)
