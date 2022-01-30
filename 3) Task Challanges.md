@@ -339,6 +339,29 @@ function createNestedPath(input) {
   }, {});
 }
 ```
+
+# 45) A note on Array Heap Sort
+
+In the Array [Heap Sort algorithm](./snippets/algorithms/heap-sort.js) we said that in order to find the node of
+the heap that we are going to start from in order to "heapify" the array we need to calculate the index of this node
+via a special formula: `lastParent = Math.floor((numOfAllElem - 2) / 2);`.
+
+If you [recall](./snippets/Data%20Structures/max-heap.js), we use the `Math.floor(i / 2)` formula in order to find the
+_parent_ of the node in a heap (if heap is represented as an array). This formula is actually very similar to the one above
+except for slight difference: in the formula above we also subtract `2` from `i`. But why that?
+
+In reality it doesn't make much difference if we subtract `1` or `2` from `i` (called `numOfAllElem` in the formula above),
+what we need to achieve here is _find the parent of the last node of the heap_. Also, the indexes of nodes in the heap
+(if it be represented as an array) start with 1, therefore we need to subtract 1 to get the index of the last node in the heap.
+Also, if we subtract 1 we will get the _right_ child of the last parent in the heap, but if we subtract 2 we get the _left_ child
+of the last parent in the heap. This is why we subtract 2.
+
+In other words, this formula means: find the last left child node in the heap and get its parent: this parent is going to be the
+last parent in the heap.
+
+Note: the Array Heap Sort algorithm would still work even if we started heapifying an array simply at the last index (without applying
+the formula), but this way we would do more unnecessary iterations.
+
 ---
 
 [task archieve :arrow_right:](./corejs-codejam/task-archieve/task)
