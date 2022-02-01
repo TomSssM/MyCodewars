@@ -23,11 +23,11 @@ Output: [-1]
 <summary>A bit of my explanation</summary>
 
 Remember how we can represent a [Heap](../../../../snippets/Data%20Structures/min-heap.js) using array? We can therefore represent
-binary tree in the same way: `[parent, left, right, ...children of left, ...children of right, ...ad so on, recursively]`.
+binary tree in the same way: `[parent, left, right, ...children of left, ...children of right, ...and so on, recursively]`.
 
-Thus your task is to create this same representation as in a Heap except for binary tree and using 2 arrays where in the 1st array
-you have all nodes ordered via preorder traversal and in the 2nd array - via inorder traversal. You need to use information from both
-arrays in order to construct this 3rd array representation of binrary tree where left child is `i * 2`, right child is `i * 2 + 1`
-and parent is `floor(i / 2)`. Note that neither `preorder` not `inorder` give such functionality.
+Thus your task is to create this same representation as in a Heap except for binary tree and with the help of 2 arrays where in the 1st
+array you have all nodes ordered via preorder traversal and in the 2nd array - via inorder traversal. You need to use information from
+both arrays in order to construct this 3rd array representation of binrary tree where left child is `i * 2`, right child is `i * 2 + 1`
+and parent is `floor(i / 2)` (like in a Heap). Note that neither `preorder` not `inorder` arrays give such functionality.
 
 </details>
