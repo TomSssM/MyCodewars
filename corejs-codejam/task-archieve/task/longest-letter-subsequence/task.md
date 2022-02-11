@@ -22,7 +22,7 @@ longestStr('ababababccddddddd', 3); // L=17 N=4 K=3 result: 10
 
 <summary>Hint 1</summary>
 
-It is one of those tasks where you use two pointers (save indexes like `i` and `j` to a variable) to iterate an array _specially_ for example by increasing / decrasing either one or the other or both pointers per iteration. Here is [another task](./corejs-codejam/task-archieve/task/most-water/task.md) whose solution uses similar mechanics.
+It is one of those tasks where you use two pointers (save indexes like `i` and `j` to a variable) to iterate an array _specially_ for example by increasing / decrasing either one or the other or both pointers per iteration. Here is [another task](../most-water/task.md) whose solution uses similar mechanics.
 
 But for this particular task you may also need to enable the _power of hashmap_.
 
