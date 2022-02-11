@@ -374,6 +374,8 @@ countOnes([0, 0]); // 0
 countOnes([1, 1, 1, 0, 1, 0, 0, 1, 1, 1]); // 4 (we throw away 0 at index 3 and get four 1's)
 ```
 
+The solution is to use a counter that we save and reset sometimes:
+
 ```js
 /**
  * @param {number[]} array
