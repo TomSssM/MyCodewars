@@ -22,7 +22,7 @@ Output: [-1]
 
 <summary>A bit of my explanation</summary>
 
-Remember how we can represent a [Heap](../../../../snippets/Data%20Structures/min-heap.js) using array? We can therefore represent
+Remember how we can represent a [Heap](../../../snippets/Data%20Structures/min-heap.js) using array? We can therefore represent
 binary tree in the same way: `[parent, left, right, ...children of left, ...children of right, ...and so on, recursively]`.
 
 Thus your task is to create this same representation as in a Heap except for binary tree and with the help of 2 arrays where in the 1st
