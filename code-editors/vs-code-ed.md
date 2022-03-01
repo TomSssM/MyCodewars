@@ -21,11 +21,16 @@ code --install-extension esbenp.prettier-vscode
 code --install-extension sysoev.vscode-open-in-github
 code --install-extension adpyke.codesnap
 code --install-extension jpoissonnier.vscode-styled-components
-code --install-extension mikestead.dotenv
 code --install-extension ms-vscode-remote.remote-ssh
 code --install-extension ms-vscode-remote.remote-ssh-edit
+code --install-extension streetsidesoftware.code-spell-checker
+code --install-extension streetsidesoftware.code-spell-checker-russian
+code --install-extension mikestead.dotenv
 code --install-extension webben.browserslist
 code --install-extension stylelint.vscode-stylelint
+code --install-extension Orta.vscode-jest
+code --install-extension jock.svg
+code --install-extension ChakrounAnas.turbo-console-log
 ```
 # Default Editor for Git
 Change the config:
@@ -38,17 +43,23 @@ Here are my preferences:
 ```json
 {
   "workbench.iconTheme": "vscode-icons",
-  "workbench.colorTheme": "Default Light+",
   "editor.tabSize": 2,
-  "editor.fontSize": 14,
-  "editor.minimap.enabled": false,
   "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
   "terminal.external.windowsExec": "C:\\\\Program Files\\\\Git\\\\bin\\\\bash.exe",
-  "workbench.startupEditor": "welcomePage",
-  "terminal.integrated.shell.osx": "/bin/bash",
+  "editor.fontSize": 14,
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  "git.enableSmartCommit": true,
+  "editor.minimap.enabled": false,
+  "editor.renderLineHighlight": "line",
+  "editor.highlightActiveIndentGuide": true,
+  "workbench.colorTheme": "Default Light+",
+  "window.zoomLevel": 0,
   "terminal.integrated.rendererType": "dom",
-  "files.autoSave": "onFocusChange",
+  "terminal.integrated.shell.osx": "/bin/bash",
   "diffEditor.ignoreTrimWhitespace": false,
+  "files.autoSave": "onFocusChange",
+  "workbench.startupEditor": "welcomePage",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[javascript]": {
     "editor.formatOnSave": false
@@ -63,11 +74,13 @@ Here are my preferences:
     { "pattern": "./packages/*" },
     { "pattern": "./services/*" }
   ],
-  "emmet.excludeLanguages": [
-    "markdown"
-  ],
-  "workbench.editor.labelFormat": "short",
-  "typescript.preferences.importModuleSpecifier": "non-relative"
+  "codesnap.transparentBackground": true,
+  "codesnap.boxShadow": "none",
+  "svg.preview.mode": "svg",
+  "cSpell.language": "en,ru",
+  "cSpell.enabled": false,
+  "jest.autoRun": { "watch": false },
+  "jest.enableCodeLens": false
 }
 ```
 
