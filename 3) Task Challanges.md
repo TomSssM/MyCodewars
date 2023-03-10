@@ -480,6 +480,6 @@ function solution(letters, indexes) {
 
 </details>
 
----
+# More tasks
 
-[task archieve :arrow_right:](./task-archieve/README.md)
+Don't worry lads, there are always more tasks to solve. Feel free to check out [Task Archieve](./task-archieve/README.md).

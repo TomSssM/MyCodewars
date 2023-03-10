@@ -3,7 +3,7 @@
  * @param {number} numRows
  * @return {string}
  */
- var convert = function(s, numRows) {
+function convert(s, numRows) {
     if (s.length === 1) {
         return s;
     }
