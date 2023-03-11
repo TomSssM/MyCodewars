@@ -1,7 +1,5 @@
 # Longest sequence of letters
 
-> __type:__ `Array` | `String`
-
 You are given a string of length `L` composed of `N` different letters. Your task is to find the longest substring that would consist of at least `K` different letters
 
 __Example:__
@@ -20,7 +18,7 @@ longestStr('ababababccddddddd', 3); // L=17 N=4 K=3 result: 10
 
 <details>
 
-<summary>Hint</summary>
+<summary>Task Type</summary>
 
 It is one of those tasks where you use two pointers (save indexes like `i` and `j` to a variable) to iterate an array _specially_ for example by increasing / decrasing either one or the other or both pointers per iteration. Here is [another task](../most-water/task.md) whose solution uses similar mechanics
 

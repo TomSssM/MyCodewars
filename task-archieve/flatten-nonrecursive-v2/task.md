@@ -1,7 +1,5 @@
 # Flatten non-recursive v2
 
-> __type:__ `Array`
-
 Your task is to write a function that flattens the array like so:
 
 ```js
@@ -14,7 +12,7 @@ Also you cannot use recursion because an array can be very big and nested arrays
 
 <details>
 
-<summary>Hint</summary>
+<summary>Task Type</summary>
 
 You can achieve the non-recursive solution by using a simple "stack and while loop" technique
 

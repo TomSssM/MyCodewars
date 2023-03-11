@@ -362,47 +362,7 @@ last parent in the heap.
 Note: the Array Heap Sort algorithm would still work even if we started heapifying an array simply at the last index (without applying
 the formula), but this way we would do more unnecessary iterations.
 
-# 46) Longest sequence of 1's
-
-Your task is to implement algorithm that finds the longest sequence of 1's in array consisting of 1's and 0's. For this task you also have to
-exclude at least 1 element out of the array, for example:
-
-```js
-countOnes([1, 0]); // 1
-countOnes([1, 1]); // 1 (because we have to throw away at least one element, thus we throw away 1)
-countOnes([0, 0]); // 0
-countOnes([1, 1, 1, 0, 1, 0, 0, 1, 1, 1]); // 4 (we throw away 0 at index 3 and get four 1's)
-```
-
-The solution is to use a counter that we save and reset sometimes:
-
-```js
-/**
- * @param {number[]} array
- */
-function countOnes(array) {
-  let max = 0;
-  let current = 0;
-  let prev = 0;
-
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] === 1) {
-      current++;
-    }
-
-    if (array[i] === 0) {
-      prev = current;
-      current = 0;
-    }
-
-    max = Math.max(current + prev, max);
-  }
-
-  return max === array.length ? max - 1 : max;
-}
-```
-
-# 47) AsyncArray
+# 46) AsyncArray
 
 We have `AsyncArray` class:
 

@@ -1,7 +1,5 @@
 # Zigzag Conversion
 
-> __type:__ `String`
-
 The string `"PAYPALISHIRING"` is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
 
 ```
@@ -47,7 +45,7 @@ __Output:__ `"A"`
 
 <details>
 
-<summary>Hint</summary>
+<summary>Task Type</summary>
 
 To solve this task you need to analyze the _relation_ between the indexes of the characters in the string
 

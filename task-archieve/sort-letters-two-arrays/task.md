@@ -1,7 +1,5 @@
 # Sort letters from one array via another array
 
-> __type:__ `Array`
-
 We have 2 arrays with a length equal to `n`: one filled with letters, the other filled with numbers (the number are from 0 to n-1)
 
 You gotta swap letters _in place_ in the 1st array such that the letters at indexes `i` from the 1st array correspond to numbers at indexes `i` from the 2nd array
@@ -48,14 +46,31 @@ Therefore such solution, though clever, does not suit the requirements
 
 <summary>Hint 2</summary>
 
+To solve this task you need to simply _sort_ the elements of the 2nd array (the numbers) and every time you swap the elements of the 2nd array you need to also likewise swap the same elements of the 1st array (the letters). As a result you are going to get the letters in the right order sorted thanks to the 2nd array
+
+</details>
+
+<details>
+
+<summary>Task Type</summary>
+
 We sort in place the 2nd array but together with the elements of the 2nd array we also swap the elements of the 1st array. There is a whole type of tasks that can be solved by swapping the elements of the array in a clever way (or in our case we swap the elements of the two arrays simultaneously)
 
 </details>
 
 <details>
 
-<summary>Hint 3</summary>
+<summary>Alternative solution</summary>
 
-To solve this task you need to simply _sort_ the elements of the 2nd array (the numbers) and every time you swap the elements of the 2nd array you need to also likewise swap the same elements of the 1st array (the letters). As a result you are going to get the letters in the right order sorted thanks to the 2nd array
+We can simply put the elements from the 1st array to the 2nd array considering the indexes from the 2nd array thus getting a solution with `O(n)` complexity:
+
+```js
+function sort(array, order) {
+  for (var i = 0; i < order.length; i++) {
+    order[i] = array[order[i]];
+  }
+  return order;
+}
+```
 
 </details>
