@@ -1,0 +1,21 @@
+# Flatten non-recursive v2
+
+> __type:__ `Array`
+
+Your task is to write a function that flattens the array like so:
+
+```js
+flatten([1,2,3,[4,[5]],[6],7]); // -> [1,2,3,4,5,6,7]
+```
+
+But the difficulty is that you can only use `.push()` and `.pop()` methods of the `Array` because all the other methods are badly optimized across different JS engines in different browsers
+
+Also you cannot use recursion because an array can be very big and nested arrays very deep and you may get a stack overflow error
+
+<details>
+
+<summary>Hint</summary>
+
+You can achieve the non-recursive solution by using a simple "stack and while loop" technique
+
+</details>

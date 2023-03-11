@@ -1,0 +1,61 @@
+# Sort letters from one array via another array
+
+> __type:__ `Array`
+
+We have 2 arrays with a length equal to `n`: one filled with letters, the other filled with numbers (the number are from 0 to n-1)
+
+You gotta swap letters _in place_ in the 1st array such that the letters at indexes `i` from the 1st array correspond to numbers at indexes `i` from the 2nd array
+
+For example:
+
+```
+[D A B E C] [3 0 1 4 2] -> [A B C D E]
+```
+
+So we look at 0'th element: it is `D` in the 1st array and `3` in the 2nd array, therefore `D` should be at index `3` in the result array and so on for each letter, `A` to `0`, `B` to `1`, `E` to `4` and `C` to `2`
+
+The phrase "in place" in the extract above means that we don't create an intermediary array to return it, thus we gotta swap elements of the 1st array to get the result array
+
+You also have a memory constraint here: `O(1)` (it means that the more elements the arrays have should not icrease memory consumption, this is also why we have to swap elements of the arrays _in place_, without creating intermediary arrays)
+
+Note that you can mutate both of the arrays
+
+<details>
+
+<summary>Hint 1</summary>
+
+We could jump over the elements of the 2nd array like so:
+
+- first element is `3`, therefore go to element at index `3`
+- at index `3` we have `4`, therefore go to element at index `4`
+- at index `4` we have `2`, therefore go to element at index `2`
+- at index `2` we have `1`, therefore go to element at index `1`
+- at index `1` we have `0`, therefore go to element at index `0`
+- we have iterated the 2nd array
+
+If we do it like that also swapping the elements along the way we will indeed be able to match the arrays above but the problem here is that there can be a situation where you can be caught in a loop and therefore skip some part of the array, here is an example:
+
+```
+[D C B A E] [3 2 1 0 4]
+3 -> 0 -> 3 -> ...
+```
+
+Therefore such solution, though clever, does not suit the requirements
+
+</details>
+
+<details>
+
+<summary>Hint 2</summary>
+
+We sort in place the 2nd array but together with the elements of the 2nd array we also swap the elements of the 1st array. There is a whole type of tasks that can be solved by swapping the elements of the array in a clever way (or in our case we swap the elements of the two arrays simultaneously)
+
+</details>
+
+<details>
+
+<summary>Hint 3</summary>
+
+To solve this task you need to simply _sort_ the elements of the 2nd array (the numbers) and every time you swap the elements of the 2nd array you need to also likewise swap the same elements of the 1st array (the letters). As a result you are going to get the letters in the right order sorted thanks to the 2nd array
+
+</details>
