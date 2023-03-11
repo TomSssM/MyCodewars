@@ -428,7 +428,7 @@ Note that you can mutate both of the arrays.
 
 <details>
 
-<summary>Hint 1</summary>
+<summary>Hint</summary>
 
 We could jump over the elements of the 2nd array like so:
 
@@ -479,6 +479,171 @@ function solution(letters, indexes) {
 ```
 
 </details>
+
+# 48) AsyncArray
+
+We have `AsyncArray` class:
+
+```js
+'use strict';
+
+((global) => {
+  const timeoutMS = 100;
+
+  const _async = (fn, cb) => {
+    setTimeout(() => {
+      cb(fn());
+    }, Math.random() * timeoutMS);
+  };
+
+  const _error = (value) =>
+    Math.random() < 0.1 ? null : value;
+
+  // you may stub the _error function for debug purposes
+  // const _error = (value) => value;
+
+  const AsyncArray = function (a = []) {
+    if (!new.target) {
+      return new AsyncArray(a);
+    }
+
+    this.read = (index, cb) =>
+      _async(() => _error(a[index]), cb);
+
+    this.size = (cb) =>
+      _async(() => _error(a.length), cb);
+  };
+
+  Object.freeze(AsyncArray);
+  global.AsyncArray = AsyncArray;
+})(typeof window === 'undefined' ? global : window);
+```
+
+And this is how we use it:
+
+```js
+const input = AsyncArray([
+  8,
+  AsyncArray([
+    15,
+    16,
+  ]),
+  AsyncArray([
+    AsyncArray([
+      AsyncArray([
+        42,
+        AsyncArray([
+          AsyncArray([]),
+          23,
+        ]),
+      ]),
+    ]),
+    4,
+  ]),
+]);
+
+// example of calling "read"
+input.read(0, (elem) => console.log(`read: ${elem}`));
+
+// example of calling "size"
+input.size((size) => console.log(`size: ${size}`));
+```
+
+The output is going to be:
+```
+size: 3
+read: 8
+```
+
+Your task is to write a function called `solution` that accepts an `AsyncArray` instance and returns a `Promise` that resolves to a simple array derived from the `AsyncArray` instance. Here is an example of its usage:
+
+```js
+const input = AsyncArray([
+  8,
+  AsyncArray([
+    15,
+    16,
+  ]),
+  AsyncArray([
+    AsyncArray([
+      AsyncArray([
+        42,
+        AsyncArray([
+          AsyncArray([]),
+          23,
+        ]),
+      ]),
+    ]),
+    4,
+  ]),
+]);
+
+solution(input).then(result => {
+  console.log('result', result);
+
+  const answer = [8, 15, 16, 42, 23, 4];
+  const isEqual = String(answer) === String(result);
+
+  if (isEqual) {
+    console.log('OK');
+  } else {
+    console.log('WRONG');
+  }
+}).catch((error) => {
+  console.error('we got error carl', error);
+});
+```
+
+The output should be `OK`.
+
+Here is the solution:
+
+```js
+async function solution(input) {
+  return getChunk(input);
+}
+
+async function getChunk(input) {
+  const size = await getAsyncArraySizePromise(input);
+  const result = [];
+
+  for (let i = 0; i < size; i++) {
+    result.push(getAsyncArrayValuePromise(input, i));
+  }
+
+  return (await Promise.all(result)).flat();
+}
+
+function getAsyncArrayValuePromise(asyncArray, index) {
+  return new Promise((res, rej) => {
+    asyncArray.read(index, (value) => {
+      if (value === null) {
+        return rej(null);
+      }
+
+      if (value instanceof AsyncArray) {
+        res(getChunk(value));
+      } else {
+        res(value);
+      }
+    });
+  });
+}
+
+function getAsyncArraySizePromise(asyncArray) {
+  return new Promise((res, rej) => {
+    asyncArray.size((value) => {
+      if (value === null) {
+        rej(null);
+      } else {
+        res(value);
+      }
+    });
+  });
+}
+```
+
+Note how in the `getChunk` function we use `Promise.all` to parallel and thus speed up the execution of the code.
 
 # More tasks
 
