@@ -20,6 +20,6 @@ user2 [(10, 14), (21, 22)]
 
 <summary>Task Type</summary>
 
-It is one of those tasks where you use two pointers (save indexes like `i` and `j` to a variable, `i` is for the 1st array and `j` is for the 2nd array) to iterate __two__ arrays _specially_ for example by increasing / decrasing either one or the other or both pointers per iteration. "Merge Sort" task uses similar mechanics
+It is one of those tasks where you use two pointers (save indexes like `i` and `j` to a variable, `i` is for the 1st array and `j` is for the 2nd array) to iterate __two__ arrays _specially_ for example by increasing / decrasing either one or the other or both pointers per iteration. The part of the "Merge Sort" algorithm that checks two sub-arrays uses similar mechanics ([link](../../snippets/algorithms/merge-sort.js#12))
 
 </details>

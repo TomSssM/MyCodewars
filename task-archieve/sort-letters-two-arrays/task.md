@@ -56,13 +56,7 @@ To solve this task you need to simply _sort_ the elements of the 2nd array (the 
 
 We sort in place the 2nd array but together with the elements of the 2nd array we also swap the elements of the 1st array. There is a whole type of tasks that can be solved by swapping the elements of the array in a clever way (or in our case we swap the elements of the two arrays simultaneously)
 
-</details>
-
-<details>
-
-<summary>Alternative solution</summary>
-
-We can simply put the elements from the 1st array to the 2nd array considering the indexes from the 2nd array thus getting a solution with `O(n)` complexity:
+Here is another example of a solution for these kind of tasks with `O(n)` complexity though it doesn't solve this particular task:
 
 ```js
 function sort(array, order) {
