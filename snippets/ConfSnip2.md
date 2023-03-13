@@ -812,3 +812,85 @@ As a result `o` doesn't have the `sayMyName` method _and_ the old empty prototyp
 refers to it).
 
 __Note:__ however it is not bad to write to `prototype = ...` (re-assign `prototype`) if you are not creating instances before you do it.
+
+## Setting properties on primitives
+
+Contemplate what this code will return:
+
+```js
+let d = 'test';
+d.d = 1;
+console.log('d.d', d.d); // ?
+```
+
+The result will be:
+
+```
+d.d undefined
+```
+
+As you know, whenever we call any method on a primitive or try to set a property on it, internally JavaScript creates an object wrapper
+for this primitive (like `new String()` for a string, `new Number()` for a number and so on). Only this way it can know how to call a method
+on the data type that is not an object (like a string primitive):
+
+```js
+String.prototype.test = function() {
+  console.log(typeof this); // object
+  console.log(this instanceof String); // true
+}
+let dd = 'abc';
+dd.test(); // logs: object, true
+console.log(dd instanceof String); // logs: false (because JS converts dd to an object instance only when we call methods for it)
+```
+
+So, when we call methods on a primitive, internally JavaScript creates a temporary object wrapper for it and invokes methods on this object wrapper instead of the primitive itself.
+For example in our example above the temporary object wrapper will be `new String('abc')` and then we call its method `new String('abc').test()`.
+
+The same happens if we try to set a property on a primitive:
+
+```js
+let dd = 'abc';
+dd.d = 1;
+```
+
+Internally, JavaScript will create a temporary object wrapper for it and set the property on this object wrapper, not on the primitive itself (like in our case when we do
+`dd.d = 1` JavaScript does `new String('abc').d = 1`). Here is code to prove my point:
+
+```js
+Object.defineProperty(String.prototype, 'test', {
+  get() {
+    return this._d;
+  },
+  set(value) {
+    this._d = value;
+    console.log(typeof this); // object
+    console.log(this instanceof String); // true
+  }
+});
+
+let d = 'abc';
+d.test = 1;
+```
+
+The result will be:
+
+```
+object
+true
+```
+
+Now the reason we see `undefined` logged to the console when we do:
+
+```js
+let d = 'test';
+d.d = 1; // (*)
+console.log('d.d', d.d); // undefined
+```
+
+is because as soon as the code in line `(*)` is evaluated JavaScript is going to discard the object wrapper it created to run
+the code in line `(*)`.
+
+That's how it is, JavaScript creates temporary object wrappers whenever we call methods on primitives or assign properties to primitives
+but as soon as the method is called or the property is assigned the temporary object wrappers are discarded. And this is why we see `undefined`
+logged to the console: the property `.d` is assigned to a temporary object wrapper which is instantly discarded in the next line and when we try to access the `.d` property again,
+a new object wrapper is created. This is an intricacy of primitives in JavaScript.
