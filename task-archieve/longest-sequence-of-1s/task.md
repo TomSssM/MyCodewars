@@ -14,6 +14,6 @@ countOnes([1, 1, 1, 0, 1, 0, 0, 1, 1, 1]); // 4 (we throw away 0 at index 3 and 
 
 <summary>Task Type</summary>
 
-It is one of those tasks where you use one pointer to iterate the array as well as a counter that we may or may not reset sometimes
+It is one of those tasks where you use one pointer to iterate the array as well as one or more counters that we may or may not reset sometimes
 
 </details>
