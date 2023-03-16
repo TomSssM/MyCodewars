@@ -7,3 +7,5 @@
 - [Sort letters from one array via another array](./sort-letters-two-arrays/task.md)
 - [Flatten non-recursive v2](./flatten-nonrecursive-v2/task.md)
 - [Intersection of intervals](./intersection-intervals/task.md)
+- [Sort the Matrix diagonally](./matrix-diagonal-sort/task.md)
+- [Keygen](./keygen/task.md)

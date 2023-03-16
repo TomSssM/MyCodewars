@@ -16,6 +16,6 @@ Also you cannot use recursion because an array can be very big and nested very d
 
 <summary>Task Type</summary>
 
-You can achieve the non-recursive solution by using a simple "stack and while loop" technique
+You can achieve the non-recursive solution by using a simple "stack and while loop" technique but at least one way of solving this means pushing elements into the stack in reverse order
 
 </details>
