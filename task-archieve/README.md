@@ -10,3 +10,4 @@
 - [Sort the Matrix diagonally](./matrix-diagonal-sort/task.md)
 - [Keygen](./keygen/task.md)
 - [Combinations](./combinations/task.md)
+- [Word Search](./word-search/task.md)
