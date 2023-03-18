@@ -9,3 +9,4 @@
 - [Intersection of intervals](./intersection-intervals/task.md)
 - [Sort the Matrix diagonally](./matrix-diagonal-sort/task.md)
 - [Keygen](./keygen/task.md)
+- [Combinations](./combinations/task.md)
