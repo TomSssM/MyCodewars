@@ -11,3 +11,4 @@
 - [Keygen](./keygen/task.md)
 - [Combinations](./combinations/task.md)
 - [Word Search](./word-search/task.md)
+- [Climbing Stairs](./climb-stairs/task.md)
