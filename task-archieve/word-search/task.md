@@ -40,3 +40,8 @@ This task is similar to [Sudoku solver](../../cheatsheet/sudoku.js) where you ca
 In this task we should see if a letter matches the one in the word and if so recursively check its neighbors as well as marking the letters that we looked at
 
 </details>
+
+---
+
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) | [:white_check_mark: solution 2](./solution-2.js) |
+| :---: | :---: | :---: |

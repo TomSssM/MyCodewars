@@ -40,3 +40,8 @@ Here is an example:
 This is a Matrix type task using Matrix mechanics or you could also say that you need to look at the _relation_ between the indexes of the array like [here](../zigzag-conversion/task.md).
 
 </details>
+
+---
+
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js)
+| :---: | :---: |

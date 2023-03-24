@@ -82,3 +82,8 @@ To solve this task you need to analyze the _relation_ between the indexes of the
 ```
 
 </details>
+
+---
+
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js)
+| :---: | :---: |

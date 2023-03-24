@@ -1,4 +1,8 @@
-# Task Archieve
+## Task Archieve [:scroll:](./task-type.md)
+
+_List of tasks_
+
+---
 
 - [Container With Most Water](./most-water/task.md)
 - [Zigzag Conversion](./zigzag-conversion/task.md)
@@ -13,3 +17,4 @@
 - [Word Search](./word-search/task.md)
 - [Climbing Stairs](./climb-stairs/task.md)
 - [Remove Duplicates from Sorted Array v2](./remove-duplicates-v2/task.md)
+- [Best Time to Buy and Sell Stock](./best-time-to-buy-and-sell-stock/task.md)

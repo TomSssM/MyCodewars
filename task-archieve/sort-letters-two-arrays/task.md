@@ -68,3 +68,8 @@ function sort(array, order) {
 ```
 
 </details>
+
+---
+
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js)
+| :---: | :---: |

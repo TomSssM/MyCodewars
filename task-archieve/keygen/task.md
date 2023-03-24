@@ -24,3 +24,8 @@ keygen(4, 13); // => [2, 5, 3, 3]
 This is more of a numbers task type than any of the array task types
 
 </details>
+
+---
+
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js)
+| :---: | :---: |

@@ -25,3 +25,8 @@ It is one of those tasks where you use two pointers (save indexes like `i` and `
 But for this particular task you may also need to enable the _power of hashmap_
 
 </details>
+
+---
+
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js)
+| :---: | :---: |

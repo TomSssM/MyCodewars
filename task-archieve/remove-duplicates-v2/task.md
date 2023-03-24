@@ -43,3 +43,8 @@ _In computer science, an in-place algorithm is an algorithm which transforms inp
 """
 
 </details>
+
+---
+
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js)
+| :---: | :---: |

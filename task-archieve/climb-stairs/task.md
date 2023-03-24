@@ -42,3 +42,8 @@ This is a numbers task type. You need to use Fibonacci Sequence to solve it
 You can store a Fibonacci Sequence in an array and you get `O(n)` memory complexity but you can also solve the task with `O(1)` memory complexity by using two counters instead of an array to get a Fibonacci Sequence
 
 </details>
+
+---
+
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) | [:white_check_mark: solution 2](./solution-2.js) | [:white_check_mark: solution 3](./solution-3.js) |
+| :---: | :---: | :---: | :---: |

@@ -80,3 +80,8 @@ In order to solve the task you need to tweak this function to suit your needs
 __Note:__ we called the recursive function inside the `backtrack` function as `dfs` meaning _Depth-first Search_ because it behaves similarly to the Depth-first Search in Binary Trees (or Graphs) but please don't confuse the two: the Binary Trees versions can be found [here](../../corejs-codejam/test/07-yield-tests.js#L457), [here](../../corejs-codejam/task/07-yield-tasks.js#L113) and of course [here](../../snippets/Data%20Structures/binary-search-tree.js)
 
 </details>
+
+---
+
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js)
+| :---: | :---: |
