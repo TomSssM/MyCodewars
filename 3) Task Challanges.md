@@ -101,7 +101,7 @@ Thus our compare function will look like this:
 const compareFunction = (val) => (a, b) => {
     /**
      * -1 - a comes first
-     * 1 - b comes first
+     * 1  - b comes first
      */
 
     if (a === val) {
@@ -125,150 +125,408 @@ because once the `Array.prototype.sort` is invoked with our callback, our callba
 elements from the array in an unsorted order and the necessary value can be `b` just as likely as `a`.
 Thus we check both.
 
-# 43) Find a duplicate number in an unsorted array
+# 43) Event Emitter to async generator
 
-**Task:**
-
-1. In an array of `n` integers one number will be duplicated
-2. The duplicate number can be repeated more than once, but there is going to be only one duplicate number
-  ( for example, if the duplicate number is 2, then an array may have several 2's in it, but _not_ several 3's
-  because the duplicate number is 2, not 3 )
-3. The algorithm should have the following complexity ( `n` is the amount of integers in an array ):
-    - **Time:** O(n)
-    - **Space:** O(1)
-4. Also, the constraint of the task is that the source array cannot be modified ( e.g. sorted )
-
-**Solution:**
-
-Because of the constraints of the task we cannot use a hash map ( or a set ) to find a duplicate number like we
-normally would because the algorithm is supposed to have space complexity of O(1). Neither can we sort the array
-and check that two adjacent numbers not be the same because the task requires that the array should not be modified
-( and the time complexity should be O(n) ).
-
-In order to find the duplicate number we are going to use Floyd's cycle detection algorithm ( with 2 pointers where
-one traverses a linked list at twice the speed of the other, also called tortoise and hare ).
-
-Now Floyd's algorithm works with linked lists where each node in a linked list has a reference to its neighbor. But how
-do we apply it here? If we think of values within an array as nodes in a linked list, then we can use the value of each
-integer in the array as a reference to the next node we are to visit. In our case, we are going to use the value of an
-integer as the index of the next node to visit.
-
-Imagine this array:
-
-```
-[6, 3, 4, 2, 1, 5, 7, 2]
-```
-
-The 1st integer is 6, how do we find out which next value in the array we are to look at? Simple, since the value
-of the node we are currently visiting is 6, then the next node we are going to visit is going to be the one at index 6.
-As a result, the next node we will visit is going to be 7 ( as 7 is located at index 6 of the array ). The value we will
-look at after 7 is going to be 2 because 2 is located at index 7 of the array. And so on.
-
-Since there are always one or more duplicate integers inside an array, the length of the array will always be either more
-or equal to the value of the biggest integer in the array. What this means is that we will never go out of bounds of the
-array if we traverse it using the algorithm described above ( using the values of the array like pointers in a linked list ).
-
-Now if we take the array from above ( let's redraw it here along with indexes ):
-
-```
-[
-  6, <- 0
-  3, <- 1
-  4, <- 2
-  2, <- 3
-  1, <- 4
-  5, <- 5
-  7, <- 6
-  2, <- 7
-]
-```
-
-We can now redraw it like a linked list:
-
-```
-6 -> 7 -> 2 -> 4 -> 1 -> 3 ┐
-          ↑                │
-          │                │
-          └────────────────┘
-```
-
-As a result, in order to find the repeating number we would need to detect the cycle in this linked list representation
-of the array.
-
-In Floyd's algorithm, we use two pointers ( tortoise and hare ) and the cycle is detected as soon as the value of one
-pointer equals the value of the other pointer ( tortoise === hare ).
-
-Let's apply this algorithm to our linked list representation of the array from above:
-- _1st iteration_: tortoise is 6, hare is 6
-- _2nd iteration_: tortoise is 7, hare is 2
-- _3rd iteration_: tortoise is 2, hare is 1
-- _4th iteration_: tortoise is 4, hare is 2
-- _5th iteration_: tortoise is 1, hare is 1
-- **tortoise === hare**
-
-As you can see, tortoise meets hare at node with the value of 1. Unfortunately for our task this information is
-not enough. Floyd's algorithm is good at detecting a cycle, but it doesn't tell us which node in the linked list
-causes that cycle. Look at our example, tortoise met hare at 1, but the node with the value of 1 didn't cause that
-cycle, 2 did. But how do we find that 2?
-
-That is where the last step of the algorithm comes in, here it is. Once tortoise meets hare at some node we need to
-do the following:
-- leave tortoise at the node where it currently is
-- move hare to the beginning of the linked list ( in our case to 6 )
-- now keep on moving _both_ tortoise and hare at the speed of one node at a time until they meet again
-- this time the node where they meet is going to be the node which causes the loop ( in our case it is 2 )
-
-Let's apply the last step of the algorithm for our example:
-- leave tortoise where it is, at node 1 ( that is where it met hare in the previous step )
-- bring hare to the beginning of the linked list, thus to 6
-- start moving both tortoise and hare one node at a time
-- _1st iteration_: tortoise is 1, hare is 6
-- _2nd iteration_: tortoise is 3, hare is 7
-- _3rd iteration_: tortoise is 2, hare is 2
-- tortoise === hare
-- **now we have our answer: integer 2**
-
-If you are wondering why or how the last step works ( with bringing hare to the beginning and moving both tortoise and
-hare one node at a time ), there is a mathematical explanation for that but it is somewhat outside the scope of this task =)
-
-Now we can finally put everything said above into code:
+For some unknown reason one day I decided to create a `Symbol.asyncIterator` method for a simple event emitter:
 
 ```js
-const repeatingArr1 = [2, 3, 4, 2, 1, 5, 7, 6];
-const repeatingArr2 = [6, 3, 4, 2, 1, 5, 7, 2];
-const repeatingArr3 = [6, 3, 2, 2, 1, 5, 7, 4];
-const repeatingArr4 = [6, 3, 2, 1, 2, 5, 2, 4];
-const findRepeating = (arr) => {
-    let [tortoise] = arr;
-    let [hare] = arr;
-    let i = 0;
+class Emitter {
+  constructor({ amount }) {
+    this.listeners = {};
+    this.amount = amount; // how much data to produce
+    this.last = 0;
+    this.started = false;
+  }
 
-    while (i < arr.length) {
-        tortoise = arr[tortoise];
-        hare = arr[arr[hare]];
-        if (tortoise === hare) {
-            ([hare] = arr);
-            while (tortoise !== hare) {
-                tortoise = arr[tortoise];
-                hare = arr[hare];
-            }
-            return tortoise;
-        }
-        i += 1;
+  start() {
+    if (this.started) return;
+    this.started = true;
+    this.read();
+  }
+
+  read() {
+    setTimeout(() => {
+      this.emit('data', this.last);
+      this.last++;
+      if (this.last <= this.amount) {
+        this.read();
+      } else {
+        this.emit('end');
+        this.started = false;
+        this.last = 0;
+      }
+    }, 100); // emulating i/o call
+  }
+
+  emit(event, ...args) {
+    const listeners = this.listeners[event];
+    if (listeners) {
+      for (const listener of listeners) {
+        listener(...args);
+      }
     }
-};
+  }
 
-console.log('repeating 1:', findRepeating(repeatingArr1));
-console.log('repeating 2:', findRepeating(repeatingArr2));
-console.log('repeating 3:', findRepeating(repeatingArr3));
-console.log('repeating 4:', findRepeating(repeatingArr4));
+  on(event, listener) {
+    if (!this.listeners[event]) {
+      this.listeners[event] = [];
+    }
+    this.listeners[event].push(listener);
+  }
+
+  async *[Symbol.asyncIterator]() {
+    let ended = false;
+    let resolver;
+    let value;
+
+    this.start();
+
+    this.on('data', (data) => {
+      value = data;
+      resolver();
+    });
+
+    this.on('end', () => {
+      ended = true;
+    });
+
+    while (true) {
+      if (ended) return;
+
+      await new Promise((resolve) => {
+        resolver = () => {
+          resolve();
+          resolver = null;
+        };
+      });
+
+      yield value;
+    }
+  }
+}
 ```
 
-The output should be:
+Non-generator usage:
+
+```js
+const emitter = new Emitter({ amount: 10 });
+
+emitter.start();
+
+emitter.on('data', (data) => {
+  console.log('got data:', data);
+});
+```
+
+Generator usage:
+
+```js
+const emitter = new Emitter({ amount: 10 });
+
+void (async () => {
+  for await (const data of emitter) {
+    console.log('got data too:', data);
+  }
+})();
+```
+
+__Note:__ the only limitation of such an iterator is that once it does `yield ...`, the value it yields needs to be processed _synchrously_
+or else the `data` event handler will attempt to call `resolver` which will be `undefined` because the line that creates the resolver (after the
+`yield` statement) has not been executed yet. Here is an example of such a scenario:
+
+```js
+const emitter = new Emitter({ amount: 10 });
+void (async () => {
+  for await (const data of emitter) {
+    console.log('got data:', data);
+
+    await new Promise((res) => {
+      setTimeout(() => {
+        console.log('I am logging data after 1 sec...', data);
+        res();
+      }, 1000);
+    });
+  }
+})();
+```
+
+I guess for this very reason Node.js Readable stream iterator doesn't use the `data` event but rather the `readable` event
+(snippet from the official git repository):
+
+```js
+/* ... */
+
+async function* createAsyncIterator(stream, options) {
+  let callback = nop;
+
+  function next(resolve) {
+    if (this === stream) {
+      callback();
+      callback = nop;
+    } else {
+      callback = resolve;
+    }
+  }
+
+  stream.on('readable', next);
+
+  let error;
+  eos(stream, { writable: false }, (err) => {
+    error = err ? aggregateTwoErrors(error, err) : null;
+    callback();
+    callback = nop;
+  });
+
+  try {
+    while (true) {
+      const chunk = stream.destroyed ? null : stream.read();
+      if (chunk !== null) {
+        yield chunk;
+      } else if (error) {
+        throw error;
+      } else if (error === null) {
+        return;
+      } else {
+        await new Promise(next);
+      }
+    }
+  } catch (err) { /* ... */ }
+}
+
+/* ... */
+```
+
+# 44) Create Nested Path
+
+Your task is to write a function that given a certain path in object keys creates nested objects, for example:
 
 ```
-repeating 1: 2
-repeating 2: 2
-repeating 3: 2
-repeating 4: 2
+createNestedPath({
+  "key1.key2.key3": "123",
+  "keyA.keyB.keyC": "abc"
+})
+-> {
+  "key1": {
+    "key2":: {
+      "key3": "123"
+    }
+  },
+  "keyA": {
+    "keyB": {
+      "keyC": "abc"
+    }
+  }
+}
 ```
+
+This function is rockin' it:
+
+```js
+function createNestedPath(input) {
+  return Object.entries(input).reduce((acc, [key, value]) => {
+    key.split('.').reduce((innerAcc, splitKey, index, array) => {
+      const isLast = index === array.length - 1;
+
+      if (isLast) {
+        innerAcc[splitKey] = value;
+        return innerAcc;
+      }
+
+      return innerAcc[splitKey] = {};
+    }, acc);
+
+    return acc;
+  }, {});
+}
+```
+
+# 45) A note on Array Heap Sort
+
+In the Array [Heap Sort algorithm](./snippets/algorithms/heap-sort.js) we said that in order to find the node of
+the heap that we are going to start from in order to "heapify" the array we need to calculate the index of this node
+via a special formula: `lastParent = Math.floor((numOfAllElem - 2) / 2);`.
+
+If you [recall](./snippets/Data%20Structures/max-heap.js), we use the `Math.floor(i / 2)` formula in order to find the
+_parent_ of the node in a heap (if heap is represented as an array). This formula is actually very similar to the one above
+except for slight difference: in the formula above we also subtract `2` from `i`. But why that?
+
+In reality it doesn't make much difference if we subtract `1` or `2` from `i` (called `numOfAllElem` in the formula above),
+what we need to achieve here is _find the parent of the last node of the heap_. Also, the indexes of nodes in the heap
+(if it be represented as an array) start with 1, therefore we need to subtract 1 to get the index of the last node in the heap.
+Also, if we subtract 1 we will get the _right_ child of the last parent in the heap, but if we subtract 2 we get the _left_ child
+of the last parent in the heap. This is why we subtract 2.
+
+In other words, this formula means: find the last left child node in the heap and get its parent: this parent is going to be the
+last parent in the heap.
+
+Note: the Array Heap Sort algorithm would still work even if we started heapifying an array simply at the last index (without applying
+the formula), but this way we would do more unnecessary iterations.
+
+# 46) AsyncArray
+
+We have `AsyncArray` class:
+
+```js
+'use strict';
+
+((global) => {
+  const timeoutMS = 100;
+
+  const _async = (fn, cb) => {
+    setTimeout(() => {
+      cb(fn());
+    }, Math.random() * timeoutMS);
+  };
+
+  const _error = (value) =>
+    Math.random() < 0.1 ? null : value;
+
+  // you may stub the _error function for debug purposes
+  // const _error = (value) => value;
+
+  const AsyncArray = function (a = []) {
+    if (!new.target) {
+      return new AsyncArray(a);
+    }
+
+    this.read = (index, cb) =>
+      _async(() => _error(a[index]), cb);
+
+    this.size = (cb) =>
+      _async(() => _error(a.length), cb);
+  };
+
+  Object.freeze(AsyncArray);
+  global.AsyncArray = AsyncArray;
+})(typeof window === 'undefined' ? global : window);
+```
+
+And this is how we use it:
+
+```js
+const input = AsyncArray([
+  8,
+  AsyncArray([
+    15,
+    16,
+  ]),
+  AsyncArray([
+    AsyncArray([
+      AsyncArray([
+        42,
+        AsyncArray([
+          AsyncArray([]),
+          23,
+        ]),
+      ]),
+    ]),
+    4,
+  ]),
+]);
+
+// example of calling "read"
+input.read(0, (elem) => console.log(`read: ${elem}`));
+
+// example of calling "size"
+input.size((size) => console.log(`size: ${size}`));
+```
+
+The output is going to be:
+```
+size: 3
+read: 8
+```
+
+Your task is to write a function called `solution` that accepts an `AsyncArray` instance and returns a `Promise` that resolves to a simple array derived from the `AsyncArray` instance. Here is an example of its usage:
+
+```js
+const input = AsyncArray([
+  8,
+  AsyncArray([
+    15,
+    16,
+  ]),
+  AsyncArray([
+    AsyncArray([
+      AsyncArray([
+        42,
+        AsyncArray([
+          AsyncArray([]),
+          23,
+        ]),
+      ]),
+    ]),
+    4,
+  ]),
+]);
+
+solution(input).then(result => {
+  console.log('result', result);
+
+  const answer = [8, 15, 16, 42, 23, 4];
+  const isEqual = String(answer) === String(result);
+
+  if (isEqual) {
+    console.log('OK');
+  } else {
+    console.log('WRONG');
+  }
+}).catch((error) => {
+  console.error('we got error carl', error);
+});
+```
+
+The output should be `OK`.
+
+Here is the solution:
+
+```js
+async function solution(input) {
+  return getChunk(input);
+}
+
+async function getChunk(input) {
+  const size = await getAsyncArraySizePromise(input);
+  const result = [];
+
+  for (let i = 0; i < size; i++) {
+    result.push(getAsyncArrayValuePromise(input, i));
+  }
+
+  return (await Promise.all(result)).flat();
+}
+
+function getAsyncArrayValuePromise(asyncArray, index) {
+  return new Promise((res, rej) => {
+    asyncArray.read(index, (value) => {
+      if (value === null) {
+        return rej(null);
+      }
+
+      if (value instanceof AsyncArray) {
+        res(getChunk(value));
+      } else {
+        res(value);
+      }
+    });
+  });
+}
+
+function getAsyncArraySizePromise(asyncArray) {
+  return new Promise((res, rej) => {
+    asyncArray.size((value) => {
+      if (value === null) {
+        rej(null);
+      } else {
+        res(value);
+      }
+    });
+  });
+}
+```
+
+Note how in the `getChunk` function we use `Promise.all` to parallel and thus speed up the execution of the code.
+
+# More tasks
+
+Don't worry lads, there are always more tasks to solve. Feel free to check out [Task Archieve](./task-archieve/README.md).

@@ -572,3 +572,325 @@ console.log(anotherKey);
 
 Except it is really inconvenient to do that, thus for multiple values it is better to use `export { ... }`
 or `export const`.
+
+## `Error.captureStackTrace`
+
+As you kow, apart from instances of the `Error` class the `throw` statement can also throw other types.
+Consider this for example:
+
+```js
+function throwSomeObj() {
+    throw {statusCode: 500};
+}
+
+try {
+  throwSomeObj();
+} catch(err) {
+  console.log(err);
+  console.log(err.stack);
+}
+```
+
+The output is:
+
+```
+{
+  "statusCode": 500
+}
+undefined
+```
+
+The exception that is thrown yields the object you passed to it, i.e. `{statusCode: 500}`. Now, as you can see this object
+does not have any stack-trace, since `undefined` is logged.
+
+However, you can use `Error.captureStackTrace` to capture the stack-trace where you throw the error. Consider this:
+
+```js
+function throwObjWithStacktrace() {
+  const someError = {statusCode: 500};
+  Error.captureStackTrace(someError);
+  throw someError;
+}
+
+try {
+  throwObjWithStacktrace();
+} catch (err) {
+  console.log(err);
+  console.log(err.stack);
+}
+```
+
+The output is:
+
+```
+{ statusCode: 500 }
+Error
+    at throwObjWithStacktrace (/Users/ilyakortasov/Documents/mine/MyCodewars/toolshed/Laboratory.js:18:11)
+    at Object.<anonymous> (/Users/ilyakortasov/Documents/mine/MyCodewars/toolshed/Laboratory.js:23:5)
+    at Module._compile (internal/modules/cjs/loader.js:1015:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)
+    at Module.load (internal/modules/cjs/loader.js:879:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:724:14)
+    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)
+    at internal/main/run_main_module.js:17:47
+```
+
+Now the caught `err` object contains the `stack` property which shows the stack to the function where the object called
+`someError` was thrown.
+
+Note that when instantiating a new `Error` object the stack will automatically be set on that object.
+
+__Note:__ the `stack` property assigned by `Error.captureStackTrace` doesn't show on the object unless we directly access it
+via `err.stack` because `Error.captureStackTrace` assigns this `stack` property as non-enumerable:
+
+```js
+const obj = {};
+Error.captureStackTrace(obj);
+obj.hasOwnProperty('stack'); // true
+Object.getOwnPropertyDescriptor(obj, 'stack'); // { value: ..., writable: true, enumerable: false, configurable: true }
+```
+
+__Also note:__ you do not even have to throw something to get a stack trace:
+
+```js
+function main () {
+  const obj = inner();
+  console.log(obj.stack); // proper stack trace
+}
+
+function inner () {
+  const obj = {};
+  Error.captureStackTrace(obj);
+  return obj;
+}
+
+main();
+```
+
+## Why writing to `.prototype` is bad
+
+First let's recall how inheritance works in JavaScript. As you know functions are just special objects. To understand inheritance in JS better you should think
+of functions as just objects that have a special quality that they can be called. You can log a function to the console as an object, use `console.dir` for that:
+
+```js
+function MyFunction() {}
+console.dir(MyFunction);
+```
+
+__Note:__ the Firefox dev tools `console.log` would print a function as an object by default. A usual `console.log` in Chromium based browsers would print a function
+more beautifully hiding away the pecualarity that a function is an object. Node.js console always prints for example `[Function: MyFunction]` for a function named "MyFunction"
+(note that it is not the same string representation as provided by `Object.prototype.toString.call(...)`).
+
+Therefore we can think of JavaScript functions as simply being key-value objects. Every function has a few own properties (`length`, `name`, `prototype` and so on) the most
+important of which is `prototype` that holds another object that by default has also only one own property called "constructor" (it equals === the function itself).
+
+```js
+function MyFunction() {
+  this.name = 'Tom';
+}
+```
+
+`Object.getOwnPropertyDescriptors(MyFunction)` returns:
+
+```js
+{
+  length: {
+    value: 0,
+    writable: false,
+    enumerable: false,
+    configurable: true
+  },
+  name: {
+    value: "MyFunction",
+    writable: false,
+    enumerable: false,
+    configurable: true
+  },
+  arguments: {
+    value: null,
+    writable: false,
+    enumerable: false,
+    configurable: false
+  },
+  caller: {
+    value: null,
+    writable: false,
+    enumerable: false,
+    configurable: false
+  },
+  prototype: {
+    value: {},
+    writable: true,
+    enumerable: false,
+    configurable: false
+  }
+}
+```
+
+`Object.getOwnPropertyDescriptors(MyFunction.prototype)` returns `{ constructor: { configurable: true, enumerable: false, value: ƒ MyFunction(), writable: true } }`.
+
+Methods defined on the "prototype" property become instance methods if an object is created with a `new` keyword:
+
+```js
+const o = new MyFunction();
+o.name; // 'Tom'
+```
+
+it is the same as:
+
+```js
+const o = Object.create(
+  MyFunction.prototype,
+  {
+    name: {
+      value: 'Tom',
+      enumerable: true,
+      writable: true,
+      configurable: true
+    }
+  }
+);
+```
+
+Methods defined on the "prototype" property become instance methods thanks to the `__proto__` property that every object has (or also called internal `[[Prototype]]` slot, more on this
+you can read [here](#static-properties-in-inheritance)).
+
+So back to the point: why writing `MyFunction.prototype = {}` is bad? Some people do it to be able to define many methods at once without having to write
+`MyFunction.prototype.methodName = function() { ... }` for every method.
+
+Contemplate the following code:
+
+```js
+function MyFunction() {
+  this.name = 'Tom';
+}
+
+const o = new MyFunction();
+
+MyFunction.prototype = { // (*)
+  sayMyName() {
+    return this.name;
+  }
+};
+
+console.log(
+  o.sayMyName()
+);
+```
+
+At first sight it looks as if the value `"Tom"` should be printed to the console, but instead we get a ` TypeError: o.sayMyName is not a function`.
+
+The reason that it happens is because first the object `o` is created and its `__proto__` is set to point to an empty `prototype` of `MyFunction`,
+and then we replace the `prototype` of `MyFunction` with a different object in line `(*)` (but this doesn't replace the `o.__proto__` property, it still points
+to the old `prototype` of `MyFunction` which it had before re-assignment in line `(*)`). Here is proof:
+
+```js
+function MyFunction() {
+  this.name = 'Tom';
+}
+
+const o = new MyFunction();
+const p1 = MyFunction.prototype;
+
+MyFunction.prototype = {
+  sayMyName() {
+    return this.name;
+  }
+};
+
+const p2 = MyFunction.prototype;
+
+p1; // {}
+p2; // { sayMyName() { ... } }
+
+p1 === p2; // false
+o.__proto__ === p1; // true
+o.__proto__ === p2; // false
+```
+
+As a result `o` doesn't have the `sayMyName` method _and_ the old empty prototype of `MyFunction` (`p1`) hangs in memory as it cannot be garbage collected (because `o.__proto__`
+refers to it).
+
+__Note:__ however it is not bad to write to `prototype = ...` (re-assign `prototype`) if you are not creating instances before you do it.
+
+## Setting properties on primitives
+
+Contemplate what this code will return:
+
+```js
+let d = 'test';
+d.d = 1;
+console.log('d.d', d.d); // ?
+```
+
+The result will be:
+
+```
+d.d undefined
+```
+
+As you know, whenever we call any method on a primitive or try to set a property on it, internally JavaScript creates an object wrapper
+for this primitive (like `new String()` for a string, `new Number()` for a number and so on). Only this way it can know how to call a method
+on the data type that is not an object (like a string primitive):
+
+```js
+String.prototype.test = function() {
+  console.log(typeof this); // object
+  console.log(this instanceof String); // true
+}
+let dd = 'abc';
+dd.test(); // logs: object, true
+console.log(dd instanceof String); // logs: false (because JS converts dd to an object instance only when we call methods for it)
+```
+
+So, when we call methods on a primitive, internally JavaScript creates a temporary object wrapper for it and invokes methods on this object wrapper instead of the primitive itself.
+For example in our example above the temporary object wrapper will be `new String('abc')` and then we call its method `new String('abc').test()`.
+
+The same happens if we try to set a property on a primitive:
+
+```js
+let dd = 'abc';
+dd.d = 1;
+```
+
+Internally, JavaScript will create a temporary object wrapper for it and set the property on this object wrapper, not on the primitive itself (like in our case when we do
+`dd.d = 1` JavaScript does `new String('abc').d = 1`). Here is code to prove my point:
+
+```js
+Object.defineProperty(String.prototype, 'test', {
+  get() {
+    return this._d;
+  },
+  set(value) {
+    this._d = value;
+    console.log(typeof this); // object
+    console.log(this instanceof String); // true
+  }
+});
+
+let d = 'abc';
+d.test = 1;
+```
+
+The result will be:
+
+```
+object
+true
+```
+
+Now the reason we see `undefined` logged to the console when we do:
+
+```js
+let d = 'test';
+d.d = 1; // (*)
+console.log('d.d', d.d); // undefined
+```
+
+is because as soon as the code in line `(*)` is evaluated JavaScript is going to discard the object wrapper it created to run
+the code in line `(*)`.
+
+That's how it is, JavaScript creates temporary object wrappers whenever we call methods on primitives or assign properties to primitives
+but as soon as the method is called or the property is assigned the temporary object wrappers are discarded. And this is why we see `undefined`
+logged to the console: the property `.d` is assigned to a temporary object wrapper which is instantly discarded in the next line and when we try to access the `.d` property again,
+a new object wrapper is created. This is an intricacy of primitives in JavaScript.

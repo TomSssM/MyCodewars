@@ -37,7 +37,7 @@ describe('pow function', function() {
     });
 
     it('is true', function() {
-      assert.isTrue('test');
+      assert.isTrue('stringo');
     });
 
     it('returns null if the argument isn\'t a number', function() {

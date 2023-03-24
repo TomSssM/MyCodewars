@@ -13,7 +13,7 @@ const decToBin = function(num = 0) {
     res = (num % 2) + res;
     num = Math.floor(num / 2);
   }
-
+  
   return res * sign;
 };
 
@@ -263,7 +263,7 @@ function isPrime(num) {
 
   while (num > divisor) {
     if(num % divisor === 0) {
-     return false;
+     return false; 
     }
     else divisor++;
   }
@@ -443,14 +443,14 @@ function greatestCommonDivisor(a, b) {
   if (a < 2 || b < 2) return 1;
   while(a >= divisor && b >= divisor) {
    if(a % divisor == 0 && b % divisor ==0) {
-      greatestDivisor = divisor;
+      greatestDivisor = divisor;      
     }
     divisor++;
   }
   return greatestDivisor;
 }
 
-greatestCommonDivisor(14, 21); // 7
+greatestCommonDivisor(14, 21); // 7 
 greatestCommonDivisor(69, 169); // 1
 ```
 
@@ -481,7 +481,7 @@ function mergeSortedArray(a, b) {
   let bElm = b[0];
   let i = 1;
   let j = 1;
-
+  
   if(a.length === 0) return b;
   if(b.length === 0) return a;
 
@@ -518,7 +518,7 @@ swapNumb(2, 3);
 // before swap:  a: 2; b:  3
 // after swap:  a: 3; b:  2
 ```
-# 17) Reverse a string
+# 17) Stringo Reverso
 ## Concatenation
 ```javascript
 function reverse(str) {

@@ -347,5 +347,5 @@ console.log('inOrder for Inverted: ' + bst.inOrder()); // 22,20,17,10,9,7,6,5,4,
  * 2. post-order
  * 3. level-order ( breadth-first )
  * 4. in-order ( default & reversed )
- * traversal methods implemented iteratively as generators in ./corejs-codejam/07-yield-tasks.js
+ * traversal methods implemented iteratively as generators in ./corejs-codejam/task/07-yield-tasks.js
  * */

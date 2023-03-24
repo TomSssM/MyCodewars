@@ -5,7 +5,7 @@
 - [Projects from the Tutorial](./projects-from-the-tutorial/README.md) :page_facing_up:
 - [Cool Projects](./cool-projects/README.md) :whale:
 - [Snippets](./snippets/README.md) :seedling:
-- [Writings](./articles/README.md) :black_nib:
+- [Writings](./writings/README.md) :black_nib:
 - [Legacy](./legacy/README.md) :file_cabinet:
 
 ---
@@ -34,7 +34,7 @@
 
 - __Others__ :pineapple:
   - [Hardcore](./cheatsheet/README.md)
-  - [CoreJS CodeJam](./corejs-codejam/README.md)
+  - [CoreJS CodeJam](./corejs-codejam/task/README.md)
   - [Polyfill.js](./Polyfill.js)
   - [Freak Show](./freakshow.js)
 

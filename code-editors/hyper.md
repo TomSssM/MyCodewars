@@ -6,6 +6,7 @@
 module.exports = {
   config: {
     cursorColor: "rgba(248,28,229,0.8)",
+    selectionColor: "rgba(0,0,255,1)",
     shell: "/bin/bash",
   },
   keymaps: {

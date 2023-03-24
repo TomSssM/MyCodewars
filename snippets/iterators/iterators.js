@@ -227,12 +227,12 @@ Number.prototype[Symbol.iterator] = function* () {
 console.log(...3);
 
 String.prototype[Symbol.iterator] = function* () {
-  yield 'sleep';
-  yield 'all';
-  yield 'day';
+  yield 'I';
+  yield 'be';
+  yield 'stringo star';
 };
 
-console.log(...'cat');
+console.log(...'drummer');
 
 // iterator for a Linked List:
 class LinkedList {
@@ -264,7 +264,7 @@ class LinkedList {
         current = current.next;
       }
     }
-
+  
     return gen();
   }
 }

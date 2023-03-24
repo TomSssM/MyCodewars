@@ -65,7 +65,7 @@ element is via a variable:
 </script>
 ```
 
-## Inserting <script> as innerHTML with caution
+## Inserting \<script\> as innerHTML with caution
 
 Yeap, in __inline scripts__ we gotta be really careful when we do the following:
 ```html
@@ -123,6 +123,9 @@ The global `window.onerror` event listener will be called in case there is ever 
     //                  error log from the browser DevTools
 </script>
 ```
+
+**Note:** this event handler doesn't catch syntax errors in code because JavaScript needs to be first parsed in order to
+assign the `.onerror` event listener :)
 
 **Also Note** The `.onerror` event listener on other HTML elements ( external resources like `<img/>` ) is called if
 we fetch this resource from the server and the request for it fails ( 403 or something ).
@@ -341,3 +344,140 @@ Upon clicking the `#inner-special` HTML element, only the event listener in line
 and the event listeners in lines `(**)`, `(***)` and `(****)` will be ignored. The last 2 are set for the
 Bubbling phase and they will also be ignored because of a call to `e.stopPropagation` in the event listener
 in line `(*)`.
+
+## Another transition intricacy
+
+One intricacy that we learnt about setting `transition` property from JS is that in order to work, it needs to be set
+in a separate tick of the event loop after the browser has a chance to paint. For exampe this code will not apply
+transition for the `opacity` property:
+
+```html
+<style>
+  div {
+    width: 100px;
+    height: 100px;
+    background-color: blue;
+  }
+</style>
+
+<div id="elem"></div>
+
+<script>
+  const e = document.getElementById('elem');
+  e.style.transition = 'opacity 1s ease-out';
+  e.style.opacity = 0;
+</script>
+```
+
+the reason being that the browser didn't paint or process the CSS properties of element `e`.
+
+But this code will work:
+
+```js
+const e = document.getElementById('elem');
+e.style.transition = 'opacity 1s ease-out';
+
+setTimeout(() => {
+  e.style.opacity = 0;
+});
+```
+
+because the code changes the property that will be affected by the transition (`opacity`) in the next tick of the event loop after the browser
+has processed the styles of `e`.
+
+Note that this code will work as well:
+
+```js
+const e = document.getElementById('elem');
+
+setTimeout(() => {
+  e.style.transition = 'opacity 1s ease-out';
+  e.style.opacity = 0;
+});
+```
+
+It is OK to set _both_ the transition property and the property that transition will affect at the same time if the browser has already
+processed the CSS properties of our element.
+
+OK, this code will also work:
+
+```js
+const e = document.getElementById('elem');
+
+setTimeout(() => {
+  e.style.transition = 'opacity 1s ease-out';
+  e.style.opacity = 0;
+}, 1000);
+
+setTimeout(() => {
+  e.style.transition = null;
+  e.style.opacity = 1;
+}, 3000);
+```
+
+here it will first fade opacity with transition and then make the element opaque again without transition, nothing criminal here.
+
+But this code will not have transition already:
+
+```js
+const e = document.getElementById('elem');
+e.style.transition = 'opacity 1s ease-out';
+
+setTimeout(() => {
+  e.style.opacity = 0;
+}, 1);
+
+setTimeout(() => {
+  e.style.transition = null; // (*)
+}, 2);
+```
+
+which may seem illogical if you comare it to example above where we set it in 2 different `setTimeout`s as well.
+
+So why is that? Let me explain.
+
+In order to work, the `transition` property and the property it affects need to be set in a separate tick of the event loop such that when
+comes the tick during which the browser re-paints, the CSS properties will already have been processed by the browser. When the re-paint
+tick comes, the browser will see that the transition is set and the CSS property it affects has changed and will thus animate the transition.
+In our case above we indeed set the transition and the browser repaints but since the transition is removed only 1 milisecond later, the browser
+cancels the transition animation (after 1ms, as soon as the function in line `(*)` fires) and abruptly changes the opacity to zero
+without animation. Since it is only 1 milisecond we barely even see element `e`.
+
+__Note:__ the effect is almost the same if we use `requestAnimationFrame`, this code does not apply the transition _at all_ because the functions
+in lines `(*)` and `(**)` both fire during the same re-paint tick:
+
+```js
+const e = document.getElementById('elem');
+e.style.transition = 'opacity 1s ease-out';
+
+requestAnimationFrame(() => {
+  e.style.opacity = 0; // (*)
+});
+
+requestAnimationFrame(() => {
+  e.style.transition = null; // (**)
+});
+
+// the same as:
+// requestAnimationFrame(() => {
+//   e.style.opacity = 0; // (*)
+//   e.style.transition = null; // (**)
+// });
+```
+
+Also note that if we were to remove the transition in the midst of the animation, for example like so:
+
+```js
+const e = document.getElementById('elem');
+e.style.transition = 'opacity 1s ease-out';
+
+setTimeout(() => {
+  e.style.opacity = 0;
+});
+
+setTimeout(() => {
+  e.style.transition = null;
+}, 500);
+```
+
+then it simply means that the transition will be smooth during 500ms and then the opacity will go abrupty to zero.
