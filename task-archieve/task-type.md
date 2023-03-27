@@ -7,12 +7,12 @@ _Tasks grouped by_ `Task Type`
 - __Two Pointers One Array__
   - [Container With Most Water](./most-water/task.md)
   - [Longest sequence of letters](./longest-letter-subsequence/task.md)
+- __Two Pointers One Array Sliding Window__
+  - [Best Time to Buy and Sell Stock](./best-time-to-buy-and-sell-stock/task.md)
 - __Two Pointers Two Arrays__
   - [Intersection of intervals](./intersection-intervals/task.md)
 - __One Pointer One Array and One or More Counters__
   - [Longest sequence of 1's](./longest-sequence-of-1s/task.md)
-- __Two Pointers Sliding Window Array__
-  - [Best Time to Buy and Sell Stock](./best-time-to-buy-and-sell-stock/task.md)
 - __Array Relation of Indexes and Values or Indexes to Values__
   - [Zigzag Conversion](./zigzag-conversion/task.md)
 - __In-Place Swap and Overwrite__
