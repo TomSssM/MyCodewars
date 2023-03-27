@@ -9,17 +9,18 @@ _Tasks grouped by_ `Task Type`
   - [Longest sequence of letters](./longest-letter-subsequence/task.md)
 - __Two Pointers One Array Sliding Window__
   - [Best Time to Buy and Sell Stock](./best-time-to-buy-and-sell-stock/task.md)
+  - [Longest sequence of letters](./longest-letter-subsequence/task.md)
 - __Two Pointers Two Arrays__
   - [Intersection of intervals](./intersection-intervals/task.md)
-- __One Pointer One Array and One or More Counters__
+- __One Pointer One Array and One or More Counters or Stack or HashMap__
   - [Longest sequence of 1's](./longest-sequence-of-1s/task.md)
 - __Array Relation of Indexes and Values or Indexes to Values__
   - [Zigzag Conversion](./zigzag-conversion/task.md)
+- __While Loop and Stack__
+  - [Flatten non-recursive v2](./flatten-nonrecursive-v2/task.md)
 - __In-Place Swap and Overwrite__
   - [Sort letters from one array via another array](./sort-letters-two-arrays/task.md)
   - [Remove Duplicates from Sorted Array v2](./remove-duplicates-v2/task.md)
-- __While Loop and Stack__
-  - [Flatten non-recursive v2](./flatten-nonrecursive-v2/task.md)
 - __Matrix__
   - [Sort the Matrix diagonally](./matrix-diagonal-sort/task.md)
 - __Numbers Math__
