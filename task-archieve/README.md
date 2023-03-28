@@ -18,3 +18,4 @@ _List of tasks_
 - [Climbing Stairs](./climb-stairs/task.md)
 - [Remove Duplicates from Sorted Array v2](./remove-duplicates-v2/task.md)
 - [Best Time to Buy and Sell Stock](./best-time-to-buy-and-sell-stock/task.md)
+- [Contiguous Array](./contiguous-array/task.md)

@@ -12,8 +12,9 @@ _Tasks grouped by_ `Task Type`
   - [Longest sequence of letters](./longest-letter-subsequence/task.md)
 - __Two Pointers Two Arrays__
   - [Intersection of intervals](./intersection-intervals/task.md)
-- __One Pointer One Array and One or More Counters or Stack or HashMap__
+- __One Pointer One Array + One or More Counters or Stack or HashMap__
   - [Longest sequence of 1's](./longest-sequence-of-1s/task.md)
+  - [Contiguous Array](./contiguous-array/task.md)
 - __Array Relation of Indexes and Values or Indexes to Values__
   - [Zigzag Conversion](./zigzag-conversion/task.md)
 - __While Loop and Stack__
