@@ -26,6 +26,14 @@ But for this particular task you may also need to enable the _power of hashmap_
 
 </details>
 
+<details>
+
+<summary>Similar Tasks</summary>
+
+- [Longest Substring Without Repeating Characters](../longest-substring-without-repeating-characters/task.md)
+
+</details>
+
 ---
 
 | [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) |

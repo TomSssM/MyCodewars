@@ -19,4 +19,5 @@ _List of tasks_
 - [Remove Duplicates from Sorted Array v2](./remove-duplicates-v2/task.md)
 - [Best Time to Buy and Sell Stock](./best-time-to-buy-and-sell-stock/task.md)
 - [Contiguous Array](./contiguous-array/task.md)
+- [Longest Substring Without Repeating Characters](./longest-substring-without-repeating-characters/task.md)
 - [Maximum Product Subarray](./maximum-product-subarray/task.md)

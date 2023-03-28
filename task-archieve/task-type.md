@@ -8,8 +8,8 @@ _Tasks grouped by_ `Task Type`
   - [Container With Most Water](./most-water/task.md)
   - [Longest sequence of letters](./longest-letter-subsequence/task.md)
 - __Two Pointers One Array Sliding Window__
-  - [Best Time to Buy and Sell Stock](./best-time-to-buy-and-sell-stock/task.md)
   - [Longest sequence of letters](./longest-letter-subsequence/task.md)
+  - [Best Time to Buy and Sell Stock](./best-time-to-buy-and-sell-stock/task.md)
 - __Two Pointers Two Arrays__
   - [Intersection of intervals](./intersection-intervals/task.md)
 - __One Pointer One Array + One or More Counters or Stack or HashMap__
