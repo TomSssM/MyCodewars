@@ -28,5 +28,5 @@ But for this particular task you may also need to enable the _power of hashmap_
 
 ---
 
-| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js)
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) |
 | :---: | :---: |

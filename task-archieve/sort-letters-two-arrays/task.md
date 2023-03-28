@@ -71,5 +71,5 @@ function sort(array, order) {
 
 ---
 
-| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js)
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) |
 | :---: | :---: |

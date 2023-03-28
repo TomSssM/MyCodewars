@@ -26,6 +26,7 @@ _Tasks grouped by_ `Task Type`
   - [Sort the Matrix diagonally](./matrix-diagonal-sort/task.md)
 - __Numbers Math__
   - [Keygen](./keygen/task.md)
+  - [Maximum Product Subarray](./maximum-product-subarray/task.md)
 - __Fibonacci Sequence__
   - [Climbing Stairs](./climb-stairs/task.md)
 - __Check if Puzzle is Solvable__

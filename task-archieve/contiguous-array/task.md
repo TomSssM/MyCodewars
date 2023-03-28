@@ -22,7 +22,7 @@ Explanation: [0, 1] (or [1, 0]) is a longest contiguous subarray with equal numb
 
 <summary>Task Type</summary>
 
-It is a One Pointer + Counter + Hashmap type of task
+It is an Array One Pointer + Counter + Hashmap type of task
 
 </details>
 
@@ -38,5 +38,5 @@ The key point to solving this task is to realize that we don't have to always ar
 
 ---
 
-| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js)
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) |
 | :---: | :---: |
