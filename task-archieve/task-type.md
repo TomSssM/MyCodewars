@@ -27,6 +27,7 @@ _Tasks grouped by_ `Task Type`
 - __Numbers Math__
   - [Keygen](./keygen/task.md)
   - [Maximum Product Subarray](./maximum-product-subarray/task.md)
+  - [Single Number](./single-number/task.md)
 - __Fibonacci Sequence__
   - [Climbing Stairs](./climb-stairs/task.md)
 - __Check if Puzzle is Solvable__

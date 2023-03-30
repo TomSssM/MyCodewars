@@ -22,3 +22,4 @@ _List of tasks_
 - [Longest Substring Without Repeating Characters](./longest-substring-without-repeating-characters/task.md)
 - [Maximum Product Subarray](./maximum-product-subarray/task.md)
 - [Fruit Into Baskets](./fruit-into-baskets/task.md)
+- [Single Number](./single-number/task.md)
