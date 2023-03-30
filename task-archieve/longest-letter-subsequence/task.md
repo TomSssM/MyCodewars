@@ -31,6 +31,7 @@ But for this particular task you may also need to enable the _power of hashmap_
 <summary>Similar Tasks</summary>
 
 - [Longest Substring Without Repeating Characters](../longest-substring-without-repeating-characters/task.md)
+- [Fruit Into Baskets](../fruit-into-baskets/task.md)
 
 </details>
 
