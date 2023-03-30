@@ -28,7 +28,7 @@ function singleNumber(nums) {
 
 But this HashMap approach uses `O(n)` extra memory. We can optimize it if we treat this task not as a "One Pointer One Array + HashMap" Task Type but rather as a "Numbers Math" Task Type
 
-Let's see how it can be done. Xor of any two numbers gives the difference of bit as `1` and same bit as `0`. Thus using this we get `1 ^ 1 == 0` because the same numbers have the same bits
+Let's see how it can be done. Xor of any two numbers gives the difference of bits as `1` and the same bits as `0`. Thus using this we get `1 ^ 1 == 0` because the same numbers have the same bits
 
 So, we will always get the single missing element because all the same numbers will evaluate to `0` and `0 ^ missing_number = missing_number`
 
