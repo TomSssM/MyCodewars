@@ -1,5 +1,5 @@
 function findMaxLength(nums) {
-    const prevCounters = {};
+    const prevCountersHashMap = {};
     let maxLength = 0;
     let counter = 0;
     let i = 0;
@@ -19,11 +19,11 @@ function findMaxLength(nums) {
             maxLength = i + 1;
         }
 
-        if (counter in prevCounters) {
-            const prevIndex = prevCounters[counter];
+        if (counter in prevCountersHashMap) {
+            const prevIndex = prevCountersHashMap[counter];
             maxLength = Math.max(maxLength, i - prevIndex);
         } else {
-            prevCounters[counter] = i; // store the first unique counter value
+            prevCountersHashMap[counter] = i; // store the first unique counter value
         }
 
         i++;

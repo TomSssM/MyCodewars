@@ -23,3 +23,4 @@ _List of tasks_
 - [Maximum Product Subarray](./maximum-product-subarray/task.md)
 - [Fruit Into Baskets](./fruit-into-baskets/task.md)
 - [Single Number](./single-number/task.md)
+- [Valid Parentheses](./valid-parentheses/task.md)

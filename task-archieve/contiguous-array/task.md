@@ -22,7 +22,7 @@ Explanation: [0, 1] (or [1, 0]) is a longest contiguous subarray with equal numb
 
 <summary>Task Type</summary>
 
-It is an Array One Pointer + Counter + Hashmap type of task
+It is a One Pointer One Array and _Counter + Hashmap_ Task Type
 
 </details>
 
