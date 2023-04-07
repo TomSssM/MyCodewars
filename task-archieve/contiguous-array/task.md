@@ -22,7 +22,9 @@ Explanation: [0, 1] (or [1, 0]) is a longest contiguous subarray with equal numb
 
 <summary>Task Type</summary>
 
-It is a One Pointer One Array and _Counter + Hashmap_ Task Type
+It is a "One Pointer One Array and Hashmap" Task Type. We can use HashMap to solve this one except it is not so obvious at first
+
+_Note:_ the solution to the [Remove Duplicate From An Array](../../1\)%20Task%20Challanges.md#14-remove-duplicate-from-an-array) task is perhaps the most classic example of the "One Pointer One Array and Hashmap" Task Type. However _this_ Contiguous Array task is more like "One Pointer One Array and Hashmap + Counter" Task Type though we can say that it is still "One Pointer One Array and Hashmap" Task Type
 
 </details>
 
