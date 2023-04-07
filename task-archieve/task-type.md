@@ -4,18 +4,24 @@ _Tasks grouped by_ `Task Type`
 
 ---
 
+- __One Pointer One Array__
+  - [Find Peak Element](./find-peak-element/task.md)
+- __Two Pointers Two Arrays__
+  - [Intersection of intervals](./intersection-intervals/task.md)
 - __Two Pointers One Array__
   - [Container With Most Water](./most-water/task.md)
   - [Longest sequence of letters](./longest-letter-subsequence/task.md)
 - __Two Pointers One Array Sliding Window__
   - [Longest sequence of letters](./longest-letter-subsequence/task.md)
   - [Best Time to Buy and Sell Stock](./best-time-to-buy-and-sell-stock/task.md)
-- __Two Pointers Two Arrays__
-  - [Intersection of intervals](./intersection-intervals/task.md)
-- __One Pointer One Array and One or More Counters or HashMap or Stack__
+- __One Pointer One Array and One or More Counters__
   - [Longest sequence of 1's](./longest-sequence-of-1s/task.md)
+- __One Pointer One Array and HashMap__
   - [Contiguous Array](./contiguous-array/task.md)
+- __One Pointer One Array and Stack__
   - [Valid Parentheses](./valid-parentheses/task.md)
+- __Array Math Operation on All Elements__
+  - [Single Number](./single-number/task.md)
 - __Array Relation of Indexes and Values or Indexes to Values__
   - [Zigzag Conversion](./zigzag-conversion/task.md)
 - __While Loop and Stack__
@@ -28,7 +34,6 @@ _Tasks grouped by_ `Task Type`
 - __Numbers Math__
   - [Keygen](./keygen/task.md)
   - [Maximum Product Subarray](./maximum-product-subarray/task.md)
-  - [Single Number](./single-number/task.md)
 - __Fibonacci Sequence__
   - [Climbing Stairs](./climb-stairs/task.md)
 - __Check if Puzzle is Solvable__

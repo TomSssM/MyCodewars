@@ -48,6 +48,8 @@ If we had started at the first tree, we would only pick from trees [1,2]
 
 Sliding Window + HashMap
 
+Just like [this task](../longest-letter-subsequence/task.md)
+
 </details>
 
 ---

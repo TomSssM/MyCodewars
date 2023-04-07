@@ -33,6 +33,8 @@ Notice that the answer must be a substring, "pwke" is a subsequence and not a su
 
 Sliding Window + HashMap
 
+Just like [this task](../longest-letter-subsequence/task.md)
+
 </details>
 
 ---

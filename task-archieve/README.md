@@ -24,3 +24,4 @@ _List of tasks_
 - [Fruit Into Baskets](./fruit-into-baskets/task.md)
 - [Single Number](./single-number/task.md)
 - [Valid Parentheses](./valid-parentheses/task.md)
+- [Find Peak Element](./find-peak-element/task.md)
