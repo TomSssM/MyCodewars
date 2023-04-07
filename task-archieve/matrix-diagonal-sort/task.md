@@ -43,5 +43,5 @@ This is a Matrix type task using Matrix mechanics or you could also say that you
 
 ---
 
-| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) |
+| [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) |
 | :---: | :---: |

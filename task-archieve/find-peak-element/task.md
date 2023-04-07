@@ -36,5 +36,5 @@ _Note:_ in the Love Triangle task as we iterate the array we also employ a techn
 
 ---
 
-| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) |
+| [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) |
 | :---: | :---: |

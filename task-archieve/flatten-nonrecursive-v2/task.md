@@ -22,5 +22,5 @@ You can achieve the non-recursive solution by using a simple "stack and while lo
 
 ---
 
-| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) | [:white_check_mark: solution 2](./solution-2.js) |
+| [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) | [:white_check_mark: solution 2](./solution-2.js) |
 | :---: | :---: | :---: |

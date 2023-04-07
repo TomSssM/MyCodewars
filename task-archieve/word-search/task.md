@@ -43,5 +43,5 @@ In this task we should see if a letter matches the one in the word and if so rec
 
 ---
 
-| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) | [:white_check_mark: solution 2](./solution-2.js) |
+| [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) | [:white_check_mark: solution 2](./solution-2.js) |
 | :---: | :---: | :---: |

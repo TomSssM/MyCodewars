@@ -20,5 +20,5 @@ It is one of those tasks where you use one pointer to iterate the array as well 
 
 ---
 
-| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) |
+| [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) |
 | :---: | :---: |
