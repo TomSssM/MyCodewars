@@ -26,9 +26,13 @@ Explanation: Your function can return either index number 1 where the peak eleme
 
 <summary>Task Type</summary>
 
-This is simply a type of task where we iterate an array using one pointer (pointer is when we save number to variable like `i` and use `i` as an index of the array and increment `i` per iteration) and get the solution
+This is simply a type of task where we iterate an array using one pointer and get the solution
 
-__Note:__ just to be clear, iteration is the code that runs inside the braces of the for-loop (each time the same code is run but with different values of the variable `i` for example starting at 0 and ending with the index of the last element of the array)
+__Note:__ "pointer" is when we save number to variable like `i` and use `i` as an index of the array and increment or decrement `i` per iteration, the `i` variable is thus called a _pointer_
+
+__Note:__ just to be clear, "iteration" is the code that runs inside the braces of the for-loop (each time the same code is run but with different values of the variable `i` (pointer) for example starting at 0 and ending with the index of the last element of the array)
+
+__Note:__ just to be clear, when we say "iterate an array" it means go over all the elements of the array (for example in the for-loop)
 
 We have already seen a similar task called [Love Triangle](../../cheatsheet/love-triangles.js). To solve that task we also simply iterate an array (and do certain things as we iterate it of course)
 
