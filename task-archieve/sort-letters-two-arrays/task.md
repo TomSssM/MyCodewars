@@ -67,6 +67,8 @@ function sort(array, order) {
 }
 ```
 
+__Note:__ this example of a solution above (which we said doesn't solve this particular task) doesn't swap but rather overwrites elements of the array. The Task Type we are studying in this particular task is called "In-Place Swap and Overwrite". To solve this particular task you need to swap elements instead of overwriting them and for the overwrite variant of this Task Type feel free to check out the [sibling task](../remove-duplicates-v2/task.md)
+
 </details>
 
 ---

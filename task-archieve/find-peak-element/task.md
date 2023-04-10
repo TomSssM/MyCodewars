@@ -28,9 +28,11 @@ Explanation: Your function can return either index number 1 where the peak eleme
 
 This is simply a type of task where we iterate an array using one pointer (pointer is when we save number to variable like `i` and use `i` as an index of the array and increment `i` per iteration) and get the solution
 
+__Note:__ just to be clear, iteration is the code that runs inside the braces of the for-loop (each time the same code is run but with different values of the variable `i` for example starting at 0 and ending with the index of the last element of the array)
+
 We have already seen a similar task called [Love Triangle](../../cheatsheet/love-triangles.js). To solve that task we also simply iterate an array (and do certain things as we iterate it of course)
 
-_Note:_ in the Love Triangle task as we iterate the array we also employ a technique where we use _values_ of elements of the array as _indexes_ (in order to check if there is a cycle)
+__Note:__ in the Love Triangle task as we iterate the array we also employ a technique where we use _values_ of elements of the array as _indexes_ (in order to check if there is a cycle)
 
 </details>
 

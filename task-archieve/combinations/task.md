@@ -25,7 +25,7 @@ Explanation: There is 1 choose 1 = 1 total combination
 
 <summary>Task Type</summary>
 
-This task is for __*Recursive Backtracking*__. You should use it to do __*Depth-first Search of Array*__
+This task is for __*Recursive Backtracking*__. You should use it to do __*Depth-first Search of Array*__ (read the Hint for what this means)
 
 </details>
 

@@ -22,9 +22,9 @@ Explanation: [0, 1] (or [1, 0]) is a longest contiguous subarray with equal numb
 
 <summary>Task Type</summary>
 
-It is a "One Pointer One Array and Hashmap" Task Type. We can use HashMap to solve this one except it is not so obvious at first
+It is a "One Pointer One Array and Hashmap" Task Type. We can use HashMap to solve this one (except it is not so obvious at first)
 
-_Note:_ the solution to the [Remove Duplicate From An Array](../../1\)%20Task%20Challanges.md#14-remove-duplicate-from-an-array) task is perhaps the most classic example of the "One Pointer One Array and Hashmap" Task Type. However _this_ Contiguous Array task is more like "One Pointer One Array and Hashmap + Counter" Task Type though we can say that it is still "One Pointer One Array and Hashmap" Task Type
+__Note:__ the solution to the ["Remove Duplicate From An Array" task](../../1\)%20Task%20Challanges.md#14-remove-duplicate-from-an-array) is perhaps the most classic example of using HashMap to solve a task in `O(n)` time complexity instead of using nested for-loops (therefore "Remove Duplicate From An Array" task is the most classic example of the "One Pointer One Array and Hashmap" Task Type, so make sure you understand how it works first before trying to solve this task, it is very crucial!). However _this_ "Contiguous Array" task is more like "One Pointer One Array and Hashmap + Counter" Task Type though we can say that it is still "One Pointer One Array and Hashmap" Task Type because we use HashMap to solve this task just like in the "Remove Duplicate From An Array" task
 
 </details>
 
@@ -34,7 +34,7 @@ _Note:_ the solution to the [Remove Duplicate From An Array](../../1\)%20Task%20
 
 In order to find the longest contiguous subarray with equal number of `0` and `1` create a counter that we increment by one if we encounter `1` and decrement by one when we encounter `0` as we loop through the array. If the counter becomes zero it means we have gone thru as many `1`s as there were `0`s
 
-The key point to solving this task is to realize that we don't have to always arrive at counter equal to zero, we will also have a contiguous array with equal number of `0` and `1` if our counter arrives at the same value as it has already been before meaning that it looped through an equal number of `1` and `0`
+The key point to solving this task is to realize that we don't have to always arrive at counter equal to zero, we will also have a contiguous array with equal number of `0` and `1` if our counter arrives at the same value as it has already been before meaning that it looped through an equal number of `1` and `0` (and that is where HashMap comes in as well)
 
 </details>
 

@@ -18,6 +18,8 @@ Also you cannot use recursion because an array can be very big and nested very d
 
 You can achieve the non-recursive solution by using a simple "stack and while loop" technique but at least one way of solving this means pushing elements into the stack in reverse order
 
+__Note:__ the same techique of using a stack or a queue and a while loop was used to perform the depth-first search of a Binary Tree for example [here](../../corejs-codejam/task/07-yield-tasks.js#L113) or [here](../../corejs-codejam/task/07-yield-tasks.js#L147) (alternatively [here](../../snippets/Data%20Structures/binary-search-tree.js#L222))
+
 </details>
 
 ---

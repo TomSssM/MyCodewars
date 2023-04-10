@@ -31,7 +31,7 @@ __Note:__ you need to write a function that returns _the number of ways to climb
 
 <summary>Task Type</summary>
 
-This is a numbers task type. You need to use Fibonacci Sequence to solve it
+This is a numbers task type. You need to use the [Fibonacci Sequence](../../1\)%20Task%20Challanges.md#12-fibonacci) to solve it
 
 </details>
 

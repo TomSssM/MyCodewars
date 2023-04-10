@@ -1,7 +1,7 @@
 function countOnes(array) {
-    let max = 0;
-    let current = 0;
-    let prev = 0;
+    let max = 0; // third counter
+    let current = 0; // first counter
+    let prev = 0; // second counter
 
     for (let i = 0; i < array.length; i++) {
         if (array[i] === 1) {
