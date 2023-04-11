@@ -14,17 +14,17 @@ Sliding Window Algorithm is a technique for reducing the complexity of algorithm
 
 ## What is Sliding Window Algorithm?
 
-It is an algorithm where we can fast compute the things which have a fixed Window for calculation and we can fetch the result in an optimized manner than using the nested loops (naive approach). The main goal of this algorithm is to reuse the result of one Window to compute the result of the next Window
+It is an algorithm where we can fast compute the things which have a fixed Window for calculation and we can fetch the result in an optimized manner instead of using the nested loops (naive approach). The main goal of this algorithm is to reuse the result of one Window to compute the result of the next Window
 
-Suppose there is a group of friends of 12 people and they decided to party together but the major concern is who is going to throw that treat. After a lot of discussion among them, they concluded that they are sitting at a round table and the group of three who is sitting adjacent to each other and have the sum of age of every member of that group is maximum among other groups of the same size will pay the bill
+Suppose there is a group of friends of 12 people and they decided to party together but the major concern is who is going to throw that treat. After a lot of discussion among them, they concluded that they are sitting at a round table and the group of three who is sitting adjacent to each other and have the sum of age of every member of that group that is maximum among other groups of the same size will pay the bill
 
-So, to find that group the naive approach would be to consider every person and run a loop for the next three's sum of age but it would take `O( 12*3 )` units here. We can use the Sliding Window technique and could reduce this problem from `O(12*3)` to `O(12)`. In the next section, we will see how we can use the Sliding Window technique to solve this problem
+So, to find that group the naive approach would be to consider every person and run a loop for the next three's sum of age but it would take `O(12*3)` units here. We can use the Sliding Window technique and could reduce this problem from `O(12*3)` to `O(12)`. In the next section, we will see how we can use the Sliding Window technique to solve this problem
 
 ## How to use Sliding Window Technique?
 
 We can use the Sliding Window technique in the example mentioned above
 
-At first, we will add the sum of the age of three members and after that, we will keep adding the next one and subtracting the last one so that after every step we can get the sum of the age of three person and we keep comparing the sum. Here the Window size is `3` and to compute next group age sum we slide the Window. The time complexity of this algorithm is `O(12)` units and this whole algorithm is Sliding Window Algorithm. Most of the Sliding Window problems can be solved using this algorithm, the portion here which slides every time is the Sliding Window
+At first, we will add the sum of the age of three members and after that, we will keep adding the next one and subtracting the last one so that after every step we can get the sum of the age of three people and we keep comparing the sum. Here the Window size is `3` and to compute next group age sum we slide the Window. The time complexity of this algorithm is `O(12)` units and this whole algorithm is Sliding Window Algorithm. Most of the Sliding Window problems can be solved using this algorithm, the portion here which slides every time is the Sliding Window
 
 Let's suppose the students of different ages are:
 
@@ -32,11 +32,11 @@ Let's suppose the students of different ages are:
 [21, 23, 24, 22, 22, 21, 26, 23, 22, 21, 24, 20]
 ```
 
-And the different windows of 3 people sitting adjacent to each other are: __`[21,23,24]`__ , __`[23,24,22]`__ , __`[24,22,22]`__ , __`[22,22,21]`__ , __`[22,21,26]`__ , __`[21,26,23]`__ , __`[26,23,22]`__ , __`[23,22,21]`__ , __`[22,21,24]`__ , __`[21,24,20]`__
+And the different windows of 3 people sitting adjacent to each other are: __`[21,23,24]`__, __`[23,24,22]`__, __`[24,22,22]`__, __`[22,22,21]`__, __`[22,21,26]`__, __`[21,26,23]`__, __`[26,23,22]`__, __`[23,22,21]`__, __`[22,21,24]`__, __`[21,24,20]`__
 
 The sums here respectively are calculated using the Sliding Window technique, lets have a look how we approach this problem
 
-The sum of first three are `21 + 23 + 24 = 68`, and the rest ones are `68 - 21 + 22 = 69`, `69 - 23 + 22 = 68` and so on till last. Here, we can compare the sums calculated at each step to find the required answer
+The sum of the first three are `21 + 23 + 24 = 68`, and the rest ones are `68 - 21 + 22 = 69`, `69 - 23 + 22 = 68` and so on till last. Here, we can compare the sums calculated at each step to find the required answer
 
 ## Basic Steps to Solve Sliding Window Problems
 
@@ -98,6 +98,40 @@ _Output:_
 60
 ```
 
+<details>
+
+<summary>JavaScript equivalent</summary>
+
+```js
+// a function to calculate maximum sum of subarray of size m in an array of size n
+function findMaximumSum(arr, n, m) {
+    let maxResult = 0;
+
+    for (let i = 0; i <= n - m; i++) {
+        let runningSum = 0;
+
+        for (let j = i; j < i + m; j++) {
+            runningSum += arr[j];
+        }
+
+        // update the maxResult variable (counter)
+        maxResult = Math.max(maxResult, runningSum);
+    }
+
+    return maxResult;
+}
+
+const arr = [10, 20, 10, 30, 5];
+const n = 5;
+const m = 3;
+
+console.log(
+    findMaximumSum(arr, n, m)
+);
+```
+
+</details>
+
 And the time complexity of running this algorithm is `O(n*m)` where `n` is the number of elements in the array and `m` is the size of the Window
 
 Optimized approach is implemented by using the Sliding Window Technique
@@ -121,7 +155,7 @@ using namespace std;
 
 int findMaximumSum(int arr[], int n, int m)
 {
-  // calculate the sum of first m elements of that array
+  // calculate the sum of the first m elements of that array
   // and store that sum in a variable named running_sum
   int max_result = 0;
 
@@ -158,4 +192,47 @@ _Output:_
 60
 ```
 
-In the above code, we are running a loop till `m` and calculating the sum of the first Window, after that linearly iterating over the whole array and add the next element and subtract the left element and after that maintaining the maximum at every step and moving the left by one unit every time. This algorithm is best optimized for solving this kind of problem where the Window size is fixed
+<details>
+
+<summary>JavaScript equivalent</summary>
+
+```js
+function findMaximumSum(arr, n, m) {
+    // calculate the sum of the first m elements of that array
+    // and store that sum in a variable named runningSum
+    let maxResult = 0;
+
+    for (let i = 0; i < m; i++) {
+        maxResult += arr[i];
+    }
+
+    // calculate sum of the remaining windows by
+    // summing up the next element subtracting the
+    // previous element
+    let runningSum = maxResult;
+
+    for (let i = m; i < n; i++) {
+        const previousElement = arr[i - m];
+        const newElement = arr[i];
+
+        runningSum -= previousElement;
+        runningSum += newElement;
+
+        maxResult = Math.max(maxResult, runningSum);
+    }
+
+    return maxResult;
+}
+
+const arr = [10, 20, 10, 30, 5];
+const n = 5;
+const m = 3;
+
+console.log(
+    findMaximumSum(arr, n, m)
+);
+```
+
+</details>
+
+In the above code, we are running a loop till `m` and calculating the sum of the first Window, after that linearly iterating over the whole array and add the next element and subtract the left element and after that maintaining the maximum at every step and moving left by one unit every time. This algorithm is best optimized for solving this kind of problem where the Window size is fixed
