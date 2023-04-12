@@ -24,7 +24,7 @@ It is one of those tasks where you use two pointers (save indexes like `i` and `
 
 But for this particular task you may also need to enable the _power of hashmap_
 
-__Note:__ in order to find out how to use HashMap to solve tasks, please see [this task](../contiguous-array/task.md)
+__Note:__ in order to find out how to use HashMap to solve tasks, please see [this task](../contiguous-array/task.md) or simply read [this article](../literature/hash-map.md)
 
 __Note:__ the particulars of the approach used in this task are also discussed in [this task](../best-time-to-buy-and-sell-stock/task.md) (same Task Type)
 
