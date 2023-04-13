@@ -28,7 +28,7 @@ __Note:__ in order to find out how to use HashMap to solve tasks, please see [th
 
 __Note:__ the particulars of the approach used in this task are also discussed in [this task](../best-time-to-buy-and-sell-stock/task.md) (same Task Type)
 
-__Note:__ apart from HashMap the approach used in this task is called "_Sliding Window_". Like we said this approach is also discussed in [this task](../best-time-to-buy-and-sell-stock/task.md) but you can also read more about the "Sliding Window" approach [here](../literature/sliding-window.md)
+__Note:__ apart from HashMap the approach used in this task is called "_Sliding Window_". Like we said this approach is also discussed in [this task](../best-time-to-buy-and-sell-stock/task.md) but you can also read more about the "Sliding Window" approach in [this article](../literature/sliding-window.md)
 
 </details>
 

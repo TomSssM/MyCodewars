@@ -33,7 +33,7 @@ You should also note that with Sliding Window technique you don't have to always
 
 __Note:__ [this task](../longest-letter-subsequence/task.md) is likewise Sliding Window but since Sliding Window Task Type is also Two Pointers Task Type it is listed in that category as well
 
-__Note:__ you can read more about the "Sliding Window" approach [here](../literature/sliding-window.md)
+__Note:__ you can read more about the "Sliding Window" approach in [this article](../literature/sliding-window.md)
 
 </details>
 
