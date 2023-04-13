@@ -15,8 +15,8 @@ _Tasks grouped by_ `Task Type`
   - [Longest sequence of letters](./longest-letter-subsequence/task.md)
 
 ### Two Pointers One Array Sliding Window
-  - [Longest sequence of letters](./longest-letter-subsequence/task.md)
   - [Best Time to Buy and Sell Stock](./best-time-to-buy-and-sell-stock/task.md)
+  - [Longest sequence of letters](./longest-letter-subsequence/task.md)
 
 ### One Pointer One Array and One or More Counters
   - [Longest sequence of 1's](./longest-sequence-of-1s/task.md)

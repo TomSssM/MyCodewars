@@ -18,6 +18,8 @@ It is one of those tasks where you use one pointer to iterate the array as well 
 
 __Note:__ a "counter" is a variable that holds some number which we are going to increase, decrease or change in some other way per iteration (and if we say "reset the counter" it means assign to the counter the value that it had before we started iterating the array)
 
+__Note:__ we have already seen a somewhat simpler task where we used counters to solve it. The task is called ["3 Greatest Integers in an Array"](../../2\)%20Task%20Challanges.md#30-3-greatest-integers-in-an-array)
+
 </details>
 
 ---

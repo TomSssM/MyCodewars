@@ -38,6 +38,12 @@ We have already seen a similar task called [Love Triangle](../../cheatsheet/love
 
 __Note:__ in the Love Triangle task as we iterate the array we also employ a technique where we use _values_ of elements of the array as _indexes_ (in order to check if there is a cycle)
 
+__Note:__ we have already seen a lot of tasks of the One Pointer One Array type:
+- [Palindrome](../../1\)%20Task%20Challanges.md#3-palindrome)
+- [Stringo Reverso](../../1\)%20Task%20Challanges.md#17-stringo-reverso)
+- [Reverse Word Order](../../1\)%20Task%20Challanges.md#18-reverse-word-order)
+- [Reverse Words In Place](../../1\)%20Task%20Challanges.md#19-reverse-words-in-place)
+
 </details>
 
 ---

@@ -28,6 +28,14 @@ __Note:__ the solution to the ["Remove Duplicate From An Array" task](../../1\)%
 
 __Note:__ you can read more about using HashMap to solve tasks in [this article](../literature/hash-map.md) as this and many other tasks requires this knowledge
 
+__Note:__ we have likewise seen lots of other HashMap tasks before:
+- [First Non Repeating Char in a String](../../1\)%20Task%20Challanges.md#20-first-non-repeating-char-in-a-string)
+- [Remove Duplicate Chars from a String](../../2\)%20Task%20Challanges.md#21-remove-duplicate-chars-from-a-string)
+- [Sum of two equal to a number](../../2\)%20Task%20Challanges.md#24-sum-of-two-equal-to-a-number)
+- [Largest Sum of Two](../../2\)%20Task%20Challanges.md#25-largest-sum-of-two)
+- [Cash Exchange](../../cheatsheet/cash-exchange.js)
+- [Longest Consequtive Sequence](../../cheatsheet/longest-cons-sequence.js)
+
 </details>
 
 <details>
@@ -37,14 +45,6 @@ __Note:__ you can read more about using HashMap to solve tasks in [this article]
 In order to find the longest contiguous subarray with equal number of `0` and `1` create a counter that we increment by one if we encounter `1` and decrement by one when we encounter `0` as we loop through the array. If the counter becomes zero it means we have gone thru as many `1`s as there were `0`s
 
 The key point to solving this task is to realize that we don't have to always arrive at counter equal to zero, we will also have a contiguous array with equal number of `0` and `1` if our counter arrives at the same value as it has already been before meaning that it looped through an equal number of `1` and `0` (and that is where HashMap comes in as well)
-
-</details>
-
-<details>
-
-<summary>Similar Tasks</summary>
-
-- [Remove Duplicate From An Array](../../1\)%20Task%20Challanges.md#14-remove-duplicate-from-an-array)
 
 </details>
 

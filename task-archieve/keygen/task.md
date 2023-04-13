@@ -23,6 +23,17 @@ keygen(4, 13); // => [2, 5, 3, 3]
 
 This is more of a numbers task type than any of the array task types
 
+We have already encountered number task types:
+- [Decimal To Binary](../../1\)%20Task%20Challanges.md#1-decimal-to-binary)
+- [Binary To Decimal](../../1\)%20Task%20Challanges.md2-binary-to-decimal)
+- [Prime Number](../../1\)%20Task%20Challanges.md#9-prime-number)
+- [Prime Factors](../../1\)%20Task%20Challanges.md#11-prime-factors)
+- [Fibonacci](../../1\)%20Task%20Challanges.md#12-fibonacci)
+- [Greatest Common Divisor](../../1\)%20Task%20Challanges.md#13-greatest-common-divisor)
+- [Swap Numbers Without Temp](../../1\)%20Task%20Challanges.md#16-swap-numbers-without-temp)
+- [Counting Zeros](../../2\)%20Task%20Challanges.md#26-counting-zeros)
+- [Advanced Zeros](../../cheatsheet/advanced-zeros.js)
+
 </details>
 
 ---
