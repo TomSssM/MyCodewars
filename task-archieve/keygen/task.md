@@ -25,7 +25,7 @@ This is more of a numbers task type than any of the array task types
 
 We have already encountered number task types:
 - [Decimal To Binary](../../1\)%20Task%20Challanges.md#1-decimal-to-binary)
-- [Binary To Decimal](../../1\)%20Task%20Challanges.md2-binary-to-decimal)
+- [Binary To Decimal](../../1\)%20Task%20Challanges.md#2-binary-to-decimal)
 - [Prime Number](../../1\)%20Task%20Challanges.md#9-prime-number)
 - [Prime Factors](../../1\)%20Task%20Challanges.md#11-prime-factors)
 - [Fibonacci](../../1\)%20Task%20Challanges.md#12-fibonacci)
