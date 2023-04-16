@@ -28,3 +28,4 @@ _List of tasks_
 - [Single Number](./single-number/task.md)
 - [Valid Parentheses](./valid-parentheses/task.md)
 - [Partition Labels](./partition-labels/task.md)
+- [Summary Ranges](./summary-ranges/task.md)
