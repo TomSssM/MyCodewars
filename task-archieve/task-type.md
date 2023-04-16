@@ -4,6 +4,8 @@ _Tasks grouped by_ `Task Type`
 
 ---
 
+[:bulb: __Extra Documentation__](./extra-documentation.md)
+
 ### One Pointer One Array
   - [Find Peak Element](./find-peak-element/task.md)
 
@@ -23,6 +25,7 @@ _Tasks grouped by_ `Task Type`
 
 ### One Pointer One Array and HashMap
   - [Contiguous Array](./contiguous-array/task.md)
+  - [Partition Labels](./partition-labels/task.md)
 
 ### One Pointer One Array and Stack
   - [Valid Parentheses](./valid-parentheses/task.md)

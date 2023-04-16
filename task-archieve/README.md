@@ -4,6 +4,8 @@ _List of tasks_
 
 ---
 
+[:bulb: __Extra Documentation__](./extra-documentation.md)
+
 - [Find Peak Element](./find-peak-element/task.md)
 - [Container With Most Water](./most-water/task.md)
 - [Zigzag Conversion](./zigzag-conversion/task.md)
@@ -25,3 +27,4 @@ _List of tasks_
 - [Fruit Into Baskets](./fruit-into-baskets/task.md)
 - [Single Number](./single-number/task.md)
 - [Valid Parentheses](./valid-parentheses/task.md)
+- [Partition Labels](./partition-labels/task.md)
