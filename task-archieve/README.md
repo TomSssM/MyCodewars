@@ -29,3 +29,4 @@ _List of tasks_
 - [Valid Parentheses](./valid-parentheses/task.md)
 - [Partition Labels](./partition-labels/task.md)
 - [Summary Ranges](./summary-ranges/task.md)
+- [Sort Colors](./sort-colors/task.md)
