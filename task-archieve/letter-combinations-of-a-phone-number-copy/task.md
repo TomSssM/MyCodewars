@@ -53,6 +53,8 @@ __Note:__ the techique of using a queue and a while loop was used to perform the
 
 __Note:__ this task can also be solved using the more obvious approach for this kind of task using __*Depth-first Search of Array*__ or __*Breadth-first Search of Array*__, see [this copy](../letter-combinations-of-a-phone-number/task.md) of this task for more on that
 
+__Note:__ this solution using a queue is actually not so much of a queue type of solution but rather __*Breadth-first Search of Array*__ algorithm implemented using a queue. However this is also a nice use case for a queue
+
 </details>
 
 <details>
