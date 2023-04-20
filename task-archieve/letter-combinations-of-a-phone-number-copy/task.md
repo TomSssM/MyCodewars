@@ -47,7 +47,7 @@ Output:
 
 <summary>Task Type</summary>
 
-We can solve this task using a Queue and a while loop though it is not obvious at first
+We can solve this task using a queue and a while loop though it is not obvious at first
 
 __Note:__ the techique of using a queue and a while loop was used to perform the breadth-first search of a Binary Tree for example [here](../../corejs-codejam/task/07-yield-tasks.js#L147) or [here](../../snippets/Data%20Structures/binary-search-tree.js#L222)
 
