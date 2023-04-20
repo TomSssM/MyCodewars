@@ -37,8 +37,9 @@ _Tasks grouped by_ `Task Type`
 ### Array Relation of Indexes and Values or Indexes to Values
   - [Zigzag Conversion](./zigzag-conversion/task.md)
 
-### While Loop and Stack
+### While Loop and Stack or Queue
   - [Flatten non-recursive v2](./flatten-nonrecursive-v2/task.md)
+  - [Letter Combinations of a Phone Number](./letter-combinations-of-a-phone-number-copy/task.md)
 
 ### In-Place Swap and Overwrite
   - [Sort letters from one array via another array](./sort-letters-two-arrays/task.md)
@@ -59,5 +60,6 @@ _Tasks grouped by_ `Task Type`
   - [Word Search](./word-search/task.md)
   - [Sudoku Solver](../cheatsheet/sudoku.js)
 
-### Backtracking Depth-first Search of Array
+### Backtracking
   - [Combinations](./combinations/task.md)
+  - [Letter Combinations of a Phone Number](./letter-combinations-of-a-phone-number/task.md)
