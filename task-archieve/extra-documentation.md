@@ -1,6 +1,6 @@
 # Extra Documentation of Task Archieve
 
-The Task Archieve MyCodewars Project groups algorithms tasks by the common approaches used for solving them and teaches the reader to find the right one of the known approaches and apply it to solve any task at all based on the preception that any known task can be generalized and abstracted away to represent one of the known general approaches that can be used when solving an algorithmic problem
+The Task Archieve MyCodewars Project groups algorithms tasks by the common approaches used for solving them and teaches the reader to find the right one of the known approaches and apply it to solve any task at all based on the preception that any known task can be generalized and abstracted away to represent one of the known general approaches that can be used when solving an algorithmic problem. So the Task Archieve is sort of a way of building neuron links in your brain
 
 Any common approach that can be used to solve any task is termed as "Task Type" within The Task Archieve Project. For example there is a Task Type where we use two pointers to iterate an array and solve the problem or there is also a Task Type where we use a HashMap (and there are quite a few tasks that can be solved using a HashMap) and so on
 

@@ -31,3 +31,5 @@ _List of tasks_
 - [Summary Ranges](./summary-ranges/task.md)
 - [Sort Colors](./sort-colors/task.md)
 - [Letter Combinations of a Phone Number](./letter-combinations-of-a-phone-number/task.md)
+- [Missing Number in Sorted Array](./missing-number-sorted-array/task.md)
+- [Missing Number](./missing-number/task.md)
