@@ -42,6 +42,51 @@ If one is stuck at the problem for more than 5 to 10 minutes the best approach t
 
 When looking for a solution to an algorithmic problem follow this flow: first determine which Task Type the problem _might_ be, then which Variation of the Task Type you may need to employ and sooner or later the solution will come up
 
+### Task Type Summary
+
+- **_One Pointer One Array_**
+  1. Iterate an array
+- **_Two Pointers Two Arrays_**
+  1. Two pointers of two arrays increase like in Merge Sort
+- **_Two Pointers One Array_**
+  1. Two pointers go from start and end until some condition
+  2. **_Sliding Window_**
+      1. Right is always ahead of left
+      2. Right is ahead of left but they meet sometimes
+- **_One Pointer One Array and One or More Counters_**
+  1. Iterate an array keeping one or more counters
+- **_One Pointer One Array and HashMap_**
+  1. Create and use one or more HashMaps as you iterate an array
+  2. Create one or more HashMaps and iterate it (them) in some way
+  3. Create one or more HashMaps and iterate an array using it (them)
+- **_One Pointer One Array and Stack_**
+  1. Create and use one or more Stacks as you iterate an array
+- **_While Loop and Stack or Queue_**
+  1. Do while loop while stack is not empty popping and pushing along the way
+  2. Do while loop while queue is not empty queueing and dequeueing along the way
+- **_Array Relation of Indexes or Values or Indexes to Values_**
+  1. Find the relation between the indexes of the array
+  2. Find the relation between the values of the array
+  3. Find the relation of the indexes to values of the array
+- **_Array Math Operation on All Elements_**
+  1. Do math or bitwise operation on all the elements of array
+  2. Do math or bitwise operation first on all the elements of array and then to the same counter on all the elements that should be in array
+- **_In-Place Swap and Overwrite_**
+  1. Sort elements of one or more arrays
+  2. Overwrite elements of one or more arrays
+- **_Matrix_**
+  1. Iterate a matrix
+- **_Numbers Math_**
+  1. Use Prime Numbers
+- **_Fibonacci Sequence_**
+  1. Use Fibonacci Sequence
+- **_Check if Puzzle is Solvable_**
+  1. Call the function recursively and see if it solves the puzzle
+- **_Backtracking_**
+  1. Call the function recursively taking out each element out of the array per iteration
+  2. Do Depth-first Search of Array
+  3. Do Breadth-first Search of Array
+
 ### During a Code Interview
 
 One should first determine the Task Type and the Variation thereof if possible. Once that is accomplished one should write pseudo-code to see if the chosen Task Type and Variation accomplishes the task and discuss it with the interviewer or ask for Hints if necessary. And only after that shall one start writing the actual code for solving the algorithmic problem in question

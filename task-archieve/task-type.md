@@ -31,13 +31,13 @@ _Tasks grouped by_ `Task Type`
 ### One Pointer One Array and Stack
   - [Valid Parentheses](./valid-parentheses/task.md)
 
-### Array Relation of Indexes or Values or Indexes to Values
-  - [Missing Number in Sorted Array](./missing-number-sorted-array/task.md)
-  - [Zigzag Conversion](./zigzag-conversion/task.md)
-
 ### While Loop and Stack or Queue
   - [Flatten non-recursive v2](./flatten-nonrecursive-v2/task.md)
   - [Letter Combinations of a Phone Number](./letter-combinations-of-a-phone-number-copy/task.md)
+
+### Array Relation of Indexes or Values or Indexes to Values
+  - [Missing Number in Sorted Array](./missing-number-sorted-array/task.md)
+  - [Zigzag Conversion](./zigzag-conversion/task.md)
 
 ### Array Math Operation on All Elements
   - [Single Number](./single-number/task.md)
