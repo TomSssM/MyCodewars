@@ -50,7 +50,7 @@ When looking for a solution to an algorithmic problem follow this flow: first de
   1. Two pointers of two arrays increase like in Merge Sort
 - **_Two Pointers One Array_**
   1. Two pointers go from start and end until some condition
-  2. **_Sliding Window_**
+  2. _Sliding Window_
       1. Right is always ahead of left
       2. Right is ahead of left but they meet sometimes
 - **_One Pointer One Array and One or More Counters_**
