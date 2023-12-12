@@ -6,6 +6,8 @@ _Tasks grouped by_ `Task Type`
 
 [:bulb: __Extra Documentation__](./extra-documentation.md)
 
+[:bulb: __Task Type Summary__](./extra-documentation.md#task-type-summary)
+
 ### One Pointer One Array
   - [Find Peak Element](./find-peak-element/task.md)
 
