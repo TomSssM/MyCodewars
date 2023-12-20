@@ -47,7 +47,7 @@ Output:
 
 <summary>Task Type</summary>
 
-We can solve this task using __*Depth-first Search of Array*__ (solution 1) exactly in the same way as [Combinations task](../combinations/task.md)
+We can solve this task using __*Depth-first Search of Array*__ (solution 1) exactly in the same way as [Combinations task](../../combinations/task.md)
 
 The point of this task is that it can also be solved using the __*Breadth-first Search of Array*__ (solution 2). It works in this way:
 1. At the beginning, it is an empty string
@@ -56,11 +56,11 @@ The point of this task is that it can also be solved using the __*Breadth-first 
 
 It is probably best to see the actual [solution 2](./solution-2.js) to understand exactly how it works
 
-__Note:__ this task can also be solved using a Queue and a while loop, see [this copy](../letter-combinations-of-a-phone-number-copy/task.md) of this task for how to solve this task if we treat it as "While Loop and Stack or Queue" Task Type
+__Note:__ this task can also be solved using a Queue and a while loop, see [this copy](../while-loop-and-stack-or-queue/task.md) of this task for how to solve this task if we treat it as "While Loop and Stack or Queue" Task Type
 
 </details>
 
 ---
 
-| [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) | [:white_check_mark: solution 2](./solution-2.js) |
+| [:arrow_left: back](../../task-type.md) | [:white_check_mark: solution](./solution.js) | [:white_check_mark: solution 2](./solution-2.js) |
 | :---: | :---: | :---: |

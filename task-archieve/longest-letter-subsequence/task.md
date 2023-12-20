@@ -24,11 +24,9 @@ It is one of those tasks where you use two pointers (save indexes like `i` and `
 
 But for this particular task you may also need to enable the _power of hashmap_
 
+__Note:__ the approach used in this task is called "_Sliding Window_". The particulars of this approach are also discussed in [this task](../best-time-to-buy-and-sell-stock/task.md) (same Task Type) but you can also read more about the "Sliding Window" approach in [this article](../literature/sliding-window.md)
+
 __Note:__ in order to find out how to use HashMap to solve tasks, please see [this task](../contiguous-array/task.md) or simply read [this article](../literature/hash-map.md)
-
-__Note:__ the particulars of the approach used in this task are also discussed in [this task](../best-time-to-buy-and-sell-stock/task.md) (same Task Type)
-
-__Note:__ apart from HashMap the approach used in this task is called "_Sliding Window_". Like we said this approach is also discussed in [this task](../best-time-to-buy-and-sell-stock/task.md) but you can also read more about the "Sliding Window" approach in [this article](../literature/sliding-window.md)
 
 </details>
 

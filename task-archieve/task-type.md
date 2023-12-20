@@ -6,10 +6,11 @@ _Tasks grouped by_ `Task Type`
 
 [:bulb: __Extra Documentation__](./extra-documentation.md)
 
-[:bulb: __Task Type Summary__](./extra-documentation.md#task-type-summary)
+[:bulb: __Task Type Summary__](./task-type-summary.md)
 
 ### One Pointer One Array
   - [Find Peak Element](./find-peak-element/task.md)
+  - [Distance Between Bus Stops](./distance-between-bus-stops/one-pointer-one-array/task.md)
 
 ### Two Pointers Two Arrays
   - [Intersection of intervals](./intersection-intervals/task.md)
@@ -35,7 +36,7 @@ _Tasks grouped by_ `Task Type`
 
 ### While Loop and Stack or Queue
   - [Flatten non-recursive v2](./flatten-nonrecursive-v2/task.md)
-  - [Letter Combinations of a Phone Number](./letter-combinations-of-a-phone-number-copy/task.md)
+  - [Letter Combinations of a Phone Number](./letter-combinations-of-a-phone-number/while-loop-and-stack-or-queue/task.md)
 
 ### Array Relation of Indexes or Values or Indexes to Values
   - [Missing Number in Sorted Array](./missing-number-sorted-array/task.md)
@@ -44,6 +45,7 @@ _Tasks grouped by_ `Task Type`
 ### Array Math Operation on All Elements
   - [Single Number](./single-number/task.md)
   - [Missing Number](./missing-number/task.md)
+  - [Distance Between Bus Stops](./distance-between-bus-stops/array-math-operation-on-all-elements/task.md)
 
 ### In-Place Swap and Overwrite
   - [Sort letters from one array via another array](./sort-letters-two-arrays/task.md)
@@ -56,8 +58,6 @@ _Tasks grouped by_ `Task Type`
 ### Numbers Math
   - [Keygen](./keygen/task.md)
   - [Maximum Product Subarray](./maximum-product-subarray/task.md)
-
-### Fibonacci Sequence
   - [Climbing Stairs](./climb-stairs/task.md)
 
 ### Check if Puzzle is Solvable
@@ -66,4 +66,4 @@ _Tasks grouped by_ `Task Type`
 
 ### Backtracking
   - [Combinations](./combinations/task.md)
-  - [Letter Combinations of a Phone Number](./letter-combinations-of-a-phone-number/task.md)
+  - [Letter Combinations of a Phone Number](./letter-combinations-of-a-phone-number/backtracking/task.md)

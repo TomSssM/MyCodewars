@@ -30,6 +30,7 @@ _List of tasks_
 - [Partition Labels](./partition-labels/task.md)
 - [Summary Ranges](./summary-ranges/task.md)
 - [Sort Colors](./sort-colors/task.md)
-- [Letter Combinations of a Phone Number](./letter-combinations-of-a-phone-number/task.md)
+- [Letter Combinations of a Phone Number](./letter-combinations-of-a-phone-number/backtracking/task.md)
 - [Missing Number in Sorted Array](./missing-number-sorted-array/task.md)
 - [Missing Number](./missing-number/task.md)
+- [Distance Between Bus Stops](./distance-between-bus-stops/one-pointer-one-array/task.md)

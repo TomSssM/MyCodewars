@@ -12,7 +12,7 @@ While the first task in the list under a specific Task Type in the menu, as we s
 
 Variations are different perhaps somewhat not obvious ways that a Task Type can be applied. For example if we look at the Task Type which entails using two pointers to iterate an array (and thus solve the task) then the 2 possible Variations of the Two Pointers One Array Task Type are going to be: first a Variation where the first pointer moves from start to end and the second pointer moves from end to start and the second Variation is going to be where both of the two pointers move in the same direction
 
-If any given task can be solved using the same Variation of the Task Type as we have already encounterd then such a task will not be found on the main menu page where we see tasks grouped by Task Type though such a task can be found in the "Similar Tasks" spoiler of the task that it is derived from or on the front page where you can find a list of tasks in the chronological order. Feel free to solve as many "Similar Tasks" as you wish after learning a certain Task Type (or its Variation) to get a solid grasp on the newly learnt concept
+If any given task can be solved using the same Variation of the Task Type as we have already encounterd then such a task will not be found on the main menu page where we see tasks grouped by Task Type though such a task can be found in the "Similar Tasks" spoiler of the task that it is derived from or on the front page where you can find a list of tasks in the chronological order. Feel free to solve as many "Similar Tasks" as you wish after learning a certain Task Type (or its Variation) to get a solid grasp of the newly learnt concept
 
 Therefore the structure of the main menu page where we see tasks grouped by Task Type can be represented as:
 
@@ -28,6 +28,8 @@ We have looked at the core entities that make up the Task Archieve philosophy an
 - "Task Type" is a general approach that can be employed to solve a Task
 - "Variation" is the not too extreme and perhaps not very obvious tweak that we can make to the general Task Type approach to code a solution of the Task
 
+__Note:__ in the hardest cases different Task Types (and their Variations of course) may call to help each other in relationship many to many for the solution of a particular Task
+
 The rest is simple: learn all the different Task Types, study them, remember them and solidify your knowledge of all the different Task Types and their Variations by studying Tasks and solving Similar Tasks and finally apply all this knowledge and see yourself cracking some of the hardest algorithmic problems with ease and grace
 
 ## Bonus
@@ -42,50 +44,9 @@ If one is stuck at the problem for more than 5 to 10 minutes the best approach t
 
 When looking for a solution to an algorithmic problem follow this flow: first determine which Task Type the problem _might_ be, then which Variation of the Task Type you may need to employ and sooner or later the solution will come up
 
-### Task Type Summary
+### The objective of a learner
 
-- **_One Pointer One Array_**
-  1. Iterate an array
-- **_Two Pointers Two Arrays_**
-  1. Two pointers of two arrays increase like in Merge Sort
-- **_Two Pointers One Array_**
-  1. Two pointers go from start and end until some condition
-  2. _Sliding Window_
-      1. Right is always ahead of left
-      2. Right is ahead of left but they meet sometimes
-- **_One Pointer One Array and One or More Counters_**
-  1. Iterate an array keeping one or more counters
-- **_One Pointer One Array and HashMap_**
-  1. Create and use one or more HashMaps as you iterate an array
-  2. Create one or more HashMaps and iterate it (them) in some way
-  3. Create one or more HashMaps and iterate an array using it (them)
-- **_One Pointer One Array and Stack_**
-  1. Create and use one or more Stacks as you iterate an array
-- **_While Loop and Stack or Queue_**
-  1. Do while loop while stack is not empty popping and pushing along the way
-  2. Do while loop while queue is not empty queueing and dequeueing along the way
-- **_Array Relation of Indexes or Values or Indexes to Values_**
-  1. Find the relation between the indexes of the array
-  2. Find the relation between the values of the array
-  3. Find the relation of the indexes to values of the array
-- **_Array Math Operation on All Elements_**
-  1. Do math or bitwise operation on all the elements of array
-  2. Do math or bitwise operation first on all the elements of array and then to the same counter on all the elements that should be in array
-- **_In-Place Swap and Overwrite_**
-  1. Sort elements of one or more arrays
-  2. Overwrite elements of one or more arrays
-- **_Matrix_**
-  1. Iterate a matrix
-- **_Numbers Math_**
-  1. Use Prime Numbers
-- **_Fibonacci Sequence_**
-  1. Use Fibonacci Sequence
-- **_Check if Puzzle is Solvable_**
-  1. Call the function recursively and see if it solves the puzzle
-- **_Backtracking_**
-  1. Call the function recursively taking out each element out of the array per iteration
-  2. Do Depth-first Search of Array
-  3. Do Breadth-first Search of Array
+This here your task is to study. Most of the work is going to be concerned with reading and studying the solutions rather than trying to figure them out. And when you try to solve some challenge you merely observe how your mind reacts to challenges as an experiment and the ability of actually solving the challenges comes automatically as a result of this experiment but you don't concentrate on it so much as on the experiment. So it is about building the mindset of a person who can solve these challenges rather than trying to just solve these challenges because it was prudently observed by the creators of this project that in order to crack the algorithms code interview (unlike Core JS interview for example) one doesn't need to concern themselves with how to solve this particular challenge or that but rather how to build the mindset of a person who knows how to solve these challenges in general. And the same state of mind is to be applied also in the real interview because you do the best job when in this state of mind
 
 ### During a Code Interview
 

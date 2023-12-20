@@ -4,7 +4,7 @@ Given a string containing digits from `2-9` inclusive, return all possible lette
 
 A mapping of digits to letters (just like on the telephone buttons) is given below. Note that `1` does not map to any letters
 
-<img src=../letter-combinations-of-a-phone-number/telephone-keypad.png width=300 />
+<img src=../backtracking/telephone-keypad.png width=300 />
 
 __Example 1:__
 
@@ -49,9 +49,9 @@ Output:
 
 We can solve this task using a queue and a while loop though it is not obvious at first
 
-__Note:__ the techique of using a queue and a while loop was used to perform the breadth-first search of a Binary Tree for example [here](../../corejs-codejam/task/07-yield-tasks.js#L147) or [here](../../snippets/Data%20Structures/binary-search-tree.js#L222)
+__Note:__ the techique of using a queue and a while loop was used to perform the breadth-first search of a Binary Tree for example [here](../../../corejs-codejam/task/07-yield-tasks.js#L147) or [here](../../../snippets/Data%20Structures/binary-search-tree.js#L222)
 
-__Note:__ this task can also be solved using the more obvious approach for this kind of task using __*Depth-first Search of Array*__ or __*Breadth-first Search of Array*__, see [this copy](../letter-combinations-of-a-phone-number/task.md) of this task for more on that
+__Note:__ this task can also be solved using the more obvious approach for this kind of task using __*Depth-first Search of Array*__ or __*Breadth-first Search of Array*__, see [this copy](../backtracking/task.md) of this task for more on that
 
 __Note:__ this solution using a queue is actually not so much of a queue type of solution but rather __*Breadth-first Search of Array*__ algorithm implemented using a queue. However this is also a nice use case for a queue
 
@@ -69,5 +69,5 @@ Here is a visual representation of the algorithm
 
 ---
 
-| [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) |
+| [:arrow_left: back](../../task-type.md) | [:white_check_mark: solution](./solution.js) |
 | :---: | :---: |
