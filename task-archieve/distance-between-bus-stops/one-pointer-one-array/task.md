@@ -40,6 +40,10 @@ Explanation: Distance between 0 and 3 is 6 or 4, minimum is 4
 
 <summary>Task Type</summary>
 
+It is a One Pointer One Array Task Type. To solve it first iterate the array and count the sum and then iterate the array in reverse (meaning counterclockwise) and count the sum. Overlap to the beginning or end of the array when necessary. Then return the lesser sum
+
+__Note:__ there is also a less intuitive solution if you treat this task as [Array Math Operation on All Elements Task Type](../array-math-operation-on-all-elements/task.md)
+
 </details>
 
 ---

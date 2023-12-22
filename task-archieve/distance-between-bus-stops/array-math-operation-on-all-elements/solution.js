@@ -5,9 +5,9 @@ function distanceBetweenBusStops(distance, start, destination) {
         destination = temp;
     }
 
-    let sum = 0;
+    let sumClockwise = 0;
     for (let i = start; i < destination; i++) {
-        sum += distance[i];
+        sumClockwise += distance[i];
     }
 
     let totalSum = 0;
@@ -15,5 +15,7 @@ function distanceBetweenBusStops(distance, start, destination) {
         totalSum += value;
     }
 
-    return Math.min(sum, totalSum - sum);
+    const sumCounterclockwise = totalSum - sumClockwise;
+
+    return Math.min(sumClockwise, sumCounterclockwise);
 }

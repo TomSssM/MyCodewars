@@ -93,6 +93,7 @@
 ---
 
 ## Backtracking
+
 1. Call the function recursively taking out each element out of the array per iteration
 2. Do Depth-first Search of Array
 3. Do Breadth-first Search of Array
