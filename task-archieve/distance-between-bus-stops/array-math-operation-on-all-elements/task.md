@@ -48,5 +48,5 @@ __Note:__ there is also a more intuitive solution if you treat this task as [One
 
 ---
 
-| [:arrow_left: back](../../task-type.md) | [:white_check_mark: solution](./solution.js)
+| [:arrow_left: back](../../task-type.md) | [:white_check_mark: solution](./solution.js) |
 | :---: | :---: |

@@ -86,6 +86,14 @@ Then we need to iterate the input array once again and as we do that this time w
 
 </details>
 
+<details>
+
+<summary>Similar Tasks</summary>
+
+- [Top K Frequent Elements](../top-k-frequent-elements/task.md)
+
+</details>
+
 ---
 
 | [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) | [:white_check_mark: solution 2](./solution-2.js) |
