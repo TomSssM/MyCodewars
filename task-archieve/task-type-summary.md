@@ -70,6 +70,8 @@
 
 1. Swap elements of one or more arrays
 2. Overwrite elements of one or more arrays
+    1. The first pointer goes through the array and upon some condition does two things at once: overwrites the value at the second pointer and increments the second pointer
+    2. Iterate the array and get some information. Then based on this information iterate the array again overwriting its values
 
 ---
 

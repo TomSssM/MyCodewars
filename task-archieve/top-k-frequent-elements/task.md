@@ -20,7 +20,9 @@ Output: [1]
 
 <summary>Task Type</summary>
 
-It is a One Pointer One Array and HashMap Task Type. In order to solve it you need to create HashMap and iterate this HashMap in some way just like in [this task](../partition-labels/task.md). Just don't be fooled by the mention of "any order" in the task description into thinking it is a Task Type for Backtracking Depth-first Search of Array
+It is a One Pointer One Array and HashMap Task Type. In order to solve it you need to create HashMap and iterate this HashMap in some way similarly to [this task](../partition-labels/task.md) except here we need to _sort_ this HashMap we get
+
+Just don't be fooled by the mention of "any order" in the task description into thinking it is a Task Type for Backtracking Depth-first Search of Array
 
 </details>
 

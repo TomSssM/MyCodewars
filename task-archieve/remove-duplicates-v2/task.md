@@ -46,6 +46,14 @@ _In computer science, an in-place algorithm is an algorithm which transforms inp
 
 </details>
 
+<details>
+
+<summary>Similar Tasks</summary>
+
+- [Move Zeroes](../move-zeroes/task.md)
+
+</details>
+
 ---
 
 | [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) |
