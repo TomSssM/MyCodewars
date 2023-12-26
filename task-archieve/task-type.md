@@ -67,3 +67,6 @@ _Tasks grouped by_ `Task Type`
 ### Backtracking
   - [Combinations](./combinations/task.md)
   - [Letter Combinations of a Phone Number](./letter-combinations-of-a-phone-number/backtracking/task.md)
+
+### Tabulation
+  - [Word Break](./word-break/task.md)

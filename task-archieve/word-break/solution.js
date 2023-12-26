@@ -1,0 +1,2 @@
+function wordBreak(s, wordDict) {
+}
