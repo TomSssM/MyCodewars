@@ -404,57 +404,57 @@
 
 2. Overwrite elements of one or more arrays
     1. The first pointer goes through the array and upon some condition does two things at once: overwrites the value at the second pointer and increments the second pointer
-    <details>
+        <details>
 
-    <summary>Code</summary>
+        <summary>Code</summary>
 
-    ```js
-    function approach(array) {
-        let i = 0;
-        let j = 0;
+        ```js
+        function approach(array) {
+            let i = 0;
+            let j = 0;
 
-        for (i = 0; i < array.length; i++) {
-            if (condition()) {
-                array[j++] = logic(array[i]);
+            for (i = 0; i < array.length; i++) {
+                if (condition()) {
+                    array[j++] = logic(array[i]);
+                }
             }
         }
-    }
 
-    // or:
+        // or:
 
-    function approach(array) {
-        let i = 0;
+        function approach(array) {
+            let i = 0;
 
-        for (const value of array) {
-            if (condition()) {
-                array[i++] = logic(value);
+            for (const value of array) {
+                if (condition()) {
+                    array[i++] = logic(value);
+                }
             }
         }
-    }
-    ```
+        ```
 
-    </details>
+        </details>
 
     2. Iterate the array and get some information. Then based on this information iterate the array again overwriting its values
-    <details>
+        <details>
 
-    <summary>Code</summary>
+        <summary>Code</summary>
 
-    ```js
-    function approach(array) {
-        let i = 0;
+        ```js
+        function approach(array) {
+            let i = 0;
 
-        for (i = 0; i < array.length; i++) {
-            logic(array[i], i);
+            for (i = 0; i < array.length; i++) {
+                logic(array[i], i);
+            }
+
+            for (i = 0; i < array.length; i++) {
+                array[i] = logic();
+            }
         }
+        ```
 
-        for (i = 0; i < array.length; i++) {
-            array[i] = logic();
-        }
-    }
-    ```
-
-    </details>
+        </details>
 
 ---
 
