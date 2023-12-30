@@ -572,13 +572,17 @@
 
     function fibonacci(length = 0) {
         if (length === 0) {
-            return 0;
+            return [];
+        }
+
+        if (length === 1) {
+            return [0];
         }
 
         const nums = [0, 1];
 
-        if (length <= 2) {
-            return nums[length - 1];
+        if (length === 2) {
+            return nums;
         }
 
         for (let i = 2; i < length; i++) {
