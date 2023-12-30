@@ -7,9 +7,9 @@ __Note__ that the same word in the dictionary may be reused multiple times in th
 __Example 1:__
 
 ```
-Input: s = "leetcode", wordDict = ["leet","code"]
+Input: s = "mycodewars", wordDict = ["my","codewars"]
 Output: true
-Explanation: Return true because "leetcode" can be segmented as "leet code"
+Explanation: Return true because "mycodewars" can be segmented as "my codewars"
 ```
 
 __Example 2:__
