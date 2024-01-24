@@ -40,7 +40,9 @@ Explanation: Distance between 0 and 3 is 6 or 4, minimum is 4
 
 <summary>Task Type</summary>
 
-It can be treated as a Array Math Operation on All Elements Task Type where you need to do math or bitwise operation first on one part of the array and then on another part of of the array. First of all make sure that `start` is always _before_ `destination` (swap them if not so). Then you need to sum all the elements between `start` and `destination` (this is your sum going clockwise, math operation first on one part of the array), after this get the total sum of all the elements of the array and extract the sum of going clockwise from this total sum (this is your sum going counterclockwise, math operation on another part of of the array). Then return the lesser sum
+It can be treated as a Array Math Operation on All Elements Task Type where you need to do math or bitwise operation first on one part of the array and then on another part of of the array
+
+First of all make sure that `start` is always _before_ `destination` (swap them if not so). Then you need to sum all the elements between `start` and `destination` (this is your sum going clockwise, math operation first on one part of the array), after this get the total sum of all the elements of the array and extract the sum of going clockwise from this total sum (this is your sum going counterclockwise, math operation on another part of of the array). Then return the lesser sum
 
 __Note:__ there is also a more intuitive solution if you treat this task as [One Pointer One Array Task Type](../one-pointer-one-array/task.md)
 

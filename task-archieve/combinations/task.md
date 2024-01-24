@@ -25,7 +25,7 @@ Explanation: There is 1 choose 1 = 1 total combination
 
 <summary>Task Type</summary>
 
-This task is for __*Recursive Backtracking*__. You should use it to do __*Depth-first Search of Array*__ (read the Hint for what this means)
+This task is for __*Recursive Backtracking*__. You should use it to do __*Depth-first Search of Array*__ (read the Hint for what this means). What we need to do here is get all unique combinations of values of an array in any order which is a common approach for solving tasks of Backtracking Task Type
 
 </details>
 
@@ -33,7 +33,7 @@ This task is for __*Recursive Backtracking*__. You should use it to do __*Depth-
 
 <summary>Hint</summary>
 
-This task is for __*Recursive Backtracking*__. Note that unlike the ["Permutations of a String" task](../../2\)%20Task%20Challanges.md#28-permutations-of-a-string), in this task we are supposed to return the output in __any order__. So for this task the order of the permutations doesn't matter. When the order of the permutations doesn't matter you should apply a permutations algorithm that is actually different from the one we saw before in the "Permutations of a String" task in order not to come up with duplicates (i.e., `[1,2]` and `[2,1]`)
+This task is for __*Recursive Backtracking*__. Note that unlike the ["Permutations of a String" task](../../2\)%20Task%20Challanges.md#28-permutations-of-a-string), in this task we are supposed to return the output in __any order__, also we want _combinations_ of values of an array and not _permutations_ like in the "Permutations of a String" task (so basically we are going to combine values of an array instead of re-arranging them the difference being that `[1,2]` and `[2,1]` are different permutations but these are the same combination of the elements). So for this task the order of the combinations doesn't matter. When the order of the combinations doesn't matter you should apply a backtracking algorithm that is actually different from the one we saw before in the "Permutations of a String" task in order not to come up with duplicates (i.e., `[1,2]` and `[2,1]`)
 
 While in the "Permutations of a String" task we would iterate the array and take out one element out of the array and get the rest of the permutations by recursively backtracking thereby always splitting the array into smaller and smaller chunks what we need to do here is somewhat the opposite though similar: we need to apply the function that by recursively backtracking builds back the array into bigger and bigger chunks (appending elements on the right to the elements on the left)
 

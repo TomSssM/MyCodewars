@@ -363,6 +363,33 @@
 
     </details>
 
+3. Merge two queues overwriting the parent queue
+    <details>
+
+    <summary>Code</summary>
+
+    ```js
+    function approach() {
+        let queue = [];
+
+        logic(queue);
+
+        while (condition()) {
+            const currentQueue = [];
+
+            while (queue.length > 0) {
+                const element = queue.shift();
+
+                currentQueue.push(logic(element));
+            }
+
+            queue = currentQueue;
+        }
+    }
+    ```
+
+    </details>
+
 ---
 
 ## Array Relation of Indexes or Values or Indexes to Values
@@ -376,8 +403,87 @@
 ## Array Math Operation on All Elements
 
 1. Do math or bitwise operation on all the elements of the array
+    <details>
+
+    <summary>Code</summary>
+
+    ```js
+    function approach(array) {
+        let counter = 0;
+
+        for (const value of array) {
+            counter += value; // math
+            // or:
+            counter ^= value; // bitwise
+        }
+
+        logic(counter);
+    }
+    ```
+
+    </details>
+
 2. Do math or bitwise operation first on all the elements of the array and then to the same counter on all the elements that should be in array
+    <details>
+
+    <summary>Code</summary>
+
+    ```js
+    function approach(array) {
+        let counter = 0;
+
+        for (const value of array) {
+            counter += value; // math
+            // or:
+            counter ^= value; // bitwise
+        }
+
+        for (let i = 0; i <= array.length; i++) {
+            counter += i; // math
+            // or:
+            counter ^= i; // bitwise
+        }
+
+        logic(counter);
+    }
+    ```
+
+    </details>
+
 3. Do math or bitwise operation first on one part of the array and then on another part of of the array
+    <details>
+
+    <summary>Code</summary>
+
+    ```js
+    function approach(array) {
+        let i;
+        let n = logic(); // index of array
+
+        let counter1 = 0;
+        let counter2 = 0;
+
+        for (i = 0; i < n; i++) {
+            const value = array[i];
+
+            counter1 += value; // math
+            // or:
+            counter1 ^= value; // bitwise
+        }
+
+        for (i = n; i < array.length; i++) {
+            const value = array[i];
+
+            counter2 += value; // math
+            // or:
+            counter2 ^= value; // bitwise
+        }
+
+        logic(counter1, counter2);
+    }
+    ```
+
+    </details>
 
 ---
 
@@ -649,7 +755,7 @@
 
 ## Backtracking
 
-1. Call the function recursively taking out each element out of the array per iteration (get all permutations)
+1. Get all permutations of values of an array in any order (call the function recursively taking out each element out of the array per iteration)
     <details>
 
     <summary>Code</summary>
@@ -658,7 +764,7 @@
     function approach(array) {
         const permutations = [];
 
-        if (array.length === 1) {
+        if (array.length === 1) { // recursion exit condition
             return [[array[0]]];
         }
 
@@ -687,7 +793,7 @@
 
     </details>
 
-2. Do Depth-first Search of Array (get all unique combinations in any order)
+2. Get all unique combinations of values of an array in any order (do Depth-first Search of Array)
     <details>
 
     <summary>Code</summary>
@@ -719,6 +825,95 @@
     __Input:__ `[1, 2, 3]`
 
     __Output:__ `[]`, `[1]`, `[2]`, `[3]`, `[1,2]`, `[1,3]`, `[2,3]`, `[1,2,3]`
+
+    </details>
+
+3. Get all unique combinations of values of many arrays in any order (adapt the approach called "Merge two queues overwriting the parent queue")
+    <details>
+
+    <summary>Code</summary>
+
+    __*queue:*__
+
+    ```js
+    function approach(...arrays) {
+        let queue = [[]];
+
+        for (const array of arrays) {
+            const currentQueue = [];
+
+            while (queue.length > 0) {
+                const currentArray = queue.shift();
+
+                for (const element of array) {
+                    currentQueue.push([...currentArray, element]);
+                }
+            }
+
+            queue = currentQueue;
+        }
+
+        logic(queue);
+    }
+    ```
+
+    __*recursion:*__
+
+    ```js
+    function approach(...arrays) {
+        const result = [];
+
+        function backtrack(prefix, offset) {
+            if (offset === arrays.length) {
+                result.push(prefix);
+                return;
+            }
+
+            const array = arrays[offset];
+
+            for (const value of array) {
+                backtrack([...prefix, value], offset + 1);
+            }
+        }
+
+        backtrack([], 0);
+
+        logic(result);
+    }
+    ```
+
+    __Input:__ `['1', '2', '3']`, `['a', 'b', 'c']`, `['*', '#', '$']`
+
+    __Output:__
+    ```
+    [ 1, 'a', '*' ]
+    [ 1, 'a', '#' ]
+    [ 1, 'a', '$' ]
+    [ 1, 'b', '*' ]
+    [ 1, 'b', '#' ]
+    [ 1, 'b', '$' ]
+    [ 1, 'c', '*' ]
+    [ 1, 'c', '#' ]
+    [ 1, 'c', '$' ]
+    [ 2, 'a', '*' ]
+    [ 2, 'a', '#' ]
+    [ 2, 'a', '$' ]
+    [ 2, 'b', '*' ]
+    [ 2, 'b', '#' ]
+    [ 2, 'b', '$' ]
+    [ 2, 'c', '*' ]
+    [ 2, 'c', '#' ]
+    [ 2, 'c', '$' ]
+    [ 3, 'a', '*' ]
+    [ 3, 'a', '#' ]
+    [ 3, 'a', '$' ]
+    [ 3, 'b', '*' ]
+    [ 3, 'b', '#' ]
+    [ 3, 'b', '$' ]
+    [ 3, 'c', '*' ]
+    [ 3, 'c', '#' ]
+    [ 3, 'c', '$' ]
+    ```
 
     </details>
 

@@ -1,5 +1,3 @@
-/* breadth first search */
-
 function letterCombinations(digits) {
     let res = [];
 

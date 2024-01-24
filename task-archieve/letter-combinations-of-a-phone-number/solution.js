@@ -1,5 +1,3 @@
-/* while loop and queue */
-
 function letterCombinations(digits) {
     let queue = [''];
     let i = 0;

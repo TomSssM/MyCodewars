@@ -36,7 +36,6 @@ _Tasks grouped by_ `Task Type`
 
 ### While Loop and Stack or Queue
   - [Flatten non-recursive v2](./flatten-nonrecursive-v2/task.md)
-  - [Letter Combinations of a Phone Number](./letter-combinations-of-a-phone-number/while-loop-and-stack-or-queue/task.md)
 
 ### Array Relation of Indexes or Values or Indexes to Values
   - [Missing Number in Sorted Array](./missing-number-sorted-array/task.md)
@@ -66,7 +65,7 @@ _Tasks grouped by_ `Task Type`
 
 ### Backtracking
   - [Combinations](./combinations/task.md)
-  - [Letter Combinations of a Phone Number](./letter-combinations-of-a-phone-number/backtracking/task.md)
+  - [Letter Combinations of a Phone Number](./letter-combinations-of-a-phone-number/task.md)
 
 ### Tabulation
   - [Word Break](./word-break/task.md)
