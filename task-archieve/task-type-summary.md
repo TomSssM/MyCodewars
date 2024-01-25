@@ -363,10 +363,12 @@
 
     </details>
 
-3. Merge two queues overwriting the parent queue
+3. Merge two queues of prefixes
     <details>
 
     <summary>Code</summary>
+
+    __*queue:*__
 
     ```js
     function approach() {
@@ -380,11 +382,34 @@
             while (queue.length > 0) {
                 const element = queue.shift();
 
-                currentQueue.push(logic(element));
+                currentQueue.push(...logic(element));
             }
 
             queue = currentQueue;
         }
+    }
+    ```
+
+    __*recursion:*__
+
+    ```js
+    function approach(array) {
+        const result = [];
+
+        function backtrack(prefix, offset) {
+            if (offset === array.length) {
+                result.push(prefix);
+                return;
+            }
+
+            const value = array[offset];
+
+            backtrack([...prefix, ...logic(value)], offset + 1);
+        }
+
+        backtrack([], 0);
+
+        logic(result);
     }
     ```
 
@@ -828,7 +853,7 @@
 
     </details>
 
-3. Get all unique combinations of values of many arrays in any order (adapt the approach called "Merge two queues overwriting the parent queue")
+3. Get all unique combinations of values of many arrays in any order (adapt the approach called "Merge two queues of prefixes")
     <details>
 
     <summary>Code</summary>
