@@ -34,8 +34,9 @@ _Tasks grouped by_ `Task Type`
 ### One Pointer One Array and Stack
   - [Valid Parentheses](./valid-parentheses/task.md)
 
-### While Loop and Stack or Queue
+### Stack or Queue
   - [Flatten non-recursive v2](./flatten-nonrecursive-v2/task.md)
+  - [Unpack IP](./unpack-ip/task.md)
 
 ### Array Relation of Indexes or Values or Indexes to Values
   - [Missing Number in Sorted Array](./missing-number-sorted-array/task.md)

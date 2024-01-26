@@ -323,9 +323,9 @@
 
 ---
 
-## While Loop and Stack or Queue
+## Stack or Queue
 
-1. Do while loop while stack is not empty popping and pushing along the way
+1. Do while loop while Stack is not empty popping and pushing along the way
     <details>
 
     <summary>Code</summary>
@@ -344,7 +344,7 @@
 
     </details>
 
-2. Do while loop while queue is not empty queueing and dequeueing along the way
+2. Do while loop while Queue is not empty queueing and dequeueing along the way
     <details>
 
     <summary>Code</summary>
@@ -363,7 +363,7 @@
 
     </details>
 
-3. Merge two queues of prefixes
+3. Merge two Queues of prefixes
     <details>
 
     <summary>Code</summary>
@@ -853,7 +853,7 @@
 
     </details>
 
-3. Get all unique combinations of values of many arrays in any order (adapt the approach called "Merge two queues of prefixes")
+3. Get all unique combinations of values of many arrays in any order (adapt the approach called "Merge two Queues of prefixes")
     <details>
 
     <summary>Code</summary>

@@ -36,4 +36,5 @@ _List of tasks_
 - [Distance Between Bus Stops](./distance-between-bus-stops/one-pointer-one-array/task.md)
 - [Top K Frequent Elements](./top-k-frequent-elements/task.md)
 - [Move Zeroes](./move-zeroes/task.md)
+- [Unpack IP](./unpack-ip/task.md)
 - [Word Break](./word-break/task.md)

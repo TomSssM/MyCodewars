@@ -47,7 +47,7 @@ Output:
 
 <summary>Task Type</summary>
 
-This a Backtracking Task Type. Think of each button of the phone as an array consisting of 3 elements (for button `"2"` the elements of the array are `['a', 'b', 'c']`). As you can see if we have digits `234` then in order to solve the task we need to find all the unique combinations of values of the arrays `['a', 'b', 'c']`, `['d', 'e', 'f']` and `['g', 'h', 'i']`. Thus we can solve the task if we use the approach to get all unique combinations of values of many arrays in any order. In order to do this we need to adapt the approach called "Merge two queues of prefixes"
+This a Backtracking Task Type. Think of each button of the phone as an array consisting of 3 elements (for button `"2"` the elements of the array are `['a', 'b', 'c']`). As you can see if we have digits `234` then in order to solve the task we need to find all the unique combinations of values of the arrays `['a', 'b', 'c']`, `['d', 'e', 'f']` and `['g', 'h', 'i']`. Thus we can solve the task if we use the approach to get all unique combinations of values of many arrays in any order. In order to do this we need to tweak the approach called "Merge two Queues of prefixes" which we have seen in pure form in [this task](../unpack-ip/task.md)
 
 It works in this way:
 1. At the beginning, it is an empty string
