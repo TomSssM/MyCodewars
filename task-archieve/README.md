@@ -6,6 +6,8 @@ _List of tasks_
 
 [:bulb: __Extra Documentation__](./extra-documentation.md)
 
+[:ledger: _Task Template_](./template/README.md)
+
 - [Find Peak Element](./find-peak-element/task.md)
 - [Container With Most Water](./most-water/task.md)
 - [Zigzag Conversion](./zigzag-conversion/task.md)
