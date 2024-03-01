@@ -89,3 +89,8 @@ One should first determine the Task Type and the Approach thereof if possible. O
 Also train your mind to run code in your head as if your mind were a debugger
 
 Oh, and one more thing: stay calm and happy!
+
+---
+
+| [:arrow_left: back](./README.md) |
+| :---: |

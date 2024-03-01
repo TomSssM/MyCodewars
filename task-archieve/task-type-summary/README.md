@@ -5,3 +5,8 @@
 ## Contents
 
 - [General](./task-type-summary-general.md)
+
+---
+
+| [:arrow_left: back](../task-type.md) |
+| :---: |
