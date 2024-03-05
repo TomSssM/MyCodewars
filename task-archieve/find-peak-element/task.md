@@ -24,9 +24,21 @@ Explanation: Your function can return either index number 1 where the peak eleme
 
 <details>
 
+<summary>Approach</summary>
+
+- `Iterate an array`
+
+</details>
+
+<details>
+
 <summary>Task Type</summary>
 
-This is simply a type of task where we iterate an array using one pointer and get the solution
+It is a "One Pointer One Array" Task Type. In order to solve the Task you should apply the Approach "Iterate an array"
+
+The Approach is simply that we iterate an array using one pointer and get the solution
+
+To solve this particular task we need to compare the element to its neighbors
 
 __Note:__ "pointer" is when we save number to variable like `i` and use `i` as an index of the array and increment or decrement `i` per iteration, the `i` variable is thus called a _pointer_
 
@@ -34,11 +46,11 @@ __Note:__ just to be clear, "iteration" is the code that runs inside the braces 
 
 __Note:__ just to be clear, when we say "iterate an array" it means go over all the elements of the array (for example in the for-loop)
 
-We have already seen a similar task called [Love Triangle](../../cheatsheet/love-triangles.js). To solve that task we also simply iterate an array (and do certain things as we iterate it of course)
+We have already seen a kindred task called [Love Triangle](../../cheatsheet/love-triangles.js). To solve that task we also simply iterate an array (and do certain things as we iterate it of course)
 
-__Note:__ in the Love Triangle task as we iterate the array we also employ a technique where we use _values_ of elements of the array as _indexes_ (in order to check if there is a cycle)
+__Note:__ in the Love Triangle task as we iterate the array we employ the Approach "Use values as indexes" where we use _values_ of elements of the array as _indexes_ (in order to check if there is a cycle)
 
-__Note:__ we have already seen a lot of tasks of the One Pointer One Array type:
+__Note:__ we have already seen a lot of tasks of the One Pointer One Array Task Type:
 - [Palindrome](../../1\)%20Task%20Challanges.md#3-palindrome)
 - [Stringo Reverso](../../1\)%20Task%20Challanges.md#17-stringo-reverso)
 - [Reverse Word Order](../../1\)%20Task%20Challanges.md#18-reverse-word-order)

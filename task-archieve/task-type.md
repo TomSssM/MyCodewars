@@ -8,7 +8,7 @@ _Tasks grouped by_ `Task Type`
 
 ### One Pointer One Array
   - [Find Peak Element](./find-peak-element/task.md)
-  - [Distance Between Bus Stops](./distance-between-bus-stops/one-pointer-one-array/task.md)
+  - [Distance Between Bus Stops](./distance-between-bus-stops/task.md)
 
 ### Two Pointers Two Arrays
   - [Intersection of intervals](./intersection-intervals/task.md)
@@ -43,7 +43,7 @@ _Tasks grouped by_ `Task Type`
 ### Array Math Operation on All Elements
   - [Single Number](./single-number/task.md)
   - [Missing Number](./missing-number/task.md)
-  - [Distance Between Bus Stops](./distance-between-bus-stops/array-math-operation-on-all-elements/task.md)
+  - [Distance Between Bus Stops](./distance-between-bus-stops/task.md)
 
 ### In-Place Swap and Overwrite
   - [Sort letters from one array via another array](./sort-letters-two-arrays/task.md)

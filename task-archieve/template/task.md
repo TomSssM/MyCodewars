@@ -15,6 +15,8 @@ TODO: optional: hint description
 <summary>Approach</summary>
 
 - `TODO: Approach`
+  - `TODO: subtype`
+- _or_ `TODO: alternative Approach`
 
 </details>
 
@@ -22,7 +24,9 @@ TODO: optional: hint description
 
 <summary>Task Type</summary>
 
-It is a TODO Task Type. In order to solve the Task you should apply the Approach "TODO"
+It is a "TODO" Task Type. In order to solve the Task you should apply the Approach "TODO"
+<!-- It is a "TODO" Task Type. In order to solve the Task you should apply the Approach "TODO" (TODO: subtype) -->
+<!-- We combine the Approaches of "TODO" and "TODO" to solve this Task -->
 
 TODO: explanation of Approach
 

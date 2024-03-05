@@ -44,11 +44,19 @@ If we had started at the first tree, we would only pick from trees [1,2]
 
 <details>
 
+<summary>Approach</summary>
+
+- `Sliding Window`
+  - `Right is ahead of left but window size is dynamic`
+- `Create and use one or more HashMaps as you iterate an array`
+
+</details>
+
+<details>
+
 <summary>Task Type</summary>
 
-Sliding Window + HashMap
-
-Just like [this task](../longest-letter-subsequence/task.md)
+We combine the Approaches of "Sliding Window" (right is ahead of left but window size is dynamic) and "Create and use one or more HashMaps as you iterate an array" to solve this Task just like [this task](../longest-letter-subsequence/task.md)
 
 </details>
 

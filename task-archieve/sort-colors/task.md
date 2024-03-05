@@ -22,6 +22,16 @@ Output: [0,1,2]
 
 <details>
 
+<summary>Approach</summary>
+
+- `Overwrite elements of one or more arrays`
+  - `Iterate the array and get some information. Then based on this information iterate the array again overwriting its values`
+- _or_ `Swap elements of one or more arrays`
+
+</details>
+
+<details>
+
 <summary>Task Type</summary>
 
 This is a Task Type for in-place swap and overwrite of the array. We have already seen an example where we need to do in-place _swap_ [here](../sort-letters-two-arrays/task.md) and an example where we need to do in-place _overwrite_ [here](../remove-duplicates-v2/task.md)

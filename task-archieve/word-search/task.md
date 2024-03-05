@@ -33,7 +33,17 @@ Output: false
 
 <details>
 
+<summary>Approach</summary>
+
+- `Call the function recursively and see if it solves the puzzle`
+
+</details>
+
+<details>
+
 <summary>Task Type</summary>
+
+It is a "Check if Puzzle is Solvable" Task Type. In order to solve the Task you should apply the Approach "Call the function recursively and see if it solves the puzzle"
 
 This task is similar to [Sudoku solver](../../cheatsheet/sudoku.js) where you call a function to see if you can solve the game starting at a certain position as you iterate through the board
 

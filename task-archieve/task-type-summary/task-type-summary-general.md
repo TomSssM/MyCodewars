@@ -21,26 +21,7 @@
 
     </details>
 
-2. Use values as indexes
-    <details>
-
-    <summary>Code</summary>
-
-    ```js
-    function approach(array) {
-        for (let i = 0; i < array.length; i++) {
-            logic(array[array[i]]);
-        }
-    }
-    ```
-
-    __Input:__ `[1, 2, 3]`
-
-    __Output:__ `2`, `3`, `undefined`
-
-    </details>
-
-3. Iterate an array in reverse
+2. Iterate an array in reverse
     <details>
 
     <summary>Code</summary>
@@ -56,6 +37,25 @@
     __Input:__ `[1, 2, 3]`
 
     __Output:__ value: `3`, `2`, `1`, index: `2`, `1`, `0`
+
+    </details>
+
+3. Use values as indexes
+    <details>
+
+    <summary>Code</summary>
+
+    ```js
+    function approach(array) {
+        for (let i = 0; i < array.length; i++) {
+            logic(array[array[i]]);
+        }
+    }
+    ```
+
+    __Input:__ `[1, 2, 3]`
+
+    __Output:__ `2`, `3`, `undefined`
 
     </details>
 

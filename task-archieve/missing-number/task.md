@@ -28,6 +28,14 @@ Explanation: n = 9 since there are 9 numbers, so all numbers are in the range [0
 
 <details>
 
+<summary>Approach</summary>
+
+- `Do math or bitwise operation first on all the elements of the array and then to the same counter on all the elements that should be in array`
+
+</details>
+
+<details>
+
 <summary>Task Type</summary>
 
 We can assume this task to be a "One Pointer One Array and HashMap" Task Type and solve it this way using a HashMap:
@@ -51,9 +59,9 @@ function missingNumber(nums) {
 }
 ```
 
-But we can solve it even more effectively if we treat it as "Array Math Operation on All Elements" Task Type and apply XOR operation for all the elements of the array similar to [that task](../single-number/task.md) (we XOR `0` by all the elements of the array and save the result to some _counter_). However for this particular task you may need to apply the Math Operation (in our case XOR) _twice_: first for all the elements of the array, then to the same _counter_ for all the elements that _should be_ in the array (similar to the HashMap solution above)
+But we can solve it even more effectively if we treat it as "Array Math Operation on All Elements" Task Type and apply XOR operation for all the elements of the array similar to [that task](../single-number/task.md) (we XOR `0` by all the elements of the array and save the result to some _counter_). However for this particular task you may need to apply the Math Operation (in our case XOR) _twice_: first for all the elements of the array, then to the same _counter_ for all the elements that _should be_ in the array (similar to the HashMap solution above). Thus you need to utilize the Approach "Do math or bitwise operation first on all the elements of the array and then to the same counter on all the elements that should be in array"
 
-__Note:__ this task can also be solved not only by doing a XOR for all the elements of the array but also by applying a Math formula for all the elements of the array. You can find this solution [here](../../2\)%20Task%20Challanges.md#23-find-a-missing-number-in-an-unsorted-array)
+__Note:__ this task can also be solved not only by doing a XOR but also by applying a Math formula for all the elements of the array. You can find this solution [here](../../2\)%20Task%20Challanges.md#23-find-a-missing-number-in-an-unsorted-array)
 
 </details>
 

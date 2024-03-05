@@ -18,11 +18,19 @@ Output: [1]
 
 <details>
 
+<summary>Approach</summary>
+
+- `Create one or more HashMaps and iterate the HashMap (the HashMaps) in some way`
+
+</details>
+
+<details>
+
 <summary>Task Type</summary>
 
-It is a One Pointer One Array and HashMap Task Type. In order to solve it you need to create HashMap and iterate this HashMap in some way similarly to [this task](../partition-labels/task.md) except here we need to _sort_ this HashMap we get
+It is a "One Pointer One Array and HashMap" Task Type. In order to solve it you need to create HashMap and iterate this HashMap in some way similarly to [this task](../partition-labels/task.md) except here we need to _sort_ this HashMap we get
 
-Just don't be fooled by the mention of "any order" in the task description into thinking it is a Task Type for Backtracking Depth-first Search of Array
+Just don't be fooled by the mention of "any order" in the task description into thinking it is a Task Type for Backtracking
 
 </details>
 

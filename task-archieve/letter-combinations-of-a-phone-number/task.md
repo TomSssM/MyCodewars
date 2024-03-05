@@ -45,9 +45,17 @@ Output:
 
 <details>
 
+<summary>Approach</summary>
+
+- `Get all unique combinations of values of many arrays in any order`
+
+</details>
+
+<details>
+
 <summary>Task Type</summary>
 
-This a Backtracking Task Type. Think of each button of the phone as an array consisting of 3 elements (for button `"2"` the elements of the array are `['a', 'b', 'c']`). As you can see if we have digits `234` then in order to solve the task we need to find all the unique combinations of values of the arrays `['a', 'b', 'c']`, `['d', 'e', 'f']` and `['g', 'h', 'i']`. Thus we can solve the task if we use the approach to get all unique combinations of values of many arrays in any order. In order to do this we need to tweak the approach called "Merge two Queues of prefixes" which we have seen in pure form in [this task](../unpack-ip/task.md)
+This a "Backtracking" Task Type. Think of each button of the phone as an array consisting of 3 elements (for button `"2"` the elements of the array are `['a', 'b', 'c']`). As you can see if we have digits `234` then in order to solve the task we need to find all the unique combinations of values of the arrays `['a', 'b', 'c']`, `['d', 'e', 'f']` and `['g', 'h', 'i']`. Thus we can solve the task if we use the Approach "Get all unique combinations of values of many arrays in any order". In order to do this we need to tweak the Approach called "Merge two Queues of prefixes" which we have seen in pure form in [this task](../unpack-ip/task.md)
 
 It works in this way:
 1. At the beginning, it is an empty string
@@ -58,7 +66,7 @@ Here is a visual representation of the algorithm:
 
 <img src=./letter-combinations-queue.gif width=400 />
 
-__Note:__ you can also get all unique combinations of values of many arrays in any order by using the recursive variation of the approach ([solution 3](./solution-3.js)) but as we have seen in the past using a Queue is more efficient than recursion because with a Queue you don't risk getting a stack overflow error
+__Note:__ you can also get all unique combinations of values of many arrays in any order by using the recursive variation of the Approach ([solution 3](./solution-3.js)) but as we have seen in the past using a Queue is more efficient than recursion because with a Queue you don't risk getting a stack overflow error
 
 </details>
 

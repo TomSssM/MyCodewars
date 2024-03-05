@@ -25,13 +25,24 @@ Explanation: In this case, no transactions are done and the max profit = 0
 
 <details>
 
+<summary>Approach</summary>
+
+- `Sliding Window`
+  - `Right is ahead of left but window size is dynamic`
+
+</details>
+
+<details>
+
 <summary>Task Type</summary>
+
+It is a "Two Pointers One Array" Task Type. In order to solve the Task you should apply the Approach "Sliding Window". Right is ahead of left but window size is dynamic
 
 This is a task for two pointers, particularly when they both move left to right (like in [this](../longest-letter-subsequence/task.md) task) and _not_ from end or start (like in [this](../most-water/task.md) task). Sometimes two pointers move such that one pointer (left pointer) is always behind the other pointer (right pointer). Such a technique when we have left pointer behind right pointer and per iteration we either increment left pointer or right pointer or per iteration we increment both left and right pointers is called "_Sliding Window_"
 
 You should also note that with Sliding Window technique you don't have to always increment left pointer by one or right pointer by one: the pointers can be set to any index they want so long as left is behind right. Indeed left pointer may even go to the same position as right pointer while right pointer increments by one to be ahead of left pointer. As you can see this Sliding Window we have been talking about may shrink and expand at will
 
-__Note:__ [this task](../longest-letter-subsequence/task.md) is likewise Sliding Window but since Sliding Window Task Type is also Two Pointers Task Type it is listed in that category as well
+__Note:__ [this task](../longest-letter-subsequence/task.md) likewise uses the Sliding Window Approach
 
 __Note:__ you can read more about the "Sliding Window" approach in [this article](../literature/sliding-window.md)
 

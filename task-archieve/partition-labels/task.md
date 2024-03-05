@@ -26,25 +26,32 @@ Output: [10]
 
 <details>
 
+<summary>Approach</summary>
+
+- `Create one or more HashMaps and iterate the HashMap (the HashMaps) in some way`
+- _or_ `Create one or more HashMaps and iterate the array again using the HashMap (the HashMaps)`
+
+</details>
+
+<details>
+
 <summary>Task Type</summary>
 
 This is a "One Pointer One Array and HashMap" Task Type
 
-We have already seen an example of this Task Type when we were solving the ["Contiguous Array" task](../contiguous-array/task.md). But this task is a tar bit more complicated because in the ["Contiguous Array" task](../contiguous-array/task.md) we simply created a HashMap and it helped us solve the task even while we were iterating the input array (or the input data, to be precise) but in _this_ task we can see the Variation (or the Subtype if you will) of the "One Pointer One Array and HashMap" Task Type where we are supposed to _create one or more HashMaps and then do something with all the new data_. Now what does this mean? It means that we need to iterate the array for the first time to create one or more HashMaps and then there are exactly two things that we can do:
+We have already seen an example of this Task Type when we were solving the ["Contiguous Array" task](../contiguous-array/task.md). But this task is a tar bit more complicated because in the ["Contiguous Array" task](../contiguous-array/task.md) we simply created a HashMap and it helped us solve the task even while we were iterating the input array (or the input data, to be precise) but in _this_ task we need to use a different and a bit more complex but very similar Approach to attain the solution. Here are supposed to _create one or more HashMaps and then do something with all the new data_. Now what does this mean? It means that we need to iterate the array for the first time to create one or more HashMaps and then there are exactly two things that we can do:
 
-1. iterate in some way the one or more HashMaps that we created during the first pass (__Variation 1__)
+1. iterate in some way the one or more HashMaps that we created during the first pass ( __Approach 1__ )
 
-2. iterate the input array once again using the knowledge from the one or more HashMaps that we created during the first pass (__Variation 2__)
+2. iterate the input array once again using the knowledge from the one or more HashMaps that we created during the first pass ( __Approach 2__ )
 
 And thus the solution should be revealed
 
-This task is kind of interesting in that we can solve it using either one or the other of the two Variations explained above! In other words we can solve this task _either_ by iterating the HashMap that we create _or_ by iterating the input array once again using the HashMap
+This Task is kind of interesting in that we can solve this Task using either one or the other of the two Approaches mentioned above! In other words we can solve this task _either_ by iterating the HashMap that we create _or_ by iterating the input array once again using the HashMap
 
 See the Hints below if you get stuck
 
 __Note:__ we say "array" here while the function accepts a string. The logic behind this is that we iterate the string the same way as an array and therefore the input string is like an array for us
-
-__Note:__ it is not always that we can solve the task by following either one of the two Variations explained above. For example we have seen the ["Tickets Orderizer" task](../../2\)%20Task%20Challanges.md#37-tickets-orderizer) before and the only way to solve it is to create a HashMap and then iterate the HashMap _specifically_, therefore following Variation 1 but we cannot solve the "Tickets Orderizer" task following Variation 2
 
 </details>
 
@@ -56,7 +63,7 @@ One thing is for sure, we need to create a HashMap where we map the letters to t
 
 <img src=image.png width=550 />
 
-Then follow one of the two Variations of the "One Pointer One Array and HashMap" Task Type that we learned in the Task Type spoiler above
+Then follow one of the two Approaches of the "One Pointer One Array and HashMap" Task Type that we learned in the Task Type spoiler above
 
 </details>
 
@@ -64,9 +71,9 @@ Then follow one of the two Variations of the "One Pointer One Array and HashMap"
 
 <summary>Hint 2</summary>
 
-As we said there are two approaches that we can use to solve this task (the two Variations of the "One Pointer One Array and HashMap" Task Type that we learned in the Task Type spoiler above)
+As we said there are two Approaches that we can use to solve this Task
 
-__Create HashMap and iterate it__
+__Create HashMap and iterate it ( Approach 1 )__
 
 We need to create a HashMap like we have seen in Hint 1 above
 
@@ -76,13 +83,13 @@ In order to solve the task we need to iterate the values of the HashMap and calc
 
 For example the first 3 letters `a`, `b` and `c` form 3 intervals that do overlap: their intervals `[0,8]`, `[1,5]` and `[4,7]` respectively form a contiguous interval of __`[0,8]`__ (smallest letter index and greatest letter index). And if you look further the next four letters `d`, `e`, `f`, and `g` form 4 intervals that do overlap: their intervals `[9,14]`, `[10,15]`, `[11]` and `[13]` respectively form a contiguous interval of __`[9,15]`__ (smallest letter index and greatest letter index). And we can clearly see that the contiguous interval `[0,8]` of `a`, `b`, `c` does _not_ overlap with the contiguous interval `[9,15]` of `d`, `e`, `f`, `g` and therefore we can separate the letters `a`, `b`, `c` into one group and the letters `d`, `e`, `f`, `g` into another group. The lengths of their groups can be determined by the start and end of their contiguous intervals: from `0` to `8` = 9 letters for the first group, from `9` to `15` = 7 letters for the second group, and so on until we have counted all the letters
 
-__Create HashMap and iterate the input array once again__
+__Create HashMap and iterate the input array once again ( Approach 2 )__
 
 This solution is a bit less obvious than the first one
 
 First of all we need to create a HashMap like we have seen in Hint 1 above
 
-Then we need to iterate the input array once again and as we do that this time we should be able to get from the HashMap the _last_ index where any given letter we are looking at has been encountered. As we iterate we should thus keep a counter of the greatest _last_ index where the letters we have already iterated have been encountered. What is crucial to notice for solving this task in this way (Variation 2) is that if we are able to find a letter whose index equals to the greatest _last_ index we have seen thus far then we can separate all the letters that we have seen before into a group as per the requirements of the task. Then it should likewise be somewhat trivial to calculate the _length_ of the group we have thus separated
+Then we need to iterate the input array once again and as we do that this time we should be able to get from the HashMap the _last_ index where any given letter we are looking at has been encountered. As we iterate we should thus keep a counter of the greatest _last_ index where the letters we have already iterated have been encountered. What is crucial to notice for solving this task in this way is that if we are able to find a letter whose index equals to the greatest _last_ index we have seen thus far then we can separate all the letters that we have seen before into a group as per the requirements of the task. Then it should likewise be somewhat trivial to calculate the _length_ of the group we have thus separated
 
 </details>
 

@@ -18,11 +18,21 @@ user2 [(10, 14), (21, 22)]
 
 <details>
 
+<summary>Approach</summary>
+
+- `Two pointers of two arrays increase like in Merge Sort`
+
+</details>
+
+<details>
+
 <summary>Task Type</summary>
 
-It is one of those tasks where you use two pointers (save indexes like `i` and `j` to a variable, `i` is for the 1st array and `j` is for the 2nd array) to iterate __two__ arrays _specially_ for example by increasing / decrasing either one or the other or both pointers per iteration. The part of the "Merge Sort" algorithm that checks two sub-arrays uses similar mechanics ([link](../../snippets/algorithms/merge-sort.js#L12))
+It is a "Two Pointers Two Arrays" Task Type. In order to solve the Task you should apply the Approach "Two pointers of two arrays increase like in Merge Sort"
 
-__Note:__ ["Merge Two Sorted Arrays" task](../../1\)%20Task%20Challanges.md#15-merge-two-sorted-arrays) is the most classic example of a task that uses the approach of solving tasks that has been showcased in this particular task (where we have two pointers that point to two arrays and we increment either one pointer or the other, read above)
+It is one of those tasks where you use two pointers (save indexes like `i` and `j` to a variable, `i` is for the 1st array and `j` is for the 2nd array) to iterate __two__ arrays _specially_ for example by increasing or decrasing either one or the other or both pointers per iteration. The part of the "Merge Sort" algorithm that checks two sub-arrays uses similar mechanics ([link](../../snippets/algorithms/merge-sort.js#L12))
+
+__Note:__ ["Merge Two Sorted Arrays" task](../../1\)%20Task%20Challanges.md#15-merge-two-sorted-arrays) is the most classic example of a task that uses the Approach "Two pointers of two arrays increase like in Merge Sort"
 
 </details>
 

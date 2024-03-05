@@ -35,7 +35,7 @@ _List of tasks_
 - [Letter Combinations of a Phone Number](./letter-combinations-of-a-phone-number/task.md)
 - [Missing Number in Sorted Array](./missing-number-sorted-array/task.md)
 - [Missing Number](./missing-number/task.md)
-- [Distance Between Bus Stops](./distance-between-bus-stops/one-pointer-one-array/task.md)
+- [Distance Between Bus Stops](./distance-between-bus-stops/task.md)
 - [Top K Frequent Elements](./top-k-frequent-elements/task.md)
 - [Move Zeroes](./move-zeroes/task.md)
 - [Unpack IP](./unpack-ip/task.md)

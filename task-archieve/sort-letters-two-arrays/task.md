@@ -52,7 +52,17 @@ To solve this task you need to simply _sort_ the elements of the 2nd array (the 
 
 <details>
 
+<summary>Approach</summary>
+
+- `Swap elements of one or more arrays`
+
+</details>
+
+<details>
+
 <summary>Task Type</summary>
+
+It is a "In-Place Swap and Overwrite" Task Type. In order to solve the Task you should apply the Approach "Swap elements of one or more arrays"
 
 We sort in place the 2nd array but together with the elements of the 2nd array we also swap the elements of the 1st array. There is a whole type of tasks that can be solved by swapping the elements of the array in a clever way (or in our case we swap the elements of the two arrays simultaneously)
 
@@ -67,7 +77,7 @@ function sort(array, order) {
 }
 ```
 
-__Note:__ this example of a solution above (which we said doesn't solve this particular task) doesn't swap but rather overwrites elements of the array. The Task Type we are studying in this particular task is called "In-Place Swap and Overwrite". To solve this particular task you need to swap elements instead of overwriting them and for the overwrite variant of this Task Type feel free to check out the [sibling task](../remove-duplicates-v2/task.md)
+__Note:__ this example of a solution above (which we said doesn't solve this particular task, the reason for it is what we saw in Hint 1) doesn't swap but rather overwrites elements of the array. The Approach we are studying in this particular task is called "Swap elements of one or more arrays". To solve this particular task you need to swap elements instead of overwriting them and for the overwrite Approach of this Task Type feel free to check out the [sibling task](../remove-duplicates-v2/task.md)
 
 __Note:__ we have already seen the ["Push Zeros Case" task](../../2\)%20Task%20Challanges.md#29-push-zeros-case) where we used the In-Place Swap type of algorithm to solve it
 

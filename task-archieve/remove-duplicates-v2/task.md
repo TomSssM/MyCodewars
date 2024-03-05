@@ -28,11 +28,20 @@ It does not matter what you leave beyond the returned k (hence they are undersco
 
 <details>
 
+<summary>Approach</summary>
+
+- `Overwrite elements of one or more arrays`
+  - `The first pointer goes through the array and upon some condition does two things at once: overwrites the value at the second pointer and increments the second pointer`
+
+</details>
+
+<details>
+
 <summary>Task Type</summary>
 
-This is an in-place algorithm just like we have seen in [that task](../sort-letters-two-arrays/task.md) except instead of swapping the elements we are going to be _overwriting_ the elements of the array with new values
+It is a "In-Place Swap and Overwrite" Task Type. In order to solve the Task you should apply the Approach "Overwrite elements of one or more arrays". The first pointer goes through the array and upon some condition does two things at once: overwrites the value at the second pointer and increments the second pointer
 
-__Note:__ we also additionally utilize the "Two Pointers One Array" Task Type technique to help us solve this but the key is overwriting elements
+This is an in-place algorithm just like we have seen in [that task](../sort-letters-two-arrays/task.md) except instead of swapping the elements we are going to be _overwriting_ the elements of the array with new values
 
 So in other words it is the same algorithm type as [that task](../sort-letters-two-arrays/task.md) except in this task we can see its counterpart type where we are overwriting elements of an array instead of swapping elements of an array
 

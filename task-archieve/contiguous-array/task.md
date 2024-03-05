@@ -20,11 +20,19 @@ Explanation: [0, 1] (or [1, 0]) is a longest contiguous subarray with equal numb
 
 <details>
 
+<summary>Approach</summary>
+
+- `Create and use one or more HashMaps as you iterate an array`
+
+</details>
+
+<details>
+
 <summary>Task Type</summary>
 
-It is a "One Pointer One Array and HashMap" Task Type. We can use HashMap to solve this one (except it is not so obvious at first)
+It is a "One Pointer One Array and HashMap" Task Type. We can use HashMap to solve this one (except it is not so obvious at first). The Approach we use here is called "Create and use one or more HashMaps as you iterate an array"
 
-__Note:__ the solution to the ["Remove Duplicate From An Array" task](../../1\)%20Task%20Challanges.md#14-remove-duplicate-from-an-array) is perhaps one of the most classic example of using HashMap to solve a task in `O(n)` time complexity instead of using nested for-loops (therefore "Remove Duplicate From An Array" task is the most classic example of the "One Pointer One Array and HashMap" Task Type, so make sure you understand how it works first before trying to solve this task, it is very crucial!). However _this_ "Contiguous Array" task is more like "One Pointer One Array and HashMap + Counter" Task Type though we can say that it is still "One Pointer One Array and HashMap" Task Type because we use HashMap to solve this task just like in the "Remove Duplicate From An Array" task
+__Note:__ the solution to the ["Remove Duplicate From An Array" task](../../1\)%20Task%20Challanges.md#14-remove-duplicate-from-an-array) is perhaps one of the most classic example of using HashMap to solve a task in `O(n)` time complexity instead of using nested for-loops (therefore "Remove Duplicate From An Array" task is the most classic example of the "One Pointer One Array and HashMap" Task Type, so make sure you understand how it works first before trying to solve this task, it is very crucial)
 
 __Note:__ you can read more about using HashMap to solve tasks in [this article](../literature/hash-map.md) as this and many other tasks requires this knowledge
 

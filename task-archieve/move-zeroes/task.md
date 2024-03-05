@@ -20,9 +20,18 @@ Output: [0]
 
 <details>
 
+<summary>Approach</summary>
+
+- `Overwrite elements of one or more arrays`
+  - `The first pointer goes through the array and upon some condition does two things at once: overwrites the value at the second pointer and increments the second pointer`
+
+</details>
+
+<details>
+
 <summary>Task Type</summary>
 
-It is In-Place Swap and Overwrite Task Type where we overwrite elements of the array. To solve it we need to use 2 pointers: the first pointer goes through the array and if the value is not `0` then it writes this value to where the second pointer is and increments the second pointer. In the end start at the second pointer and write zeroes after it until the end of the array. This task uses the same approach as [this task](../remove-duplicates-v2/task.md)
+It is a "In-Place Swap and Overwrite" Task Type. In order to solve the Task you should apply the Approach "Overwrite elements of one or more arrays" (The first pointer goes through the array and upon some condition does two things at once: overwrites the value at the second pointer and increments the second pointer) just like [this task](../remove-duplicates-v2/task.md)
 
 </details>
 

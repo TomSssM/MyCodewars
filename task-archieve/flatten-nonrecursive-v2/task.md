@@ -14,11 +14,21 @@ Also you cannot use recursion because an array can be very big and nested very d
 
 <details>
 
+<summary>Approach</summary>
+
+- `Do while loop while Stack is not empty popping and pushing along the way`
+
+</details>
+
+<details>
+
 <summary>Task Type</summary>
 
-You can achieve the non-recursive solution by using a simple "stack and while loop" technique but at least one way of solving this means pushing elements into the stack in reverse order
+It is a "Stack or Queue" Task Type. In order to solve the Task you should apply the Approach "Do while loop while Stack is not empty popping and pushing along the way"
 
-__Note:__ the same techique of using a stack or a queue and a while loop was used to perform the depth-first search or breadth-first search of a Binary Tree for example [here](../../corejs-codejam/task/07-yield-tasks.js#L113) or [here](../../corejs-codejam/task/07-yield-tasks.js#L147) (alternatively [here](../../snippets/Data%20Structures/binary-search-tree.js#L222))
+The key to solving this particular Task is to see that you also need to push elements into the Stack in reverse order
+
+__Note:__ the same Approach of using a Stack or a Queue and a while loop was used to perform the depth-first search or breadth-first search of a Binary Tree for example [here](../../corejs-codejam/task/07-yield-tasks.js#L113) or [here](../../corejs-codejam/task/07-yield-tasks.js#L147) (alternatively [here](../../snippets/Data%20Structures/binary-search-tree.js#L222))
 
 </details>
 

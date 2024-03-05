@@ -18,13 +18,23 @@ longestStr('ababababccddddddd', 3); // L=17 N=4 K=3 result: 10
 
 <details>
 
+<summary>Approach</summary>
+
+- `Sliding Window`
+  - `Right is ahead of left but window size is dynamic`
+- `Create and use one or more HashMaps as you iterate an array`
+
+</details>
+
+<details>
+
 <summary>Task Type</summary>
 
-It is one of those tasks where you use two pointers (save indexes like `i` and `j` to a variable) to iterate an array _specially_ for example by increasing / decrasing either one or the other or both pointers per iteration. Here is [another task](../most-water/task.md) whose solution uses similar mechanics
+We combine the Approaches of "Sliding Window" (right is ahead of left but window size is dynamic) and "Create and use one or more HashMaps as you iterate an array" to solve this Task
 
-But for this particular task you may also need to enable the _power of hashmap_
+It is one of those tasks where you use two pointers (save indexes like `i` and `j` to a variable) to iterate an array _specially_ for example by increasing or decrasing either one or the other or both pointers per iteration. Here is [another task](../most-water/task.md) whose solution uses similar mechanics. But for this particular task you may also need to enable the _power of HashMap_ and the _Sliding Window_ technique
 
-__Note:__ the approach used in this task is called "_Sliding Window_". The particulars of this approach are also discussed in [this task](../best-time-to-buy-and-sell-stock/task.md) (same Task Type) but you can also read more about the "Sliding Window" approach in [this article](../literature/sliding-window.md)
+__Note:__ one of the Approaches used in this task is called "_Sliding Window_". The particulars of this Approach are also discussed in [this task](../best-time-to-buy-and-sell-stock/task.md) but you can also read more about the "Sliding Window" Approach in [this article](../literature/sliding-window.md)
 
 __Note:__ in order to find out how to use HashMap to solve tasks, please see [this task](../contiguous-array/task.md) or simply read [this article](../literature/hash-map.md)
 

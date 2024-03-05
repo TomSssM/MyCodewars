@@ -28,6 +28,14 @@ Explanation: n = 9 since there are 9 numbers, so all numbers are in the range [0
 
 <details>
 
+<summary>Approach</summary>
+
+- `Find the relation of the indexes to values of the array`
+
+</details>
+
+<details>
+
 <summary>Task Type</summary>
 
 This is a classic task where you need to look at and analyze the _relation_ between the indexes of the array, or the _relation_ between the values of the array, or the _relation_ of the indexes to the values of the array. Basically it could mean something like this: see what index (or value) the element of the array had and what index (or value) the element of the array should have in the solution and find the relation between these two

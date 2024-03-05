@@ -29,11 +29,19 @@ Notice that the answer must be a substring, "pwke" is a subsequence and not a su
 
 <details>
 
+<summary>Approach</summary>
+
+- `Sliding Window`
+  - `Right is ahead of left but window size is dynamic`
+- `Create and use one or more HashMaps as you iterate an array`
+
+</details>
+
+<details>
+
 <summary>Task Type</summary>
 
-Sliding Window + HashMap
-
-Just like [this task](../longest-letter-subsequence/task.md)
+We combine the Approaches of "Sliding Window" (right is ahead of left but window size is dynamic) and "Create and use one or more HashMaps as you iterate an array" to solve this Task just like [this task](../longest-letter-subsequence/task.md)
 
 </details>
 
