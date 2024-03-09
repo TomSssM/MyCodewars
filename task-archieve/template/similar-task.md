@@ -19,7 +19,7 @@ TODO: optional: hint description
 
   <summary><i><b><code>TODO: Approach 1</code></b></i></summary>
 
-    Just like [this task](TODO: link). TODO: optional details
+    Just like [this task](TODO: link). TODO: optional: details
 
   </details>
 
