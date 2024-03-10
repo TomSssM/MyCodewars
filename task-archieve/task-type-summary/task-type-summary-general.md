@@ -1,8 +1,8 @@
 # Task Type Summary General
 
-## One Pointer One Array
+## __`One Pointer One Array`__
 
-1. Iterate an array
+1. __*`Iterate an array`*__
     <details>
 
     <summary>Code</summary>
@@ -21,7 +21,7 @@
 
     </details>
 
-2. Iterate an array in reverse
+2. __*`Iterate an array in reverse`*__
     <details>
 
     <summary>Code</summary>
@@ -40,7 +40,7 @@
 
     </details>
 
-3. Use values as indexes
+3. __*`Use values as indexes`*__
     <details>
 
     <summary>Code</summary>
@@ -61,9 +61,9 @@
 
 ---
 
-## Two Pointers Two Arrays
+## __`Two Pointers Two Arrays`__
 
-1. Two pointers of two arrays increase like in Merge Sort
+1. __*`Two pointers of two arrays increase like in Merge Sort`*__
     <details>
 
     <summary>Code</summary>
@@ -99,9 +99,9 @@
 
 ---
 
-## Two Pointers One Array
+## __Two Pointers One Array__
 
-1. Two pointers go from start and end until some condition
+1. __*`Two pointers go from start and end until some condition`*__
     <details>
 
     <summary>Code</summary>
@@ -125,8 +125,8 @@
 
     </details>
 
-2. _Sliding Window_
-    1. Right is always ahead of left and window size is fixed
+2. __*`Sliding Window`*__
+    1. __*`Right is always ahead of left and window size is fixed`*__
         <details>
 
         <summary>Code</summary>
@@ -152,7 +152,7 @@
 
         </details>
 
-    2. Right is ahead of left but window size is dynamic
+    2. __*`Right is ahead of left but window size is dynamic`*__
         <details>
 
         <summary>Code</summary>
@@ -184,7 +184,7 @@
 
         </details>
 
-    3. Right is ahead of left but window size is dynamic and right meets left sometimes (they both look at the same element)
+    3. __*`Right is ahead of left but window size is dynamic and right meets left sometimes (they both look at the same element)`*__
         <details>
 
         <summary>Code</summary>
@@ -218,9 +218,9 @@
 
 ---
 
-## One Pointer One Array and One or More Counters
+## __One Pointer One Array and One or More Counters__
 
-1. Iterate an array keeping one or more counters
+1. __*`Iterate an array keeping one or more counters`*__
     <details>
 
     <summary>Code</summary>
@@ -239,9 +239,9 @@
 
 ---
 
-## One Pointer One Array and HashMap
+## __One Pointer One Array and HashMap__
 
-1. Create and use one or more HashMaps as you iterate an array
+1. __*`Create and use one or more HashMaps as you iterate an array`*__
     <details>
 
     <summary>Code</summary>
@@ -258,7 +258,7 @@
 
     </details>
 
-2. Create one or more HashMaps and iterate the HashMap (the HashMaps) in some way
+2. __*`Create one or more HashMaps and iterate the HashMap (the HashMaps) in some way`*__
     <details>
 
     <summary>Code</summary>
@@ -277,7 +277,7 @@
 
     </details>
 
-3. Create one or more HashMaps and iterate the array again using the HashMap (the HashMaps)
+3. __*`Create one or more HashMaps and iterate the array again using the HashMap (the HashMaps)`*__
     <details>
 
     <summary>Code</summary>
@@ -300,9 +300,9 @@
 
 ---
 
-## One Pointer One Array and Stack
+## __One Pointer One Array and Stack__
 
-1. Create and use one or more Stacks as you iterate an array
+1. __*`Create and use one or more Stacks as you iterate an array`*__
     <details>
 
     <summary>Code</summary>
@@ -321,9 +321,9 @@
 
 ---
 
-## Stack or Queue
+## __Stack or Queue__
 
-1. Do while loop while Stack is not empty popping and pushing along the way
+1. __*`Do while loop while Stack is not empty popping and pushing along the way`*__
     <details>
 
     <summary>Code</summary>
@@ -342,7 +342,7 @@
 
     </details>
 
-2. Do while loop while Queue is not empty queueing and dequeueing along the way
+2. __*`Do while loop while Queue is not empty queueing and dequeueing along the way`*__
     <details>
 
     <summary>Code</summary>
@@ -361,7 +361,7 @@
 
     </details>
 
-3. Merge two Queues of prefixes
+3. __*`Merge two Queues of prefixes`*__
     <details>
 
     <summary>Code</summary>
@@ -415,17 +415,17 @@
 
 ---
 
-## Array Relation of Indexes or Values or Indexes to Values
+## __Array Relation of Indexes or Values or Indexes to Values__
 
-1. Find the relation between the indexes of the array
-2. Find the relation between the values of the array
-3. Find the relation of the indexes to values of the array
+1. __*`Find the relation between the indexes of the array`*__
+2. __*`Find the relation between the values of the array`*__
+3. __*`Find the relation of the indexes to values of the array`*__
 
 ---
 
-## Array Math Operation on All Elements
+## __Array Math Operation on All Elements__
 
-1. Do math or bitwise operation on all the elements of the array
+1. __*`Do math or bitwise operation on all the elements of the array`*__
     <details>
 
     <summary>Code</summary>
@@ -446,7 +446,7 @@
 
     </details>
 
-2. Do math or bitwise operation first on all the elements of the array and then to the same counter on all the elements that should be in array
+2. __*`Do math or bitwise operation first on all the elements of the array and then to the same counter on all the elements that should be in array`*__
     <details>
 
     <summary>Code</summary>
@@ -473,7 +473,7 @@
 
     </details>
 
-3. Do math or bitwise operation first on one part of the array and then on another part of of the array
+3. __*`Do math or bitwise operation first on one part of the array and then on another part of of the array`*__
     <details>
 
     <summary>Code</summary>
@@ -510,9 +510,9 @@
 
 ---
 
-## In-Place Swap and Overwrite
+## __In-Place Swap and Overwrite__
 
-1. Swap elements of one or more arrays
+1. __*`Swap elements of one or more arrays`*__
     <details>
 
     <summary>Code</summary>
@@ -531,8 +531,8 @@
 
     </details>
 
-2. Overwrite elements of one or more arrays
-    1. The first pointer goes through the array and upon some condition does two things at once: overwrites the value at the second pointer and increments the second pointer
+2. __*`Overwrite elements of one or more arrays`*__
+    1. __*`The first pointer goes through the array and upon some condition does two things at once: overwrites the value at the second pointer and increments the second pointer`*__
         <details>
 
         <summary>Code</summary>
@@ -564,7 +564,7 @@
 
         </details>
 
-    2. Iterate the array and get some information. Then based on this information iterate the array again overwriting its values
+    2. __*`Iterate the array and get some information. Then based on this information iterate the array again overwriting its values`*__
         <details>
 
         <summary>Code</summary>
@@ -587,9 +587,9 @@
 
 ---
 
-## Matrix
+## __Matrix__
 
-1. Iterate a matrix
+1. __*`Iterate a matrix`*__
     <details>
 
     <summary>Code</summary>
@@ -631,9 +631,9 @@
 
 ---
 
-## Numbers Math
+## __Numbers Math__
 
-1. Use Prime Numbers
+1. __*`Use Prime Numbers`*__
     <details>
 
     <summary>Code</summary>
@@ -689,7 +689,7 @@
 
     </details>
 
-2. Use Fibonacci Sequence
+2. __*`Use Fibonacci Sequence`*__
     <details>
 
     <summary>Code</summary>
@@ -749,9 +749,9 @@
 
 ---
 
-## Check if Puzzle is Solvable
+## __Check if Puzzle is Solvable__
 
-1. Call the function recursively and see if it solves the puzzle
+1. __*`Call the function recursively and see if it solves the puzzle`*__
     <details>
 
     <summary>Code</summary>
@@ -776,12 +776,14 @@
 
 ---
 
-## Backtracking
+## __Backtracking__
 
-1. Get all permutations of values of an array in any order (call the function recursively taking out each element out of the array per iteration)
+1. __*`Get all permutations of values of an array in any order`*__
     <details>
 
     <summary>Code</summary>
+
+    Call the function recursively taking out each element out of the array per iteration
 
     ```js
     function approach(array) {
@@ -816,10 +818,12 @@
 
     </details>
 
-2. Get all unique combinations of values of an array in any order (do Depth-first Search of Array)
+2. __*`Get all unique combinations of values of an array in any order`*__
     <details>
 
     <summary>Code</summary>
+
+    Depth-first Search of Array
 
     ```js
     function approach(array) {
@@ -851,10 +855,12 @@
 
     </details>
 
-3. Get all unique combinations of values of many arrays in any order (adapt the approach called "Merge two Queues of prefixes")
+3. __*`Get all unique combinations of values of many arrays in any order`*__
     <details>
 
     <summary>Code</summary>
+
+    Adapt the Approach _`Merge two Queues of prefixes`_
 
     __*queue:*__
 

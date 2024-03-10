@@ -1,9 +1,13 @@
-## Task Type
+## __`Task Type`__
 
-1. Approach
+1. __*`Approach`*__
     <details>
 
     <summary>Code</summary>
+
+    TODO: optional: Short description
+
+    __*variation:*__
 
     ```js
     function approach() {

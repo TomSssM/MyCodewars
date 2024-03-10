@@ -28,7 +28,7 @@ Explanation: There is 1 choose 1 = 1 total combination
 - __`Backtracking`__
   <details>
 
-  <summary><i><b><code>Get all unique combinations of values of an array in any order (do Depth-first Search of Array)</code></b></i></summary>
+  <summary><i><b><code>Get all unique combinations of values of an array in any order</code></b></i></summary>
 
     This task is for __*Recursive Backtracking*__. You should use it to do __*Depth-first Search of Array*__ (read on to know what this means). What we need to do here is get all unique combinations of values of an array in any order
 
