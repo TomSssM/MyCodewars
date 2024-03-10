@@ -36,20 +36,18 @@ Explanation: The ranges are:
 
 <details>
 
-<summary>Approach</summary>
-
-- `Sliding Window`
-  - `Right is ahead of left but window size is dynamic and right meets left sometimes (they both look at the same element)`
-
-</details>
-
-<details>
-
 <summary>Task Type</summary>
 
-It is a "Two Pointers One Array" Task Type. In order to solve the Task you should apply the Approach "Sliding Window". Except one rather crucial difference of the Approach used here from the Sliding Window Approach we have seen in [this Task](../best-time-to-buy-and-sell-stock/task.md) is that the right and the left pointers may be looking at _the same element_ of the array. This intricacy is utilized here somewhat to get a really elegant solution
+- __`Two Pointers One Array`__
+  <details>
 
-__Note:__ read more about Sliding Window in [this article](../literature/sliding-window.md)
+  <summary><i><b><code>Sliding Window. Right is ahead of left but window size is dynamic and right meets left sometimes (they both look at the same element)</code></b></i></summary>
+
+    In order to solve the Task you should apply the Approach _`Sliding Window. Right is ahead of left but window size is dynamic and right meets left sometimes (they both look at the same element)`_. Except one rather crucial difference of the Approach used here from the Sliding Window Approach we have seen in [this Task](../best-time-to-buy-and-sell-stock/task.md) is that the right and the left pointers may be looking at _the same element_ of the array. This intricacy is utilized here somewhat to get a really elegant solution
+
+    __Note:__ read more about Sliding Window in [this article](../literature/sliding-window.md)
+
+  </details>
 
 </details>
 

@@ -23,9 +23,26 @@ TODO: optional: hint description
 
   </details>
 
----
+</details>
+
+<!-- MOST COMMON TEMPLATE:
+<details>
+
+<summary>Task Type</summary>
+
+- __`TODO: Task Type 1`__
+  <details>
+
+  <summary><i><b><code>TODO: Approach 1</code></b></i></summary>
+
+    Just like [this task](TODO: link)
+
+    TODO: optional: details
+
+  </details>
 
 </details>
+-->
 
 ---
 

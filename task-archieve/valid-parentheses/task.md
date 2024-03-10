@@ -30,27 +30,20 @@ Output: false
 
 <details>
 
-<summary>Approach</summary>
-
-- `Create and use one or more Stacks as you iterate an array`
-
-</details>
-
-<details>
-
 <summary>Task Type</summary>
 
-It is a "One Pointer One Array and _Stack_" Task Type. So you need to iterate a string as an array and use a Stack in order to solve the task
+- __`One Pointer One Array and Stack`__
+  <details>
 
-</details>
+  <summary><i><b><code>Create and use one or more Stacks as you iterate an array</code></b></i></summary>
 
-<details>
+    So you need to iterate a string as an array and use a Stack in order to solve the task
 
-<summary>Hint</summary>
+    If you encounter an opening bracket then you need to push it to the Stack. If you encounter a closing bracket then you need to pop the opening bracket off the Stack (only make sure that you pop off the same type of opening bracket as you found a closing bracket for otherwise the brackets are placed incorrectly)
 
-If you encounter an opening bracket then you need to push it to the Stack. If you encounter a closing bracket then you need to pop off the Stack (only make sure that you pop the same type of opening bracket as you found a closing bracket otherwise the brackets are placed incorrectly)
+    __Note:__ we have already given a try to solving this task [here](../../cheatsheet/brackets/README.md)
 
-__Note:__ we have already given a try to solving this task [here](../../cheatsheet/brackets/README.md)
+  </details>
 
 </details>
 

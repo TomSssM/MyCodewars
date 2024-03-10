@@ -23,73 +23,64 @@ Explanation: There is 1 choose 1 = 1 total combination
 
 <details>
 
-<summary>Approach</summary>
-
-- `Get all unique combinations of values of an array in any order (do Depth-first Search of Array)`
-
-</details>
-
-<details>
-
 <summary>Task Type</summary>
 
-It is a "Backtracking" Task Type. In order to solve the Task you should apply the Approach "Get all unique combinations of values of an array in any order"
+- __`Backtracking`__
+  <details>
 
-Like we said this task is for __*Recursive Backtracking*__. You should use it to do __*Depth-first Search of Array*__ (read the Hint for what this means). What we need to do here is get all unique combinations of values of an array in any order
+  <summary><i><b><code>Get all unique combinations of values of an array in any order (do Depth-first Search of Array)</code></b></i></summary>
 
-</details>
+    This task is for __*Recursive Backtracking*__. You should use it to do __*Depth-first Search of Array*__ (read on to know what this means). What we need to do here is get all unique combinations of values of an array in any order
 
-<details>
+    Note that unlike the ["Permutations of a String" task](../../2\)%20Task%20Challanges.md#28-permutations-of-a-string), in this task we are supposed to return the output in __any order__, also we want _combinations_ of values of an array and not _permutations_ like in the "Permutations of a String" task (so basically we are going to combine values of an array instead of re-arranging them the difference being that `[1,2]` and `[2,1]` are different permutations but these are the same combination of the elements). So for this task the order of the combinations doesn't matter. When the order of the combinations doesn't matter you should apply a backtracking algorithm that is actually different from the one we saw before in the "Permutations of a String" task in order not to come up with duplicates (i.e., `[1,2]` and `[2,1]`)
 
-<summary>Hint</summary>
+    Basically the "Permutations of a String" task uses the Approach _`Get all permutations of values of an array in any order`_ while in this particular task we need to use the Approach _`Get all unique combinations of values of an array in any order`_
 
-This task is for __*Recursive Backtracking*__. Note that unlike the ["Permutations of a String" task](../../2\)%20Task%20Challanges.md#28-permutations-of-a-string), in this task we are supposed to return the output in __any order__, also we want _combinations_ of values of an array and not _permutations_ like in the "Permutations of a String" task (so basically we are going to combine values of an array instead of re-arranging them the difference being that `[1,2]` and `[2,1]` are different permutations but these are the same combination of the elements). So for this task the order of the combinations doesn't matter. When the order of the combinations doesn't matter you should apply a backtracking algorithm that is actually different from the one we saw before in the "Permutations of a String" task in order not to come up with duplicates (i.e., `[1,2]` and `[2,1]`)
+    While in the "Permutations of a String" task we would iterate the array and take out one element out of the array and get the rest of the permutations by recursively backtracking thereby always splitting the array into smaller and smaller chunks what we need to do here is somewhat the opposite though similar: we need to apply the function that by recursively backtracking builds back the array into bigger and bigger chunks (appending elements on the right to the elements on the left)
 
-Basically the "Permutations of a String" task uses the Approach "Get all permutations of values of an array in any order" while in this particular task we need to use the Approach "Get all unique combinations of values of an array in any order"
+    This is what the output of the function should look like:
 
-While in the "Permutations of a String" task we would iterate the array and take out one element out of the array and get the rest of the permutations by recursively backtracking thereby always splitting the array into smaller and smaller chunks what we need to do here is somewhat the opposite though similar: we need to apply the function that by recursively backtracking builds back the array into bigger and bigger chunks (appending elements on the right to the elements on the left)
+    ```
+    Input: [1,2,3]
+    Output: [
+      [],
+      [1],              [2],           [3],
+      [1,2],[1,3],      [2,3]
+      [1,2,3],
+    ]
+    ```
 
-This is what the output of the function should look like:
+    Every level (for example `[1], [2], [3]` is level 1, `[1,2],[1,3], [2,3]` is level 2 and `[1,2,3]` is level 3) indicates the depth of the call stack (thus every next level is a recursive call) and every element separated by a space " " indicates iterations within the same function call
 
-```
-Input: [1,2,3]
-Output: [
-  [],
-  [1],              [2],           [3],
-  [1,2],[1,3],      [2,3]
-  [1,2,3],
-]
-```
+    Here is the function:
 
-Every level (for example `[1], [2], [3]` is level 1, `[1,2],[1,3], [2,3]` is level 2 and `[1,2,3]` is level 3) indicates the depth of the call stack (thus every next level is a recursive call) and every element separated by a space " " indicates iterations within the same function call
+    ```js
+    function backtrack(arr) {
+      const result = [];
 
-Here is the function:
+      function dfs(cur, offset) { // depth first search
+        result.push(cur);
 
-```js
-function backtrack(arr) {
-  const result = [];
+        if (offset === arr.length) {
+          return;
+        }
 
-  function dfs(cur, offset) { // depth first search
-    result.push(cur);
+        for (let i = offset; i < arr.length; i++) {
+          dfs(cur.concat(arr[i]), i + 1);
+        }
+      }
 
-    if (offset === arr.length) {
-      return;
+      dfs([], 0);
+
+      return result;
     }
+    ```
 
-    for (let i = offset; i < arr.length; i++) {
-      dfs(cur.concat(arr[i]), i + 1);
-    }
-  }
+    In order to solve the task you need to tweak this function to suit your needs
 
-  dfs([], 0);
+    __Note:__ we called the recursive function inside the `backtrack` function as `dfs` meaning _Depth-first Search_ because it behaves similarly to the Depth-first Search in Binary Trees (or Graphs) but please don't confuse the two: the Binary Trees versions can be found [here](../../corejs-codejam/test/07-yield-tests.js#L457), [here](../../corejs-codejam/task/07-yield-tasks.js#L113) and of course [here](../../snippets/Data%20Structures/binary-search-tree.js)
 
-  return result;
-}
-```
-
-In order to solve the task you need to tweak this function to suit your needs
-
-__Note:__ we called the recursive function inside the `backtrack` function as `dfs` meaning _Depth-first Search_ because it behaves similarly to the Depth-first Search in Binary Trees (or Graphs) but please don't confuse the two: the Binary Trees versions can be found [here](../../corejs-codejam/test/07-yield-tests.js#L457), [here](../../corejs-codejam/task/07-yield-tasks.js#L113) and of course [here](../../snippets/Data%20Structures/binary-search-tree.js)
+  </details>
 
 </details>
 

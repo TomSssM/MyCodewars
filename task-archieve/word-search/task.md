@@ -33,21 +33,18 @@ Output: false
 
 <details>
 
-<summary>Approach</summary>
-
-- `Call the function recursively and see if it solves the puzzle`
-
-</details>
-
-<details>
-
 <summary>Task Type</summary>
 
-It is a "Check if Puzzle is Solvable" Task Type. In order to solve the Task you should apply the Approach "Call the function recursively and see if it solves the puzzle"
+- __`Check if Puzzle is Solvable`__
+  <details>
 
-This task is similar to [Sudoku solver](../../cheatsheet/sudoku.js) where you call a function to see if you can solve the game starting at a certain position as you iterate through the board
+  <summary><i><b><code>Call the function recursively and see if it solves the puzzle</code></b></i></summary>
 
-In this task we should see if a letter matches the one in the word and if so recursively check its neighbors as well as marking the letters that we looked at
+    This task is similar to [Sudoku solver](../../cheatsheet/sudoku.js) where you call a function to see if you can solve the game starting at a certain position as you iterate through the board
+
+    In this task we should see if a letter matches the one in the word and if so recursively check its neighbors as well as marking the letters that we looked at
+
+  </details>
 
 </details>
 

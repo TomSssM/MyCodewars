@@ -30,14 +30,6 @@ Output: false
 
 <details>
 
-<summary>Approach</summary>
-
-- ``
-
-</details>
-
-<details>
-
 <summary>Task Type</summary>
 
 </details>

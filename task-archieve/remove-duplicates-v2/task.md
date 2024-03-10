@@ -28,30 +28,26 @@ It does not matter what you leave beyond the returned k (hence they are undersco
 
 <details>
 
-<summary>Approach</summary>
-
-- `Overwrite elements of one or more arrays`
-  - `The first pointer goes through the array and upon some condition does two things at once: overwrites the value at the second pointer and increments the second pointer`
-
-</details>
-
-<details>
-
 <summary>Task Type</summary>
 
-It is a "In-Place Swap and Overwrite" Task Type. In order to solve the Task you should apply the Approach "Overwrite elements of one or more arrays". The first pointer goes through the array and upon some condition does two things at once: overwrites the value at the second pointer and increments the second pointer
+- __`In-Place Swap and Overwrite`__
+  <details>
 
-This is an in-place algorithm just like we have seen in [that task](../sort-letters-two-arrays/task.md) except instead of swapping the elements we are going to be _overwriting_ the elements of the array with new values
+  <summary><i><b><code>Overwrite elements of one or more arrays. The first pointer goes through the array and upon some condition does two things at once: overwrites the value at the second pointer and increments the second pointer</code></b></i></summary>
 
-So in other words it is the same algorithm type as [that task](../sort-letters-two-arrays/task.md) except in this task we can see its counterpart type where we are overwriting elements of an array instead of swapping elements of an array
+    This is an in-place algorithm just like we have seen in [that task](../sort-letters-two-arrays/task.md) except instead of swapping the elements we are going to be _overwriting_ the elements of the array with new values
 
-There are only two types of in-place algorithms: swapping and overwriting. Here is a quote from Wikipedia to prove my point:
+    So in other words it is the same algorithm type as [that task](../sort-letters-two-arrays/task.md) except in this task we can see its counterpart type where we are overwriting elements of an array instead of swapping elements of an array
 
-"""
+    There are only two types of in-place algorithms: swapping and overwriting. Here is a quote from Wikipedia to prove my point:
 
-_In computer science, an in-place algorithm is an algorithm which transforms input using no auxiliary data structure. However, a small amount of extra storage space is allowed for auxiliary variables. The input is usually overwritten by the output as the algorithm executes. An in-place algorithm updates its input sequence only through replacement or swapping of elements. An algorithm which is not in-place is sometimes called not-in-place or out-of-place._
+    """
 
-"""
+    _In computer science, an in-place algorithm is an algorithm which transforms input using no auxiliary data structure. However, a small amount of extra storage space is allowed for auxiliary variables. The input is usually overwritten by the output as the algorithm executes. An in-place algorithm updates its input sequence only through replacement or swapping of elements. An algorithm which is not in-place is sometimes called not-in-place or out-of-place._
+
+    """
+
+  </details>
 
 </details>
 

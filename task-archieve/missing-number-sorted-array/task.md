@@ -28,19 +28,18 @@ Explanation: n = 9 since there are 9 numbers, so all numbers are in the range [0
 
 <details>
 
-<summary>Approach</summary>
-
-- `Find the relation of the indexes to values of the array`
-
-</details>
-
-<details>
-
 <summary>Task Type</summary>
 
-This is a classic task where you need to look at and analyze the _relation_ between the indexes of the array, or the _relation_ between the values of the array, or the _relation_ of the indexes to the values of the array. Basically it could mean something like this: see what index (or value) the element of the array had and what index (or value) the element of the array should have in the solution and find the relation between these two
+- __`Array Relation of Indexes or Values or Indexes to Values`__
+  <details>
 
-To solve this particular task you should merely see the _relation_ of the indexes to the values of the array in that each value in the array should be _equal_ to its index and if it is not then the index of the value is the missing number!
+  <summary><i><b><code>Find the relation of the indexes to values of the array</code></b></i></summary>
+
+    This is a classic task where you need to look at and analyze the _relation_ between the indexes of the array, or the _relation_ between the values of the array, or the _relation_ of the indexes to the values of the array. Basically it could mean something like this: see what index (or value) the element of the array had and what index (or value) the element of the array should have in the solution and find the relation between these two
+
+    To solve this particular task you should merely see the _relation_ of the indexes to the values of the array in that each value in the array should be _equal_ to its index and if it is not then the index of the value is the missing number!
+
+  </details>
 
 </details>
 

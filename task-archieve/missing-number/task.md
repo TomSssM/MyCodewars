@@ -28,40 +28,39 @@ Explanation: n = 9 since there are 9 numbers, so all numbers are in the range [0
 
 <details>
 
-<summary>Approach</summary>
-
-- `Do math or bitwise operation first on all the elements of the array and then to the same counter on all the elements that should be in array`
-
-</details>
-
-<details>
-
 <summary>Task Type</summary>
 
-We can assume this task to be a "One Pointer One Array and HashMap" Task Type and solve it this way using a HashMap:
+- __`Array Math Operation on All Elements`__
+  <details>
 
-```js
-function missingNumber(nums) {
-  const len = nums.length;
-  const hashMap = {};
+  <summary><i><b><code>Do math or bitwise operation first on all the elements of the array and then to the same counter on all the elements that should be in array</code></b></i></summary>
 
-  for (const num of nums) {
-    hashMap[num] = true;
-  }
+    We can assume this task to be a `One Pointer One Array and HashMap` Task Type and solve it this way using a HashMap:
 
-  for (let i = 0; i < len; i++) {
-    if (!hashMap[i]) {
-      return i;
+    ```js
+    function missingNumber(nums) {
+      const len = nums.length;
+      const hashMap = {};
+
+      for (const num of nums) {
+        hashMap[num] = true;
+      }
+
+      for (let i = 0; i < len; i++) {
+        if (!hashMap[i]) {
+          return i;
+        }
+      }
+
+      return len;
     }
-  }
+    ```
 
-  return len;
-}
-```
+    But we can solve it even more effectively if we treat it as `Array Math Operation on All Elements` Task Type and apply XOR operation for all the elements of the array similar to [that task](../single-number/task.md) (we XOR `0` by all the elements of the array and save the result to some _counter_). However for this particular task you may need to apply the Math Operation (in our case XOR) _twice_: first for all the elements of the array, then to the same _counter_ for all the elements that _should be_ in the array (similar to the HashMap solution above). Thus you need to utilize the Approach _`Do math or bitwise operation first on all the elements of the array and then to the same counter on all the elements that should be in array`_
 
-But we can solve it even more effectively if we treat it as "Array Math Operation on All Elements" Task Type and apply XOR operation for all the elements of the array similar to [that task](../single-number/task.md) (we XOR `0` by all the elements of the array and save the result to some _counter_). However for this particular task you may need to apply the Math Operation (in our case XOR) _twice_: first for all the elements of the array, then to the same _counter_ for all the elements that _should be_ in the array (similar to the HashMap solution above). Thus you need to utilize the Approach "Do math or bitwise operation first on all the elements of the array and then to the same counter on all the elements that should be in array"
+    __Note:__ this task can also be solved not only by doing a XOR but also by applying a Math formula for all the elements of the array. You can find this solution [here](../../2\)%20Task%20Challanges.md#23-find-a-missing-number-in-an-unsorted-array)
 
-__Note:__ this task can also be solved not only by doing a XOR but also by applying a Math formula for all the elements of the array. You can find this solution [here](../../2\)%20Task%20Challanges.md#23-find-a-missing-number-in-an-unsorted-array)
+  </details>
 
 </details>
 

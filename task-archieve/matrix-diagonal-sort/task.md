@@ -35,17 +35,16 @@ Here is an example:
 
 <details>
 
-<summary>Approach</summary>
-
-- `Iterate a matrix`
-
-</details>
-
-<details>
-
 <summary>Task Type</summary>
 
-This is a Matrix Task Type using Matrix mechanics or you could also say that you need to look at the _relation_ between the indexes of the array like [here](../zigzag-conversion/task.md)
+- __`Matrix`__
+  <details>
+
+  <summary><i><b><code>Iterate a matrix</code></b></i></summary>
+
+    This is a `Matrix` Task Type using Matrix mechanics or you could also say that you need to look at the _relation_ between the indexes of the array like [here](../zigzag-conversion/task.md)
+
+  </details>
 
 </details>
 

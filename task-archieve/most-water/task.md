@@ -57,19 +57,16 @@ Start with the maximum width container and go to a shorter width container if th
 
 <details>
 
-<summary>Approach</summary>
-
-- `Two pointers go from start and end until some condition`
-
-</details>
-
-<details>
-
 <summary>Task Type</summary>
 
-It is a "Two Pointers One Array" Task Type. In order to solve the Task you should apply the Approach "Two pointers go from start and end until some condition"
+- __`Two Pointers One Array`__
+  <details>
 
-For the solution of this particular task your left pointer going from the start to the end and your right pointer going from the end to the start are going to form a rectangular space. You need to note the size of that space formed by the left and right pointers and keep increasing either the left pointer or the right one depending on which one has the smaller height. This allows us to try and find the biggest rectangular space that can be formed by two pointers and thus attain the solution. The business logic of this Task is somewhat related to geometry by its nature
+  <summary><i><b><code>Two pointers go from start and end until some condition</code></b></i></summary>
+
+    For the solution of this particular task your left pointer going from the start to the end and your right pointer going from the end to the start are going to form a rectangular space. You need to note the size of that space formed by the left and right pointers and keep increasing either the left pointer or the right one depending on which one has the smaller height. This allows us to try and find the biggest rectangular space that can be formed by two pointers and thus attain the solution. The business logic of this Task is somewhat related to geometry by its nature
+
+  </details>
 
 </details>
 

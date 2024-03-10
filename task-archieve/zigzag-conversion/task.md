@@ -45,21 +45,18 @@ __Output:__ `"A"`
 
 <details>
 
-<summary>Approach</summary>
-
-- `Find the relation between the indexes of the array`
-
-</details>
-
-<details>
-
 <summary>Task Type</summary>
 
-It is a "Array Relation of Indexes or Values or Indexes to Values" Task Type. In order to solve the Task you should apply the Approach "Find the relation between the indexes of the array"
+- __`Array Relation of Indexes or Values or Indexes to Values`__
+  <details>
 
-To solve this Task you need to analyze the _relation_ between the indexes of the characters of the string treating the string as an array
+  <summary><i><b><code>Find the relation between the indexes of the array</code></b></i></summary>
 
-The spoiler below entitled "Pseudo code" has some of the logic of that _relation_ depicted in a form that suggests the idea of the solution
+    To solve this Task you need to analyze the _relation_ between the indexes of the characters of the string treating the string as an array
+
+    The spoiler below entitled "Pseudo code" has some of the logic of that _relation_ depicted in a form that suggests the idea of the solution
+
+  </details>
 
 </details>
 

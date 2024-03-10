@@ -38,21 +38,27 @@ Explanation: Distance between 0 and 3 is 6 or 4, minimum is 4
 
 <details>
 
-<summary>Approach</summary>
-
-- `Iterate an array`
-- `Iterate an array in reverse`
-- _or_ `Do math or bitwise operation first on one part of the array and then on another part of of the array`
-
-</details>
-
-<details>
-
 <summary>Task Type</summary>
 
-It is a "One Pointer One Array" Task Type. To solve it first iterate the array and count the sum and then iterate the array in reverse (meaning counterclockwise) and count the sum. Overlap to the beginning or end of the array when necessary. Then return the lesser sum. Thus we utilize the two Approaches "Iterate an array" and "Iterate an array in reverse" in order to solve the Task ([solution 1](./solution.js))
+- __`One Pointer One Array`__
+  <details>
 
-This Task can also be treated as "Array Math Operation on All Elements" Task Type and solved using the Approach "Do math or bitwise operation first on one part of the array and then on another part of of the array" ([solution 2](./solution-2.js)). First of all make sure that `start` is always _before_ `destination` (swap them if not so). Then you need to sum all the elements between `start` and `destination` (this is your sum going clockwise, math operation first on one part of the array), after this get the total sum of all the elements of the array and extract the sum of going clockwise from this total sum (this is your sum going counterclockwise, math operation on another part of of the array). Then return the lesser sum
+  <summary><i><b><code>Iterate an array</code></b></i> + <i><b><code>Iterate an array in reverse</code></b></i></summary>
+
+    First iterate the array and count the sum and then iterate the array in reverse (meaning counterclockwise) and count the sum. Overlap to the beginning or end of the array when necessary. Then return the lesser sum. Thus we utilize the two Approaches _`Iterate an array`_ and _`Iterate an array in reverse`_ in order to solve the Task ([solution 1](./solution.js))
+
+  </details>
+
+---
+
+- __`Array Math Operation on All Elements`__
+  <details>
+
+  <summary><i><b><code>Do math or bitwise operation first on one part of the array and then on another part of of the array</code></b></i></summary>
+
+    This Task can also be solved using the Approach _`Do math or bitwise operation first on one part of the array and then on another part of of the array`_ ([solution 2](./solution-2.js)). First of all make sure that the pointer `start` is always _before_ the pointer `destination` (swap them if not so). Then you need to sum all the elements between `start` and `destination` (this is your sum going clockwise, math operation first on one part of the array), after this get the total sum of all the elements of the array and extract the sum of going clockwise from this total sum (this is your sum going counterclockwise, math operation on another part of of the array). Then return the lesser sum
+
+  </details>
 
 </details>
 

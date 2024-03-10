@@ -24,37 +24,34 @@ Explanation: Your function can return either index number 1 where the peak eleme
 
 <details>
 
-<summary>Approach</summary>
-
-- `Iterate an array`
-
-</details>
-
-<details>
-
 <summary>Task Type</summary>
 
-It is a "One Pointer One Array" Task Type. In order to solve the Task you should apply the Approach "Iterate an array"
+- __`One Pointer One Array`__
+  <details>
 
-The Approach is simply that we iterate an array using one pointer and get the solution
+  <summary><i><b><code>Iterate an array</code></b></i></summary>
 
-To solve this particular task we need to compare the element to its neighbors
+    The Approach is simply that we iterate an array using one pointer and get the solution
 
-__Note:__ "pointer" is when we save number to variable like `i` and use `i` as an index of the array and increment or decrement `i` per iteration, the `i` variable is thus called a _pointer_
+    To solve this particular task we need to compare the element to its neighbors
 
-__Note:__ just to be clear, "iteration" is the code that runs inside the braces of the for-loop (each time the same code is run but with different values of the variable `i` (pointer) for example starting at 0 and ending with the index of the last element of the array)
+    __Note:__ "pointer" is when we save number to a variable like `i` and use `i` as an index of the array and increment or decrement `i` per iteration, the `i` variable is thus called a _pointer_
 
-__Note:__ just to be clear, when we say "iterate an array" it means go over all the elements of the array (for example in the for-loop)
+    __Note:__ just to be clear, "iteration" is the code that runs inside the braces of the for-loop or while-loop (each time the same code is run but with different values of the variable `i` (pointer) for example starting at 0 and ending with the index of the last element of the array)
 
-We have already seen a kindred task called [Love Triangle](../../cheatsheet/love-triangles.js). To solve that task we also simply iterate an array (and do certain things as we iterate it of course)
+    __Note:__ just to be clear, when we say "iterate an array" it means go over all the elements of the array (for example in the for-loop)
 
-__Note:__ in the Love Triangle task as we iterate the array we employ the Approach "Use values as indexes" where we use _values_ of elements of the array as _indexes_ (in order to check if there is a cycle)
+    We have already seen a kindred task called [Love Triangle](../../cheatsheet/love-triangles.js). To solve that task we also simply iterate an array (and do certain things as we iterate it of course)
 
-__Note:__ we have already seen a lot of tasks of the One Pointer One Array Task Type:
-- [Palindrome](../../1\)%20Task%20Challanges.md#3-palindrome)
-- [Stringo Reverso](../../1\)%20Task%20Challanges.md#17-stringo-reverso)
-- [Reverse Word Order](../../1\)%20Task%20Challanges.md#18-reverse-word-order)
-- [Reverse Words In Place](../../1\)%20Task%20Challanges.md#19-reverse-words-in-place)
+    __Note:__ in the Love Triangle task we employ the Approach _`Use values as indexes`_ where we use _values_ of elements of the array as _indexes_ (in order to check if there is a cycle)
+
+    __Note:__ we have already seen a lot of tasks of the `One Pointer One Array` Task Type:
+    - [Palindrome](../../1\)%20Task%20Challanges.md#3-palindrome)
+    - [Stringo Reverso](../../1\)%20Task%20Challanges.md#17-stringo-reverso)
+    - [Reverse Word Order](../../1\)%20Task%20Challanges.md#18-reverse-word-order)
+    - [Reverse Words In Place](../../1\)%20Task%20Challanges.md#19-reverse-words-in-place)
+
+  </details>
 
 </details>
 

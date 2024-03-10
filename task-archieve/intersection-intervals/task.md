@@ -18,21 +18,20 @@ user2 [(10, 14), (21, 22)]
 
 <details>
 
-<summary>Approach</summary>
-
-- `Two pointers of two arrays increase like in Merge Sort`
-
-</details>
-
-<details>
-
 <summary>Task Type</summary>
 
-It is a "Two Pointers Two Arrays" Task Type. In order to solve the Task you should apply the Approach "Two pointers of two arrays increase like in Merge Sort"
+- __`Two Pointers Two Arrays`__
+  <details>
 
-It is one of those tasks where you use two pointers (save indexes like `i` and `j` to a variable, `i` is for the 1st array and `j` is for the 2nd array) to iterate __two__ arrays _specially_ for example by increasing or decrasing either one or the other or both pointers per iteration. The part of the "Merge Sort" algorithm that checks two sub-arrays uses similar mechanics ([link](../../snippets/algorithms/merge-sort.js#L12))
+  <summary><i><b><code>Two pointers of two arrays increase like in Merge Sort</code></b></i></summary>
 
-__Note:__ ["Merge Two Sorted Arrays" task](../../1\)%20Task%20Challanges.md#15-merge-two-sorted-arrays) is the most classic example of a task that uses the Approach "Two pointers of two arrays increase like in Merge Sort"
+    It is one of those tasks where we use two pointers (save indexes like `i` and `j` to a variable, `i` is for the 1st array and `j` is for the 2nd array) to iterate __two__ arrays _specially_ for example by increasing or decrasing either one or the other or both pointers per iteration. The part of the "Merge Sort" algorithm that checks two sub-arrays uses similar mechanics ([link](../../snippets/algorithms/merge-sort.js#L12))
+
+    So we create a 3rd array and according to some logic push to the 3rd array either element at pointer `i` from the 1st array (and increment `i`) or element at pointer `j` from the 2nd array (and increment `j`). The logic of choosing between `i` or `j` might be as simple as which element is smaller: element at `i` or element `j`
+
+    __Note:__ ["Merge Two Sorted Arrays" task](../../1\)%20Task%20Challanges.md#15-merge-two-sorted-arrays) is the most classic example of a task that uses the Approach _`Two pointers of two arrays increase like in Merge Sort`_
+
+  </details>
 
 </details>
 
