@@ -1,3 +1,5 @@
+# Task Type Summary Title
+
 ## __`Task Type`__
 
 1. __*`Approach`*__
@@ -17,6 +19,8 @@
     __Input:__ TODO
 
     __Output:__ TODO
+
+    ---
 
     </details>
 

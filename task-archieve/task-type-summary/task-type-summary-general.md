@@ -19,6 +19,8 @@
 
     __Output:__ value: `1`, `2`, `3`, index: `0`, `1`, `2`
 
+    ---
+
     </details>
 
 2. __*`Iterate an array in reverse`*__
@@ -38,6 +40,8 @@
 
     __Output:__ value: `3`, `2`, `1`, index: `2`, `1`, `0`
 
+    ---
+
     </details>
 
 3. __*`Use values as indexes`*__
@@ -56,6 +60,8 @@
     __Input:__ `[1, 2, 3]`
 
     __Output:__ `2`, `3`, `undefined`
+
+    ---
 
     </details>
 
@@ -95,11 +101,13 @@
 
     __Output:__ intermingled values of both arrays
 
+    ---
+
     </details>
 
 ---
 
-## __Two Pointers One Array__
+## __`Two Pointers One Array`__
 
 1. __*`Two pointers go from start and end until some condition`*__
     <details>
@@ -122,6 +130,8 @@
         }
     }
     ```
+
+    ---
 
     </details>
 
@@ -149,6 +159,8 @@
         __Input:__ `WINDOW_SIZE = 3`, `[1, 2, 3, 4, 5, 6, 7]`
 
         __Output:__ `1, 4`, `2, 5`, `3, 6`, `4, 7`
+
+        ---
 
         </details>
 
@@ -182,6 +194,8 @@
 
         __Output:__ `1, 2`, `1, 4`, `3, 4`, `3, 5`, `4, 5`, `5, 6`, `5, 7`, `6, 7`
 
+        ---
+
         </details>
 
     3. __*`Right is ahead of left but window size is dynamic and right meets left sometimes (they both look at the same element)`*__
@@ -214,11 +228,13 @@
 
         __Output:__ `1, 1`, `1, 2`, `2, 2`, `2, 3`, `3, 3`, `3, 5`, `5, 5`, `5, 6`, `6, 7`, `7, 7`
 
+        ---
+
         </details>
 
 ---
 
-## __One Pointer One Array and One or More Counters__
+## __`One Pointer One Array and One or More Counters`__
 
 1. __*`Iterate an array keeping one or more counters`*__
     <details>
@@ -235,11 +251,13 @@
     }
     ```
 
+    ---
+
     </details>
 
 ---
 
-## __One Pointer One Array and HashMap__
+## __`One Pointer One Array and HashMap`__
 
 1. __*`Create and use one or more HashMaps as you iterate an array`*__
     <details>
@@ -255,6 +273,8 @@
         }
     }
     ```
+
+    ---
 
     </details>
 
@@ -274,6 +294,8 @@
         logic(hashMap, Object.entries(hashMap));
     }
     ```
+
+    ---
 
     </details>
 
@@ -296,11 +318,13 @@
     }
     ```
 
+    ---
+
     </details>
 
 ---
 
-## __One Pointer One Array and Stack__
+## __`One Pointer One Array and Stack`__
 
 1. __*`Create and use one or more Stacks as you iterate an array`*__
     <details>
@@ -317,11 +341,13 @@
     }
     ```
 
+    ---
+
     </details>
 
 ---
 
-## __Stack or Queue__
+## __`Stack or Queue`__
 
 1. __*`Do while loop while Stack is not empty popping and pushing along the way`*__
     <details>
@@ -339,6 +365,8 @@
         }
     }
     ```
+
+    ---
 
     </details>
 
@@ -358,6 +386,8 @@
         }
     }
     ```
+
+    ---
 
     </details>
 
@@ -411,11 +441,13 @@
     }
     ```
 
+    ---
+
     </details>
 
 ---
 
-## __Array Relation of Indexes or Values or Indexes to Values__
+## __`Array Relation of Indexes or Values or Indexes to Values`__
 
 1. __*`Find the relation between the indexes of the array`*__
 2. __*`Find the relation between the values of the array`*__
@@ -423,7 +455,7 @@
 
 ---
 
-## __Array Math Operation on All Elements__
+## __`Array Math Operation on All Elements`__
 
 1. __*`Do math or bitwise operation on all the elements of the array`*__
     <details>
@@ -443,6 +475,8 @@
         logic(counter);
     }
     ```
+
+    ---
 
     </details>
 
@@ -470,6 +504,8 @@
         logic(counter);
     }
     ```
+
+    ---
 
     </details>
 
@@ -506,11 +542,13 @@
     }
     ```
 
+    ---
+
     </details>
 
 ---
 
-## __In-Place Swap and Overwrite__
+## __`In-Place Swap and Overwrite`__
 
 1. __*`Swap elements of one or more arrays`*__
     <details>
@@ -528,6 +566,8 @@
         ([array[i1], array[i2]] = [array[i2], array[i1]]);
     }
     ```
+
+    ---
 
     </details>
 
@@ -562,6 +602,8 @@
         }
         ```
 
+        ---
+
         </details>
 
     2. __*`Iterate the array and get some information. Then based on this information iterate the array again overwriting its values`*__
@@ -583,11 +625,13 @@
         }
         ```
 
+        ---
+
         </details>
 
 ---
 
-## __Matrix__
+## __`Matrix`__
 
 1. __*`Iterate a matrix`*__
     <details>
@@ -627,11 +671,13 @@
 
     __Output:__ horizontal: `1`, `2`, `3`, vertical: `1`, `4`, `7`, diagonal: `1`, `5`, `9`
 
+    ---
+
     </details>
 
 ---
 
-## __Numbers Math__
+## __`Numbers Math`__
 
 1. __*`Use Prime Numbers`*__
     <details>
@@ -686,6 +732,8 @@
     ```
 
     __Output:__ `2`, `3`, `5`, `7`, `11`, `13`, `17`, `19`, `23`, `29`, `31`, `37`, `41`, `43`, `47`, ...
+
+    ---
 
     </details>
 
@@ -745,11 +793,13 @@
 
     __Output:__ `0`, `1`, `1`, `2`, `3`, `5`, `8`, `13`, `21`, `34`, ...
 
+    ---
+
     </details>
 
 ---
 
-## __Check if Puzzle is Solvable__
+## __`Check if Puzzle is Solvable`__
 
 1. __*`Call the function recursively and see if it solves the puzzle`*__
     <details>
@@ -772,11 +822,13 @@
     }
     ```
 
+    ---
+
     </details>
 
 ---
 
-## __Backtracking__
+## __`Backtracking`__
 
 1. __*`Get all permutations of values of an array in any order`*__
     <details>
@@ -816,6 +868,8 @@
 
     __Output:__ `[ 1, 2, 3 ]`, `[ 1, 3, 2 ]`, `[ 2, 1, 3 ]`, `[ 2, 3, 1 ]`, `[ 3, 1, 2 ]`, `[ 3, 2, 1 ]`
 
+    ---
+
     </details>
 
 2. __*`Get all unique combinations of values of an array in any order`*__
@@ -852,6 +906,8 @@
     __Input:__ `[1, 2, 3]`
 
     __Output:__ `[]`, `[1]`, `[2]`, `[3]`, `[1,2]`, `[1,3]`, `[2,3]`, `[1,2,3]`
+
+    ---
 
     </details>
 
@@ -943,6 +999,8 @@
     [ 3, 'c', '#' ]
     [ 3, 'c', '$' ]
     ```
+
+    ---
 
     </details>
 
