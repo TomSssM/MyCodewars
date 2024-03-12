@@ -20,18 +20,16 @@ longestStr('ababababccddddddd', 3); // L=17 N=4 K=3 result: 10
 
 <summary>Task Type</summary>
 
-- __`Two Pointers One Array`__ + __`One Pointer One Array and HashMap`__
+- __`Sliding Window`__ + __`One Pointer One Array and HashMap`__
   <details>
 
-  <summary><i><b><code>Sliding Window. Right is ahead of left but window size is dynamic</code></b></i> + <i><b><code>Create and use one or more HashMaps as you iterate an array</code></b></i></summary>
+  <summary><i><b><code>Sliding Window. Dynamic size. Left follows behind right</code></b></i> + <i><b><code>Create and use one or more HashMaps as you iterate an array</code></b></i></summary>
 
-    We combine the Approaches of _`Sliding Window. Right is ahead of left but window size is dynamic`_ and _`Create and use one or more HashMaps as you iterate an array`_ to solve this Task
+    It is one of those tasks where you use two pointers (save indexes like `i` and `j` to a variable) to iterate an array _specially_ for example by increasing or decrasing either one or the other or both pointers per iteration. Here is [another task](../most-water/task.md) whose solution uses similar mechanics though it doesn't use the _Sliding Window_ technique like we need in this task
 
-    It is one of those tasks where you use two pointers (save indexes like `i` and `j` to a variable) to iterate an array _specially_ for example by increasing or decrasing either one or the other or both pointers per iteration. Here is [another task](../most-water/task.md) whose solution uses similar mechanics
+    For this particular task we need to use the _Sliding Window_ technique and along with the _Sliding Window_ technique you also need to enable the _power of HashMap_
 
-    But for this particular task along with the _Sliding Window_ technique you also need to enable the _power of HashMap_
-
-    __Note:__ one of the Approaches used in this task is called _`Sliding Window`_. The particulars of this Approach are also discussed in [this task](../best-time-to-buy-and-sell-stock/task.md) but you can also read more about the _`Sliding Window`_ Approach in [this article](../literature/sliding-window.md)
+    __Note:__ like we said one of the Approaches used in this task is called _`Sliding Window. Dynamic size. Left follows behind right`_. The particulars of this Approach are explained in [this task](../best-time-to-buy-and-sell-stock/task.md)
 
     __Note:__ in order to find out how to use HashMap to solve tasks, please see [this task](../contiguous-array/task.md) or simply read [this article](../literature/hash-map.md)
 

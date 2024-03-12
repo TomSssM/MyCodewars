@@ -38,14 +38,12 @@ Explanation: The ranges are:
 
 <summary>Task Type</summary>
 
-- __`Two Pointers One Array`__
+- __`Sliding Window`__
   <details>
 
-  <summary><i><b><code>Sliding Window. Right is ahead of left but window size is dynamic and right meets left sometimes (they both look at the same element)</code></b></i></summary>
+  <summary><i><b><code>Sliding Window. Dynamic size. Left follows behind right and meets right sometimes</code></b></i></summary>
 
-    In order to solve the Task you should apply the Approach _`Sliding Window. Right is ahead of left but window size is dynamic and right meets left sometimes (they both look at the same element)`_. Except one rather crucial difference of the Approach used here from the Sliding Window Approach we have seen in [this Task](../best-time-to-buy-and-sell-stock/task.md) is that the right and the left pointers may be looking at _the same element_ of the array. This intricacy is utilized here somewhat to get a really elegant solution
-
-    __Note:__ read more about Sliding Window in [this article](../literature/sliding-window.md)
+    The Approach _`Sliding Window. Dynamic size. Left follows behind right and meets right sometimes`_ used in this Task has one intricacy different from the Approach _`Sliding Window. Dynamic size. Left follows behind right`_ which we have learnt in [this task](../best-time-to-buy-and-sell-stock/task.md) in that the left pointer may _meet_ the right pointer sometimes (meaning when they meet the left and the right pointers both look at the same element of the array). This intricacy is utilized here to get a really elegant solution
 
   </details>
 

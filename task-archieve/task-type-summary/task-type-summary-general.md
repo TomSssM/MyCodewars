@@ -135,102 +135,105 @@
 
     </details>
 
-2. __*`Sliding Window`*__
-    1. __*`Right is always ahead of left and window size is fixed`*__
-        <details>
+---
 
-        <summary>Code</summary>
+## __`Sliding Window`__
 
-        ```js
-        function approach(array) {
-            let i = 0;
+1. __*`Sliding Window. Fixed size`*__
+    <details>
 
-            for (i = 0; i < WINDOW_SIZE; i++) {
-                logic(array[i]);
+    <summary>Code</summary>
+
+    ```js
+    function approach(array) {
+        let i = 0;
+
+        for (i = 0; i < WINDOW_SIZE; i++) {
+            logic(array[i]);
+        }
+
+        while (i < array.length) {
+            logic(array[i - WINDOW_SIZE], array[i]);
+            i++;
+        }
+    }
+    ```
+
+    __Input:__ `WINDOW_SIZE = 3`, `[1, 2, 3, 4, 5, 6, 7]`
+
+    __Output:__ `1, 4`, `2, 5`, `3, 6`, `4, 7`
+
+    ---
+
+    </details>
+
+2. __*`Sliding Window. Dynamic size. Left follows behind right`*__
+    <details>
+
+    <summary>Code</summary>
+
+    ```js
+    function approach(array) {
+        let i = 0;
+        let j = 1;
+
+        while (j < array.length) {
+            logic(array[i], array[j]);
+
+            while (i < j - 1) {
+                if (condition()) {
+                    i++;
+                }
             }
 
-            while (i < array.length) {
-                logic(array[i - WINDOW_SIZE], array[i]);
-                i++;
+            while (condition() && j < array.length) {
+                j++;
             }
         }
-        ```
+    }
+    ```
 
-        __Input:__ `WINDOW_SIZE = 3`, `[1, 2, 3, 4, 5, 6, 7]`
+    __Input:__ `[1, 2, 3, 4, 5, 6, 7]`
 
-        __Output:__ `1, 4`, `2, 5`, `3, 6`, `4, 7`
+    __Output:__ `1, 2`, `1, 4`, `3, 4`, `3, 5`, `4, 5`, `5, 6`, `5, 7`, `6, 7`
 
-        ---
+    ---
 
-        </details>
+    </details>
 
-    2. __*`Right is ahead of left but window size is dynamic`*__
-        <details>
+3. __*`Sliding Window. Dynamic size. Left follows behind right and meets right sometimes`*__
+    <details>
 
-        <summary>Code</summary>
+    <summary>Code</summary>
 
-        ```js
-        function approach(array) {
-            let i = 0;
-            let j = 1;
+    ```js
+    function approach(array) {
+        let i = 0;
+        let j = 0;
 
-            while (j < array.length) {
-                logic(array[i], array[j]);
+        while (j < array.length) {
+            logic(array[i], array[j]);
 
-                while (i < j - 1) {
-                    if (condition()) {
-                        i++;
-                    }
-                }
-
-                while(condition() && j < array.length) {
-                    j++;
+            while (i < j) {
+                if (condition()) {
+                    i++;
                 }
             }
-        }
-        ```
 
-        __Input:__ `[1, 2, 3, 4, 5, 6, 7]`
-
-        __Output:__ `1, 2`, `1, 4`, `3, 4`, `3, 5`, `4, 5`, `5, 6`, `5, 7`, `6, 7`
-
-        ---
-
-        </details>
-
-    3. __*`Right is ahead of left but window size is dynamic and right meets left sometimes (they both look at the same element)`*__
-        <details>
-
-        <summary>Code</summary>
-
-        ```js
-        function approach(array) {
-            let i = 0;
-            let j = 0;
-
-            while (j < array.length) {
-                logic(array[i], array[j]);
-
-                while (i < j) {
-                    if (condition()) {
-                        i++;
-                    }
-                }
-
-                while(condition() && j < array.length) {
-                    j++;
-                }
+            while (condition() && j < array.length) {
+                j++;
             }
         }
-        ```
+    }
+    ```
 
-        __Input:__ `[1, 2, 3, 4, 5, 6, 7]`
+    __Input:__ `[1, 2, 3, 4, 5, 6, 7]`
 
-        __Output:__ `1, 1`, `1, 2`, `2, 2`, `2, 3`, `3, 3`, `3, 5`, `5, 5`, `5, 6`, `6, 7`, `7, 7`
+    __Output:__ `1, 1`, `1, 2`, `2, 2`, `2, 3`, `3, 3`, `3, 5`, `5, 5`, `5, 6`, `6, 7`, `7, 7`
 
-        ---
+    ---
 
-        </details>
+    </details>
 
 ---
 
@@ -1003,6 +1006,12 @@
     ---
 
     </details>
+
+---
+
+## __`Tabulation`__
+
+<!-- TODO: here -->
 
 ---
 

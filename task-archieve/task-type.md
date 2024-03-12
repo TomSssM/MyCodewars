@@ -15,6 +15,8 @@ _Tasks grouped by_ `Task Type`
 
 ### Two Pointers One Array
   - [Container With Most Water](./most-water/task.md)
+
+### Sliding Window
   - [Best Time to Buy and Sell Stock](./best-time-to-buy-and-sell-stock/task.md)
   - [Summary Ranges](./summary-ranges/task.md)
   - [Longest sequence of letters](./longest-letter-subsequence/task.md)

@@ -46,10 +46,10 @@ If we had started at the first tree, we would only pick from trees [1,2]
 
 <summary>Task Type</summary>
 
-- __`Two Pointers One Array`__ + __`One Pointer One Array and HashMap`__
+- __`Sliding Window`__ + __`One Pointer One Array and HashMap`__
   <details>
 
-  <summary><i><b><code>Sliding Window. Right is ahead of left but window size is dynamic</code></b></i> + <i><b><code>Create and use one or more HashMaps as you iterate an array</code></b></i></summary>
+  <summary><i><b><code>Sliding Window. Dynamic size. Left follows behind right</code></b></i> + <i><b><code>Create and use one or more HashMaps as you iterate an array</code></b></i></summary>
 
     Just like [this task](../longest-letter-subsequence/task.md)
 
