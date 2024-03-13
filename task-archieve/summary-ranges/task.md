@@ -41,9 +41,9 @@ Explanation: The ranges are:
 - __`Sliding Window`__
   <details>
 
-  <summary><i><b><code>Sliding Window. Dynamic size. Left follows behind right and meets right sometimes</code></b></i></summary>
+  <summary><i><b><code>Sliding Window. Dynamic size. Left meets right sometimes</code></b></i></summary>
 
-    The Approach _`Sliding Window. Dynamic size. Left follows behind right and meets right sometimes`_ used in this Task has one intricacy different from the Approach _`Sliding Window. Dynamic size. Left follows behind right`_ which we have learnt in [this task](../best-time-to-buy-and-sell-stock/task.md) in that the left pointer may _meet_ the right pointer sometimes (meaning when they meet the left and the right pointers both look at the same element of the array). This intricacy is utilized here to get a really elegant solution
+    The Approach _`Sliding Window. Dynamic size. Left meets right sometimes`_ used in this Task has one intricacy different from the Approach _`Sliding Window. Dynamic size`_ which we have learnt in [this task](../best-time-to-buy-and-sell-stock/task.md) in that the left pointer may _meet_ the right pointer sometimes (meaning when they meet the left and the right pointers both look at the same element of the array). This intricacy is utilized here to get a really elegant solution
 
   </details>
 

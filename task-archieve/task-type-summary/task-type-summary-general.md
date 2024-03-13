@@ -167,7 +167,7 @@
 
     </details>
 
-2. __*`Sliding Window. Dynamic size. Left follows behind right`*__
+2. __*`Sliding Window. Dynamic size`*__
     <details>
 
     <summary>Code</summary>
@@ -201,7 +201,7 @@
 
     </details>
 
-3. __*`Sliding Window. Dynamic size. Left follows behind right and meets right sometimes`*__
+3. __*`Sliding Window. Dynamic size. Left meets right sometimes`*__
     <details>
 
     <summary>Code</summary>

@@ -34,7 +34,7 @@ Notice that the answer must be a substring, "pwke" is a subsequence and not a su
 - __`Sliding Window`__ + __`One Pointer One Array and HashMap`__
   <details>
 
-  <summary><i><b><code>Sliding Window. Dynamic size. Left follows behind right</code></b></i> + <i><b><code>Create and use one or more HashMaps as you iterate an array</code></b></i></summary>
+  <summary><i><b><code>Sliding Window. Dynamic size</code></b></i> + <i><b><code>Create and use one or more HashMaps as you iterate an array</code></b></i></summary>
 
     Just like [this task](../longest-letter-subsequence/task.md)
 
