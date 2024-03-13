@@ -454,7 +454,7 @@
 
 1. __*`Find the relation between the indexes of the array`*__
 2. __*`Find the relation between the values of the array`*__
-3. __*`Find the relation of the indexes to values of the array`*__
+3. __*`Find the relation between the indexes and the values of the array`*__
 
 ---
 
@@ -483,7 +483,7 @@
 
     </details>
 
-2. __*`Do math or bitwise operation first on all the elements of the array and then to the same counter on all the elements that should be in array`*__
+2. __*`Do math or bitwise operation first on all the elements of the array and then to the same counter on all the elements that should be in the array`*__
     <details>
 
     <summary>Code</summary>
@@ -636,7 +636,7 @@
 
 ## __`Matrix`__
 
-1. __*`Iterate a matrix`*__
+1. __*`Iterate a Matrix`*__
     <details>
 
     <summary>Code</summary>

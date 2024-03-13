@@ -40,7 +40,7 @@ Here is an example:
 - __`Matrix`__
   <details>
 
-  <summary><i><b><code>Iterate a matrix</code></b></i></summary>
+  <summary><i><b><code>Iterate a Matrix</code></b></i></summary>
 
     This is a `Matrix` Task Type using Matrix mechanics or you could also say that you need to look at the _relation_ between the indexes of the array like [here](../zigzag-conversion/task.md)
 
