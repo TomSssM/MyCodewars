@@ -47,7 +47,7 @@ __Output:__ `"A"`
 
 <summary>Task Type</summary>
 
-- __`Array Relation of Indexes or Values or Indexes to Values`__
+- __`Array Relation of Indexes and Values`__
   <details>
 
   <summary><i><b><code>Find the relation between the indexes of the array</code></b></i></summary>

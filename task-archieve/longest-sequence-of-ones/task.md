@@ -13,7 +13,7 @@ countOnes([1, 1, 1, 0, 1, 0, 0, 1, 1, 1]); // 4 (we throw away 0 at index 3 and 
 
 <summary>Task Type</summary>
 
-- __`One Pointer One Array and One or More Counters`__
+- __`Array and Counter`__
   <details>
 
   <summary><i><b><code>Iterate an array keeping one or more counters</code></b></i></summary>

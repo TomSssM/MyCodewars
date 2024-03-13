@@ -20,7 +20,7 @@ longestStr('ababababccddddddd', 3); // L=17 N=4 K=3 result: 10
 
 <summary>Task Type</summary>
 
-- __`Sliding Window`__ + __`One Pointer One Array and HashMap`__
+- __`Sliding Window`__ + __`Array and HashMap`__
   <details>
 
   <summary><i><b><code>Sliding Window. Dynamic size</code></b></i> + <i><b><code>Create and use one or more HashMaps as you iterate an array</code></b></i></summary>

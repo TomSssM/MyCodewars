@@ -21,21 +21,21 @@ _Tasks grouped by_ `Task Type`
   - [Summary Ranges](./summary-ranges/task.md)
   - [Longest sequence of letters](./longest-letter-subsequence/task.md)
 
-### One Pointer One Array and One or More Counters
+### Array and Counter
   - [Longest sequence of ones](./longest-sequence-of-ones/task.md)
 
-### One Pointer One Array and HashMap
+### Array and HashMap
   - [Contiguous Array](./contiguous-array/task.md)
   - [Partition Labels](./partition-labels/task.md)
 
-### One Pointer One Array and Stack
+### Array and Stack or Queue
   - [Valid Parentheses](./valid-parentheses/task.md)
 
 ### Stack or Queue
   - [Flatten non-recursive v2](./flatten-nonrecursive-v2/task.md)
   - [Unpack IP](./unpack-ip/task.md)
 
-### Array Relation of Indexes or Values or Indexes to Values
+### Array Relation of Indexes and Values
   - [Missing Number in Sorted Array](./missing-number-sorted-array/task.md)
   - [Zigzag Conversion](./zigzag-conversion/task.md)
 

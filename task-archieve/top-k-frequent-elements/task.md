@@ -20,7 +20,7 @@ Output: [1]
 
 <summary>Task Type</summary>
 
-- __`One Pointer One Array and HashMap`__
+- __`Array and HashMap`__
   <details>
 
   <summary><i><b><code>Create one or more HashMaps and iterate the HashMap (the HashMaps) in some way</code></b></i></summary>

@@ -237,7 +237,7 @@
 
 ---
 
-## __`One Pointer One Array and One or More Counters`__
+## __`Array and Counter`__
 
 1. __*`Iterate an array keeping one or more counters`*__
     <details>
@@ -260,7 +260,7 @@
 
 ---
 
-## __`One Pointer One Array and HashMap`__
+## __`Array and HashMap`__
 
 1. __*`Create and use one or more HashMaps as you iterate an array`*__
     <details>
@@ -327,7 +327,7 @@
 
 ---
 
-## __`One Pointer One Array and Stack`__
+## __`Array and Stack or Queue`__
 
 1. __*`Create and use one or more Stacks as you iterate an array`*__
     <details>
@@ -450,7 +450,7 @@
 
 ---
 
-## __`Array Relation of Indexes or Values or Indexes to Values`__
+## __`Array Relation of Indexes and Values`__
 
 1. __*`Find the relation between the indexes of the array`*__
 2. __*`Find the relation between the values of the array`*__

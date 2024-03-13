@@ -30,7 +30,7 @@ Explanation: n = 9 since there are 9 numbers, so all numbers are in the range [0
 
 <summary>Task Type</summary>
 
-- __`Array Relation of Indexes or Values or Indexes to Values`__
+- __`Array Relation of Indexes and Values`__
   <details>
 
   <summary><i><b><code>Find the relation of the indexes to values of the array</code></b></i></summary>

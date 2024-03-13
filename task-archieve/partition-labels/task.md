@@ -28,7 +28,7 @@ Output: [10]
 
 <summary>Hint</summary>
 
-This is a `One Pointer One Array and HashMap` Task Type. We have already seen an example of this Task Type when we were solving the ["Contiguous Array" task](../contiguous-array/task.md). But this task is a tar bit more complicated because in the ["Contiguous Array" task](../contiguous-array/task.md) we simply created a HashMap and it helped us solve the task even while we were iterating the input array (or the input data, to be precise) but in _this_ task we need to use a different and a bit more complex but very similar Approach to attain the solution. Here we are supposed to _create one or more HashMaps and then do something with all the new data_. Now what does this mean? It means that we need to iterate the array for the first time to create one or more HashMaps and then there are exactly two things that we can do:
+This is a `Array and HashMap` Task Type. We have already seen an example of this Task Type when we were solving the ["Contiguous Array" task](../contiguous-array/task.md). But this task is a tar bit more complicated because in the ["Contiguous Array" task](../contiguous-array/task.md) we simply created a HashMap and it helped us solve the task even while we were iterating the input array (or the input data, to be precise) but in _this_ task we need to use a different and a bit more complex but very similar Approach to attain the solution. Here we are supposed to _create one or more HashMaps and then do something with all the new data_. Now what does this mean? It means that we need to iterate the array for the first time to create one or more HashMaps and then there are exactly two things that we can do:
 
 1. Iterate in some way the one or more HashMaps that we created during the first pass ( _Approach 1_ )
 
@@ -44,7 +44,7 @@ One thing is for sure, we need to create a HashMap where we map the letters to t
 
 <img src=image.png width=550 />
 
-Then follow one of the two Approaches of the `One Pointer One Array and HashMap` Task Type in the "Task Type" spoiler
+Then follow one of the two Approaches of the `Array and HashMap` Task Type in the "Task Type" spoiler
 
 </details>
 
@@ -52,7 +52,7 @@ Then follow one of the two Approaches of the `One Pointer One Array and HashMap`
 
 <summary>Task Type</summary>
 
-- __`One Pointer One Array and HashMap`__
+- __`Array and HashMap`__
   <details>
 
   <summary><i><b><code>Create one or more HashMaps and iterate the HashMap (the HashMaps) in some way</code></b></i></summary>

@@ -31,7 +31,7 @@ Notice that the answer must be a substring, "pwke" is a subsequence and not a su
 
 <summary>Task Type</summary>
 
-- __`Sliding Window`__ + __`One Pointer One Array and HashMap`__
+- __`Sliding Window`__ + __`Array and HashMap`__
   <details>
 
   <summary><i><b><code>Sliding Window. Dynamic size</code></b></i> + <i><b><code>Create and use one or more HashMaps as you iterate an array</code></b></i></summary>

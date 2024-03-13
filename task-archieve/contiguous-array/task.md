@@ -22,12 +22,12 @@ Explanation: [0, 1] (or [1, 0]) is a longest contiguous subarray with equal numb
 
 <summary>Task Type</summary>
 
-- __`One Pointer One Array and HashMap`__
+- __`Array and HashMap`__
   <details>
 
   <summary><i><b><code>Create and use one or more HashMaps as you iterate an array</code></b></i></summary>
 
-    The solution to the ["Remove Duplicate From An Array" task](../../1\)%20Task%20Challanges.md#14-remove-duplicate-from-an-array) is perhaps one of the most classic example of using HashMap to solve a task in `O(n)` time complexity instead of using nested for-loops (therefore "Remove Duplicate From An Array" task is the most classic example of the `One Pointer One Array and HashMap` Task Type, so make sure you understand how it works first before trying to solve this task, it is very crucial)
+    The solution to the ["Remove Duplicate From An Array" task](../../1\)%20Task%20Challanges.md#14-remove-duplicate-from-an-array) is perhaps one of the most classic example of using HashMap to solve a task in `O(n)` time complexity instead of using nested for-loops (therefore "Remove Duplicate From An Array" task is the most classic example of the `Array and HashMap` Task Type, so make sure you understand how it works first before trying to solve this task, it is very crucial)
 
     __Note:__ you can read more about using HashMap to solve tasks in [this article](../literature/hash-map.md) as this and many other tasks require this knowledge
 

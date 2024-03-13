@@ -32,7 +32,7 @@ Output: false
 
 <summary>Task Type</summary>
 
-- __`One Pointer One Array and Stack`__
+- __`Array and Stack or Queue`__
   <details>
 
   <summary><i><b><code>Create and use one or more Stacks as you iterate an array</code></b></i></summary>

@@ -35,7 +35,7 @@ Explanation: n = 9 since there are 9 numbers, so all numbers are in the range [0
 
   <summary><i><b><code>Do math or bitwise operation first on all the elements of the array and then to the same counter on all the elements that should be in array</code></b></i></summary>
 
-    We can assume this task to be a `One Pointer One Array and HashMap` Task Type and solve it this way using a HashMap:
+    We can assume this task to be a `Array and HashMap` Task Type and solve it this way using a HashMap:
 
     ```js
     function missingNumber(nums) {
