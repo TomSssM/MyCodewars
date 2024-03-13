@@ -21,7 +21,7 @@ _List of tasks_
 - [Combinations](./combinations/task.md)
 - [Word Search](./word-search/task.md)
 - [Climbing Stairs](./climb-stairs/task.md)
-- [Remove Duplicates from Sorted Array v2](./remove-duplicates-v2/task.md)
+- [Remove Duplicates from Sorted Array](./remove-duplicates-sorted-array/task.md)
 - [Best Time to Buy and Sell Stock](./best-time-to-buy-and-sell-stock/task.md)
 - [Contiguous Array](./contiguous-array/task.md)
 - [Longest Substring Without Repeating Characters](./longest-substring-without-repeating-characters/task.md)

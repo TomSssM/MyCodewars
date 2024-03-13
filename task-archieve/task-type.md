@@ -46,7 +46,7 @@ _Tasks grouped by_ `Task Type`
 
 ### In-Place Swap and Overwrite
   - [Sort letters from one array via another array](./sort-letters-two-arrays/task.md)
-  - [Remove Duplicates from Sorted Array v2](./remove-duplicates-v2/task.md)
+  - [Remove Duplicates from Sorted Array](./remove-duplicates-sorted-array/task.md)
   - [Sort Colors](./sort-colors/task.md)
 
 ### Matrix

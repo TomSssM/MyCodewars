@@ -1,4 +1,4 @@
-# Remove Duplicates from Sorted Array v2
+# Remove Duplicates from Sorted Array
 
 Given an integer array `nums` sorted in __non-decreasing order__, remove some duplicates __in-place__ such that each unique element appears __at most twice__. The __relative order__ of the elements should be kept the __same__
 

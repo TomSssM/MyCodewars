@@ -27,7 +27,7 @@ Output: [0]
 
   <summary><i><b><code>Overwrite elements of one or more arrays. The first pointer goes through the array and upon some condition does two things at once: overwrites the value at the second pointer and increments the second pointer</code></b></i></summary>
 
-    Just like [this task](../remove-duplicates-v2/task.md)
+    Just like [this task](../remove-duplicates-sorted-array/task.md)
 
   </details>
 

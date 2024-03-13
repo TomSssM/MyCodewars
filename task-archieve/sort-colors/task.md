@@ -24,7 +24,7 @@ Output: [0,1,2]
 
 <summary>Hint</summary>
 
-This is a Task Type for in-place swap and overwrite of the array. We have already seen an example where we need to do in-place _swap_ [here](../sort-letters-two-arrays/task.md) and an example where we need to do in-place _overwrite_ [here](../remove-duplicates-v2/task.md)
+This is a Task Type for in-place swap and overwrite of the array. We have already seen an example where we need to do in-place _swap_ [here](../sort-letters-two-arrays/task.md) and an example where we need to do in-place _overwrite_ [here](../remove-duplicates-sorted-array/task.md)
 
 The beauty of this task is that it can be solved _both_ ways either by _swapping_ elements or _overwriting_ elements of the array
 
