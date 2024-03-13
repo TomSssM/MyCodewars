@@ -348,6 +348,25 @@
 
     </details>
 
+2. __*`Create and use one or more Queues as you iterate an array`*__
+    <details>
+
+    <summary>Code</summary>
+
+    ```js
+    function approach(array) {
+        const queue = [];
+
+        for (let i = 0; i < array.length; i++) {
+            logic(array[i], queue); // queue.push() queue.shift()
+        }
+    }
+    ```
+
+    ---
+
+    </details>
+
 ---
 
 ## __`Stack or Queue`__
