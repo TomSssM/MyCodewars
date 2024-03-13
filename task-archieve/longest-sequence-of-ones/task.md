@@ -1,4 +1,4 @@
-# Longest sequence of 1's
+# Longest sequence of ones
 
 Your task is to implement algorithm that finds the longest sequence of 1's in array consisting of 1's and 0's. For this task you also have to exclude at least 1 element out of the array, for example:
 

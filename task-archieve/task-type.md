@@ -22,7 +22,7 @@ _Tasks grouped by_ `Task Type`
   - [Longest sequence of letters](./longest-letter-subsequence/task.md)
 
 ### One Pointer One Array and One or More Counters
-  - [Longest sequence of 1's](./longest-sequence-of-1s/task.md)
+  - [Longest sequence of ones](./longest-sequence-of-ones/task.md)
 
 ### One Pointer One Array and HashMap
   - [Contiguous Array](./contiguous-array/task.md)
