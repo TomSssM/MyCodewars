@@ -32,7 +32,7 @@ _Tasks grouped by_ `Task Type`
   - [Valid Parentheses](./valid-parentheses/task.md)
 
 ### Stack or Queue
-  - [Flatten non-recursive v2](./flatten-nonrecursive-v2/task.md)
+  - [Flatten non-recursive](./flatten-nonrecursive/task.md)
   - [Unpack IP](./unpack-ip/task.md)
 
 ### Array Relation of Indexes and Values

@@ -1,4 +1,4 @@
-# Flatten non-recursive v2
+# Flatten non-recursive
 
 Your task is to write a function that flattens the array like so:
 
