@@ -54,8 +54,9 @@ Therefore the structure of the main menu page where we see tasks grouped by Task
 ```
 - Task Type
   - Task
-    * Approach
-    * Similar Tasks
+    - Approach
+      * Variation of Approach
+    - Similar Tasks
 ```
 
 __Note:__ in the hardest cases different Approaches may call to help each other in a relationship many to many for the solution of a particular Task. Naturally in this case we enlist a Task under the header of the Task Type whose Approach is more crucial to the solution of this Task
@@ -64,7 +65,25 @@ __Note:__ a very useful component of the Task Archieve is indeed [Task Type Summ
 
 The rest is simple: learn all the different Approaches, study them, remember them and solidify your knowledge of all the different Approaches and Task Types by studying Tasks and solving Similar Tasks and finally apply all this knowledge and see yourself cracking some of the hardest algorithmic problems with ease and grace
 
+It is also to be noted that in the description of any Task you can find the famous "Task Type" spoiler where grouped by Task Type you can find all the Approaches applicable to the Task. Open the spoiler of any Approach in order to see how it can be applied to solve the Task along with description of how the Approach works. This way solving any Task you can go on to the next Task not merely with a solution of the previous Task but also somewhat wiser than before
+
 ## Bonus
+
+### How to understand an algorithm
+
+Sometimes you are looking at a solution to a Task and you can't understand how this solution works. Then you read the explanation provided and you still don't understand it. The thing is, most of the explanation is in the code and knowing that the author of the explanation goes only as far as needed in his efforts to explain. This here article solves this little misunderstanding
+
+One can't understand the code when contemplating it merely because one can't see _all_ parts of the code in action when running the code in his head and should he venture to run the code in real life when it runs so fast that all the important parts evade him all at once once again. Fortunately there is a solution to this minor drawback
+
+In any text editor or in the browser there is a tool called "Debugger". You can learn how to use Debugger for example in "learnjavascript Tutorial" > "Code quality" > "Debugging in the browser". Note that the mechanics of using the Debugger in the browser are the same for the Debugger in any IDE or Code Editor so learnjavascript Tutorial is a good place to learn about it
+
+Debugger can be used not only for debugging your code but also for learning how the code works. Debugger allows to start running your code and then pause it at any point in code where you tell it to do so. The place you tell Debugger to pause execution of your code is called a "breakpoint". For example you can set a breakpoint inside a for-loop and the Debugger will pause the code on each iteration. Thus Debugger essentially allows you to slow down the execution of your code to as slow a speed as you wish
+
+With Debugger you can pause and resume your code at any point of the algorithm. This way you are enabled to run the algorithm not at the speed of light but rather at any speed you want. Thus running the algorithm at a very slow speed with the Debugger you can carefully analyze all the relations between all the values of the code in the flow of its algorithm and see how this flow really proceeds. And this is exactly what your mind needs before it can easily see and understand the algorithm of the code you have been looking at
+
+Thus you can use Debugger in order to understand the algorithm of any code you want. Feel free to make notes or draw when analyzing the code with the Debugger and feel free to read any extra explanations you can find here to help you understand all the algorithms you see here
+
+Once you understand the algorithm of the solution of a specific Task you may note that any solution you find here is tied to one of the many Approaches you can find in this here project. Like we said earlier Approach is merely a more general algorithm that can be applied to come up with similar algorithms for solution of many tasks. Having understood the algorithm of a specific solution you will realize how you are instantly enabled to understand the Approach used in general. This way you will be enabled to use the Approach learnt as a building block in your future complex algorithms for the solutions of many Tasks! And all because you were enabled to understand the algorithm in the first place by using Debugger to learn. This technique of using Debugger to understand the algorithm of how any code works we call here _Debugger calm_ because it is a calm and fulfilling way to go about it
 
 ### When you can't solve something
 
