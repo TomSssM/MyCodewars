@@ -31,10 +31,6 @@ _Tasks grouped by_ `Task Type`
 ### Array and Stack or Queue
   - [Valid Parentheses](./valid-parentheses/task.md)
 
-### Stack or Queue
-  - [Flatten non-recursive](./flatten-nonrecursive/task.md)
-  - [Unpack IP](./unpack-ip/task.md)
-
 ### Array Relation of Indexes and Values
   - [Missing Number in Sorted Array](./missing-number-sorted-array/task.md)
   - [Zigzag Conversion](./zigzag-conversion/task.md)
@@ -49,16 +45,20 @@ _Tasks grouped by_ `Task Type`
   - [Remove Duplicates from Sorted Array](./remove-duplicates-sorted-array/task.md)
   - [Sort Colors](./sort-colors/task.md)
 
+### Stack or Queue
+  - [Flatten non-recursive](./flatten-nonrecursive/task.md)
+  - [Unpack IP](./unpack-ip/task.md)
+
 ### Matrix
   - [Sort the Matrix diagonally](./matrix-diagonal-sort/task.md)
+
+### Check if Puzzle is Solvable
+  - [Word Search](./word-search/task.md)
 
 ### Numbers Math
   - [Keygen](./keygen/task.md)
   - [Maximum Product Subarray](./maximum-product-subarray/task.md)
   - [Climbing Stairs](./climb-stairs/task.md)
-
-### Check if Puzzle is Solvable
-  - [Word Search](./word-search/task.md)
 
 ### Backtracking
   - [Combinations](./combinations/task.md)

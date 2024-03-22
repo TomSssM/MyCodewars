@@ -4,7 +4,9 @@
 
 ## Contents
 
-- [General](./task-type-summary-general.md)
+- [Array](./array.md)
+- [Data Structures](./data-structures.md)
+- [Algorithms](./algorithms.md)
 
 ---
 
