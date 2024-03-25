@@ -1,18 +1,17 @@
-# Task Type Summary Title
+## __`TODO: Task Type`__
 
-## __`Task Type`__
-
-1. __*`Approach`*__
+1. __*`TODO: Approach`*__
     <details>
 
     <summary>Code</summary>
 
-    TODO: optional: Short description
+    TODO: optional: short description
 
     __*variation:*__
 
     ```js
     function approach() {
+        TODO
     }
     ```
 
@@ -25,9 +24,6 @@
     </details>
 
 ---
-
-| [:arrow_left: back](./README.md) |
-| :---: |
 
 <!--
 function approach(array) {

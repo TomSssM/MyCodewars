@@ -9,6 +9,7 @@ _List of tasks_
 [:ledger: _Task Template_](./template/README.md)
 
 - [Find Peak Element](./find-peak-element/task.md)
+- [Reverse an Array](./reverse-array/task.md)
 - [Container With Most Water](./most-water/task.md)
 - [Zigzag Conversion](./zigzag-conversion/task.md)
 - [Longest sequence of letters](./longest-letter-subsequence/task.md)

@@ -473,25 +473,50 @@
 ## __`In-Place Swap and Overwrite`__
 
 1. __*`Swap elements of one or more arrays`*__
-    <details>
+    1. __*`Swap elements of one or more arrays`*__
+        <details>
 
-    <summary>Code</summary>
+        <summary>Code</summary>
 
-    ```js
-    function approach(array) {
-        for (let i = 0; i < array.length; i++) {
-            logic(array, i, swap);
+        ```js
+        function approach(array) {
+            for (let i = 0; i < array.length; i++) {
+                logic(array, i, swap);
+            }
         }
-    }
 
-    function swap(array, i1, i2) {
-        ([array[i1], array[i2]] = [array[i2], array[i1]]);
-    }
-    ```
+        function swap(array, i1, i2) {
+            ([array[i1], array[i2]] = [array[i2], array[i1]]);
+        }
+        ```
 
-    ---
+        ---
 
-    </details>
+        </details>
+    2. __*`Swap one part of the array with the other part of the array`*__
+        <details>
+
+        <summary>Code</summary>
+
+        ```js
+        function approach(array) {
+            const partsSeparator = logic(array);
+
+            for (let i = 0; i < partsSeparator; i++) {
+                const j = logic(array, i);
+
+                swap(array, i, j);
+            }
+        }
+
+        function swap(array, i1, i2) {
+            ([array[i1], array[i2]] = [array[i2], array[i1]]);
+        }
+        ```
+
+        ---
+
+        </details>
 
 2. __*`Overwrite elements of one or more arrays`*__
     1. __*`The first pointer goes through the array and upon some condition does two things at once: overwrites the value at the second pointer and increments the second pointer`*__

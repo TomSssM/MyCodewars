@@ -9,6 +9,7 @@ _Tasks grouped by_ `Task Type`
 ### One Pointer One Array
   - [Find Peak Element](./find-peak-element/task.md)
   - [Distance Between Bus Stops](./distance-between-bus-stops/task.md)
+  - [Reverse an Array](./reverse-array/task.md)
 
 ### Two Pointers Two Arrays
   - [Intersection of intervals](./intersection-intervals/task.md)
@@ -44,6 +45,7 @@ _Tasks grouped by_ `Task Type`
   - [Sort letters from one array via another array](./sort-letters-two-arrays/task.md)
   - [Remove Duplicates from Sorted Array](./remove-duplicates-sorted-array/task.md)
   - [Sort Colors](./sort-colors/task.md)
+  - [Reverse an Array](./reverse-array/task.md)
 
 ### Stack or Queue
   - [Flatten non-recursive](./flatten-nonrecursive/task.md)
