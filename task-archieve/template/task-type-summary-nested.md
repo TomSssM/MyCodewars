@@ -1,4 +1,3 @@
-1. ...
     1. __*`TODO: Approach`*__
         <details>
 
