@@ -548,8 +548,6 @@
                     e--;
                 }
             }
-
-            return array;
         }
 
         function swap(array, i1, i2) {
@@ -577,18 +575,6 @@
             for (i = 0; i < array.length; i++) {
                 if (condition()) {
                     array[j++] = logic(array[i]);
-                }
-            }
-        }
-
-        // or:
-
-        function approach(array) {
-            let i = 0;
-
-            for (const value of array) {
-                if (condition()) {
-                    array[i++] = logic(value);
                 }
             }
         }
