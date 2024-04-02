@@ -55,7 +55,7 @@ You can find the overwriting type of solution and the swapping type of solution 
 
   <details>
 
-  <summary><i><b><code>Swap elements of one or more arrays</code></b></i></summary>
+  <summary><i><b><code>Swap elements of one or more arrays. Dutch National Flag algorithm</code></b></i></summary>
 
     The solution that entails swapping elements of the array is a famous Dutch National Flag alogrithm. The Dutch National Flag algorithm is a sorting algorithm that partitions an array containing elements of three distinct values (for example, `0`s, `1`s, and `2`s) into three parts, in a single traversal of the array. The algorithm is named after the Dutch national flag, which has three horizontal stripes of red, white, and blue
 
