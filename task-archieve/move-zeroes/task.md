@@ -31,9 +31,21 @@ Output: [0]
 
   </details>
 
+  ---
+
+  <details>
+
+  <summary><i><b><code>Swap elements of one or more arrays. The first pointer goes through the array and upon some condition does two things at once: swaps the value at the first pointer with the value at the second pointer and increments the second pointer</code></b></i></summary>
+
+    Just like [this task](../remove-duplicates-sorted-array/task.md)
+
+    Swapping solution is kind of more interesting because it doesn't need to fill array with zeros after the second pointer once the first pointer has finished its pass of the array
+
+  </details>
+
 </details>
 
 ---
 
-| [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) |
-| :---: | :---: |
+| [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) | [:white_check_mark: solution 2](./solution-2.js) |
+| :---: | :---: | :---: |

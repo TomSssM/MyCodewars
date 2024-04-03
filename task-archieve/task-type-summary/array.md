@@ -494,7 +494,34 @@
 
         </details>
 
-    2. __*`Swap one part of the array with the other part of the array`*__
+    2. __*`The first pointer goes through the array and upon some condition does two things at once: swaps the value at the first pointer with the value at the second pointer and increments the second pointer`*__
+        <details>
+
+        <summary>Code</summary>
+
+        ```js
+        function approach(array) {
+            let i = 0; // or 1
+            let j = 0;
+
+            for (i = 0; i < array.length; i++) {
+                if (condition()) {
+                    swap(array, i, j);
+                    j++;
+                }
+            }
+        }
+
+        function swap(array, i1, i2) {
+            ([array[i1], array[i2]] = [array[i2], array[i1]]);
+        }
+        ```
+
+        ---
+
+        </details>
+
+    3. __*`Swap one part of the array with the other part of the array`*__
         <details>
 
         <summary>Code</summary>
@@ -504,7 +531,7 @@
             const partsSeparator = logic(array);
 
             for (let i = 0; i < partsSeparator; i++) {
-                const j = logic(array, i);
+                const j = logic(array, partsSeparator, i);
 
                 swap(array, i, j);
             }
@@ -519,7 +546,7 @@
 
         </details>
 
-    3. __*`Dutch National Flag algorithm`*__
+    4. __*`Dutch National Flag algorithm`*__
         <details>
 
         <summary>Code</summary>
@@ -565,11 +592,9 @@
 
         <summary>Code</summary>
 
-        __*overwrite:*__
-
         ```js
         function approach(array) {
-            let i = 0;
+            let i = 0; // or 1
             let j = 0;
 
             for (i = 0; i < array.length; i++) {
@@ -577,26 +602,6 @@
                     array[j++] = logic(array[i]);
                 }
             }
-        }
-        ```
-
-        __*swap:*__
-
-        ```js
-        function approach(array) {
-            let i = 0;
-            let j = 0;
-
-            for (i = 0; i < array.length; i++) {
-                if (condition()) {
-                    swap(array, i, j);
-                    j++;
-                }
-            }
-        }
-
-        function swap(array, i1, i2) {
-            ([array[i1], array[i2]] = [array[i2], array[i1]]);
         }
         ```
 
