@@ -10,6 +10,7 @@ _Tasks grouped by_ `Task Type`
   - [Find Peak Element](./find-peak-element/task.md)
   - [Distance Between Bus Stops](./distance-between-bus-stops/task.md)
   - [Reverse an Array](./reverse-array/task.md)
+  - [Basketball Games](./basketball-games/task.md)
 
 ### Two Pointers Two Arrays
   - [Intersection of intervals](./intersection-intervals/task.md)

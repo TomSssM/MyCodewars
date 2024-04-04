@@ -65,6 +65,23 @@
 
     </details>
 
+4. __*`Sort the array and do something with it`*__
+    <details>
+
+    <summary>Code</summary>
+
+    ```js
+    function approach(array) {
+        const sorted = array.sort(logic);
+
+        approach2(sorted);
+    }
+    ```
+
+    ---
+
+    </details>
+
 ---
 
 ## __`Two Pointers Two Arrays`__

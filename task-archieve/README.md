@@ -40,4 +40,5 @@ _List of tasks_
 - [Top K Frequent Elements](./top-k-frequent-elements/task.md)
 - [Move Zeroes](./move-zeroes/task.md)
 - [Unpack IP](./unpack-ip/task.md)
+- [Basketball Games](./basketball-games/task.md)
 - [Word Break](./word-break/task.md)
