@@ -48,5 +48,5 @@ longestStr('ababababccddddddd', 3); // L=17 N=4 K=3 result: 10
 
 ---
 
-| [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) |
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) |
 | :---: | :---: |

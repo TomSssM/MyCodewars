@@ -64,5 +64,5 @@ Explanation: Distance between 0 and 3 is 6 or 4, minimum is 4
 
 ---
 
-| [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) | [:white_check_mark: solution 2](./solution-2.js) |
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) | [:white_check_mark: solution 2](./solution-2.js) |
 | :---: | :---: | :---: |

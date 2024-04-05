@@ -85,6 +85,8 @@ Thus you can use Debugger in order to understand the algorithm of any code you w
 
 Once you understand the algorithm of the solution of a specific Task you may note that any solution you find here is tied to one of the many Approaches you can find in this here project. Like we said earlier Approach is merely a more general algorithm that can be applied to come up with similar algorithms for solution of many tasks. Having understood the algorithm of a specific solution you will realize how you are instantly enabled to understand the Approach used in general. This way you will be enabled to use the Approach learnt as a building block in your future complex algorithms for the solutions of many Tasks! And all because you were enabled to understand the algorithm in the first place by using Debugger to learn. This technique of using Debugger to understand the algorithm of how any code works we call here _Debugger calm_ because it is a calm and fulfilling way to go about it
 
+Also when trying to see how the algorithm works or come up with a solution try to visualize the algorithm in action: now arrays become as connected squares and pointers as arrows to the squares, somewhere on the background counters increment and decrement and so on. Whatever your imagination is capable of
+
 ### When you can't solve something
 
 One should never worry regarding the matter or suffer any other kindred blunders so characteristic of a studious mind

@@ -55,5 +55,5 @@ Output: ['1.2.3.1', '1.2.3.2', '1.2.3.3', '1.2.3.7']
 
 ---
 
-| [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) | [:white_check_mark: solution 2](./solution-2.js) |
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) | [:white_check_mark: solution 2](./solution-2.js) |
 | :---: | :---: | :---: |

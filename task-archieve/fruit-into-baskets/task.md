@@ -59,5 +59,5 @@ If we had started at the first tree, we would only pick from trees [1,2]
 
 ---
 
-| [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) |
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) |
 | :---: | :---: |

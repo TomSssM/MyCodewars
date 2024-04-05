@@ -57,5 +57,5 @@ The key point to solving this task is to realize that we don't have to always ar
 
 ---
 
-| [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) |
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) |
 | :---: | :---: |

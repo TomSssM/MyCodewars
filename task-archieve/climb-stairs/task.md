@@ -52,5 +52,5 @@ You can store a Fibonacci Sequence in an array and you get `O(n)` memory complex
 
 ---
 
-| [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) | [:white_check_mark: solution 2](./solution-2.js) | [:white_check_mark: solution 3](./solution-3.js) |
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) | [:white_check_mark: solution 2](./solution-2.js) | [:white_check_mark: solution 3](./solution-3.js) |
 | :---: | :---: | :---: | :---: |

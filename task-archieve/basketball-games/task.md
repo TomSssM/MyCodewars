@@ -57,7 +57,7 @@ As you can see we have 3 overlapping games and thus need at least 3 judges so th
 - __`One Pointer One Array`__ + __`Array and Counter`__
   <details>
 
-  <summary><i><b><code>Sort the array and do something with it</code></b></i> + <i><b><code>Iterate an array keeping one or more counters</code></b></i></summary>
+  <summary><i><b><code>Sort the array and do something with it</code></b></i> + <i><b><code>Iterate an array incrementing and decrementing one or more counters</code></b></i> + <i><b><code>Iterate an array keeping one or more max or min counters</code></b></i></summary>
 
     As was stated in the Hint above we merely need to find the max number of games happening at the same time. In order to do that we can change the array to be composed of elements where each element represents either start or end of any game. Then the business logic of applying the necessary Approaches becomes evident
 
@@ -69,5 +69,5 @@ As you can see we have 3 overlapping games and thus need at least 3 judges so th
 
 ---
 
-| [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) |
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) |
 | :---: | :---: |

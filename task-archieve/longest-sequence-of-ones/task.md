@@ -16,7 +16,7 @@ countOnes([1, 1, 1, 0, 1, 0, 0, 1, 1, 1]); // 4 (we throw away 0 at index 3 and 
 - __`Array and Counter`__
   <details>
 
-  <summary><i><b><code>Iterate an array keeping one or more counters</code></b></i></summary>
+  <summary><i><b><code>Iterate an array incrementing and decrementing one or more counters</code></b></i> + <i><b><code>Iterate an array keeping one or more max or min counters</code></b></i> + <i><b><code>Iterate an array keeping one or more previous counters</code></b></i></summary>
 
     It is one of those tasks where you use one pointer to iterate the array as well as one or more counters that we may or may not reset sometimes
 
@@ -24,7 +24,11 @@ countOnes([1, 1, 1, 0, 1, 0, 0, 1, 1, 1]); // 4 (we throw away 0 at index 3 and 
 
     __Note:__ a "counter" is a variable that holds some number which we are going to increase, decrease or change in some other way per iteration (and if we say "reset the counter" it means assign to the counter the value that it had before we started iterating the array)
 
-    __Note:__ we have already seen a somewhat simpler task where we used counters to solve it. The task is called ["3 Greatest Integers in an Array"](../../2\)%20Task%20Challanges.md#30-3-greatest-integers-in-an-array)
+    __Note:__ when we say "keep a counter" while iterating an array it means you iterate an array and on some or all iterations you update or reset the counter. Sometimes you merely increment or decrement the counter and sometimes (if the logic of the task is complex) you may assign some cleverly calculated value to it per iteration (the current value of the counter itself may be used to calculate its new value of course)
+
+    __Note:__ did you notice how we need to combine no less than 3 Approaches of the `Array and Counter` Task Type in order to get the solution?
+
+    __Note:__ we have already seen a somewhat simpler task where we used counters to solve it. The task is called ["3 Greatest Integers in an Array"](../../2\)%20Task%20Challanges.md#30-3-greatest-integers-in-an-array) (this Task uses the _`Iterate an array keeping one or more previous counters`_ Approach)
 
   </details>
 
@@ -32,5 +36,5 @@ countOnes([1, 1, 1, 0, 1, 0, 0, 1, 1, 1]); // 4 (we throw away 0 at index 3 and 
 
 ---
 
-| [:arrow_left: back](../task-type.md) | [:white_check_mark: solution](./solution.js) |
+| [:arrow_left: back](../README.md) | [:white_check_mark: solution](./solution.js) |
 | :---: | :---: |

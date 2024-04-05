@@ -266,7 +266,82 @@
         let counter;
 
         for (let i = 0; i < array.length; i++) {
-            logic(array[i], counter);
+            logic(array, i, counter);
+        }
+    }
+    ```
+
+    ---
+
+    </details>
+
+2. __*`Iterate an array incrementing and decrementing one or more counters`*__
+    <details>
+
+    <summary>Code</summary>
+
+    ```js
+    function approach(array) {
+        let counter = 0;
+
+        for (let i = 0; i < array.length; i++) {
+            if (condition()) {
+              counter++;
+            }
+
+            if (condition()) {
+              counter--;
+            }
+        }
+    }
+    ```
+
+    ---
+
+    </details>
+
+3. __*`Iterate an array keeping one or more max or min counters`*__
+    <details>
+
+    <summary>Code</summary>
+
+    ```js
+    function approach(array) {
+        let counter;
+        let max = -Infinity;
+        let min = Infinity;
+
+        for (let i = 0; i < array.length; i++) {
+            const newMax = logic(array, i, counter);
+            const newMin = logic(array, i, counter);
+
+            max = Math.max(newMax, max);
+            min = Math.min(newMin, min);
+        }
+    }
+    ```
+
+    ---
+
+    </details>
+
+4. __*`Iterate an array keeping one or more previous counters`*__
+    <details>
+
+    <summary>Code</summary>
+
+    ```js
+    function approach(array) {
+        let prev;
+        let counter;
+
+        for (let i = 0; i < array.length; i++) {
+            logic(array, i, counter);
+
+            if (condition()) {
+              prev = counter;
+              counter = logic();
+            }
         }
     }
     ```
