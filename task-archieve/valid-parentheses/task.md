@@ -37,6 +37,7 @@ Output: false
 
   <summary><i><b><code>Create and use one or more Stacks as you iterate an array</code></b></i></summary>
 
+    <!-- TODO: refactor the abstract explanation of the Approach TODO: The Approach is that ... -->
     So you need to iterate a string as an array and use a Stack in order to solve the task
 
     If you encounter an opening bracket then you need to push it to the Stack. If you encounter a closing bracket then you need to pop the opening bracket off the Stack (only make sure that you pop off the same type of opening bracket as you found a closing bracket for otherwise the brackets are placed incorrectly)

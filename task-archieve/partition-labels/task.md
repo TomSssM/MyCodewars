@@ -28,6 +28,7 @@ Output: [10]
 
 <summary>Hint</summary>
 
+<!-- TODO: links to Easy Tasks -->
 This is a `Array and HashMap` Task Type. We have already seen an example of this Task Type when we were solving the ["Contiguous Array" task](../contiguous-array/task.md). But this task is a tar bit more complicated because in the ["Contiguous Array" task](../contiguous-array/task.md) we simply created a HashMap and it helped us solve the task even while we were iterating the input array (or the input data, to be precise) but in _this_ task we need to use a different and a bit more complex but very similar Approach to attain the solution. Here we are supposed to _create one or more HashMaps and then do something with all the new data_. Now what does this mean? It means that we need to iterate the array for the first time to create one or more HashMaps and then there are exactly two things that we can do:
 
 1. Iterate in some way the one or more HashMaps that we created during the first pass ( _Approach 1_ )
@@ -38,6 +39,7 @@ And thus the solution should be revealed
 
 This Task is kind of interesting in that we can solve this Task using __either one or the other__ of the two Approaches mentioned above! In other words we can solve this task _either_ by iterating the HashMap that we create _or_ by iterating the input array once again using the HashMap
 
+<!-- TODO: move to the Easy Task: -->
 __Note:__ we say "array" here while the function accepts a string. The logic behind this is that we iterate the string the same way as an array and therefore the input string is like an array for us
 
 One thing is for sure, we need to create a HashMap where we map the letters to the indexes in the string at which those letters were encountered
@@ -57,6 +59,8 @@ Then follow one of the two Approaches of the `Array and HashMap` Task Type in th
 
   <summary><i><b><code>Create one or more HashMaps and iterate the HashMap (the HashMaps) in some way</code></b></i></summary>
 
+    <!-- TODO: move abstract explanation of the Approach to an Easy Task -->
+
     We need to create a HashMap like we have seen in Hint above
 
     Then if you take a look at the _values_ of the HashMap we can see that the values represent _intervals_ indicating the first and last index where each letter can be found in the input string (in the arrays that make up the values of the HashMap the first value is the first index where the letter can be found and can be treated as the start of the _interval_ and the last value is the last index where the letter can be found and therefore can be treated as the end of the _interval_)
@@ -73,6 +77,8 @@ Then follow one of the two Approaches of the `Array and HashMap` Task Type in th
 
   <summary><i><b><code>Create one or more HashMaps and iterate the array again using the HashMap (the HashMaps)</code></b></i></summary>
 
+    <!-- TODO: move abstract explanation of the Approach to an Easy Task -->
+
     This solution is a bit less obvious than the first one
 
     First of all we need to create a HashMap like we have seen in Hint above
@@ -87,6 +93,7 @@ Then follow one of the two Approaches of the `Array and HashMap` Task Type in th
 
 <summary>Similar Tasks</summary>
 
+<!-- TODO: move Similar Task to an Easy Task -->
 - [Top K Frequent Elements](../top-k-frequent-elements/task.md)
 
 </details>

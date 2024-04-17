@@ -27,11 +27,17 @@ Explanation: [0, 1] (or [1, 0]) is a longest contiguous subarray with equal numb
 
   <summary><i><b><code>Create and use one or more HashMaps as you iterate an array</code></b></i></summary>
 
+    <!-- TODO: move abstract explanation of the Approach to an Easy Task -->
+
+    <!-- TODO: abstract explanation of the Approach TODO: The Approach is that ... -->
+
     The solution to the ["Remove Duplicate From An Array" task](../../1\)%20Task%20Challanges.md#14-remove-duplicate-from-an-array) is perhaps one of the most classic example of using HashMap to solve a task in `O(n)` time complexity instead of using nested for-loops (therefore "Remove Duplicate From An Array" task is the most classic example of the `Array and HashMap` Task Type, so make sure you understand how it works first before trying to solve this task, it is very crucial)
 
     __Note:__ you can read more about using HashMap to solve tasks in [this article](../literature/hash-map.md) as this and many other tasks require this knowledge
 
     You should read Hint for the logic of applying the Approach _`Create and use one or more HashMaps as you iterate an array`_ to solve this particular task
+
+    <!-- TODO: links to Easy Tasks -->
 
     __Note:__ we have likewise seen lots of other HashMap tasks before:
     - [First Non Repeating Char in a String](../../1\)%20Task%20Challanges.md#20-first-non-repeating-char-in-a-string)
@@ -40,6 +46,8 @@ Explanation: [0, 1] (or [1, 0]) is a longest contiguous subarray with equal numb
     - [Largest Sum of Two](../../2\)%20Task%20Challanges.md#25-largest-sum-of-two)
     - [Cash Exchange](../../cheatsheet/cash-exchange.js)
     - [Longest Consequtive Sequence](../../cheatsheet/longest-cons-sequence.js)
+
+    <!-- TODO: expnanation of the logic of the solution -->
 
   </details>
 

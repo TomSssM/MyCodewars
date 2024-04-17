@@ -30,6 +30,9 @@ Explanation: There is 1 choose 1 = 1 total combination
 
   <summary><i><b><code>Get all unique combinations of values of an array in any order</code></b></i></summary>
 
+    <!-- TODO: refactor the abstract explanation of the Approach TODO: The Approach is that ... -->
+    <!-- TODO: perhaps port the permutations of the string task to task-archieve -->
+
     This task is for __*Recursive Backtracking*__. You should use it to do __*Depth-first Search of Array*__ (read on to know what this means). What we need to do here is get all unique combinations of values of an array in any order
 
     Note that unlike the ["Permutations of a String" task](../../2\)%20Task%20Challanges.md#28-permutations-of-a-string), in this task we are supposed to return the output in __any order__, also we want _combinations_ of values of an array and not _permutations_ like in the "Permutations of a String" task (so basically we are going to combine values of an array instead of re-arranging them the difference being that `[1,2]` and `[2,1]` are different permutations but these are the same combination of the elements). So for this task the order of the combinations doesn't matter. When the order of the combinations doesn't matter you should apply a backtracking algorithm that is actually different from the one we saw before in the "Permutations of a String" task in order not to come up with duplicates (i.e., `[1,2]` and `[2,1]`)

@@ -59,6 +59,8 @@ As you can see we have 3 overlapping games and thus need at least 3 judges so th
 
   <summary><i><b><code>Sort the array and do something with it</code></b></i> + <i><b><code>Iterate an array incrementing and decrementing one or more counters</code></b></i> + <i><b><code>Iterate an array keeping one or more max or min counters</code></b></i></summary>
 
+    <!-- TODO: abstract explanation of the Approach TODO: The Approach is that ... -->
+
     As was stated in the Hint above we merely need to find the max number of games happening at the same time. In order to do that we can change the array to be composed of elements where each element represents either start or end of any game. Then the business logic of applying the necessary Approaches becomes evident
 
     First we need to sort the points in time (when games start and end) thus attained. Then we need to loop through the array keeping track of the counter (the number of judges): if we encounter the start of a game then we increment the counter, if we encounter the end of a game then we decrement the counter. This will allow us to count the max number of games that have ever overlapped during the entire time period, which, as we have discussed, _is_ in fact equal to the number of judges we are going to need (for the number of judges required grows as the number of parallel games grows because a judge has only one limitation of not being able to attend two games simultaneously)

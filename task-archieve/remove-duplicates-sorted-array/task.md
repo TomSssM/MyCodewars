@@ -47,6 +47,10 @@ It does not matter what you leave beyond the returned k (hence they are undersco
 
     """
 
+    <!-- TODO: abstract explanation of the Approach TODO: The Approach is that ... -->
+
+    <!-- TODO: expnanation of the logic of the solution -->
+
   </details>
 
   ---
@@ -56,6 +60,8 @@ It does not matter what you leave beyond the returned k (hence they are undersco
   <summary><i><b><code>Swap elements of one or more arrays. The first pointer goes through the array and upon some condition does two things at once: swaps the value at the first pointer with the value at the second pointer and increments the second pointer</code></b></i></summary>
 
     We can also solve the task by following the same logic as the overwriting solution entails except instead of overwriting elements we are going to be swapping elements ([solution 2](./solution-2.js))
+
+    <!-- TODO: abstract explanation of the Approach TODO: The Approach is that ... -->
 
     Sometimes the overwriting Approach doesn't fit because by overwriting we create duplicate elements in the array (which may be a problem if we want to iterate the same array again) but with swapping we don't, we merely swap. However the logic of the solution of this task doesn't care if we swap or overwrite so we can use either Approach
 

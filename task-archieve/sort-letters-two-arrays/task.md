@@ -74,8 +74,6 @@ To solve this task you need to simply _sort_ the elements of the 2nd array (the 
 
     __Note:__ this example of a solution above (which we said doesn't solve this particular task, the reason for it is what we saw in Hint 1) doesn't swap but rather overwrites elements of the array. The Approach we are studying in this particular task is called _`Swap elements of one or more arrays`_. To solve this particular task you need to swap elements instead of overwriting them and for the overwrite Approach of this Task Type feel free to check out the [sibling task](../remove-duplicates-sorted-array/task.md)
 
-    __Note:__ we have already seen the ["Push Zeros Case" task](../../2\)%20Task%20Challanges.md#29-push-zeros-case) where we used the In-Place Swap type of algorithm to solve it
-
   </details>
 
 </details>

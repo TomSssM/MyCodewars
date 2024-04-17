@@ -32,6 +32,9 @@ Explanation: In this case, no transactions are done and the max profit = 0
 
   <summary><i><b><code>Sliding Window. Dynamic size</code></b></i></summary>
 
+    <!-- TODO: Easy Task for Sliding Window fixed size -->
+    <!-- TODO: refactor the abstract explanation of the Approach TODO: The Approach is that ... -->
+
     This is a task for two pointers. Sometimes two pointers move such that one pointer (left pointer) is always behind the other pointer (right pointer). Such a technique when we have the left pointer behind the right pointer and per iteration we either increment the left pointer or the right pointer or per iteration we increment both the left and the right pointers is called "_Sliding Window_"
 
     In order to learn the basics of the "_Sliding Window_" technique read [this article](../literature/sliding-window.md). We are going to build all further explanation on top of the knowledge from the article
@@ -42,7 +45,7 @@ Explanation: In this case, no transactions are done and the max profit = 0
 
     Thus using the _`Sliding Window. Dynamic size`_ Approach you don't have to always increment the left pointer by one or the right pointer by one: the pointers can be set to any index they want so long as the left is behind the right. Indeed the left pointer may even go to the same position as the right pointer while the right pointer increments by one to be ahead of the left pointer. As you can see this Sliding Window we have been talking about may shrink and expand at will
 
-    __Note:__ [this task](../longest-letter-subsequence/task.md) likewise uses the same Sliding Window Approach _`Sliding Window. Dynamic size`_ but combines it with one of the HashMap Approaches
+    <!-- TODO: expnanation of the logic of the solution -->
 
   </details>
 

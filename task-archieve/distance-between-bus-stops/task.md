@@ -56,6 +56,8 @@ Explanation: Distance between 0 and 3 is 6 or 4, minimum is 4
 
   <summary><i><b><code>Do math or bitwise operation first on one part of the array and then on another part of of the array</code></b></i></summary>
 
+    <!-- TODO: abstract explanation of the Approach: The Approach is that ... -->
+
     This Task can also be solved using the Approach _`Do math or bitwise operation first on one part of the array and then on another part of of the array`_ ([solution 2](./solution-2.js)). First of all make sure that the pointer `start` is always _before_ the pointer `destination` (swap them if not so). Then you need to sum all the elements between `start` and `destination` (this is your sum going clockwise, math operation first on one part of the array), after this get the total sum of all the elements of the array and extract the sum of going clockwise from this total sum (this is your sum going counterclockwise, math operation on another part of of the array). Then return the lesser sum
 
   </details>

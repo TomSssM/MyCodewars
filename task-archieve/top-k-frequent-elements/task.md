@@ -25,6 +25,8 @@ Output: [1]
 
   <summary><i><b><code>Create one or more HashMaps and iterate the HashMap (the HashMaps) in some way</code></b></i></summary>
 
+    <!-- TODO: refactor the abstract explanation of the Approach TODO: The Approach is that ... BUT keep in mind we have already seen this approach so this is a Similar Task essentially -->
+
     In order to solve the task you need to create HashMap and iterate this HashMap in some way similarly to [this task](../partition-labels/task.md) except here we need not to iterate but rather _sort_ this HashMap we get
 
     Just don't be fooled by the mention of "any order" in the task description into thinking it is a Task Type for Backtracking

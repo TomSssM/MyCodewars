@@ -32,6 +32,24 @@ Output: false
 
 <summary>Task Type</summary>
 
+- __`TODO: Task Type`__
+  <details>
+
+  <summary><i><b><code>TODO: Approach</code></b></i></summary>
+
+    <!-- TODO: write the Approach using One Pointer One Array and recursion -->
+    <!-- TODO: write to task type description: We need to check which way to go, go both ways to see which one is correct: that is a call for recursion -->
+
+    <!-- TODO: write Tabulation: it means as using an array as a data structure that holds in it the results of some computations in order to see if this array enables us to solve the Task -->
+
+    TODO: explanation of Approach
+
+    TODO: optional: example of Approach
+
+    TODO: optional: how to apply the Approach to the Task
+
+  </details>
+
 </details>
 
 ---

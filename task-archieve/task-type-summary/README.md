@@ -4,6 +4,8 @@
 
 > :bulb: `approach2(...)` means that the posssibilities of further actions are so vast that it is surely going to be some other Approach used in that place thereby making the solution a combination of two Approaches instead of just one (and the immediate business logic of the Task of course). The same is if you encounter `approach3(...)` then it is going to be a combination of 3 Approaches and so forth
 
+> :bulb: One should also consider using recursion especially with simple Approaches
+
 ## Contents
 
 - [Array](./array.md)

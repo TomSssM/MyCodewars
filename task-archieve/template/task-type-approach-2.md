@@ -19,11 +19,11 @@ TODO: optional: hint description
 
   <summary><i><b><code>TODO: Approach 1</code></b></i></summary>
 
-    TODO: explanation of Approach
+    TODO: abstract explanation of the Approach if Approach is used for the first time: TODO: The Approach is that ...
 
-    TODO: optional: example of Approach
+    TODO: expnanation of the logic of the solution and how the Approach is applied
 
-    TODO: optional: how to apply the Approach to the Task
+    TODO: optional: example of the logic of the solution
 
   </details>
 
@@ -33,11 +33,11 @@ TODO: optional: hint description
 
   <summary><i><b><code>TODO: Approach 2</code></b></i></summary>
 
-    TODO: explanation of Approach
+    TODO: abstract explanation of the Approach if Approach is used for the first time: TODO: The Approach is that ...
 
-    TODO: optional: example of Approach
+    TODO: expnanation of the logic of the solution and how the Approach is applied
 
-    TODO: optional: how to apply the Approach to the Task
+    TODO: optional: example of the logic of the solution
 
   </details>
 

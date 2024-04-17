@@ -43,11 +43,10 @@ You can find the overwriting type of solution and the swapping type of solution 
 
   <summary><i><b><code>Overwrite elements of one or more arrays. Iterate the array and get some information. Then based on this information iterate the array again overwriting its values</code></b></i></summary>
 
+    <!-- TODO: refactor the abstract explanation of the Approach TODO: The Approach is that ... -->
     The solution that entails overwriting elements of the array is a two-pass algorithm using counting sort
 
-    Iterate the array counting number of `0`s, `1`s, and `2`s
-
-    Overwrite the array with the _total_ number of `0`s, then `1`s and followed by `2`s
+    Iterate the array counting number of `0`s, `1`s, and `2`s. Then overwrite the array with the _total_ number of `0`s, then `1`s and followed by `2`s
 
   </details>
 
@@ -57,7 +56,7 @@ You can find the overwriting type of solution and the swapping type of solution 
 
   <summary><i><b><code>Swap elements of one or more arrays. Dutch National Flag algorithm</code></b></i></summary>
 
-    The solution that entails swapping elements of the array is a famous Dutch National Flag alogrithm. The Dutch National Flag algorithm is a sorting algorithm that partitions an array containing elements of three distinct values (for example, `0`s, `1`s, and `2`s) into three parts, in a single traversal of the array. The algorithm is named after the Dutch national flag, which has three horizontal stripes of red, white, and blue
+    The Approach that entails swapping elements of the array is a famous Dutch National Flag alogrithm. The Dutch National Flag algorithm is a sorting algorithm that partitions an array containing elements of three distinct values (for example, `0`s, `1`s, and `2`s) into three parts, in a single traversal of the array. The algorithm is named after the Dutch national flag, which has three horizontal stripes of red, white, and blue
 
     The algorithm uses three pointers (let's call them `s`, `e` and `n` respectively) to partition the array into three sections:
 

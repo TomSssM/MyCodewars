@@ -52,12 +52,15 @@ Output:
 
   <summary><i><b><code>Get all unique combinations of values of many arrays in any order</code></b></i></summary>
 
-    Think of each button of the phone as an array consisting of 3 elements (for example for button `"2"` the elements of the array are `['a', 'b', 'c']`). As you can see if we have digits `234` then in order to solve the task we need to find all the unique combinations of values of the arrays `['a', 'b', 'c']`, `['d', 'e', 'f']` and `['g', 'h', 'i']`. Thus we can solve the task if we use the Approach _`Get all unique combinations of values of many arrays in any order`_. In order to do this we need to tweak the Approach called _`Merge two Queues of prefixes`_ which we have seen in pure form in [this task](../unpack-ip/task.md)
-
+    <!-- TODO: abstract explanation of the Approach TODO: The Approach is that ... -->
+    <!--
     It works in this way:
     1. At the beginning, it is an empty string
     2. A new layer is obtained by adding characters at the end of the previous layer
     3. After the new layer is obtained, the previous layer is not used
+    -->
+
+    Think of each button of the phone as an array consisting of 3 elements (for example for button `"2"` the elements of the array are `['a', 'b', 'c']`). As you can see if we have digits `234` then in order to solve the task we need to find all the unique combinations of values of the arrays `['a', 'b', 'c']`, `['d', 'e', 'f']` and `['g', 'h', 'i']`. Thus we can solve the task if we use the Approach _`Get all unique combinations of values of many arrays in any order`_. In order to do this we need to tweak the Approach called _`Merge two Queues of prefixes`_ which we have seen in pure form in [this task](../unpack-ip/task.md)
 
     Here is a visual representation of the algorithm:
 

@@ -41,6 +41,7 @@ Output: ['1.2.3.1', '1.2.3.2', '1.2.3.3', '1.2.3.7']
 
   <summary><i><b><code>Merge two Queues of prefixes</code></b></i></summary>
 
+    <!-- TODO: refactor the abstract explanation of the Approach TODO: The Approach is that ... -->
     Basically we use one Queue as a Queue of prefixes and each of the prefixes we combine with an array of other values and put into a new Queue. Then the old Queue is disregarded and the new Queue is used as a Queue of prefixes again in the next iteration
 
     In our task each octet or a series of octets is a prefix. If we encounter a simple octet we append it to the previous octets in the Queue. If we encounter either of the patterns then we append an octet to the previous octets in the Queue several times for each octet of the pattern
