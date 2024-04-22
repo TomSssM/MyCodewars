@@ -1,0 +1,61 @@
+
+Go over all the Tasks and fill the TODO
+  - first create the Easy Tasks for all the Approaches
+  - then refactor the medium Tasks
+  - make sure no more TODOs are left in the task-archieve
+
+Sort README md by difficulty
+Sort task type md by difficulty
+Sort task type summary md by difficulty
+
+WRITE INTO EXTRA DOCUMENTATION:
+    1) visualize it and see how you would achieve the goal of the Task being completely unrestrained in your imagination and then see which of the ways of solving it you find this way coincidences with which of the Approaches or a combination of the Approaches + ALSO visualize every approach so you can use it like a spell in your imagination
+    2) Also append a note to extra-documentation that README md is Tasks grouped not by timeline but by difficulty in such a way as for a learner to learn
+    3) Make sure extra-documentation tells how to work with the Task Type spoilers and the Approaches
+    4) Make sure extra-documentation mentions how more complex solutions are almost always a combination of the Approaches (the solution utilizes the mechanics of several Approaches instead of just one Approach)
+    5) Explain how when the spoiler says Approach 1 + Approach 2 it means that you need to combine the mechanics of the two Approaches to get the solution
+    6) Just look at the code of the specific solution of the Task and then look at the the abstract code of the Approach in task type summary and you will see the similarity. This similarity is the abstract mechanics that can be reused across multiple Tasks
+    7) Same if you look at the solution that uses a combination of the Approaches. Look at the code of the specific solution and then look at the code of the Approaches that the solution combines and you will see how the mechanics of multiple Appearances intertwine and can be intertwined for attaining a solution to a Task
+
+isPalindrome (search on leetcode) as the template task for the Approach two pointers go in opposite directions
+  + go from start and end until meet Approach
+  + go in reverse Approach
+
+Solve the easy tasks and solidify the Approaches
+  > NOTE: you need the basic education u have never had before dealing with the medium tasks like you do
+  > NOTE: stick them to top of our list showcasing the Approaches more clearly than the current tasks do
+  tasks:
+    https://leetcode.com/list/xix1yu51/
+    https://youtube.com/playlist?list=PLjOcsOwEjb12kPbh4f1BjWh-sao0tX-Md&si=VAlR2vAb_7zZ0e1x
+
+MEDIUM:
+
+https://leetcode.com/problems/insert-interval/
+https://leetcode.com/problems/possible-bipartition/
+https://leetcode.com/problems/rotate-array/
+https://leetcode.com/problems/happy-number/
+https://leetcode.com/problems/count-primes/
+
+https://leetcode.com/problems/word-break/
+https://leetcode.com/problems/word-break/solutions/3205773/139-solution-with-step-by-step-explanation/
+https://leetcode.com/problems/word-break/solutions/3106264/simple-c-dp-short/
+* tabulation (say that it is like our dfs approach except with like memoization on steroids)
+
+https://leetcode.com/problems/interleaving-string/description/
+https://leetcode.com/problems/interleaving-string/solutions/2249509/python-simple-solution-w-explanation-recursion-dp/
+* same as before but tabulation using 2D arrays
+
+https://leetcode.com/problems/palindrome-partitioning/
+  * let's use our dfs function
+
+https://leetcode.com/problems/combination-sum/description/
+  * MORE DFS!!!
+  * https://leetcode.com/problems/combination-sum/solutions/1881839/easy-backtracking-approach-deduplicating-and-pruning/
+
+https://leetcode.com/problems/longest-palindromic-substring/
+NOTE: 1) NEW two indexes go away from each other, max counter, iterate array 2) tabulation
+https://leetcode.com/problems/longest-palindromic-substring/solutions/4212564/beats-96-49-5-different-approaches-brute-force-eac-dp-ma-recursion/
+
+(?) Maybe create a video like Debugger.mp4 showcasing all the features of the debugger
+  - first on MacOS
+  - then on Windows in the 2019 version of vscode
