@@ -35,6 +35,8 @@ Explanation: [0, 1] (or [1, 0]) is a longest contiguous subarray with equal numb
 
     <!-- TODO: And the HashMap article also features two Approaches (the second one for create HashMap and iterate it) so please move the other one into a separate Task -->
 
+    <!-- TODO: Find the first index of the element in an array that repeats N times is your task for Craate HashMap and iterate the array again using the HashMap -->
+
     The solution to the ["Remove Duplicate From An Array" task](../../1\)%20Task%20Challanges.md#14-remove-duplicate-from-an-array) is perhaps one of the most classic example of using HashMap to solve a task in `O(n)` time complexity instead of using nested for-loops (therefore "Remove Duplicate From An Array" task is the most classic example of the `Array and HashMap` Task Type, so make sure you understand how it works first before trying to solve this task, it is very crucial)
 
     __Note:__ you can read more about using HashMap to solve tasks in [this article](../literature/hash-map.md) as this and many other tasks require this knowledge
