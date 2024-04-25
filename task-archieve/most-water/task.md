@@ -64,6 +64,8 @@ Start with the maximum width container and go to a shorter width container if th
 
   <summary><i><b><code>Two pointers go from start and end until some condition</code></b></i></summary>
 
+    <!-- TODO: Find the longest distances between two elements of an array (like two a's in an array of letters) is your Easy Task for two pointers go from start and end until they meet -->
+
     The Approach is that we create two pointers: the first pointer goes from the start of the array to the end of the array and the other pointer goes from the end of the array to the start of the array until both pointers meet
 
     For the solution of this particular task your left pointer going from the start to the end and your right pointer going from the end to the start are going to form a rectangular space (distance between the pointers is width and the smaller value of either the left or the right pointer is height, see the picture in Hint). You need to note the size of that space formed by the left and right pointers and keep increasing either the left pointer or the right pointer depending on which one has the smaller height (which one points to the smaller value). This allows us to try and find the biggest rectangular space that can be formed by two pointers and thus attain the solution. The logic of this Task is somewhat related to geometry by its nature

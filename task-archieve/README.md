@@ -8,6 +8,7 @@ _List of tasks_
 
 [:ledger: _Task Template_](./template/README.md)
 
+<!-- TODO: continue refactoring: -->
 - [Find Peak Element](./find-peak-element/task.md)
 - [Reverse an Array](./reverse-array/task.md)
 - [Distance Between Bus Stops](./distance-between-bus-stops/task.md)
