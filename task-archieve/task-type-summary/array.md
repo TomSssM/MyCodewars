@@ -84,6 +84,36 @@
 
 ---
 
+## __`Two Pointers One Array`__
+
+1. __*`Two pointers go from start and end until some condition`*__
+    <details>
+
+    <summary>Code</summary>
+
+    ```js
+    function approach(array) {
+        let i = 0;
+        let j = array.length - 1;
+
+        while (i < j) {
+            logic(array[i], array[j]);
+
+            if (condition()) {
+                i++;
+            } else {
+                j--;
+            }
+        }
+    }
+    ```
+
+    ---
+
+    </details>
+
+---
+
 ## __`Two Pointers Two Arrays`__
 
 1. __*`Two pointers of two arrays increase like in Merge Sort`*__
@@ -117,36 +147,6 @@
     __Input:__ `[1, 2, 3]`, `['a', 'b', 'c']`
 
     __Output:__ intermingled values of both arrays
-
-    ---
-
-    </details>
-
----
-
-## __`Two Pointers One Array`__
-
-1. __*`Two pointers go from start and end until some condition`*__
-    <details>
-
-    <summary>Code</summary>
-
-    ```js
-    function approach(array) {
-        let i = 0;
-        let j = array.length - 1;
-
-        while (i < j) {
-            logic(array[i], array[j]);
-
-            if (condition()) {
-                i++;
-            } else {
-                j--;
-            }
-        }
-    }
-    ```
 
     ---
 
@@ -318,6 +318,8 @@
             max = Math.max(newMax, max);
             min = Math.min(newMin, min);
         }
+
+        logic(max, min);
     }
     ```
 
@@ -343,6 +345,8 @@
               counter = logic();
             }
         }
+
+        logic(prev, counter);
     }
     ```
 
@@ -364,7 +368,7 @@
         const hashMap = {};
 
         for (let i = 0; i < array.length; i++) {
-            logic(array[i], hashMap);
+            logic(array[i], i, hashMap);
         }
     }
     ```
@@ -383,7 +387,7 @@
         const hashMap = {};
 
         for (let i = 0; i < array.length; i++) {
-            logic(array[i], hashMap);
+            logic(array[i], i, hashMap);
         }
 
         logic(hashMap, Object.entries(hashMap));
@@ -404,11 +408,11 @@
         const hashMap = {};
 
         for (let i = 0; i < array.length; i++) {
-            logic(array[i], hashMap);
+            logic(array[i], i, hashMap);
         }
 
         for (let i = 0; i < array.length; i++) {
-            logic(array[i], hashMap);
+            logic(array[i], i, hashMap);
         }
     }
     ```
@@ -431,7 +435,7 @@
         const stack = [];
 
         for (let i = 0; i < array.length; i++) {
-            logic(array[i], stack); // stack.push() stack.pop()
+            logic(array[i], i, stack); // stack.push() stack.pop()
         }
     }
     ```
@@ -450,7 +454,7 @@
         const queue = [];
 
         for (let i = 0; i < array.length; i++) {
-            logic(array[i], queue); // queue.push() queue.shift()
+            logic(array[i], i, queue); // queue.push() queue.shift()
         }
     }
     ```
@@ -531,12 +535,12 @@
     ```js
     function approach(array) {
         let i;
-        let n = logic(); // index of array
+        let partsSeparator = logic(); // index of array
 
         let counter1 = 0;
         let counter2 = 0;
 
-        for (i = 0; i < n; i++) {
+        for (i = 0; i < partsSeparator; i++) {
             const value = array[i];
 
             counter1 += value; // math
@@ -544,7 +548,7 @@
             counter1 ^= value; // bitwise
         }
 
-        for (i = n; i < array.length; i++) {
+        for (i = partsSeparator; i < array.length; i++) {
             const value = array[i];
 
             counter2 += value; // math
@@ -573,7 +577,7 @@
         ```js
         function approach(array) {
             for (let i = 0; i < array.length; i++) {
-                logic(array, i, swap);
+                logic(array[i], i, array, swap);
             }
         }
 
@@ -596,7 +600,7 @@
             let i = 0; // or 1
             let j = 0;
 
-            for (i = 0; i < array.length; i++) {
+            for (i = i; i < array.length; i++) {
                 if (condition()) {
                     swap(array, i, j);
                     j++;
@@ -662,7 +666,7 @@
                     mid++;
                 } else if (array[mid] === MIDDLE) {
                     mid++;
-                } else { // array[mid] === LARGER
+                } else { // if (array[mid] === LARGER)
                     swap(array, mid, e);
                     e--;
                 }
@@ -689,7 +693,7 @@
             let i = 0; // or 1
             let j = 0;
 
-            for (i = 0; i < array.length; i++) {
+            for (i = i; i < array.length; i++) {
                 if (condition()) {
                     array[j++] = logic(array[i]);
                 }

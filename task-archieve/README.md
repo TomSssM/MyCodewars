@@ -8,11 +8,13 @@ _List of tasks_
 
 [:ledger: _Task Template_](./template/README.md)
 
-<!-- TODO: continue refactoring: -->
 - [Find Peak Element](./find-peak-element/task.md)
 - [Reverse an Array](./reverse-array/task.md)
 - [Distance Between Bus Stops](./distance-between-bus-stops/task.md)
-<!-- TODO: Use values as indexes (Love Triangles) -->
+<!-- TODO: Use values as indexes (tweak it a bit to avoid counter: find a Love Triangle) -->
+<!-- TODO: counter Task Type Easy Tasks here NOTE: see the medium tasks for details -->
+<!-- TODO: continue refactoring: -->
+
 - [Container With Most Water](./most-water/task.md)
 - [Missing Number in Sorted Array](./missing-number-sorted-array/task.md)
 - [Zigzag Conversion](./zigzag-conversion/task.md)

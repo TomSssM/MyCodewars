@@ -1,8 +1,4 @@
 
-Refactor task-type-summary:
-  * partsSeparator for math or bitwise on one part of the array then another part of the array
-  * refactor what goes into logic(...) in the Task Type summary
-
 Go over all the Tasks and fill the TODO
   - first create the Easy Tasks for all the Approaches
   - then refactor the medium Tasks

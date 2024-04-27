@@ -13,7 +13,7 @@
             for (let j = 0; j < game.length; j++) {
                 logic(game[j][i]);
 
-                if (approach()) {
+                if (approach(game)) {
                     return true;
                 }
             }
@@ -331,7 +331,7 @@
 
 ## __`Tabulation`__
 
-<!-- TODO: here -->
+<!-- TODO: here: Dynamic Programming -->
 
 ---
 

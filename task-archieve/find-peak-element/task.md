@@ -31,7 +31,7 @@ Explanation: Your function can return either index number 1 where the peak eleme
 
   <summary><i><b><code>Iterate an array</code></b></i></summary>
 
-    The Approach is simply that we iterate an array using one pointer. Per itatation we do something with the element of the array knowing its value and its index and so on
+    The Approach is that we iterate an array using one pointer. Per itatation we do something with the element of the array knowing its value and its index and so on
 
     __Note:__ "pointer" is when we save number to a variable like `i` and use `i` as an index of the array to get values of the array and increment or decrement `i` per iteration, the `i` variable is thus called a _pointer_
 
@@ -39,7 +39,7 @@ Explanation: Your function can return either index number 1 where the peak eleme
 
     __Note:__ just to be clear, when we say "iterate an array" it means go over all the elements of the array (for example in the for-loop)
 
-    In order to solve this particular task we need to compare the element the pointer is at to its neighbors
+    In order to solve this Task we need to compare the element the pointer is at to its neighbors. If the element is greater than both its neighbors then we have found a peak element of the array
 
   </details>
 

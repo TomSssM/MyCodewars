@@ -25,9 +25,9 @@ Output: ['c','b','a']
 
   <summary><i><b><code>Iterate an array in reverse</code></b></i></summary>
 
-    <!-- TODO: abstract explanation of the Approach: The Approach is that ... -->
+    The Approach is that we iterate an array _in reverse_ using one pointer. Per itatation we do something with the element of the array knowing its value and its index and so on
 
-    We can iterate the array in reverse, create a new array with all the elements in reverse order and return the new array. Applying this Approach we can create a solution that uses `O(n)` memory where `n` is the size of the array
+    In order to solve this Task we can iterate the array in reverse, create a new array with all the elements in reverse order and return the new array. Applying this Approach we can create a solution that uses `O(n)` memory where `n` is the size of the array
 
   </details>
 
@@ -40,7 +40,7 @@ Output: ['c','b','a']
 
     <!-- TODO: abstract explanation of the Approach: The Approach is that ... -->
 
-    We can separate the array in the middle into two equal parts. Then we swap the elements of the first part with the elements of the other part. For example if we use pointer `i` to iterate the array then we swap element `i` (element from the first part of the array) with element `length - i` (element from the other part of the array). Applying this Approach we can create a solution that uses `O(1)` memory which is good
+    In order to solve this Task we can separate the array in the middle into two equal parts. Then we swap the elements of the first part with the elements of the other part. For example if we use pointer `i` to iterate the array then we swap element `i` (element from the first part of the array) with element `length - i` (element from the other part of the array). Applying this Approach we can create a solution that uses `O(1)` memory which is good
 
   </details>
 

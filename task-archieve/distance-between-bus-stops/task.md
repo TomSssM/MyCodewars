@@ -45,7 +45,9 @@ Explanation: Distance between 0 and 3 is 6 or 4, minimum is 4
 
   <summary><i><b><code>Iterate an array</code></b></i> + <i><b><code>Iterate an array in reverse</code></b></i></summary>
 
-    First iterate the array and count the sum and then iterate the array in reverse (meaning counterclockwise) and count the sum. Overlap to the beginning or end of the array when necessary. Then return the lesser sum. Thus we utilize the two Approaches _`Iterate an array`_ and _`Iterate an array in reverse`_ in order to solve the Task ([solution 1](./solution.js))
+    In order to solve this Task we first iterate the array and count the sum and then iterate the array in reverse (meaning counterclockwise) and count the sum. Make sure to overlap to the beginning or end of the array when necessary. Then return the lesser sum
+
+    Thus we utilize the two Approaches _`Iterate an array`_ and _`Iterate an array in reverse`_ in order to solve the Task ([solution 1](./solution.js))
 
   </details>
 

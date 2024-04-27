@@ -21,7 +21,7 @@ TODO: optional: hint description
 
     TODO: abstract explanation of the Approach if Approach is used for the first time: TODO: The Approach is that ...
 
-    TODO: expnanation of the logic of the solution and how the Approach is applied
+    TODO: expnanation of the logic of the solution and how the Approach is applied TODO: In order to solve this Task we ...
 
     TODO: optional: example of the logic of the solution
 
@@ -36,7 +36,7 @@ TODO: optional: hint description
 
     TODO: abstract explanation of the Approach if Approach is used for the first time: TODO: The Approach is that ...
 
-    TODO: expnanation of the logic of the solution and how the Approach is applied
+    TODO: expnanation of the logic of the solution and how the Approach is applied TODO: In order to solve this Task we ...
 
     TODO: optional: example of the logic of the solution
 
