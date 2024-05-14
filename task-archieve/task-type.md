@@ -26,7 +26,8 @@ _Tasks grouped by_ `Task Type`
   - [Longest sequence of letters](./longest-letter-subsequence/task.md)
 
 ### Array and Counter
-  - [Longest sequence of ones](./longest-sequence-of-ones/task.md)
+  - [The last sequence of ones](./the-last-sequence-of-ones/task.md)
+  - [The longest sequence of ones](./the-longest-sequence-of-ones/task.md)
 
 ### Array and HashMap
   - [Contiguous Array](./contiguous-array/task.md)

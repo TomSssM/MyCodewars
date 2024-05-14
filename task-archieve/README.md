@@ -11,15 +11,16 @@ _List of tasks_
 - [Find Peak Element](./find-peak-element/task.md)
 - [Reverse an Array](./reverse-array/task.md)
 - [Distance Between Bus Stops](./distance-between-bus-stops/task.md)
-<!-- TODO: Use values as indexes (tweak it a bit to avoid counter: find a Love Triangle) -->
+- [The last sequence of ones](./the-last-sequence-of-ones/task.md)
 <!-- TODO: counter Task Type Easy Tasks here NOTE: see the medium tasks for details -->
+<!-- TODO: Use values as indexes (tweak it a bit to avoid counter: find a Love Triangle) -->
 <!-- TODO: continue refactoring: -->
 
 - [Container With Most Water](./most-water/task.md)
 - [Missing Number in Sorted Array](./missing-number-sorted-array/task.md)
 - [Zigzag Conversion](./zigzag-conversion/task.md)
 - [Longest sequence of letters](./longest-letter-subsequence/task.md)
-- [Longest sequence of ones](./longest-sequence-of-ones/task.md)
+- [The longest sequence of ones](./the-longest-sequence-of-ones/task.md)
 - [Sort letters from one array via another array](./sort-letters-two-arrays/task.md)
 - [Flatten non-recursive](./flatten-nonrecursive/task.md)
 - [Intersection of intervals](./intersection-intervals/task.md)
