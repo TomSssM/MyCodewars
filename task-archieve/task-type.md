@@ -27,6 +27,7 @@ _Tasks grouped by_ `Task Type`
 
 ### Array and Counter
   - [The last sequence of ones](./the-last-sequence-of-ones/task.md)
+  - [Greatest integer in array](./greatest-integer-in-array/task.md)
   - [The longest sequence of ones](./the-longest-sequence-of-ones/task.md)
 
 ### Array and HashMap

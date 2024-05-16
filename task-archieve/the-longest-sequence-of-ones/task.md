@@ -18,11 +18,9 @@ countOnes([1, 1, 1, 0, 1, 0, 0, 1, 1, 1]); // 4 (we throw away 0 at index 3 and 
 
   <summary><i><b><code>Iterate an array incrementing and decrementing one or more counters</code></b></i> + <i><b><code>Iterate an array keeping one or more max or min counters</code></b></i> + <i><b><code>Iterate an array keeping one or more previous counters</code></b></i></summary>
 
-    <!-- TODO: we need to combine no less than 3 Approaches of the Task Type to create a solution -->
-
-    <!-- TODO: Easy Task for Iterate an array keeping one or more max or min counters TODO: probably google on leetcode biggest integer in array -->
-
     <!-- TODO: Easy Task for Iterate an array keeping one or more previous counters TODO: ["3 Greatest Integers in an Array"](../../2\)%20Task%20Challanges.md#30-3-greatest-integers-in-an-array -->
+
+    <!-- TODO: we need to combine no less than 3 Approaches of the Task Type to create a solution -->
 
     <!-- TODO: expnanation of the logic of the solution: we combine three Approaches and here comes the explanation -->
 

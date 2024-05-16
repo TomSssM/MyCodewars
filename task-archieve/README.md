@@ -12,7 +12,8 @@ _List of tasks_
 - [Reverse an Array](./reverse-array/task.md)
 - [Distance Between Bus Stops](./distance-between-bus-stops/task.md)
 - [The last sequence of ones](./the-last-sequence-of-ones/task.md)
-<!-- TODO: counter Task Type Easy Tasks here NOTE: see the medium tasks for details -->
+- [Greatest integer in array](./greatest-integer-in-array/task.md)
+<!-- TODO: counter Task Type Easy Task here NOTE: see the medium tasks for details -->
 <!-- TODO: Use values as indexes (tweak it a bit to avoid counter: find a Love Triangle) -->
 <!-- TODO: continue refactoring: -->
 
