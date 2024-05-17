@@ -1,4 +1,4 @@
-# The last sequence of ones
+# The Last Sequence of Ones
 
 You are given a binary array `nums`. Binary array means that the array consists only of `1`s and `0`s. You need to return the length of the last sequence of `1`s after the last `0` in the array
 

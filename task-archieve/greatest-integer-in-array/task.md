@@ -1,4 +1,4 @@
-# Greatest integer in array
+# Greatest Integer in Array
 
 Given an array of positive integers return the _greatest integer in the array_. If an array is empty return `-1`
 

@@ -11,9 +11,10 @@ _List of tasks_
 - [Find Peak Element](./find-peak-element/task.md)
 - [Reverse an Array](./reverse-array/task.md)
 - [Distance Between Bus Stops](./distance-between-bus-stops/task.md)
-- [The last sequence of ones](./the-last-sequence-of-ones/task.md)
-- [Greatest integer in array](./greatest-integer-in-array/task.md)
-<!-- TODO: counter Task Type Easy Task here NOTE: see the medium tasks for details -->
+- [The Last Sequence of Ones](./the-last-sequence-of-ones/task.md)
+- [Greatest Integer in Array](./greatest-integer-in-array/task.md)
+- [3 Greatest Integers in Array](./three-greatest-integers-in-array/task.md)
+<!-- TODO: maybe "The Longest Sequence of Ones" goes here? -->
 <!-- TODO: Use values as indexes (tweak it a bit to avoid counter: find a Love Triangle) -->
 <!-- TODO: continue refactoring: -->
 
@@ -21,7 +22,7 @@ _List of tasks_
 - [Missing Number in Sorted Array](./missing-number-sorted-array/task.md)
 - [Zigzag Conversion](./zigzag-conversion/task.md)
 - [Longest sequence of letters](./longest-letter-subsequence/task.md)
-- [The longest sequence of ones](./the-longest-sequence-of-ones/task.md)
+- [The Longest Sequence of Ones](./the-longest-sequence-of-ones/task.md)
 - [Sort letters from one array via another array](./sort-letters-two-arrays/task.md)
 - [Flatten non-recursive](./flatten-nonrecursive/task.md)
 - [Intersection of intervals](./intersection-intervals/task.md)

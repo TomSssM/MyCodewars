@@ -1,4 +1,4 @@
-# The longest sequence of ones
+# The Longest Sequence of Ones
 
 Your task is to implement algorithm that finds the longest sequence of 1's in array consisting of 1's and 0's. For this task you also have to exclude at least 1 element out of the array, for example:
 
@@ -17,8 +17,6 @@ countOnes([1, 1, 1, 0, 1, 0, 0, 1, 1, 1]); // 4 (we throw away 0 at index 3 and 
   <details>
 
   <summary><i><b><code>Iterate an array incrementing and decrementing one or more counters</code></b></i> + <i><b><code>Iterate an array keeping one or more max or min counters</code></b></i> + <i><b><code>Iterate an array keeping one or more previous counters</code></b></i></summary>
-
-    <!-- TODO: Easy Task for Iterate an array keeping one or more previous counters TODO: ["3 Greatest Integers in an Array"](../../2\)%20Task%20Challanges.md#30-3-greatest-integers-in-an-array -->
 
     <!-- TODO: we need to combine no less than 3 Approaches of the Task Type to create a solution -->
 

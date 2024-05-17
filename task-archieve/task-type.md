@@ -26,9 +26,10 @@ _Tasks grouped by_ `Task Type`
   - [Longest sequence of letters](./longest-letter-subsequence/task.md)
 
 ### Array and Counter
-  - [The last sequence of ones](./the-last-sequence-of-ones/task.md)
-  - [Greatest integer in array](./greatest-integer-in-array/task.md)
-  - [The longest sequence of ones](./the-longest-sequence-of-ones/task.md)
+  - [The Last Sequence of Ones](./the-last-sequence-of-ones/task.md)
+  - [Greatest Integer in Array](./greatest-integer-in-array/task.md)
+  - [3 Greatest Integers in Array](./three-greatest-integers-in-array/task.md)
+  - [The Longest Sequence of Ones](./the-longest-sequence-of-ones/task.md)
 
 ### Array and HashMap
   - [Contiguous Array](./contiguous-array/task.md)
