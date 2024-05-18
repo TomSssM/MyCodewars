@@ -14,6 +14,7 @@ _List of tasks_
 - [The Last Sequence of Ones](./the-last-sequence-of-ones/task.md)
 - [Greatest Integer in Array](./greatest-integer-in-array/task.md)
 - [3 Greatest Integers in Array](./three-greatest-integers-in-array/task.md)
+<!-- TODO: maybe a second approach for the Easy Task of find three greatest integers can be sort array and do something with it -->
 <!-- TODO: maybe "The Longest Sequence of Ones" goes here? -->
 <!-- TODO: Use values as indexes (tweak it a bit to avoid counter: find a Love Triangle) -->
 <!-- TODO: continue refactoring: -->

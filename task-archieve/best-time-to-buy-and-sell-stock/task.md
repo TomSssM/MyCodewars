@@ -34,6 +34,7 @@ Explanation: In this case, no transactions are done and the max profit = 0
 
     <!-- TODO: Easy Task for Sliding Window fixed size -->
     <!-- TODO: The example in the article (sliding window) is your Easy Task for this Approach -->
+    <!-- TODO: maybe Easy Task for Sliding Window. Dynamic size -->
     <!-- TODO: refactor the abstract explanation of the Approach TODO: The Approach is that ... -->
 
     This is a task for two pointers. Sometimes two pointers move such that one pointer (left pointer) is always behind the other pointer (right pointer). Such a technique when we have the left pointer behind the right pointer and per iteration we either increment the left pointer or the right pointer or per iteration we increment both the left and the right pointers is called "_Sliding Window_"

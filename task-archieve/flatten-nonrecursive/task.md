@@ -21,6 +21,8 @@ Also you cannot use recursion because an array can be very big and nested very d
 
   <summary><i><b><code>Do while loop while Stack is not empty popping and pushing along the way</code></b></i></summary>
 
+    <!-- TODO: this becomes an easy Task for Array and Stack and while loop once you allow to use the .unshift() method -->
+
     <!-- TODO: abstract explanation of the Approach TODO: The Approach is that ... -->
     <!-- TODO: maybe move abstract explanation of the Approach to an Easy Task -->
 
