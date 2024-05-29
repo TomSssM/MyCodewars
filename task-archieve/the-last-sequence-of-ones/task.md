@@ -54,9 +54,9 @@ Explanation: the array is empty thus the last sequence of 1s after the last 0 do
 
   <summary><i><b><code>Iterate an array keeping one or more counters</code></b></i></summary>
 
-    The Approach is that we iterate an array and keep one or more counters. Read on to learn more
+    The Approach is that we iterate an array and keep one or more counters
 
-    __Note:__ a "counter" is a variable that holds some number which we are going to increase, decrease or change in some other way per iteration
+    __Note:__ a "counter" is a variable that holds some number which we are going to increase, decrease or change in some other way per iteration. A _counter_ variable is created before we start iterating the array (before the for-loop) and is thus accessible during the entire iteration of the array as well as after the entire iteration of the array (after the for-loop)
 
     __Note:__ and if we say "reset a counter" it means assign to a counter the value that it had before we started iterating the array
 
