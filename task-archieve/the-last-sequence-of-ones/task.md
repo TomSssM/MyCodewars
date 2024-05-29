@@ -73,7 +73,7 @@ Explanation: the array is empty thus the last sequence of 1s after the last 0 do
 
   <summary><i><b><code>Iterate an array incrementing and decrementing one or more counters</code></b></i> + <i><b><code>Iterate an array in reverse</code></b></i></summary>
 
-    Another way we can solve this Task is if we apply the _`Iterate an array in reverse`_ Approach in addition to the _`Iterate an array incrementing and decrementing one or more counters`_ Approach. If we iterate the array in reverse then we can solve the Task via the simplest manipulations to the counter, that is by merely incrementing and decrementing the counter but never having to reset the counter or anything. All we need to do is iterate the array in reverse incrementing the counter if we come across a `1` in the array and stop iterating the array either if we come across a `0` in the array or if we reach the end of the array ([solution 2](./solution-2.js))
+    Another way we can solve this Task is if we apply the _`Iterate an array in reverse`_ Approach in addition to the _`Iterate an array incrementing and decrementing one or more counters`_ Approach. If we iterate the array in reverse then we can solve the Task via the simplest manipulations to the counter, that is by merely incrementing and decrementing the counter but never having to reset the counter or anything. All we need to do is iterate the array in reverse incrementing the counter if we come across a `1` in the array and stop iterating the array either if we come across a `0` in the array or if we reach the start of the array ([solution 2](./solution-2.js))
 
   </details>
 
