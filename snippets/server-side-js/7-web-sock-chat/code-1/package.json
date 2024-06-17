@@ -12,6 +12,6 @@
   "license": "ISC",
   "dependencies": {
     "node-static": "^0.7.11",
-    "ws": "^6.2.1"
+    "ws": "^6.2.3"
   }
 }
