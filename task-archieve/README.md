@@ -17,7 +17,7 @@ _List of tasks_
 <!-- TODO: maybe a second approach for the Easy Task of find three greatest integers can be sort array and do something with it -->
 <!-- TODO: maybe "The Longest Sequence of Ones" goes here? -->
 <!-- TODO: Use values as indexes (tweak it a bit to avoid counter: find a Love Triangle) -->
-<!-- TODO: new Approach: two pointers go in opposing directions from each other: 1) https://femida.yandex-team.ru/problems/8125/ 2) https://leetcode.com/problems/find-k-closest-elements/description/ -->
+<!-- TODO: new Approach: two pointers go in opposing directions from each other NOTE: before the go towards each other approach: 1) https://femida.yandex-team.ru/problems/8125/ 2) https://leetcode.com/problems/find-k-closest-elements/description/ -->
 <!-- TODO: continue refactoring: -->
 
 - [Container With Most Water](./most-water/task.md)
