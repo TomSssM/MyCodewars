@@ -1,4 +1,14 @@
 
+TODO: great idea final v3:
+  - rename Approach to Algorithm because this project is now called Algorithms or something =)
+  - create a folder named algorithms and store there as *.md files all abstract explanations of the algorithms and all tasks to refer to these via links
+  - change the structure of every task, every task now is to be composed of:
+    1) description
+    2) link to algorithm explanation (for every algorithm applicable)
+    3) solution explanation (for every algorithm applicable)
+    4) links to code solution or solution if more than one (for every algorithm applicable)
+    5) back button
+
 Go over all the Tasks and fill the TODO
   - first create the Easy Tasks for all the Approaches
   - then refactor the medium Tasks
