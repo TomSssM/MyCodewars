@@ -1,4 +1,7 @@
 
+IDEA: like a glossary with examples idea
+IDEA: maybe algorithm explanation should also have examples
+
 TODO: great idea final v3:
   - rename Approach to Algorithm because this project is now called Algorithms or something =)
   - create a folder named algorithms and store there as *.md files all abstract explanations of the algorithms and all tasks to refer to these via links
