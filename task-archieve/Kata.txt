@@ -1,10 +1,12 @@
 
 IDEA: like a glossary with examples idea
+IDEA: perhaps remove the "template" folder (and the links)
 IDEA: maybe algorithm explanation should also have examples
 
 TODO: great idea final v3:
   - rename Approach to Algorithm because this project is now called Algorithms or something =)
   - create a folder named algorithms and store there as *.md files all abstract explanations of the algorithms and all tasks to refer to these via links
+    NOTE: we explain the algorithm then show it in action by solving the template task right in the explanation and in the solution of the template task itself we merely repeat the explanation except more succintly
   - change the structure of every task, every task now is to be composed of:
     1) description
     2) link to algorithm explanation (for every algorithm applicable)
