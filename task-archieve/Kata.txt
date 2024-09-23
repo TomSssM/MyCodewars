@@ -1,7 +1,10 @@
 
+TODO: see ./imagining-layout
+
 IDEA: like a glossary with examples idea
 IDEA: perhaps remove the "template" folder (and the links)
 IDEA: maybe algorithm explanation should also have examples
+IDEA: let's not group tasks by algorithm type and so on
 
 TODO: great idea final v3:
   - rename Approach to Algorithm because this project is now called Algorithms or something =)
