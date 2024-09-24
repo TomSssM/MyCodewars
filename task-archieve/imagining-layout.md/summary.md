@@ -5,7 +5,7 @@
 > [Algorithm Explanation](./explanations/one-pointer-one-array/iterate-an-array.md)
 
 ```js
-function approach(array) {
+function algorithm(array) {
     for (let i = 0; i < array.length; i++) {
         logic(array[i], i);
     }
@@ -23,7 +23,7 @@ __Output:__ value: `1`, `2`, `3`, index: `0`, `1`, `2`
 > [Algorithm Explanation](https://google.com)
 
 ```js
-function approach(array) {
+function algorithm(array) {
     for (let i = array.length - 1; i >= 0; i--) {
         logic(array[i], i);
     }
