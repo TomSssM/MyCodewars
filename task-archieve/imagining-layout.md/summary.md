@@ -2,7 +2,7 @@
 
 ## __*`Iterate an array`*__
 
-> __[Algorithm Explanation](./explanations/one-pointer-one-array/iterate-an-array.md)__
+> [Algorithm Explanation](./explanations/one-pointer-one-array/iterate-an-array.md)
 
 ```js
 function algorithm(array) {
@@ -20,7 +20,7 @@ __Output:__ value: `1`, `2`, `3`, index: `0`, `1`, `2`
 
 ## __*`Iterate an array in reverse`*__
 
-> __[Algorithm Explanation](https://google.com)__
+> [Algorithm Explanation](https://google.com)
 
 ```js
 function algorithm(array) {
