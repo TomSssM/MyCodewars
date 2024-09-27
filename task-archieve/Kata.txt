@@ -5,6 +5,7 @@ IDEA: like a glossary with examples idea
 IDEA: perhaps remove the "template" folder (and the links)
 IDEA: maybe algorithm explanation should also have examples
 IDEA: let's not group tasks by algorithm type and so on
+IDEA: consecutive sequences of 1's separated by 0's (there can only be one 0 between any two sequences of 1's) return the length of the last two sequences of 1's is the template task for _Iterate an array keeping one or more previous counters_ (an elegant solution but sometimes this algorithm is the only solution)
 
 TODO: great idea final v3:
   - rename Approach to Algorithm because this project is now called Algorithms or something =)
