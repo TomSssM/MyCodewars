@@ -4,7 +4,7 @@
 
 ---
 
-Tutorial descriotion issues here on this page telling about the tutorial and how to approach it etc.
+Tutorial description issues here on this page telling about the tutorial and how to approach it etc.
 
 ## Location
 
