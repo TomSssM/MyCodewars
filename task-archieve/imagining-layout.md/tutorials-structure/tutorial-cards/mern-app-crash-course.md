@@ -8,4 +8,8 @@ React Crash Course from Brad Traversy released in 2019. This Crash Course teache
 
 ## Location
 
-`./Code/JS/React`
+`./Code/JS/React/Video-1.mp4`
+
+`./Code/JS/React/Video-2.mp4`
+
+`./Code/JS/React/Video-3.mp4`

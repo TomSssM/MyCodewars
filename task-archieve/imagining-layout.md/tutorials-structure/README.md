@@ -1,8 +1,8 @@
 # The Holidays Code
 
-<img src="./logo.jpg" height=100 />
+<img src="./logo.jpg" height=80 />
 
 ## Contents
 
-- [Tutorials](./list.md)
-- [Learning Maps]()
+- [Knowledge](./list.md)
+- [Learning Maps](./learning-maps/README.md)

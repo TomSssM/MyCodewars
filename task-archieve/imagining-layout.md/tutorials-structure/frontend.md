@@ -30,8 +30,8 @@
 ## JavaScript
 
 - __Tutorials__
-  - [JavaScript W3Schools]()
   - [JavaScript (Avelx)]()
+  - [JavaScript W3Schools]()
   - [learnjavascript]()
   - [JavaScript Notes]()
 
@@ -57,7 +57,8 @@
 
 - __Tutorials__
   - [Webpack Crash Course (2019)]()
-  - [Webpack Tutorial]()
+  - [Webpack Tutorial](./tutorial-cards/webpack.md)
+  - [Webpack Tutorial (V2)](./tutorial-cards/webpack-v2.md)
 
 ### React
 
