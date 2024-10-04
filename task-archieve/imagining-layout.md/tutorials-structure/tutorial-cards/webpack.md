@@ -1,4 +1,4 @@
-# Weback Tutorial
+# Webpack Tutorial
 
 <img src="./webpack-logo-old.png" height=150 />
 
@@ -8,4 +8,4 @@ Tutorial description issues here on this page telling about the tutorial and how
 
 ## Location
 
-- [Weback Tutorial]()
+- [Webpack Tutorial]()
