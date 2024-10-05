@@ -526,7 +526,3 @@ function getAsyncArraySizePromise(asyncArray) {
 ```
 
 Note how in the `getChunk` function we use `Promise.all` to parallel and thus speed up the execution of the code.
-
-# More tasks
-
-Don't worry lads, there are always more tasks to solve. Feel free to check out [Task Archieve](./task-archieve/README.md).
