@@ -9,7 +9,7 @@
   "author": "RS",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "^2.3.4"
+    "mocha": "^11.7.5"
   },
   "repository": {
     "type": "git",
